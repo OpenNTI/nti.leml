@@ -9,7 +9,7 @@ bcrpyt = Bcrypt()
 def init():
 	login_manager.init_app(app)
 
-def get_login_manager();
+def get_login_manager():
 	return login_manager
 
 def get_global_app():
