@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "lem": {
+      "type": "object",
+      "properties": {
+        "startIDs": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "stopIDs": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "building blocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+              },
+              "type": {
+                "type": "string",
+                "enum": ["Information", "Dialogue", "Feedback", "Practice", "Evidence"]
+              },
+              "description": {
+                "type": "string",
+              },
+              "method": {
+                "type": "string",
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "method"
+            ]
+          },
+        },
+        "contexts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["Classroom", "Online Synchronous", "Online Asynchronous", "Experiential"]
+              },
+              "building blocks": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "notations": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "type"
+            ]
+          },
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Learner Action", "Facilitator Action", "System Action"]
+              },
+              "arrow tail": {
+                "type": "integer"
+              },
+              "arrow head": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "type",
+              "arrow tail",
+              "arrow head"
+            ]
+          },
+        },
+        "notations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "building block": {
+                "type": "integer"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type",
+              "building block",
+              "description"
+            ]
+          }
+        }
+      },
+      "required": [
+        "building blocks",
+        "contexts",
+        "actions",
+        "notations"
+      ]
+    }
+  },
+  "required": [
+    "lem"
+  ]
+}
