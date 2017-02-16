@@ -28,21 +28,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.15/cytoscape.js"></script>
     <style type="text/css">
       #cy {
-        width: 50%;
-        height: 100%;
+        width: 800px;
+        height: 600px;
         display: block;
+        border: 1px solid lightgray;
       }
-    </style>
-
-    <!-- Vis js -->
-    <link href=".http://visjs.org/dist/vis-network.min.css" rel="stylesheet" type="text/css">
-
-    <style type="text/css">
-    #mynetwork {
-      width: 600px;
-      height: 400px;
-      border: 1px solid lightgray;
-    }
     </style>
   </head>
   <body>
@@ -68,14 +58,8 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-9">
-          <div id="mynetwork">
-            <div id="cy"></div>
-            <!--
-            <div class="vis-network" tabindex="900" style="position: relative; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;">
-              <canvas width="1200" height="800" style="position: relative; touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;"></canvas>
+            <div id="cy">
             </div>
-          -->
-          </div>
         </div>
         <div class="col-md-3">
           <button type="button" class="btn btn-primary" onclick="document.getElementById('fileOpener').click();">Upload LEM</button>
@@ -85,6 +69,5 @@
     </div>
 
     <script type="text/javascript" src="../js/cytoscape_canvas.js"></script>
-    <!--<script type="text/javascript" src="../js/canvas.js"></script>-->
   </body>
 </html>
