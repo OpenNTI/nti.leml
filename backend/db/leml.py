@@ -33,6 +33,7 @@ class Notation(EmbeddedDocument):
 
 # LEM Model
 class Lem(Document):
+	lem_id = IntField(required=True, unique=True)
 	startIDs = ListField(IntField())
 	stopIDs = ListField(IntField())
 	building_blocks = ListField(EmbeddedDocumentField(Block), required=True)

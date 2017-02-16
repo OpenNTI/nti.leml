@@ -10,9 +10,9 @@ block3 = Block(id=3, block_type="Dialogue", description="Lessons Learned", metho
 context1 = Context(id=4, context_type="Online Asynchronous", building_blocks=[1, 2, 3], actions=[5, 6], notations=[])
 action1 = Action(id=5, action_type="Learner Action", arrow_tail=1, arrow_head=2)
 action2 = Action(id=6, action_type="Learner Action", arrow_tail=2, arrow_head=3)
-lemExample = Lem(startIDs=[1], stopIDs=[3], building_blocks=[block1, block2, block3], contexts=[context1], actions=[action1, action2], notations=[]).save()
+lemExample = Lem(lem_id=10, startIDs=[1], stopIDs=[3], building_blocks=[block1, block2, block3], contexts=[context1], actions=[action1, action2], notations=[]).save()
 
-for lem in Lem.objects:
+'''for lem in Lem.objects:
 	print("Start ID's: %s" % lem.startIDs)
 	print("Stop ID's: %s" % lem.stopIDs)
 	print("Building Blocks: ")
@@ -29,4 +29,4 @@ for lem in Lem.objects:
 	for notation in lem.notations:
 		print("Building Block: %d, Description: %s" % (notation.building_block, notation.description))
 
-db.drop_database("temp")
+#db.drop_database("temp")'''
