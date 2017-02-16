@@ -1,5 +1,13 @@
 from flask_globals import *
 
-flask_globals.init()
+init()
+application = get_global_app()
 
-#start adding routes here
+#URL for getting a lem item
+@app.route('/lem', methods = ['GET', 'POST'])
+def lem():
+	
+	
+#Start the application
+if __name__ == '__main__':
+	application.run(debug=True)
