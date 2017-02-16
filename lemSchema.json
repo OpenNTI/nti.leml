@@ -89,17 +89,17 @@
                 "type": "string",
                 "enum": ["Learner Action", "Facilitator Action", "System Action"]
               },
-              "arrow tail": {
+              "from": {
                 "type": "integer"
               },
-              "arrow head": {
+              "to": {
                 "type": "integer"
               }
             },
             "required": [
               "type",
-              "arrow tail",
-              "arrow head"
+              "from",
+              "to"
             ]
           },
         },

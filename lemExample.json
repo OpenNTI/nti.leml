@@ -36,14 +36,14 @@
       {
         "id": 5,
         "type": "Learner Action",
-        "arrow tail": 1,
-        "arrow head": 2
+        "from": 1,
+        "to": 2
       },
       {
         "id": 6,
         "type": "Learner Action",
-        "arrow tail": 2,
-        "arrow head": 3
+        "from": 2,
+        "to": 3
       }
     ],
     "notations": []
