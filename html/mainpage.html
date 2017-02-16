@@ -34,6 +34,40 @@
         border: 1px solid lightgray;
       }
     </style>
+
+    <script>
+    function loadFile() {
+      var input, file, fr;
+
+      if (typeof window.FileReader !== 'function') {
+        alert("The file API isn't supported on this browser yet.");
+        return;
+      }
+
+      input = document.getElementById('fileOpener');
+      if (!input) {
+        alert("Um, couldn't find the fileinput element.");
+      }
+      else if (!input.files) {
+        alert("This browser doesn't seem to support the `files` property of file inputs.");
+      }
+      else if (!input.files[0]) {
+        alert("Please select a file before clicking 'Load'");
+      }
+      else {
+        file = input.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        fr.readAsText(file);
+      }
+
+      function receivedText(e) {
+        lines = e.target.result;
+        var newArr = JSON.parse(lines);
+        console.log(newArr);
+      }
+      }
+      </script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -62,11 +96,19 @@
             </div>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-primary" onclick="document.getElementById('fileOpener').click();">Upload LEM</button>
+          <button type="button" class="btn btn-primary" onclick="readLem();">Upload LEM</button>
+          <button onclick="loadFile();">Load</button>
           <input type="file" style="display:none" id="fileOpener">
         </div>
       </div>
     </div>
+
+    <script>
+      function readLem() {
+        $("#fileOpener").change(loadFile);
+        $("#fileOpener").click();
+      }
+    </script>
 
     <script type="text/javascript" src="../js/cytoscape_canvas.js"></script>
   </body>
