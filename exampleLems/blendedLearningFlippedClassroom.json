@@ -1,0 +1,118 @@
+{
+  "fromModelURL": "http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=JQ41",
+  "lem": {
+    "startIDs": [1],
+    "stopIDs": [7],
+    "building blocks": [
+      {
+        "id":1,
+        "type": "Information",
+        "description": "Topic Overview",
+        "method": "HTML File"
+      },
+      {
+        "id": 2,
+        "type": "Information",
+        "description": "Topic Concept Presentation",
+        "method": "Video"
+      },
+      {
+        "id": 3,
+        "type": "Information",
+        "description": "Skill Demonstration",
+        "method": "Video"
+      },
+      {
+        "id":4,
+        "type": "Practice",
+        "description": "Problem Set",
+        "method": "Group Project Work"
+      },
+      {
+        "id": 5,
+        "type": "Feedback",
+        "description": "Feedback on Problem Sets",
+        "method": "Peer Feedback"
+      },
+      {
+        "id": 6,
+        "type": "Dialogue",
+        "description": "Reflection Discussion",
+        "method": "Discussion"
+      },
+      {
+        "id": 7,
+        "type": "Evidence",
+        "description": "Individual Problem Set",
+        "method": "Dropbox"
+      }
+    ],
+    "actions": [
+      {
+        "id": 8,
+        "type": "Learner Action",
+        "from": 1,
+        "to": 2
+      },
+      {
+        "id": 9,
+        "type": "Learner Action",
+        "from": 2,
+        "to": 3
+      },
+      {
+        "id": 10,
+        "type": "Learner Action",
+        "from": 3,
+        "to": 4
+      },
+      {
+        "id": 11,
+        "type": "Learner Action",
+        "from": 4,
+        "to": 6
+      },
+      {
+        "id": 12,
+        "type": "Learner Action",
+        "from": 5,
+        "to": 4
+      },
+      {
+        "id": 13,
+        "type": "Learner Action",
+        "from": 6,
+        "to": 7
+      }
+    ],
+    "contexts": [
+      {
+        "id": 14,
+        "type": "Online Asynchronous",
+        "building blocks": [1,2,3],
+        "actions": [],
+        "notations": []
+      },
+      {
+        "id": 15,
+        "type": "Classroom",
+        "building blocks": [4,5],
+        "actions": [],
+        "notations": []
+      },
+      {
+        "id": 16,
+        "type": "Online Asynchronous",
+        "building blocks": [6,7],
+        "actions": [],
+        "notations": []
+      }
+    ],
+    "notations": [
+      {
+        "building block": 7,
+        "description": "Objective 1"
+      }
+    ]
+  }
+}
