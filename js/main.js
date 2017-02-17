@@ -70,7 +70,25 @@ function renderLem(json) {
   if (contexts) {
     for (var index in contexts) {
       var context = contexts[index];
-      elements.push({data: {id: context['id']}, style: {label:context['type']}});
+
+      var styleClass;
+
+      switch (context['type']) {
+        case "Online Asynchronous":
+          styleClass = "onlineasynchronous";
+          break;
+        case "Online Synchronous":
+          styleClass = "onlinesynchronous";
+          break;
+        case "Classroom":
+          styleClass = "classroom";
+          break;
+        case "Experiential":
+          styleClass = "experiential";
+          break;
+      }
+
+      elements.push({data: {id: context['id']}, style: {label:context['type']}, classes: styleClass});
 
       var buildingBlock;
       for (var index in context['building blocks']) {

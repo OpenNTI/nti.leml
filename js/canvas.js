@@ -35,7 +35,6 @@ function loadNewCytoscapeWith(elements) {
           'label': 'data(id)'
         }
       },
-
       {
         selector: 'edge',
         style: {
@@ -46,7 +45,6 @@ function loadNewCytoscapeWith(elements) {
           'curve-style': 'bezier'
         }
       },
-
       {
         selector: '.startstop',
         style: {
@@ -54,11 +52,34 @@ function loadNewCytoscapeWith(elements) {
           'label': ''
         }
       },
-
       {
         selector: ':parent',
         style: {
           'background-opacity': 0.333
+        }
+      },
+      {
+        selector: '.onlineasynchronous',
+        style: {
+          'background-color': '#42d1f4'
+        }
+      },
+      {
+        selector: '.onlinesynchronous',
+        style: {
+          'background-color': '#41f258'
+        }
+      },
+      {
+        selector: '.classroom',
+        style: {
+          'background-color': '#f1ef40'
+        }
+      },
+      {
+        selector: '.experiential',
+        style: {
+          'background-color': '#ef60f7'
         }
       },
     ],
