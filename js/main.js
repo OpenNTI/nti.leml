@@ -157,8 +157,10 @@ function renderLem(json) {
   if (notations) {
     for (var index in notations) {
       var notation = notations[index];
-      elements.push({data: {id: notation['id'], style: {label: notation['description']}}},
-        {data: {id: "objectivelink" + notation['id'], source: notation['from'], target: notation['buildingBlock']}}
+      var notationID = "object" + notation['building block'];
+
+      elements.push({data: {id: notationID}, style: {label: notation['description']}},
+        {data: {id: "objectivelink" + notation['id'], source: notationID, target: notation['building block']}}
       );
     }
   }

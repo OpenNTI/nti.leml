@@ -32,7 +32,7 @@ function loadNewCytoscapeWith(elements) {
         selector: 'node',
         style: {
           'background-color': '#666',
-          'label': 'data(id)',
+          'label': '',
         }
       },
       {
