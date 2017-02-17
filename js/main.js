@@ -1,3 +1,10 @@
+var ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+var validateLem;
+
+$.getJSON("../lemSchema.json", function(schema) {
+  validateLem = ajv.compile(schema);
+});
+
 <!-- from http://stackoverflow.com/a/21446426/6004931 -->
 function loadFile() {
   var input, file, fr;
@@ -28,13 +35,13 @@ function loadFile() {
 function receivedText(e) {
   lines = e.target.result;
   var lemJson = JSON.parse(lines);
-  renderLem(lemJson);
-}
 
-var position = {x:0, y:0};
-const columns = 5;
-const xPadding = 300;
-const yPadding = 100;
+  if (validateLem(lemJson)) {
+    renderLem(lemJson);
+  } else {
+    console.log(ajv.errors);
+  }
+}
 
 function uploadLem() {
   $("#fileOpener").change(loadFile);
