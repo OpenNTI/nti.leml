@@ -169,16 +169,3 @@ function renderLem(json) {
 
   loadNewCytoscapeWith(elements);
 }
-
-function getNextPosition() {
-  var newPosition = {x: position.x, y: position.y};
-
-  if (position.x < xPadding * columns) {
-    position.x += xPadding
-  } else {
-    position.x  = 0;
-    position.y += yPadding;
-  }
-
-  return newPosition;
-}
