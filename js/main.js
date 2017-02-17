@@ -5,8 +5,8 @@ $.getJSON("../lemSchema.json", function(schema) {
   validateLem = ajv.compile(schema);
 });
 
-<!-- from http://stackoverflow.com/a/21446426/6004931 -->
 function loadFile() {
+  // from http://stackoverflow.com/a/21446426/6004931
   var input, file, fr;
 
   if (typeof window.FileReader !== 'function') {
@@ -97,10 +97,10 @@ function renderLem(json) {
 
       elements.push({data: {id: context['id']}, style: {label:context['type']}, classes: styleClass});
 
-      var buildingBlock;
       for (var index in context['building blocks']) {
-        buildingBlock = buildingBlocks[index];
-        buildingBlock.parent = context['id'];
+        var buildingBlockID = context['building blocks'][index];
+        var buildingBlock = buildingBlocks.filter(function (bb) { return bb.id == buildingBlockID;})[0];
+        buildingBlock['parent'] = context['id'];
       }
     }
   }
@@ -162,6 +162,8 @@ function renderLem(json) {
       );
     }
   }
+
+  console.log(elements);
 
   loadNewCytoscapeWith(elements);
 }
