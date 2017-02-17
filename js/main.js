@@ -1,3 +1,4 @@
+// Prepare JSON Schema validation
 var ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
 var validateLem;
 
@@ -5,11 +6,17 @@ $.getJSON("../lemSchema.json", function(schema) {
   validateLem = ajv.compile(schema);
 });
 
+// Set up file input button
 $(function() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").onclick(function() {this.value = null;});
 });
 
+function uploadLem() {
+  $("#fileOpener").click();
+}
+
+// Set up LEM JSON file processing
 function loadFile() {
   // from http://stackoverflow.com/a/21446426/6004931
   var input, file, fr;
@@ -46,10 +53,6 @@ function receivedText(e) {
   } else {
     console.log(ajv.errors);
   }
-}
-
-function uploadLem() {
-  $("#fileOpener").click();
 }
 
 function renderLem(json) {
