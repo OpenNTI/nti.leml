@@ -52,6 +52,16 @@ function renderLem(json) {
   var actions = json['lem']['actions'];
   var contexts = json['lem']['contexts'];
 
+  // Start dots
+  for (var index in startIDs) {
+    var startID = startIDs[index];
+    var startNodeID = "start" + startID;
+
+    elements.push({data: {id: startNodeID}, style: {label:"Start"}},
+      {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
+    );
+  }
+
   // Contexts
   var context;
   for (var index in contexts) {
@@ -63,7 +73,7 @@ function renderLem(json) {
       buildingBlock = buildingBlocks[index];
       buildingBlock.parent = context['id'];
     }
-}
+  }
 
   // Building Blocks
   var buildingBlock;
@@ -72,33 +82,15 @@ function renderLem(json) {
     elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}});
   }
 
-  /*
   // Stop dots
-  nextPosition = getNextPosition();
-
   for (var index in stopIDs) {
     var stopID = stopIDs[index];
     var stopNodeID = "stop" + stopID;
 
-    cy.add({group: "nodes", data: {id: stopNodeID}, style: {label:"Stop"}, position: nextPosition});
-    nextPosition = {x: 0, y: nextPosition.y + 100};
-
-    cy.add({group: "edges", data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}})
+    elements.push({data: {id: stopNodeID}, style: {label:"Stop"}},
+      {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
+    );
   }
-
-  // Start dots
-  nextPosition = {x:0, y:0};
-
-  for (var index in startIDs) {
-    var startID = startIDs[index];
-    var startNodeID = "start" + startID;
-
-    cy.add({group: "nodes", data: {id: startNodeID}, style: {label:"Start"}, position: nextPosition});
-    nextPosition = {x: 0, y: nextPosition.y + 100};
-
-    cy.add({group: "edges", data: {id: startNodeID + startID, source: startNodeID, target: startID}})
-  }
-  */
 
   // Actions
   for (var index in actions) {
