@@ -32,7 +32,7 @@ function loadNewCytoscapeWith(elements) {
         selector: 'node',
         style: {
           'background-color': '#666',
-          'label': 'data(id)'
+          'label': 'data(id)',
         }
       },
       {
@@ -80,6 +80,41 @@ function loadNewCytoscapeWith(elements) {
         selector: '.experiential',
         style: {
           'background-color': '#ef60f7'
+        }
+      },
+      {
+        selector: '.dialogue',
+        style: {
+          'background-image': '../img/Dialogue.png',
+          'background-fit': 'contain'
+        }
+      },
+      {
+        selector: '.evidence',
+        style: {
+          'background-image': '../img/Evidence.png',
+          'background-fit': 'contain'
+        }
+      },
+      {
+        selector: '.feedback',
+        style: {
+          'background-image': '../img/Feedback.png',
+          'background-fit': 'contain'
+        }
+      },
+      {
+        selector: '.information',
+        style: {
+          'background-image': '../img/information.png',
+          'background-fit': 'contain'
+        }
+      },
+      {
+        selector: '.practice',
+        style: {
+          'background-image': '../img/Practice.png',
+          'background-fit': 'contain'
         }
       },
     ],
