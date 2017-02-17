@@ -44,24 +44,36 @@ function uploadLem() {
 function renderLem(json) {
   console.log(json);
 
-  // Remove all nodes
-  cy.remove("node");
+  var elements = [];
 
-  buildingBlocks = json['lem']['building blocks'];
+  var buildingBlocks = json['lem']['building blocks'];
+  var startIDs = json['lem']['startIDs'];
+  var stopIDs = json['lem']['stopIDs'];
+  var actions = json['lem']['actions'];
+  var contexts = json['lem']['contexts'];
 
-  var nextPosition = getNextPosition();
+  // Contexts
+  var context;
+  for (var index in contexts) {
+    context = contexts[index];
+    elements.push({data: {id: context['id']}, style: {label:context['type']}});
+
+    var buildingBlock;
+    for (var index in context['building blocks']) {
+      buildingBlock = buildingBlocks[index];
+      buildingBlock.parent = context['id'];
+    }
+}
 
   // Building Blocks
-  var element;
+  var buildingBlock;
   for (var index in buildingBlocks) {
-    nextPosition = getNextPosition();
-    element = buildingBlocks[index];
-    console.log(element)
-    cy.add({group: "nodes", data: {id: element['id']}, style: {label:element['type'] + " " + element['description']}, position: nextPosition});
+    buildingBlock = buildingBlocks[index];
+    elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}});
   }
 
+  /*
   // Stop dots
-  var stopIDs = json['lem']['stopIDs'];
   nextPosition = getNextPosition();
 
   for (var index in stopIDs) {
@@ -75,7 +87,6 @@ function renderLem(json) {
   }
 
   // Start dots
-  var startIDs = json['lem']['startIDs'];
   nextPosition = {x:0, y:0};
 
   for (var index in startIDs) {
@@ -87,14 +98,17 @@ function renderLem(json) {
 
     cy.add({group: "edges", data: {id: startNodeID + startID, source: startNodeID, target: startID}})
   }
+  */
 
-  actions = json['lem']['actions'];
+  // Actions
   for (var index in actions) {
     element = actions[index];
-    cy.add({group: "edges", data: {id: element['id'], source: element['from'], target: element['to']}})
+    elements.push({data: {id: element['id'], source: element['from'], target: element['to']}});
   }
 
-  cy.fit();
+  console.log(elements);
+
+  loadNewCytoscapeWith(elements);
 }
 
 function getNextPosition() {
