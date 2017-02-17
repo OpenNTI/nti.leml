@@ -23,17 +23,17 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer",
+                "type": "integer"
               },
               "type": {
                 "type": "string",
                 "enum": ["Information", "Dialogue", "Feedback", "Practice", "Evidence"]
               },
               "description": {
-                "type": "string",
+                "type": "string"
               },
               "method": {
-                "type": "string",
+                "type": "string"
               }
             },
             "required": [
@@ -41,7 +41,7 @@
               "type",
               "method"
             ]
-          },
+          }
         },
         "contexts": {
           "type": "array",
@@ -78,7 +78,7 @@
               "id",
               "type"
             ]
-          },
+          }
         },
         "actions": {
           "type": "array",
@@ -101,7 +101,7 @@
               "from",
               "to"
             ]
-          },
+          }
         },
         "notations": {
           "type": "array",
