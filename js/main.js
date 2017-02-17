@@ -102,7 +102,27 @@ function renderLem(json) {
   if (buildingBlocks) {
     for (var index in buildingBlocks) {
       var buildingBlock = buildingBlocks[index];
-      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}});
+
+      var styleClass;
+      switch (buildingBlock['type']) {
+        case "Dialogue":
+          styleClass = "dialogue";
+          break;
+        case "Evidence":
+          styleClass = "evidence";
+          break;
+        case "Feedback":
+          styleClass = "feedback";
+          break;
+        case "Information":
+          styleClass = "information";
+          break;
+        case "Practice":
+          styleClass = "practice";
+          break;
+      }
+
+      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}, classes: styleClass});
     }
   }
 
