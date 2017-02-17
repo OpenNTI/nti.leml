@@ -32,6 +32,9 @@ function receivedText(e) {
 }
 
 var position = {x:0, y:0};
+const columns = 5;
+const xPadding = 300;
+const yPadding = 100;
 
 function uploadLem() {
   $("#fileOpener").change(loadFile);
@@ -81,11 +84,11 @@ function renderLem(json) {
 function getNextPosition() {
   var newPosition = {x: position.x, y: position.y};
 
-  if (position.x < 2000) {
-    position.x += 500
+  if (position.x < xPadding * columns) {
+    position.x += xPadding
   } else {
     position.x  = 0;
-    position.y += 500;
+    position.y += yPadding;
   }
 
   return newPosition;
