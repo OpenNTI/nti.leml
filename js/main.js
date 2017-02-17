@@ -5,6 +5,11 @@ $.getJSON("../lemSchema.json", function(schema) {
   validateLem = ajv.compile(schema);
 });
 
+$(function() {
+  $("#fileOpener").change(loadFile);
+  $("#fileOpener").onclick(function() {this.value = null;});
+});
+
 function loadFile() {
   // from http://stackoverflow.com/a/21446426/6004931
   var input, file, fr;
@@ -44,7 +49,6 @@ function receivedText(e) {
 }
 
 function uploadLem() {
-  $("#fileOpener").change(loadFile);
   $("#fileOpener").click();
 }
 
