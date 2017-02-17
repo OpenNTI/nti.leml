@@ -116,7 +116,6 @@
               }
             },
             "required": [
-              "type",
               "building block",
               "description"
             ]
