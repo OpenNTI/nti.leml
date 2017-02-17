@@ -31,7 +31,9 @@ function loadFile() {
   }
 }
 
-function readLem() {
+var position = {x:0, y:0};
+
+function uploadLem() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").click();
 }
