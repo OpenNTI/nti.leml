@@ -51,29 +51,45 @@ function renderLem(json) {
 
   var nextPosition = getNextPosition();
 
+  // Building Blocks
   var element;
-  for (index in buildingBlocks) {
+  for (var index in buildingBlocks) {
     nextPosition = getNextPosition();
     element = buildingBlocks[index];
     console.log(element)
     cy.add({group: "nodes", data: {id: element['id']}, style: {label:element['type'] + " " + element['description']}, position: nextPosition});
   }
 
+  // Stop dots
+  var stopIDs = json['lem']['stopIDs'];
+  nextPosition = getNextPosition();
+
+  for (var index in stopIDs) {
+    var stopID = stopIDs[index];
+    var stopNodeID = "stop" + stopID;
+
+    cy.add({group: "nodes", data: {id: stopNodeID}, style: {label:"Stop"}, position: nextPosition});
+    nextPosition = {x: 0, y: nextPosition.y + 100};
+
+    cy.add({group: "edges", data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}})
+  }
+
+  // Start dots
   var startIDs = json['lem']['startIDs'];
   nextPosition = {x:0, y:0};
 
-  for (index in startIDs) {
+  for (var index in startIDs) {
     var startID = startIDs[index];
     var startNodeID = "start" + startID;
 
     cy.add({group: "nodes", data: {id: startNodeID}, style: {label:"Start"}, position: nextPosition});
     nextPosition = {x: 0, y: nextPosition.y + 100};
-    
+
     cy.add({group: "edges", data: {id: startNodeID + startID, source: startNodeID, target: startID}})
   }
 
   actions = json['lem']['actions'];
-  for (index in actions) {
+  for (var index in actions) {
     element = actions[index];
     cy.add({group: "edges", data: {id: element['id'], source: element['from'], target: element['to']}})
   }
