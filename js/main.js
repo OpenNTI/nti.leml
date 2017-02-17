@@ -44,11 +44,11 @@ function renderLem(json) {
   // Remove all nodes
   cy.remove("node");
 
-  buildingBlocks = json['lem']['building blocks']
+  buildingBlocks = json['lem']['building blocks'];
+
+  var nextPosition = getNextPosition();
 
   var element;
-  var nextPosition;
-
   for (index in buildingBlocks) {
     nextPosition = getNextPosition();
     element = buildingBlocks[index];
@@ -56,6 +56,18 @@ function renderLem(json) {
     cy.add({group: "nodes", data: {id: element['id']}, style: {label:element['type'] + " " + element['description']}, position: nextPosition});
   }
 
+  var startIDs = json['lem']['startIDs'];
+  nextPosition = {x:0, y:0};
+
+  for (index in startIDs) {
+    var startID = startIDs[index];
+    var startNodeID = "start" + startID;
+
+    cy.add({group: "nodes", data: {id: startNodeID}, style: {label:"Start"}, position: nextPosition});
+    nextPosition = {x: 0, y: nextPosition.y + 100};
+    
+    cy.add({group: "edges", data: {id: startNodeID + startID, source: startNodeID, target: startID}})
+  }
 
   actions = json['lem']['actions'];
   for (index in actions) {
