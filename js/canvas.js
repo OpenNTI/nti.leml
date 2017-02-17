@@ -40,10 +40,18 @@ function loadNewCytoscapeWith(elements) {
         selector: 'edge',
         style: {
           'width': 4,
-          'line-color': '#ad1a66',
-          'target-arrow-color': '#ad1a66',
+          'line-color': '#000',
+          'target-arrow-color': '#000',
           'target-arrow-shape': 'triangle',
           'curve-style': 'bezier'
+        }
+      },
+
+      {
+        selector: '.startstop',
+        style: {
+          'background-color': '#000',
+          'label': ''
         }
       },
 

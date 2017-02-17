@@ -57,7 +57,7 @@ function renderLem(json) {
     var startID = startIDs[index];
     var startNodeID = "start" + startID;
 
-    elements.push({data: {id: startNodeID}, style: {label:"Start"}},
+    elements.push({data: {id: startNodeID}, style: {label:"Start", class:"startstop"}},
       {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
     );
   }
@@ -87,7 +87,7 @@ function renderLem(json) {
     var stopID = stopIDs[index];
     var stopNodeID = "stop" + stopID;
 
-    elements.push({data: {id: stopNodeID}, style: {label:"Stop"}},
+    elements.push({data: {id: stopNodeID}, style: {label:"Stop", class:"startstop"}},
       {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
     );
   }
@@ -101,6 +101,19 @@ function renderLem(json) {
   console.log(elements);
 
   loadNewCytoscapeWith(elements);
+
+  // Add styling classes
+
+  for (var index in startIDs) {
+    var startNodeID = "start" + startID;
+    cy.$("#" + startNodeID).addClass('startstop');
+  }
+
+  for (var index in stopIDs) {
+    var stopNodeID = "stop" + stopID;
+    cy.$("#" + stopNodeID).addClass('startstop');
+  }
+
 }
 
 function getNextPosition() {
