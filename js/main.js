@@ -23,12 +23,12 @@ function loadFile() {
     fr.onload = receivedText;
     fr.readAsText(file);
   }
+}
 
-  function receivedText(e) {
-    lines = e.target.result;
-    var newArr = JSON.parse(lines);
-    console.log(newArr);
-  }
+function receivedText(e) {
+  lines = e.target.result;
+  var lemJson = JSON.parse(lines);
+  renderLem(lemJson);
 }
 
 var position = {x:0, y:0};
@@ -36,4 +36,45 @@ var position = {x:0, y:0};
 function uploadLem() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").click();
+}
+
+function renderLem(json) {
+  console.log(json);
+
+  // Remove all nodes
+  cy.remove("node");
+
+  buildingBlocks = json['lem']['building blocks']
+
+  var element;
+  var nextPosition;
+
+  for (index in buildingBlocks) {
+    nextPosition = getNextPosition();
+    element = buildingBlocks[index];
+    console.log(element)
+    cy.add({group: "nodes", data: {id: element['id']}, style: {label:element['type'] + " " + element['description']}, position: nextPosition});
+  }
+
+
+  actions = json['lem']['actions'];
+  for (index in actions) {
+    element = actions[index];
+    cy.add({group: "edges", data: {id: element['id'], source: element['from'], target: element['to']}})
+  }
+
+  cy.fit();
+}
+
+function getNextPosition() {
+  var newPosition = {x: position.x, y: position.y};
+
+  if (position.x < 2000) {
+    position.x += 500
+  } else {
+    position.x  = 0;
+    position.y += 500;
+  }
+
+  return newPosition;
 }
