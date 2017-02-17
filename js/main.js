@@ -44,6 +44,7 @@ function uploadLem() {
 function renderLem(json) {
   console.log(json);
 
+  // Build cytoscape elements here
   var elements = [];
 
   var buildingBlocks = json['lem']['building blocks'];
@@ -51,69 +52,73 @@ function renderLem(json) {
   var stopIDs = json['lem']['stopIDs'];
   var actions = json['lem']['actions'];
   var contexts = json['lem']['contexts'];
+  var notations = json['lem']['notations'];
 
   // Start dots
-  for (var index in startIDs) {
-    var startID = startIDs[index];
-    var startNodeID = "start" + startID;
+  if (startIDs) {
+    for (var index in startIDs) {
+      var startID = startIDs[index];
+      var startNodeID = "start" + startID;
 
-    elements.push({data: {id: startNodeID}, style: {label:"Start", class:"startstop"}},
-      {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
-    );
+      elements.push({data: {id: startNodeID}, style: {label:"Start", class:"startstop"}, classes: 'startstop'},
+        {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
+      );
+    }
   }
 
   // Contexts
-  var context;
-  for (var index in contexts) {
-    context = contexts[index];
-    elements.push({data: {id: context['id']}, style: {label:context['type']}});
+  if (contexts) {
+    for (var index in contexts) {
+      var context = contexts[index];
+      elements.push({data: {id: context['id']}, style: {label:context['type']}});
 
-    var buildingBlock;
-    for (var index in context['building blocks']) {
-      buildingBlock = buildingBlocks[index];
-      buildingBlock.parent = context['id'];
+      var buildingBlock;
+      for (var index in context['building blocks']) {
+        buildingBlock = buildingBlocks[index];
+        buildingBlock.parent = context['id'];
+      }
     }
   }
 
   // Building Blocks
-  var buildingBlock;
-  for (var index in buildingBlocks) {
-    buildingBlock = buildingBlocks[index];
-    elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}});
+  if (buildingBlocks) {
+    for (var index in buildingBlocks) {
+      var buildingBlock = buildingBlocks[index];
+      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}});
+    }
   }
 
   // Stop dots
-  for (var index in stopIDs) {
-    var stopID = stopIDs[index];
-    var stopNodeID = "stop" + stopID;
+  if (stopIDs) {
+    for (var index in stopIDs) {
+      var stopID = stopIDs[index];
+      var stopNodeID = "stop" + stopID;
 
-    elements.push({data: {id: stopNodeID}, style: {label:"Stop", class:"startstop"}},
-      {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
-    );
+      elements.push({data: {id: stopNodeID}, style: {label:"Stop", class:"startstop"}, classes: 'startstop'},
+        {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
+      );
+    }
   }
 
   // Actions
-  for (var index in actions) {
-    element = actions[index];
-    elements.push({data: {id: element['id'], source: element['from'], target: element['to']}});
+  if (actions) {
+    for (var index in actions) {
+      element = actions[index];
+      elements.push({data: {id: element['id'], source: element['from'], target: element['to']}});
+    }
   }
 
-  console.log(elements);
+  // Notations
+  if (notations) {
+    for (var index in notations) {
+      var notation = notations[index];
+      elements.push({data: {id: notation['id'], style: {label: notation['description']}}},
+        {data: {id: "objectivelink" + notation['id'], source: notation['from'], target: notation['buildingBlock']}}
+      );
+    }
+  }
 
   loadNewCytoscapeWith(elements);
-
-  // Add styling classes
-
-  for (var index in startIDs) {
-    var startNodeID = "start" + startID;
-    cy.$("#" + startNodeID).addClass('startstop');
-  }
-
-  for (var index in stopIDs) {
-    var stopNodeID = "stop" + stopID;
-    cy.$("#" + stopNodeID).addClass('startstop');
-  }
-
 }
 
 function getNextPosition() {
