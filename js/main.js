@@ -105,11 +105,17 @@ function renderLem(json) {
 
       elements.push({data: {id: context['id']}, style: {label:context['type']}, classes: styleClass});
 
-      // Adds parent tags to building blocks within this context
+      // Adds parent tags to items within this context
       for (var index in context['building blocks']) {
         var buildingBlockID = context['building blocks'][index];
         var buildingBlock = buildingBlocks.filter(function (bb) { return bb.id == buildingBlockID;})[0];
         buildingBlock['parent'] = context['id'];
+      }
+
+      for (var index in context['notations']) {
+        var notationID = context['notations'][index];
+        var notation = notations.filter(function (n) { return n['building block'] == notationID;})[0];
+        notation['parent'] = context['id'];
       }
     }
   }
@@ -168,7 +174,7 @@ function renderLem(json) {
       var notation = notations[index];
       var notationID = "object" + notation['building block'];
 
-      elements.push({data: {id: notationID}, style: {label: notation['description']}},
+      elements.push({data: {id: notationID, parent: notation['parent']}, style: {label: notation['description']}},
         {data: {id: "objectivelink" + notation['id'], source: notationID, target: notation['building block']}}
       );
     }
