@@ -10,6 +10,20 @@ $.getJSON("../lemSchema.json", function(schema) {
 $(function() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").on('click', function() {this.value = null;});
+  $("#downloadPNG").on('click', function() {
+    var content = cy.png();
+
+    var dl = document.createElement('a');
+    dl.setAttribute('href', content);
+    dl.setAttribute('download', 'lem.png');
+
+    var imgTag = document.createElement('img');
+    imgTag.setAttribute('alt','LEM PNG');
+    imgTag.setAttribute('src', content)
+
+    dl.appendChild(imgTag);
+    dl.click();
+  });
 });
 
 function uploadLem() {
