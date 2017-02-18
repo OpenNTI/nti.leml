@@ -144,7 +144,7 @@ function renderLem(json) {
           break;
       }
 
-      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " " + buildingBlock['description']}, classes: styleClass});
+      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " || " + buildingBlock['description']}, classes: styleClass});
     }
   }
 
