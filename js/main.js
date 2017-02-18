@@ -61,6 +61,7 @@ function renderLem(json) {
   // Build cytoscape elements here
   var elements = [];
 
+  // Get lem parts
   var buildingBlocks = json['lem']['building blocks'];
   var startIDs = json['lem']['startIDs'];
   var stopIDs = json['lem']['stopIDs'];
@@ -104,6 +105,7 @@ function renderLem(json) {
 
       elements.push({data: {id: context['id']}, style: {label:context['type']}, classes: styleClass});
 
+      // Adds parent tags to building blocks within this context
       for (var index in context['building blocks']) {
         var buildingBlockID = context['building blocks'][index];
         var buildingBlock = buildingBlocks.filter(function (bb) { return bb.id == buildingBlockID;})[0];
