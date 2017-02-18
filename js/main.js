@@ -9,7 +9,7 @@ $.getJSON("../lemSchema.json", function(schema) {
 // Set up file input button
 $(function() {
   $("#fileOpener").change(loadFile);
-  $("#fileOpener").onclick(function() {this.value = null;});
+  $("#fileOpener").on('click', function() {this.value = null;});
 });
 
 function uploadLem() {
