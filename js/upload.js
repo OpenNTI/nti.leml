@@ -7,24 +7,46 @@ $.getJSON("../lemSchema.json", function(schema) {
 });
 
 // Set up file input button
+const ImageType = {
+  JPEG: '.jpeg',
+  PNG: '.png'
+};
+
 $(function() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").on('click', function() {this.value = null;});
+
   $("#downloadPNG").on('click', function() {
-    var content = cy.png();
+    downloadImage(ImageType.PNG);
+  });
 
-    var dl = document.createElement('a');
-    dl.setAttribute('href', content);
-    dl.setAttribute('download', 'lem.png');
-
-    var imgTag = document.createElement('img');
-    imgTag.setAttribute('alt','LEM PNG');
-    imgTag.setAttribute('src', content)
-
-    dl.appendChild(imgTag);
-    dl.click();
+  $("#downloadJPEG").on('click', function() {
+    downloadImage(ImageType.JPEG);
   });
 });
+
+function downloadImage(fileType) {
+  var content;
+
+  if (fileType == ImageType.JPEG) {
+    content = cy.jpeg();
+  } else if (fileType == ImageType.PNG) {
+    content = cy.png();
+  } else {
+    console.err("Invalid image type");
+  }
+
+  var downloadLink = $('#downloadLink')[0];
+  downloadLink.setAttribute('href', content);
+
+  var fileName = 'lem' + fileType;
+  downloadLink.setAttribute('download', fileName);
+
+  var imgTag = $('#downloadImage')[0];
+  imgTag.setAttribute('src', content);
+
+  downloadLink.click();
+}
 
 function uploadLem() {
   $("#fileOpener").click();

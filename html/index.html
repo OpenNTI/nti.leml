@@ -7,7 +7,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>LEML Project</title>
 
-
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     <!-- Bootstrap -->
@@ -65,12 +64,31 @@
             <div id="cy">
             </div>
         </div>
+
         <div class="col-md-3">
           <button type="button" class="btn btn-primary" onclick="uploadLem();">Upload LEM</button>
-          <input type="file" style="display:none" accept=".json,.lem" id="fileOpener">
-          <button type="button" class="btn btn-primary" id="downloadPNG">Download PNG</button>
+
+          <div class="dropdown show">
+            <a class="btn btn-primary dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Download as
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#" id="downloadPNG">PNG</a>
+              <a class="dropdown-item" href="#" id="downloadJPEG">JPEG</a>
+            </div>
+          </div>
+
         </div>
       </div>
+    </div>
+
+    <div style="display:none">
+      <!-- hidden div for function elements -->
+      <input type="file"  accept=".json,.lem" id="fileOpener">
+      <a id="downloadLink">
+        <img id="downloadImage" alt="LEM Image"></img>
+      </a>
     </div>
 
     <script type="text/javascript" src="../js/render.js"></script>
