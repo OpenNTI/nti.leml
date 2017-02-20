@@ -228,7 +228,7 @@ function renderLem(json) {
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info
       elements.push({data: notation, style: {label: notation['description']}},
-        {data: {id: "objectivelink" + notation['id'], source: notationID, target: notation['building block']}}
+        {data: {id: "objectivelink" + notation['id'], source: notation['id'], target: notation['building block']}}
       );
     }
   }
