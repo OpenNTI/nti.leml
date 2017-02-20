@@ -117,6 +117,30 @@ function loadNewCytoscapeWith(elements) {
           'background-fit': 'contain'
         }
       },
+      {
+        selector: '.learnerAction',
+        style: {
+          'line-style': 'solid',
+          'target-arrow-fill': 'filled',
+          'target-arrow-shape': 'triangle'
+        }
+      },
+      {
+        selector: '.facilitatorAction',
+        style: {
+          'line-style': 'dotted',
+          'target-arrow-fill': 'hollow',
+          'target-arrow-shape': 'triangle'
+        }
+      },
+      {
+        selector: '.systemAction',
+        style: {
+          'line-style': 'dashed',
+          'target-arrow-fill': 'hollow',
+          'target-arrow-shape': 'traingle-backcurve'
+        }
+      }
     ],
 
     layout: {

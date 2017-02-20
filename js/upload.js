@@ -190,7 +190,7 @@ function renderLem(json) {
       var stopID = stopIDs[index];
       var stopNodeID = "stop" + stopID;
 
-      elements.push({data: {id: stopNodeID}, style: {label:"Stop", class:"startstop"}, classes: 'startstop'},
+      elements.push({data: {id: stopNodeID}, style: {label:"Stop"}, classes: "startstop"},
         {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
       );
     }
@@ -199,8 +199,22 @@ function renderLem(json) {
   // Actions
   if (actions) {
     for (var index in actions) {
-      element = actions[index];
-      elements.push({data: {id: element['id'], source: element['from'], target: element['to']}});
+      action = actions[index];
+
+      var styleClass;
+      switch(action['type']) {
+        case "Learner Action":
+          styleClass = "learnerAction";
+          break;
+        case "Facilitator Action":
+          styleClass = "facilitatorAction";
+          break;
+        case "System Action":
+          styleClass = "systemAction";
+          break;
+      }
+
+      elements.push({data: {id: action['id'], source: action['from'], target: action['to']}, classes: styleClass});
     }
   }
 
