@@ -1,5 +1,5 @@
 {
-  "fromModelURL":"http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=B0Y1",
+  "sourceModelURL":"http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=B0Y1",
   "lem": {
     "startIDs": [1],
     "stopIDs": [3],
@@ -36,14 +36,14 @@
       {
         "id": 5,
         "type": "Learner Action",
-        "from": 1,
-        "to": 2
+        "source": 1,
+        "target": 2
       },
       {
         "id": 6,
         "type": "Learner Action",
-        "from": 2,
-        "to": 3
+        "source": 2,
+        "target": 3
       }
     ],
     "notations": []

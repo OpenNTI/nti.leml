@@ -51,38 +51,38 @@
       {
         "id": 8,
         "type": "Learner Action",
-        "from": 1,
-        "to": 2
+        "source": 1,
+        "target": 2
       },
       {
         "id": 9,
         "type": "Learner Action",
-        "from": 2,
-        "to": 3
+        "source": 2,
+        "target": 3
       },
       {
         "id": 10,
         "type": "Learner Action",
-        "from": 3,
-        "to": 4
+        "source": 3,
+        "target": 4
       },
       {
         "id": 11,
         "type": "Learner Action",
-        "from": 4,
-        "to": 6
+        "source": 4,
+        "target": 6
       },
       {
         "id": 12,
         "type": "Learner Action",
-        "from": 5,
-        "to": 4
+        "source": 5,
+        "target": 4
       },
       {
         "id": 13,
         "type": "Learner Action",
-        "from": 6,
-        "to": 7
+        "source": 6,
+        "target": 7
       }
     ],
     "contexts": [
@@ -110,6 +110,7 @@
     ],
     "notations": [
       {
+        "id":17,
         "building block": 7,
         "description": "Objective 1"
       }
