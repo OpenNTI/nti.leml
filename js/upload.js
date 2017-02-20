@@ -123,7 +123,6 @@ function renderLem(json) {
       var context = contexts[index];
 
       var styleClass;
-
       switch (context['type']) {
         case "Online Asynchronous":
           styleClass = "onlineasynchronous";
@@ -139,7 +138,8 @@ function renderLem(json) {
           break;
       }
 
-      elements.push({data: {id: context['id']}, style: {label:context['type']}, classes: styleClass});
+      // Set data to context because context already includes 'id' and all other info
+      elements.push({data: context, style: {label:context['type']}, classes: styleClass});
 
       // Adds parent tags to items within this context
       for (var index in context['building blocks']) {
@@ -180,7 +180,8 @@ function renderLem(json) {
           break;
       }
 
-      elements.push({data: {id: buildingBlock['id'], parent: buildingBlock['parent']}, style: {label:buildingBlock['type'] + " || " + buildingBlock['description']}, classes: styleClass});
+      // Set data to buildingBlock because contbuildingBlockext already includes 'id', 'parent', and all other info
+      elements.push({data: buildingBlock, style: {label:buildingBlock['type'] + " || " + buildingBlock['description']}, classes: styleClass});
     }
   }
 
@@ -214,7 +215,8 @@ function renderLem(json) {
           break;
       }
 
-      elements.push({data: {id: action['id'], source: action['from'], target: action['to']}, classes: styleClass});
+      // Set data to action because action already includes 'id', 'source', 'target', and all other info
+      elements.push({data: action, classes: styleClass});
     }
   }
 
@@ -224,8 +226,9 @@ function renderLem(json) {
       var notation = notations[index];
       var notationID = "object" + notation['building block'];
 
-      elements.push({data: {id: notationID, parent: notation['parent']}, style: {label: notation['description']}},
-        {data: {id: "objectivelink" + notation['id'], source: notationID, target: notation['building block']}}
+      // Set data to notation because notation already includes 'id', 'parent, and all other info
+      elements.push({data: notation, style: {label: notation['description']}},
+        {data: {id: "objectivelink" + notation['id'], source: notation['id'], target: notation['building block']}}
       );
     }
   }
