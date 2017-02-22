@@ -40,14 +40,23 @@ function loadNewCytoscapeWith(elements) {
         style: {
           'text-valign':'center',
           'text-halign':'center',
-          'text-wrap': 'wrap'
+          'text-wrap': 'wrap',
+          'shape': 'roundrectangle',
+          'width': 150,
+          'height': 90,
+          'background-fit': 'contain',
+          'background-color':'#fff',
+          'border-color':'#000',
+          'border-width': 2,
+          'border-opacity': 0.5
         }
       },
       {
         selector: '.context',
         style: {
           'text-valign':'top',
-          'text-halign':'center'
+          'text-halign':'center',
+          'shape': 'roundrectangle'
         }
       },
       {
@@ -76,60 +85,59 @@ function loadNewCytoscapeWith(elements) {
       {
         selector: '.onlineasynchronous',
         style: {
-          'background-color': '#42d1f4'
+          'background-color': '#42d1f4',
+          'color': '#3872d1'
         }
       },
       {
         selector: '.onlinesynchronous',
         style: {
-          'background-color': '#41f258'
+          'background-color': '#41f258',
+          'color': '#35c649'
         }
       },
       {
         selector: '.classroom',
         style: {
-          'background-color': '#f1ef40'
+          'background-color': '#f1ef40',
+          'color': '#cecc33'
         }
       },
       {
         selector: '.experiential',
         style: {
-          'background-color': '#ef60f7'
+          'background-color': '#ef60f7',
+          'color': '#b647bc'
         }
       },
       {
         selector: '.dialogue',
         style: {
-          'background-image': '../img/Dialogue.png',
-          'background-fit': 'contain'
+          'background-image': '../img/Dialogue.png'
         }
       },
       {
         selector: '.evidence',
         style: {
-          'background-image': '../img/Evidence.png',
-          'background-fit': 'contain'
+          'background-image': '../img/Evidence.png'
         }
       },
       {
         selector: '.feedback',
         style: {
-          'background-image': '../img/Feedback.png',
-          'background-fit': 'contain'
+          'background-image': '../img/Feedback.png'
         }
       },
       {
         selector: '.information',
         style: {
-          'background-image': '../img/information.png',
-          'background-fit': 'contain'
+          'background-image': '../img/information.png'
         }
       },
       {
         selector: '.practice',
         style: {
-          'background-image': '../img/Practice.png',
-          'background-fit': 'contain'
+          'background-image': '../img/Practice.png'
         }
       },
       {
