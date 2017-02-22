@@ -63,7 +63,7 @@ function loadNewCytoscapeWith(elements) {
           'text-halign':'center',
           'text-wrap': 'wrap',
           'shape': 'roundrectangle',
-          'width': 80,
+          'width': 'label',
           'height': 45,
           'background-fit': 'contain',
           'background-color':'#fff',
