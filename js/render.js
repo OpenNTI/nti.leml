@@ -32,6 +32,31 @@ function loadNewCytoscapeWith(elements) {
         }
       },
       {
+        selector: 'edge',
+        style: {
+          'width': 4,
+          'line-color': '#000',
+          'target-arrow-color': '#000',
+          'target-arrow-shape': 'triangle',
+          'curve-style': 'bezier'
+        }
+      },
+      {
+        selector: '.notation',
+        style: {
+          'text-valign':'center',
+          'text-halign':'center',
+          'width': 45,
+          'height': 10,
+          'shape': 'ellipse',
+          'background-color':'#fff',
+          'border-color':'#000',
+          'border-width': 2,
+          'border-opacity': 0.9,
+          'padding': 30
+        }
+      },
+      {
         selector: '.buildingBlock',
         style: {
           'text-valign':'center',
@@ -55,16 +80,6 @@ function loadNewCytoscapeWith(elements) {
           'text-halign':'center',
           'shape': 'roundrectangle',
           'padding': 20
-        }
-      },
-      {
-        selector: 'edge',
-        style: {
-          'width': 4,
-          'line-color': '#000',
-          'target-arrow-color': '#000',
-          'target-arrow-shape': 'triangle',
-          'curve-style': 'bezier'
         }
       },
       {
@@ -160,6 +175,13 @@ function loadNewCytoscapeWith(elements) {
           'line-style': 'dashed',
           'target-arrow-fill': 'hollow',
           'target-arrow-shape': 'traingle-backcurve'
+        }
+      },
+      {
+        selector: '.notationEdge',
+        style: {
+          'line-style': 'dashed',
+          'target-arrow-shape': 'none'
         }
       }
     ],
