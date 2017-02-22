@@ -197,6 +197,10 @@ function loadNewCytoscapeWith(elements) {
     minZoom: 0.05,
     maxZoom: 5
   });
+
+  cy.snapToGrid();
+  cy.snapToGrid('snapOn');
+  cy.snapToGrid('gridOn');
 }
 
 $(loadNewCytoscapeWith(defaultElements));
