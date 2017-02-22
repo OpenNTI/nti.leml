@@ -36,6 +36,21 @@ function loadNewCytoscapeWith(elements) {
         }
       },
       {
+        selector: '.buildingBlock',
+        style: {
+          'text-valign':'center',
+          'text-halign':'center',
+          'text-wrap': 'wrap'
+        }
+      },
+      {
+        selector: '.context',
+        style: {
+          'text-valign':'top',
+          'text-halign':'center'
+        }
+      },
+      {
         selector: 'edge',
         style: {
           'width': 4,

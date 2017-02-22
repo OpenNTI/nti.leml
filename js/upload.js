@@ -138,8 +138,10 @@ function renderLem(json) {
           break;
       }
 
+      var classes = styleClass + " context";
+
       // Set data to context because context already includes 'id' and all other info
-      elements.push({data: context, style: {label:context['type']}, classes: styleClass});
+      elements.push({data: context, style: {label:context['type']}, classes: classes});
 
       // Adds parent tags to items within this context
       for (var index in context['building blocks']) {
@@ -180,8 +182,10 @@ function renderLem(json) {
           break;
       }
 
+      var classes = styleClass + " buildingBlock";
+
       // Set data to buildingBlock because contbuildingBlockext already includes 'id', 'parent', and all other info
-      elements.push({data: buildingBlock, style: {label:buildingBlock['type'] + " || " + buildingBlock['description']}, classes: styleClass});
+      elements.push({data: buildingBlock, style: {label:buildingBlock['type'] + " \n\n\n " + buildingBlock['description']}, classes: classes});
     }
   }
 
