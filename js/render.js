@@ -21,10 +21,6 @@ function loadNewCytoscapeWith(elements) {
 
     container: document.getElementById('cy'), // container to render in
 
-    layout: {
-      name: 'cose-bilkent'
-    },
-
     elements: elements,
 
     style: [ // the stylesheet for the graph
@@ -169,9 +165,13 @@ function loadNewCytoscapeWith(elements) {
     ],
 
     layout: {
-      name: 'grid',
-      rows: 1
+      // https://github.com/cytoscape/cytoscape.js-dagre
+      name: 'dagre',
+      rankDir: 'LR',
+      avoidOverlap: true,
+      avoidOverlapPadding: 40
     },
+
     minZoom: 0.05,
     maxZoom: 5
   });
