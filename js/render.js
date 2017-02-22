@@ -183,6 +183,13 @@ function loadNewCytoscapeWith(elements) {
           'line-style': 'dashed',
           'target-arrow-shape': 'none'
         }
+      },
+      {
+        selector: '.selected',
+        style: {
+          'border-color': 'red',
+          'border-width': 5
+        }
       }
     ],
 
@@ -195,13 +202,23 @@ function loadNewCytoscapeWith(elements) {
     },
 
     minZoom: 0.25,
-    maxZoom: 5
+    maxZoom: 5,
+    selectionType: 'single',
+    autounselectify: false,
 
   });
 
   cy.snapToGrid();
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
+
+  cy.on('select', 'node', function() {
+    this.addClass('selected');
+  });
+
+  cy.on('unselect', 'node', function() {
+    this.removeClass('selected');
+  });
 }
 
 $(loadNewCytoscapeWith(defaultElements));
