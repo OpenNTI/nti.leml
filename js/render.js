@@ -42,13 +42,14 @@ function loadNewCytoscapeWith(elements) {
           'text-halign':'center',
           'text-wrap': 'wrap',
           'shape': 'roundrectangle',
-          'width': 150,
-          'height': 90,
+          'width': 80,
+          'height': 45,
           'background-fit': 'contain',
           'background-color':'#fff',
           'border-color':'#000',
           'border-width': 2,
-          'border-opacity': 0.5
+          'border-opacity': 0.5,
+          'padding': 30
         }
       },
       {
@@ -56,7 +57,8 @@ function loadNewCytoscapeWith(elements) {
         style: {
           'text-valign':'top',
           'text-halign':'center',
-          'shape': 'roundrectangle'
+          'shape': 'roundrectangle',
+          'padding': 20
         }
       },
       {
