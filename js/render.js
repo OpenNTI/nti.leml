@@ -194,8 +194,9 @@ function loadNewCytoscapeWith(elements) {
       avoidOverlapPadding: 40
     },
 
-    minZoom: 0.05,
+    minZoom: 0.25,
     maxZoom: 5
+
   });
 
   cy.snapToGrid();
