@@ -146,8 +146,9 @@ function loadNewCytoscapeWith(elements) {
     layout: {
       name: 'grid',
       rows: 1
-    }
-
+    },
+    minZoom: 0.05,
+    maxZoom: 5
   });
 }
 
