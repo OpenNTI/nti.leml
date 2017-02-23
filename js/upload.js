@@ -51,16 +51,12 @@ function downloadImage(fileType) {
 function downloadLemJson() {
   var lemJson = generateJson();
 
-  console.log(lemJson);
-
   var content = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lemJson));
 
-  console.log(content);
-
-  var downloadLink = $('#downloadJSONLink')[0];
+  var downloadLink = $('#downloadLink')[0];
   downloadLink.setAttribute('href', content);
 
-  var fileName = 'lem.json';
+  var fileName = 'model.lem';
   downloadLink.setAttribute('download', fileName);
 
   downloadLink.click();
@@ -105,7 +101,7 @@ function receivedText(e) {
   if (validateLem(lemJson)) {
     renderLem(lemJson);
   } else {
-    console.err('JSON not valide for LEM schema')
+    console.error('JSON not valid for LEM schema');
     console.log(ajv.errors);
   }
 }
@@ -269,7 +265,10 @@ function generateJson() {
   var nodes = elements.nodes;
 
   edges.map(function(edge) {
-    lem.actions.push(edge.data);
+    var id = edge.data.id;
+    if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
+      lem.actions.push(edge.data);
+    }
   });
 
   nodes.map(function(node) {
@@ -292,5 +291,13 @@ function generateJson() {
   });
 
   var json = {lem: lem};
-  return json;
+
+  if (validateLem(json)) {
+    return json;
+  } else {
+    console.error('JSON not valid for LEM schema');
+    console.log(ajv.errors);
+
+    return null;
+  }
 }
