@@ -29,4 +29,4 @@ for lem in Lem.objects:
 	for notation in lem.notations:
 		print("Building Block: %d, Description: %s" % (notation.building_block, notation.description))
 
-db.drop_database("temp")
+#db.drop_database("temp")
