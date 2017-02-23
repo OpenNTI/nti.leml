@@ -1,23 +1,23 @@
 {
   "sourceModelURL":"http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=B0Y1",
   "lem": {
-    "startIDs": ["1"],
-    "stopIDs": ["3"],
+    "startIDs": [1],
+    "stopIDs": [3],
     "building blocks": [
         {
-          "id":"1",
+          "id":1,
           "type": "Information",
           "description": "Demonstration",
           "method": "Video"
         },
         {
-          "id": "2",
+          "id": 2,
           "type": "Practice",
           "description": "Application Exercise",
           "method": "Assignment"
         },
         {
-          "id": "3",
+          "id": 3,
           "type": "Dialogue",
           "description": "Lessons Learned",
           "method": "Discussion"
@@ -25,25 +25,25 @@
     ],
     "contexts": [
       {
-        "id": "4",
+        "id": 4,
         "type": "Online Asynchronous",
-        "building blocks": ["1","2","3"],
-        "actions": ["5","6"],
+        "building blocks": [1,2,3],
+        "actions": [5,6],
         "notations": []
       }
     ],
     "actions": [
       {
-        "id": "5",
+        "id": 5,
         "type": "Learner Action",
-        "source": "1",
-        "target": "2"
+        "source": 1,
+        "target": 2
       },
       {
-        "id": "6",
+        "id": 6,
         "type": "Learner Action",
-        "source": "2",
-        "target": "3"
+        "source": 2,
+        "target": 3
       }
     ],
     "notations": []
