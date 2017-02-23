@@ -16,15 +16,14 @@ class Context(EmbeddedDocument):
 	id = IntField(required=True, unique=True)
 	context_type = StringField(required=True, choices=CONTEXT_TYPE)
 	building_blocks = ListField(IntField())
-	actions = ListField(IntField())
 	notations = ListField(IntField())
 
 # Action Model
 class Action(EmbeddedDocument):
 	id = IntField(required=True, unique=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
-	arrow_tail = IntField(required=True)
-	arrow_head = IntField(required=True)
+	source = IntField(required=True)
+	target = IntField(required=True)
 
 # Notation Model
 class Notation(EmbeddedDocument):
