@@ -1,47 +1,47 @@
 {
   "fromModelURL": "http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=JQ41",
   "lem": {
-    "startIDs": ["1"],
-    "stopIDs": ["7"],
+    "startIDs": [1],
+    "stopIDs": [7],
     "building blocks": [
       {
-        "id":"1",
+        "id":1,
         "type": "Information",
         "description": "Topic Overview",
         "method": "HTML File"
       },
       {
-        "id": "2",
+        "id": 2,
         "type": "Information",
         "description": "Topic Concept Presentation",
         "method": "Video"
       },
       {
-        "id": "3",
+        "id": 3,
         "type": "Information",
         "description": "Skill Demonstration",
         "method": "Video"
       },
       {
-        "id": "4",
+        "id":4,
         "type": "Practice",
         "description": "Problem Set",
         "method": "Group Project Work"
       },
       {
-        "id": "5",
+        "id": 5,
         "type": "Feedback",
         "description": "Feedback on Problem Sets",
         "method": "Peer Feedback"
       },
       {
-        "id": "6",
+        "id": 6,
         "type": "Dialogue",
         "description": "Reflection Discussion",
         "method": "Discussion"
       },
       {
-        "id": "7",
+        "id": 7,
         "type": "Evidence",
         "description": "Individual Problem Set",
         "method": "Dropbox"
@@ -49,69 +49,69 @@
     ],
     "actions": [
       {
-        "id": "8",
+        "id": 8,
         "type": "Learner Action",
-        "source": "1",
-        "target": "2"
+        "source": 1,
+        "target": 2
       },
       {
-        "id": "9",
+        "id": 9,
         "type": "Learner Action",
-        "source": "2",
-        "target": "3"
+        "source": 2,
+        "target": 3
       },
       {
-        "id": "10",
+        "id": 10,
         "type": "Learner Action",
-        "source": "3",
-        "target": "4"
+        "source": 3,
+        "target": 4
       },
       {
-        "id": "11",
+        "id": 11,
         "type": "Learner Action",
-        "source": "4",
-        "target": "6"
+        "source": 4,
+        "target": 6
       },
       {
-        "id": "12",
+        "id": 12,
         "type": "Learner Action",
-        "source": "5",
-        "target": "4"
+        "source": 5,
+        "target": 4
       },
       {
-        "id": "13",
+        "id": 13,
         "type": "Learner Action",
-        "source": "6",
-        "target": "7"
+        "source": 6,
+        "target": 7
       }
     ],
     "contexts": [
       {
-        "id": "14",
+        "id": 14,
         "type": "Online Asynchronous",
-        "building blocks": ["1","2","3"],
+        "building blocks": [1,2,3],
         "actions": [],
         "notations": []
       },
       {
-        "id": "15",
+        "id": 15,
         "type": "Classroom",
-        "building blocks": ["4","5"],
+        "building blocks": [4,5],
         "actions": [],
         "notations": []
       },
       {
-        "id": "16",
+        "id": 16,
         "type": "Online Asynchronous",
-        "building blocks": ["6","7"],
+        "building blocks": [6,7],
         "actions": [],
         "notations": []
       }
     ],
     "notations": [
       {
-        "id":"17",
-        "building block": "7",
+        "id":17,
+        "building block": 7,
         "description": "Objective 1"
       }
     ]
