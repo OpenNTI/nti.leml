@@ -5,3 +5,12 @@
   display: block;
   border: 1px solid lightgray;
 }
+
+#dd_pane {
+	width: 75%;
+	height: 15%;
+	bottom: 0;
+	position: fixed;
+  	display: block;
+  	border: 1px solid lightgray;
+}

@@ -1,19 +1,19 @@
 var cy;
 var defaultElements = [ // list of graph elements to start with
-  { // node a
-    data: { id: 'a' }
-  },
-  { // node b
-    data: { id: 'b' }
-  },
-  { data: { id: 'c' } },
-  { data: { id: 'c:c', parent: 'c' } },
-  { data: { id: 'c:d', parent: 'c' } },
-  { data: { id: 'c:e', parent: 'c' } },
-  { data: { id: 'c:f', parent: 'c' } },
-  { // edge ab
-    data: { id: 'ab', source: 'a', target: 'b' }
-  }
+  // { // node a
+  //   data: { id: 'a' }
+  // },
+  // { // node b
+  //   data: { id: 'b' }
+  // },
+  // { data: { id: 'c' } },
+  // { data: { id: 'c:c', parent: 'c' } },
+  // { data: { id: 'c:d', parent: 'c' } },
+  // { data: { id: 'c:e', parent: 'c' } },
+  // { data: { id: 'c:f', parent: 'c' } },
+  // { // edge ab
+  //   data: { id: 'ab', source: 'a', target: 'b' }
+  // }
 ];
 
 function loadNewCytoscapeWith(elements) {
@@ -63,7 +63,7 @@ function loadNewCytoscapeWith(elements) {
           'text-halign':'center',
           'text-wrap': 'wrap',
           'shape': 'roundrectangle',
-          'width': 80,
+          'width': 'label',
           'height': 45,
           'background-fit': 'contain',
           'background-color':'#fff',
@@ -183,6 +183,13 @@ function loadNewCytoscapeWith(elements) {
           'line-style': 'dashed',
           'target-arrow-shape': 'none'
         }
+      },
+      {
+        selector: '.selected',
+        style: {
+          'border-color': 'red',
+          'border-width': 5
+        }
       }
     ],
 
@@ -194,9 +201,43 @@ function loadNewCytoscapeWith(elements) {
       avoidOverlapPadding: 40
     },
 
-    minZoom: 0.05,
-    maxZoom: 5
+    minZoom: 0.25,
+    maxZoom: 5,
+    selectionType: 'single',
+    autounselectify: false,
+
   });
+
+  cy.snapToGrid();
+  cy.snapToGrid('snapOn');
+  cy.snapToGrid('gridOn');
+
+  cy.on('select', 'node', function() {
+    this.addClass('selected');
+  });
+
+  cy.on('unselect', 'node', function() {
+    this.removeClass('selected');
+  });
+
+  cy.on('cxttap', 'node', function(evt) {
+    for (index in cy.elements()) {
+      ele = cy.elements()[index];
+      if (ele.selected()) {
+        if (ele.json()['classes'].includes("buildingBlock")) {
+          if (ele.id() != this.id()) {
+            cy.add([{group: "edges", data: {id: new_id, source: ele.id(), target: this.id()}}]);
+            new_id = new_id + 1;
+            break;
+          }
+        }
+      }
+    }
+  });
+
+  cy.on('cxttap', 'edge', function(evt) {
+    cy.remove(this);
+  })
 }
 
 $(loadNewCytoscapeWith(defaultElements));
