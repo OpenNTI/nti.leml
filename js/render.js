@@ -226,7 +226,7 @@ function loadNewCytoscapeWith(elements) {
       if (ele.selected()) {
         if (ele.json()['classes'].includes("buildingBlock")) {
           if (ele.id() != this.id()) {
-            cy.add([{group: "edges", data: {id: new_id, source: ele.id(), target: this.id()}}]);
+            cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: ele.id(), target: this.id()}}]);
             new_id = new_id + 1;
             break;
           } else {
