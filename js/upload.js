@@ -124,7 +124,7 @@ function renderLem(json) {
       var startID = startIDs[index];
       var startNodeID = "start" + startID;
 
-      elements.push({data: {id: startNodeID}, style: {label:"Start", class:"startstop"}, classes: 'startstop'},
+      elements.push({data: {id: startNodeID, start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'},
         {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
       );
     }
@@ -177,7 +177,7 @@ function renderLem(json) {
       var stopID = stopIDs[index];
       var stopNodeID = "stop" + stopID;
 
-      elements.push({data: {id: stopNodeID}, style: {label:"Stop"}, classes: "startstop"},
+      elements.push({data: {id: stopNodeID, start: false}, style: {label:"Stop"}, classes: "startstop"},
         {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
       );
     }
@@ -221,8 +221,8 @@ function generateJson() {
   var nodes = elements.nodes;
 
   edges.map(function(edge) {
-    var classes = edge.classes;
-    if (!(classes.includes("startstart") || classes.includes("notation"))) {
+    var id = edge.data.id;
+    if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
       convertIdToInt(edge.data);
       lem.actions.push(edge.data);
     }
@@ -266,6 +266,14 @@ function convertIdToInt(object) {
   if (!object.id) {
     console.error("Object passed to convertIdToInt did not have id");
   } else {
-    object.data.id = object.data.id * 1;
+    object.id = object.id * 1;
+  }
+
+  if (object.source) {
+    object.source = object.source * 1;
+  }
+
+  if (object.target) {
+    object.target = object.target * 1;
   }
 }
