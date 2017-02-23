@@ -1,19 +1,19 @@
 var cy;
 var defaultElements = [ // list of graph elements to start with
-  { // node a
-    data: { id: 'a' }
-  },
-  { // node b
-    data: { id: 'b' }
-  },
-  { data: { id: 'c' } },
-  { data: { id: 'c:c', parent: 'c' } },
-  { data: { id: 'c:d', parent: 'c' } },
-  { data: { id: 'c:e', parent: 'c' } },
-  { data: { id: 'c:f', parent: 'c' } },
-  { // edge ab
-    data: { id: 'ab', source: 'a', target: 'b' }
-  }
+  // { // node a
+  //   data: { id: 'a' }
+  // },
+  // { // node b
+  //   data: { id: 'b' }
+  // },
+  // { data: { id: 'c' } },
+  // { data: { id: 'c:c', parent: 'c' } },
+  // { data: { id: 'c:d', parent: 'c' } },
+  // { data: { id: 'c:e', parent: 'c' } },
+  // { data: { id: 'c:f', parent: 'c' } },
+  // { // edge ab
+  //   data: { id: 'ab', source: 'a', target: 'b' }
+  // }
 ];
 
 function loadNewCytoscapeWith(elements) {
@@ -219,6 +219,22 @@ function loadNewCytoscapeWith(elements) {
   cy.on('unselect', 'node', function() {
     this.removeClass('selected');
   });
+
+  cy.on('tapstart', 'node', function(evt) {
+    for (index in cy.elements()) {
+      ele = cy.elements()[index];
+      if (ele.selected()) {
+        if (ele.id() != this.id()) {
+          cy.add([{group: "edges", data: {id: new_id, source: ele.id(), target: this.id()}}]);
+          new_id = new_id + 1;
+        }
+      }
+    }
+  });
+
+  cy.on('cxttap', 'edge', function(evt) {
+    cy.remove(this);
+  })
 }
 
 $(loadNewCytoscapeWith(defaultElements));
