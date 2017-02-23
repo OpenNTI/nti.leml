@@ -107,18 +107,16 @@ function receivedText(e) {
 }
 
 function renderLem(json) {
-  console.log(json);
-
   // Build cytoscape elements here
   var elements = [];
 
   // Get lem parts
-  var buildingBlocks = json['lem']['building blocks'];
-  var startIDs = json['lem']['startIDs'];
-  var stopIDs = json['lem']['stopIDs'];
-  var actions = json['lem']['actions'];
-  var contexts = json['lem']['contexts'];
-  var notations = json['lem']['notations'];
+  var buildingBlocks = json.lem.building_blocks;
+  var startIDs = json.lem.startIDs;
+  var stopIDs = json.lem.stopIDs;
+  var actions = json.lem.actions;
+  var contexts = json.lem.contexts;
+  var notations = json.lem.notations;
 
   // Start dots
   if (startIDs) {
@@ -137,38 +135,24 @@ function renderLem(json) {
     for (var index in contexts) {
       var context = contexts[index];
 
-      var styleClass;
-      switch (context['type']) {
-        case "Online Asynchronous":
-          styleClass = "onlineasynchronous";
-          break;
-        case "Online Synchronous":
-          styleClass = "onlinesynchronous";
-          break;
-        case "Classroom":
-          styleClass = "classroom";
-          break;
-        case "Experiential":
-          styleClass = "experiential";
-          break;
-      }
+      var styleClass = context.context_type.replace(" ", "_");
 
       var classes = styleClass + " context";
 
       // Set data to context because context already includes 'id' and all other info
-      elements.push({data: context, style: {label:context['type']}, classes: classes});
+      elements.push({data: context, style: {label: context.context_type}, classes: classes});
 
       // Adds parent tags to items within this context
-      for (var index in context['building blocks']) {
-        var buildingBlockID = context['building blocks'][index];
+      for (var index in context.building_blocks) {
+        var buildingBlockID = context.building_blocks[index];
         var buildingBlock = buildingBlocks.filter(function (bb) { return bb.id == buildingBlockID;})[0];
-        buildingBlock['parent'] = context['id'];
+        buildingBlock.parent = context.id;
       }
 
-      for (var index in context['notations']) {
-        var notationID = context['notations'][index];
-        var notation = notations.filter(function (n) { return n['building block'] == notationID;})[0];
-        notation['parent'] = context['id'];
+      for (var index in context.notations) {
+        var notationID = context.notations[index];
+        var notation = notations.filter(function (n) { return n.building_block == notationID;})[0];
+        notation.parent = context.id;
       }
     }
   }
@@ -178,29 +162,12 @@ function renderLem(json) {
     for (var index in buildingBlocks) {
       var buildingBlock = buildingBlocks[index];
 
-      var styleClass;
-      switch (buildingBlock['type']) {
-        case "Dialogue":
-          styleClass = "dialogue";
-          break;
-        case "Evidence":
-          styleClass = "evidence";
-          break;
-        case "Feedback":
-          styleClass = "feedback";
-          break;
-        case "Information":
-          styleClass = "information";
-          break;
-        case "Practice":
-          styleClass = "practice";
-          break;
-      }
+      var styleClass = buildingBlock.block_type.replace(" ", "_");
 
       var classes = styleClass + " buildingBlock";
 
       // Set data to buildingBlock because contbuildingBlockext already includes 'id', 'parent', and all other info
-      elements.push({data: buildingBlock, style: {label:buildingBlock['type'] + " \n\n\n\n " + buildingBlock['description']}, classes: classes});
+      elements.push({data: buildingBlock, style: {label:buildingBlock.block_type + " \n\n\n\n " + buildingBlock.description}, classes: classes});
     }
   }
 
@@ -221,18 +188,7 @@ function renderLem(json) {
     for (var index in actions) {
       action = actions[index];
 
-      var styleClass;
-      switch(action['type']) {
-        case "Learner Action":
-          styleClass = "learnerAction";
-          break;
-        case "Facilitator Action":
-          styleClass = "facilitatorAction";
-          break;
-        case "System Action":
-          styleClass = "systemAction";
-          break;
-      }
+      var styleClass = action.action_type.replace(" ", "_");
 
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
       elements.push({data: action, classes: styleClass});
@@ -243,11 +199,11 @@ function renderLem(json) {
   if (notations) {
     for (var index in notations) {
       var notation = notations[index];
-      var notationID = "object" + notation['building block'];
+      var notationID = "object" + notation.building_block;
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info
-      elements.push({data: notation, style: {label: notation['description']}, classes: "notation"},
-        {data: {id: "objectivelink" + notation['id'], source: notation['id'], target: notation['building block']}, classes: 'notationEdge'}
+      elements.push({data: notation, style: {label: notation.description}, classes: "notation"},
+        {data: {id: "objectivelink" + notation.id, source: notation.id, target: notation.building_block}, classes: 'notationEdge'}
       );
     }
   }
@@ -258,9 +214,9 @@ function renderLem(json) {
 }
 
 function generateJson() {
-  var lem = {contexts: [], 'building blocks': [], notations: [], actions: [], startIDs: [], stopIDs: []};
+  var lem = {contexts: [], building_blocks: [], notations: [], actions: [], startIDs: [], stopIDs: []};
 
-  var elements = cy.json()['elements'];
+  var elements = cy.json().elements;
   var edges = elements.edges;
   var nodes = elements.nodes;
 
@@ -287,7 +243,7 @@ function generateJson() {
       }
     } else if (node.classes.includes("buildingBlock")) {
         convertIdToInt(node.data);
-        lem['building blocks'].push(node.data);
+        lem.building_blocks.push(node.data);
     } else if (node.classes.includes("notation")) {
         convertIdToInt(node.data);
         lem.notations.push(node.data);

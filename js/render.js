@@ -96,65 +96,65 @@ function loadNewCytoscapeWith(elements) {
         }
       },
       {
-        selector: '.onlineasynchronous',
+        selector: '.Online_Asynchronous',
         style: {
           'background-color': '#42d1f4',
           'color': '#3872d1'
         }
       },
       {
-        selector: '.onlinesynchronous',
+        selector: '.Online_Synchronous',
         style: {
           'background-color': '#41f258',
           'color': '#35c649'
         }
       },
       {
-        selector: '.classroom',
+        selector: '.Classroom',
         style: {
           'background-color': '#f1ef40',
           'color': '#cecc33'
         }
       },
       {
-        selector: '.experiential',
+        selector: '.Experiential',
         style: {
           'background-color': '#ef60f7',
           'color': '#b647bc'
         }
       },
       {
-        selector: '.dialogue',
+        selector: '.Dialogue',
         style: {
           'background-image': '../img/Dialogue.png'
         }
       },
       {
-        selector: '.evidence',
+        selector: '.Evidence',
         style: {
           'background-image': '../img/Evidence.png'
         }
       },
       {
-        selector: '.feedback',
+        selector: '.Feedback',
         style: {
           'background-image': '../img/Feedback.png'
         }
       },
       {
-        selector: '.information',
+        selector: '.Information',
         style: {
           'background-image': '../img/information.png'
         }
       },
       {
-        selector: '.practice',
+        selector: '.Practice',
         style: {
           'background-image': '../img/Practice.png'
         }
       },
       {
-        selector: '.learnerAction',
+        selector: '.Learner_Action',
         style: {
           'line-style': 'solid',
           'target-arrow-fill': 'filled',
@@ -162,7 +162,7 @@ function loadNewCytoscapeWith(elements) {
         }
       },
       {
-        selector: '.facilitatorAction',
+        selector: '.Facilitator_Action',
         style: {
           'line-style': 'dotted',
           'target-arrow-fill': 'hollow',
@@ -170,7 +170,7 @@ function loadNewCytoscapeWith(elements) {
         }
       },
       {
-        selector: '.systemAction',
+        selector: '.System_Action',
         style: {
           'line-style': 'dashed',
           'target-arrow-fill': 'hollow',
