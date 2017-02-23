@@ -122,22 +122,8 @@ function renderLem(json) {
     for (var index in contexts) {
       var context = contexts[index];
 
-      var styleClass;
-      switch (context['type']) {
-        case "Online Asynchronous":
-          styleClass = "onlineasynchronous";
-          break;
-        case "Online Synchronous":
-          styleClass = "onlinesynchronous";
-          break;
-        case "Classroom":
-          styleClass = "classroom";
-          break;
-        case "Experiential":
-          styleClass = "experiential";
-          break;
-      }
-
+      var styleClass = context.type.replace(" ", "_");
+      
       var classes = styleClass + " context";
 
       // Set data to context because context already includes 'id' and all other info
@@ -163,24 +149,7 @@ function renderLem(json) {
     for (var index in buildingBlocks) {
       var buildingBlock = buildingBlocks[index];
 
-      var styleClass;
-      switch (buildingBlock['type']) {
-        case "Dialogue":
-          styleClass = "dialogue";
-          break;
-        case "Evidence":
-          styleClass = "evidence";
-          break;
-        case "Feedback":
-          styleClass = "feedback";
-          break;
-        case "Information":
-          styleClass = "information";
-          break;
-        case "Practice":
-          styleClass = "practice";
-          break;
-      }
+      var styleClass = buildingBlock.type.replace(" ", "_");
 
       var classes = styleClass + " buildingBlock";
 
@@ -206,18 +175,7 @@ function renderLem(json) {
     for (var index in actions) {
       action = actions[index];
 
-      var styleClass;
-      switch(action['type']) {
-        case "Learner Action":
-          styleClass = "learnerAction";
-          break;
-        case "Facilitator Action":
-          styleClass = "facilitatorAction";
-          break;
-        case "System Action":
-          styleClass = "systemAction";
-          break;
-      }
+      var styleClass = action.type.replace(" ", "_");
 
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
       elements.push({data: action, classes: styleClass});
