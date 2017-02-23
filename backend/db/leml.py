@@ -6,14 +6,14 @@ ACTION_TYPE = ("Learner Action", "Facilitator Action", "System Action")
 
 # Block Model
 class Block(EmbeddedDocument):
-	id = IntField(required=True, unique=True)
+	id = IntField(required=True)
 	block_type = StringField(required=True, choices=BLOCK_TYPE)
 	description = StringField()
 	method = StringField(required=True)
 
 # Context Model
 class Context(EmbeddedDocument):
-	id = IntField(required=True, unique=True)
+	id = IntField(required=True)
 	context_type = StringField(required=True, choices=CONTEXT_TYPE)
 	building_blocks = ListField(IntField())
 	actions = ListField(IntField())
@@ -21,7 +21,7 @@ class Context(EmbeddedDocument):
 
 # Action Model
 class Action(EmbeddedDocument):
-	id = IntField(required=True, unique=True)
+	id = IntField(required=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
 	arrow_tail = IntField(required=True)
 	arrow_head = IntField(required=True)
