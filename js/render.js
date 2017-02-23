@@ -220,13 +220,14 @@ function loadNewCytoscapeWith(elements) {
     this.removeClass('selected');
   });
 
-  cy.on('tapstart', 'node', function(evt) {
+  cy.on('cxttap', 'node', function(evt) {
     for (index in cy.elements()) {
       ele = cy.elements()[index];
       if (ele.selected()) {
         if (ele.id() != this.id()) {
           cy.add([{group: "edges", data: {id: new_id, source: ele.id(), target: this.id()}}]);
           new_id = new_id + 1;
+          break;
         }
       }
     }
