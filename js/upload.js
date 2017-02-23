@@ -265,27 +265,31 @@ function generateJson() {
   var nodes = elements.nodes;
 
   edges.map(function(edge) {
-    var id = edge.data.id;
-    if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
+    var classes = edge.classes;
+    if (!(classes.includes("startstart") || classes.includes("notation"))) {
+      convertIdToInt(edge.data);
       lem.actions.push(edge.data);
     }
   });
 
   nodes.map(function(node) {
     if (node.classes.includes("context")) {
+        convertIdToInt(node.data);
         lem.contexts.push(node.data);
     } else if (node.classes.includes("startstop")) {
       var id = node.data.id;
-      if (id.includes("start")) {
-        var startID = id.split("start")[1];
+      if (node.data.start) {
+        var startID = id.split("start")[1] * 1;
         lem.startIDs.push(startID);
-      } else if (id.includes("stop")) {
-        var stopID = id.split("stop")[1];
+      } else {
+        var stopID = id.split("stop")[1] * 1;
         lem.stopIDs.push(stopID);
       }
-    } else if (node.classes.includes('buildingBlock')) {
+    } else if (node.classes.includes("buildingBlock")) {
+        convertIdToInt(node.data);
         lem['building blocks'].push(node.data);
-    } else if (node.classes.includes('notation')) {
+    } else if (node.classes.includes("notation")) {
+        convertIdToInt(node.data);
         lem.notations.push(node.data);
     }
   });
@@ -299,5 +303,13 @@ function generateJson() {
     console.log(ajv.errors);
 
     return null;
+  }
+}
+
+function convertIdToInt(object) {
+  if (!object.id) {
+    console.error("Object passed to convertIdToInt did not have id");
+  } else {
+    object.data.id = object.data.id * 1;
   }
 }
