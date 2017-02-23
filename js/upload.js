@@ -48,6 +48,24 @@ function downloadImage(fileType) {
   downloadLink.click();
 }
 
+function downloadLemJson() {
+  var lemJson = generateJson();
+
+  console.log(lemJson);
+
+  var content = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lemJson));
+
+  console.log(content);
+
+  var downloadLink = $('#downloadJSONLink')[0];
+  downloadLink.setAttribute('href', content);
+
+  var fileName = 'lem.json';
+  downloadLink.setAttribute('download', fileName);
+
+  downloadLink.click();
+}
+
 function uploadLem() {
   $("#fileOpener").click();
 }
@@ -87,6 +105,7 @@ function receivedText(e) {
   if (validateLem(lemJson)) {
     renderLem(lemJson);
   } else {
+    console.err('JSON not valide for LEM schema')
     console.log(ajv.errors);
   }
 }
@@ -240,4 +259,38 @@ function renderLem(json) {
   console.log(elements);
 
   loadNewCytoscapeWith(elements);
+}
+
+function generateJson() {
+  var lem = {contexts: [], 'building blocks': [], notations: [], actions: [], startIDs: [], stopIDs: []};
+
+  var elements = cy.json()['elements'];
+  var edges = elements.edges;
+  var nodes = elements.nodes;
+
+  edges.map(function(edge) {
+    lem.actions.push(edge.data);
+  });
+
+  nodes.map(function(node) {
+    if (node.classes.includes("context")) {
+        lem.contexts.push(node.data);
+    } else if (node.classes.includes("startstop")) {
+      var id = node.data.id;
+      if (id.includes("start")) {
+        var startID = id.split("start")[1];
+        lem.startIDs.push(startID);
+      } else if (id.includes("stop")) {
+        var stopID = id.split("stop")[1];
+        lem.stopIDs.push(stopID);
+      }
+    } else if (node.classes.includes('buildingBlock')) {
+        lem['building blocks'].push(node.data);
+    } else if (node.classes.includes('notation')) {
+        lem.notations.push(node.data);
+    }
+  });
+
+  var json = {lem: lem};
+  return json;
 }
