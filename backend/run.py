@@ -8,6 +8,7 @@ init()
 application = get_global_app()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
+in_use_id = [0]
 
 #URL for getting a lem item
 @app.route('/lem', methods = ['GET', 'POST'])
@@ -39,6 +40,21 @@ def save():
 	toLem(json_string).save()
 	db.close()
 	return "complete"
+
+#URL for deleting a lem objects
+@app.route('/delete', methods = ['GET', 'POST'])
+def delete():
+	id = request.args.get('id')
+	db = connect(name, host = host)
+	for lem in Lem.objects(lem_id = id):
+		lem.delete()
+	db.close()
+	return 'complete'
+
+#URL for getting next available id
+@app.route("/nextid", methods = ['GET', 'POST'])
+def nextid():
+	return str(in_use_id[-1] + 1)
 
 #Start the application
 if __name__ == '__main__':
