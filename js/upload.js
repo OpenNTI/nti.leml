@@ -16,13 +16,13 @@ $(function() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").on('click', function() {this.value = null;});
 
-  $("#downloadPNG").on('click', function() {
-    downloadImage(ImageType.PNG);
-  });
+  // $("#downloadPNG").on('click', function() {
+  //   downloadImage(ImageType.PNG);
+  // });
 
-  $("#downloadJPEG").on('click', function() {
-    downloadImage(ImageType.JPEG);
-  });
+  // $("#downloadJPEG").on('click', function() {
+  //   downloadImage(ImageType.JPEG);
+  // });
 });
 
 function downloadImage(fileType) {
