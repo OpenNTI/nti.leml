@@ -217,12 +217,21 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('gridOn');
 
   cy.on('select', 'node', function(evt) {
-    this.addClass('selected');
+    evt.cyTarget.addClass('selected');
     console.log(evt.cyTarget);
+    if (evt.cyTarget.hasClass('buildingBlock')) {
+      toggleSidebar(1);
+    } else if (evt.cyTarget.hasClass('context')) {
+      toggleSidebar(3);
+    } else if (evt.cyTarget.hasClass('notation')) {
+      toggleSidebar(4);
+    } else {
+      toggleSidebar(0);
+    }
   });
 
-  cy.on('unselect', 'node', function() {
-    this.removeClass('selected');
+  cy.on('unselect', 'node', function(evt) {
+    evt.cyTarget.removeClass('selected');
   });
 
   cy.on('cxttap', 'node', function(evt) {
@@ -285,9 +294,13 @@ function loadNewCytoscapeWith(elements) {
     // }
   });
 
+  cy.on('select', 'edge', function(evt) {
+    toggleSidebar(2);
+  });
+
   cy.on('cxttap', 'edge', function(evt) {
     cy.remove(this);
-  })
+  });
 }
 
 $(loadNewCytoscapeWith(defaultElements));

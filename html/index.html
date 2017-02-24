@@ -45,6 +45,7 @@
     <!-- Local JS files-->
     <script type="text/javascript" src="../js/upload.js"></script>
     <script type="text/javascript" src="../js/drag_and_drop.js"></script>
+    <script type="text/javascript" src="../js/sidebar.js"></script>
 
   </head>
   <body>
@@ -82,11 +83,12 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" id="content">
             <div id="cy" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 open" id="sidebar0">
+        <!-- <h3> I am a sidebar</h3> -->
 <!--           <button type="button" class="btn btn-primary" onclick="downloadLemJson();">Export LEM</button>
           <button type="button" class="btn btn-primary" onclick="uploadLem();">Upload LEM</button>
 
@@ -101,6 +103,10 @@
             </div>
           </div> -->
         </div>
+        <div class="hidden" id="sidebar1"><h3>Building Block</h3></div>
+        <div class="hidden" id="sidebar2"><h3>Action</h3></div>
+        <div class="hidden" id="sidebar3"><h3>Context</h3></div>
+        <div class="hidden" id="sidebar4"><h3>Objective</h3></div>
       </div>
       <div class="row">
       <div class="col-md-6">
