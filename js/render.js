@@ -221,20 +221,63 @@ function loadNewCytoscapeWith(elements) {
   });
 
   cy.on('cxttap', 'node', function(evt) {
-    for (index in cy.elements()) {
-      ele = cy.elements()[index];
-      if (ele.selected()) {
-        if (ele.json()['classes'].includes("buildingBlock")) {
-          if (ele.id() != this.id()) {
-            cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: ele.id(), target: this.id()}}]);
-            new_id = new_id + 1;
-            break;
-          } else {
-            cy.remove(this);
-          }
+    var nodes = cy.json().elements.nodes;
+    nodes.map(function(val) {
+      if (val.selected) {
+        if (val.classes.includes("buildingBlock")) {
+            if (evt.cyTarget.id() != val.data.id) {
+              cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}}]);
+            } else {
+              cy.remove(evt.cyTarget);
+            }
+        } else if (val.classes.includes("context")) {
+          if (evt.cyTarget.id() != val.data.id) {
+          //var data = evt.cyTarget.json().data;
+          //var classes = evt.cyTarget.json().classes;
+          //var label = evt.cyTarget.style().label;
+          //var position = evt.cyTarget.position();
+          //cy.remove(evt.cyTarget);
+          //data.parent = val.data.id;
+          //cy.$('#' + data.id).data(data);
+          //cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
+          evt.cyTarget.data('parent', val.data.id);
+          val.data.building_blocks.push(evt.cyTarget.id());
+          cy.$('#' + val.data.id).data(val.data);
+          cy.load();
+          cy.resize();
+          console.log(cy.$('node'));
+        } else {
+          cy.remove(evt.cyTarget);
+        }
         }
       }
-    }
+    });
+
+
+
+    // for (index in cy.elements()) {
+    //   ele = cy.elements()[index];
+    //   var classes = ele.json()['classes'];
+    //   if (classes.includes("selected")) {
+    //     console.log("?");
+    //     if (classes.includes("buildingBlock")) {
+    //       console.log("??");
+    //       if (ele.id() != this.id()) {
+    //         cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: ele.id(), target: this.id()}}]);
+    //         new_id = new_id + 1;
+    //         break;
+    //       } else {
+    //         cy.remove(this);
+    //       }
+    //     } else if (ele.json()['classes'].includes("context")) {
+    //       //var buildingBlock = {id, block_type:, description:, method:, parent:};
+    //       console.log("???");
+    //       console.log(this);
+    //       var context = ele;
+
+    //     }
+    //   }
+    // }
   });
 
   cy.on('cxttap', 'edge', function(evt) {
