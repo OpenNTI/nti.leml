@@ -98,28 +98,32 @@ function loadNewCytoscapeWith(elements) {
       {
         selector: '.Online_Asynchronous',
         style: {
-          'background-color': '#42d1f4',
+          'background-color': '#e6f2ff',
+          'border-color': '#99ccff',
           'color': '#3872d1'
         }
       },
       {
         selector: '.Online_Synchronous',
         style: {
-          'background-color': '#41f258',
+          'background-color': '#e6fff2',
+          'border-color': '#99ff99',
           'color': '#35c649'
         }
       },
       {
         selector: '.Classroom',
         style: {
-          'background-color': '#f1ef40',
+          'background-color': '#ffffe6',
+          'border-color': '#ffcc99',
           'color': '#cecc33'
         }
       },
       {
         selector: '.Experiential',
         style: {
-          'background-color': '#ef60f7',
+          'background-color': '#f1ef40',
+          'border-color': '#cc99ff',
           'color': '#b647bc'
         }
       },
@@ -212,8 +216,9 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
 
-  cy.on('select', 'node', function() {
+  cy.on('select', 'node', function(evt) {
     this.addClass('selected');
+    console.log(evt.cyTarget);
   });
 
   cy.on('unselect', 'node', function() {
