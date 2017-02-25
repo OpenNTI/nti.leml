@@ -123,7 +123,7 @@ function loadNewCytoscapeWith(elements) {
       {
         selector: '.Experiential',
         style: {
-          'background-color': '#f1ef40',
+          'background-color': '#d9b8f9',
           'border-color': '#cc99ff',
           'color': '#b647bc'
         }
