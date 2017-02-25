@@ -151,9 +151,40 @@
         </div>
         <div class="hidden" id="sidebar3">
           <h3>Context</h3>
+                    <form class="form-horizontal">
+  <div class="input-group">
+      <input type="text" id="inputContext" class="form-control" aria-label="..." readonly>
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Context Type <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#" onclick="contextChange(0);">Classroom</a></li>
+          <li><a href="#" onclick="contextChange(1);">Online Synchronous</a></li>
+          <li><a href="#" onclick="contextChange(2);">Online Asynchronous</a></li>
+          <li><a href="#" onclick="contextChange(3);">Experiential</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+    </div><!-- /input-group -->
+</form>
+
         </div>
         <div class="hidden" id="sidebar4">
-          <h3>Objective</h3>
+          <h3>Notation</h3>
+        </div>
+        <div class="hidden" id="sidebar5">
+          <h3>Start/Stop</h3>
+                    <form class="form-horizontal">
+  <div class="input-group">
+      <input type="text" id="inputStartstop" class="form-control" aria-label="..." readonly>
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#" onclick="startstopChange(true);">Start</a></li>
+          <li><a href="#" onclick="startstopChange(false);">Stop</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+    </div><!-- /input-group -->
+</form>
+
         </div>
       </div>
       <div class="row">
@@ -163,16 +194,16 @@
           <h3 class="panel-title">Drag and Drop Toolbar</h3>
         </div>
         <div class="panel-body">
-          <img id="Dialogue" src="../img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" width="50" height="50">
-          <img id="Evidence" src="../img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
-          <img id="Feedback" src="../img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
           <img id="Information" src="../img/Information.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
+          <img id="Dialogue" src="../img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" width="50" height="50">
+          <img id="Feedback" src="../img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
           <img id="Practice" src="../img/Practice.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
+          <img id="Evidence" src="../img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
           <img id="startstop" src="../img/startstop.png" draggable="true" ondragstart="drag(event, id)" width="50" height="50">
           <img id="ClassroomContext" src="../img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
-          <img id="ExperientialContext" src="../img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
-          <img id="Online_AsynchronousContext" src="../img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
           <img id="Online_SynchronousContext" src="../img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
+          <img id="Online_AsynchronousContext" src="../img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
+          <img id="ExperientialContext" src="../img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" height="50">
         </div>
         </div>
         </div>

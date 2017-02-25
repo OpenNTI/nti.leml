@@ -22,6 +22,8 @@ function drop(ev) {
         var new_node = cy.add([{group: "nodes", data: context, position: {x: x_coord, y: y_coord}, style: {
             label: context.context_type}, classes: ct + " context"
         }]);
+    } else if (data.includes("startstop")) {
+        cy.add({group: "nodes", data: {id: new_id}, style: {class: "startstop"}, classes: "startstop"});
     } else {
     	var description = "{Enter a description}";
     	var buildingBlock = {id: new_id, method: "", description: description, block_type: data};

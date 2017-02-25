@@ -26,6 +26,11 @@ function toggleSidebar(i, evt) {
 				$('#sidebar4').removeClass('open');
 				$('#sidebar4').addClass('hidden');
 			}
+			if ($('#sidebar5').hasClass('open')) {
+				$('#sidebar5').removeClass('col-md-3');
+				$('#sidebar5').removeClass('open');
+				$('#sidebar5').addClass('hidden');
+			}
 			break;
 		case 1: // block
 		if ($('#sidebar1').hasClass('hidden')) {
@@ -52,6 +57,11 @@ function toggleSidebar(i, evt) {
 				$('#sidebar4').removeClass('col-md-3');
 				$('#sidebar4').removeClass('open');
 				$('#sidebar4').addClass('hidden');
+			}
+			if ($('#sidebar5').hasClass('open')) {
+				$('#sidebar5').removeClass('col-md-3');
+				$('#sidebar5').removeClass('open');
+				$('#sidebar5').addClass('hidden');
 			}
 			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;			
 			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;			
@@ -84,6 +94,11 @@ function toggleSidebar(i, evt) {
 				$('#sidebar4').removeClass('open');
 				$('#sidebar4').addClass('hidden');
 			}
+			if ($('#sidebar5').hasClass('open')) {
+				$('#sidebar5').removeClass('col-md-3');
+				$('#sidebar5').removeClass('open');
+				$('#sidebar5').addClass('hidden');
+			}
 			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
 			break;
 		case 3: // context
@@ -112,6 +127,12 @@ function toggleSidebar(i, evt) {
 				$('#sidebar4').removeClass('open');
 				$('#sidebar4').addClass('hidden');
 			}
+			if ($('#sidebar5').hasClass('open')) {
+				$('#sidebar5').removeClass('col-md-3');
+				$('#sidebar5').removeClass('open');
+				$('#sidebar5').addClass('hidden');
+			}
+			document.getElementById('inputContext').value = evt.cyTarget.json().data.context_type;
 			break;
 		case 4: // objective
 			if ($('#sidebar4').hasClass('hidden')) {
@@ -138,6 +159,50 @@ function toggleSidebar(i, evt) {
 				$('#sidebar0').removeClass('col-md-3');
 				$('#sidebar0').removeClass('open');
 				$('#sidebar0').addClass('hidden');
+			}
+			if ($('#sidebar5').hasClass('open')) {
+				$('#sidebar5').removeClass('col-md-3');
+				$('#sidebar5').removeClass('open');
+				$('#sidebar5').addClass('hidden');
+			}
+			break;
+		case 5: // startstop
+			if ($('#sidebar5').hasClass('hidden')) {
+				$('#sidebar5').addClass('col-md-3');
+				$('#sidebar5').removeClass('hidden');
+				$('#sidebar5').addClass('open');
+			}
+			if ($('#sidebar1').hasClass('open')) {
+				$('#sidebar1').removeClass('col-md-3');
+				$('#sidebar1').removeClass('open');
+				$('#sidebar1').addClass('hidden');
+			}
+			if ($('#sidebar2').hasClass('open')) {
+				$('#sidebar2').removeClass('col-md-3');
+				$('#sidebar2').removeClass('open');
+				$('#sidebar2').addClass('hidden');
+			}
+			if ($('#sidebar3').hasClass('open')) {
+				$('#sidebar3').removeClass('col-md-3');
+				$('#sidebar3').removeClass('open');
+				$('#sidebar3').addClass('hidden');
+			}
+			if ($('#sidebar0').hasClass('open')) {
+				$('#sidebar0').removeClass('col-md-3');
+				$('#sidebar0').removeClass('open');
+				$('#sidebar0').addClass('hidden');
+			}
+			if ($('#sidebar4').hasClass('open')) {
+				$('#sidebar4').removeClass('col-md-3');
+				$('#sidebar4').removeClass('open');
+				$('#sidebar4').addClass('hidden');
+			}
+			if (typeof(evt.cyTarget.json().data.start) != 'undefined') {
+				if (evt.cyTarget.json().data.start) {
+					document.getElementById('inputStartstop').value = "Start";
+				} else {
+					document.getElementById('inputStartstop').value = "Stop";
+				}
 			}
 			break;
 		
@@ -238,5 +303,61 @@ function actionChange(i) {
 			document.getElementById('inputAction').value = 'System Action';
 			ele.data('action_type', 'System Action');
 			break;
+	}
+}
+
+function contextChange(i) {
+	var ele = cy.$('#' + selectedId);
+	if (ele.hasClass('Classroom')) {
+		ele.removeClass('Classroom');
+	}
+	if (ele.hasClass('Online_Synchronous')) {
+		ele.removeClass('Online_Synchronous');
+	}
+	if (ele.hasClass('Online_Asynchronous')) {
+		ele.removeClass('Online_Asynchronous');
+	}
+	if (ele.hasClass('Experiential')) {
+		ele.removeClass('Experiential');
+	}
+
+	switch (i) {
+		case 0:
+			ele.addClass('Classroom');
+			document.getElementById('inputContext').value = 'Classroom';
+			ele.data('context_type', 'Classroom');
+			ele.css({label: 'Classroom'});
+			break;
+		case 1:
+			ele.addClass('Online_Synchronous');
+			document.getElementById('inputContext').value = 'Online Synchronous';
+			ele.data('context_type', 'Online Synchronous');
+			ele.css({label: 'Online Synchronous'});
+			break;
+		case 2:
+			ele.addClass('Online_Asynchronous');
+			document.getElementById('inputContext').value = 'Online Asynchronous';
+			ele.data('context_type', 'Online Asynchronous');
+			ele.css({label: 'Online Asynchronous'});
+			break;
+		case 3:
+			ele.addClass('Experiential');
+			document.getElementById('inputContext').value = 'Experiential';
+			ele.data('context_type', 'Experiential');
+			ele.css({label: 'Experiential'});
+			break;
+	}
+}
+
+function startstopChange(start) {
+	var ele = cy.$('#' + selectedId);
+	if (start) {
+		ele.data('start', true);
+		ele.css({label: "Start"});
+		document.getElementById('inputStartstop').value = 'Start';
+	} else {
+		ele.data('start', false);
+		ele.css({label: "Stop"});
+		document.getElementById('inputStartstop').value = 'Stop';
 	}
 }

@@ -228,7 +228,9 @@ function loadNewCytoscapeWith(elements) {
     } else if (evt.cyTarget.hasClass('context')) {
       toggleSidebar(3, evt);
     } else if (evt.cyTarget.hasClass('notation')) {
-      toggleSidebar(4,evt);
+      toggleSidebar(4, evt);
+    } else if (evt.cyTarget.hasClass('startstop')) {
+      toggleSidebar(5, evt);
     } else {
       toggleSidebar(0, evt);
     }
@@ -243,7 +245,7 @@ function loadNewCytoscapeWith(elements) {
     var nodes = cy.json().elements.nodes;
     nodes.map(function(val) {
       if (val.selected) {
-        if (val.classes.includes("buildingBlock")) {
+        if (val.classes.includes("buildingBlock") || val.classes.includes("startstop")) {
             if (evt.cyTarget.id() != val.data.id) {
               cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}, classes: "Learner_Action"}]);
               new_id = new_id + 1;
@@ -253,7 +255,10 @@ function loadNewCytoscapeWith(elements) {
             }
         } else if (val.classes.includes("context")) {
           if (evt.cyTarget.id() != val.data.id) {
+            if (!evt.cyTarget.json().classes.includes("context")) {
+
           var data = evt.cyTarget.json().data;
+          console.log(evt.cyTarget.parent().json());
           var classes = evt.cyTarget.json().classes;
           var label = evt.cyTarget.style().label;
           var position = evt.cyTarget.position();
@@ -276,6 +281,7 @@ function loadNewCytoscapeWith(elements) {
           //cy.load();
           cy.resize();
           //console.log(cy.$('node'));
+            }
           } else {
             cy.remove(evt.cyTarget);
             toggleSidebar(0, evt);
