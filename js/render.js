@@ -244,6 +244,7 @@ function loadNewCytoscapeWith(elements) {
         if (val.classes.includes("buildingBlock")) {
             if (evt.cyTarget.id() != val.data.id) {
               cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}}]);
+              new_id = new_id + 1;
             } else {
               cy.remove(evt.cyTarget);
               toggleSidebar(0, evt);
@@ -254,12 +255,21 @@ function loadNewCytoscapeWith(elements) {
           var classes = evt.cyTarget.json().classes;
           var label = evt.cyTarget.style().label;
           var position = evt.cyTarget.position();
+          var out_edges = cy.elements('edge[source = "' + evt.cyTarget.id() + '"], edge[target = "' + evt.cyTarget.id() + '"]');
+          var index = 0;
+          var edges = [];
+          for (index = 0; index < out_edges.length; index++) {
+            edges.push(out_edges[index].json().data);
+          }
           cy.remove(evt.cyTarget);
           data.parent = val.data.id;
           //cy.$('#' + data.id).data(data);
           cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
           //evt.cyTarget.data('parent', val.data.id);
           val.data.building_blocks.push(evt.cyTarget.id());
+          for (index = 0; index < edges.length; index++) {
+            cy.add({group: "edges", data: edges[index]});
+          }
           //cy.$('#' + val.data.id).data(val.data);
           //cy.load();
           cy.resize();
