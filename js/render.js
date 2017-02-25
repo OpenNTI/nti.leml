@@ -1,4 +1,5 @@
 var cy;
+var selectedId;
 var defaultElements = [ // list of graph elements to start with
   // { // node a
   //   data: { id: 'a' }
@@ -218,20 +219,22 @@ function loadNewCytoscapeWith(elements) {
 
   cy.on('select', 'node', function(evt) {
     evt.cyTarget.addClass('selected');
-    console.log(evt.cyTarget);
+    selectedId = evt.cyTarget.id();
+    //console.log(evt.cyTarget);
     if (evt.cyTarget.hasClass('buildingBlock')) {
-      toggleSidebar(1);
+      toggleSidebar(1, evt);
     } else if (evt.cyTarget.hasClass('context')) {
-      toggleSidebar(3);
+      toggleSidebar(3, evt);
     } else if (evt.cyTarget.hasClass('notation')) {
-      toggleSidebar(4);
+      toggleSidebar(4,evt);
     } else {
-      toggleSidebar(0);
+      toggleSidebar(0, evt);
     }
   });
 
   cy.on('unselect', 'node', function(evt) {
     evt.cyTarget.removeClass('selected');
+    toggleSidebar(0, evt);
   });
 
   cy.on('cxttap', 'node', function(evt) {
@@ -243,23 +246,24 @@ function loadNewCytoscapeWith(elements) {
               cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}}]);
             } else {
               cy.remove(evt.cyTarget);
+              toggleSidebar(0, evt);
             }
         } else if (val.classes.includes("context")) {
           if (evt.cyTarget.id() != val.data.id) {
-          //var data = evt.cyTarget.json().data;
-          //var classes = evt.cyTarget.json().classes;
-          //var label = evt.cyTarget.style().label;
-          //var position = evt.cyTarget.position();
-          //cy.remove(evt.cyTarget);
-          //data.parent = val.data.id;
+          var data = evt.cyTarget.json().data;
+          var classes = evt.cyTarget.json().classes;
+          var label = evt.cyTarget.style().label;
+          var position = evt.cyTarget.position();
+          cy.remove(evt.cyTarget);
+          data.parent = val.data.id;
           //cy.$('#' + data.id).data(data);
-          //cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
-          evt.cyTarget.data('parent', val.data.id);
+          cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
+          //evt.cyTarget.data('parent', val.data.id);
           val.data.building_blocks.push(evt.cyTarget.id());
-          cy.$('#' + val.data.id).data(val.data);
-          cy.load();
+          //cy.$('#' + val.data.id).data(val.data);
+          //cy.load();
           cy.resize();
-          console.log(cy.$('node'));
+          //console.log(cy.$('node'));
         } else {
           cy.remove(evt.cyTarget);
         }
@@ -295,11 +299,12 @@ function loadNewCytoscapeWith(elements) {
   });
 
   cy.on('select', 'edge', function(evt) {
-    toggleSidebar(2);
+    toggleSidebar(2, evt);
   });
 
   cy.on('cxttap', 'edge', function(evt) {
-    cy.remove(this);
+    cy.remove(evt.cyTarget);
+    toggleSidebar(0, evt);
   });
 }
 
