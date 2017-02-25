@@ -84,6 +84,7 @@ function toggleSidebar(i, evt) {
 				$('#sidebar4').removeClass('open');
 				$('#sidebar4').addClass('hidden');
 			}
+			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
 			break;
 		case 3: // context
 			if ($('#sidebar3').hasClass('hidden')) {
@@ -207,4 +208,35 @@ function descriptionChange() {
 function updateLabel() {
 	var json = cy.$('#' + selectedId).json();
 	cy.$('#' + selectedId).css({label: json.data.method + "\n\n\n\n" + json.data.description});
+}
+
+function actionChange(i) {
+	var ele = cy.$('#' + selectedId);
+	if (ele.hasClass('Learner_Action')) {
+		ele.removeClass('Learner_Action');
+	}
+	if (ele.hasClass('Facilitator_Action')) {
+		ele.removeClass('Facilitator_Action');
+	}
+	if (ele.hasClass('System_Action')) {
+		ele.removeClass('System_Action');
+	}
+
+	switch(i) {
+		case 0:
+			ele.addClass('Learner_Action');
+			document.getElementById('inputAction').value = 'Learner Action';
+			ele.data('action_type', 'Learner Action');
+			break;
+		case 1:
+			ele.addClass('Facilitator_Action');
+			document.getElementById('inputAction').value = 'Facilitator Action';
+			ele.data('action_type', 'Facilitator Action');
+			break;
+		case 2:
+			ele.addClass('System_Action');
+			document.getElementById('inputAction').value = 'System Action';
+			ele.data('action_type', 'System Action');
+			break;
+	}
 }

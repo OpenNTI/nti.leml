@@ -193,7 +193,9 @@ function loadNewCytoscapeWith(elements) {
         selector: '.selected',
         style: {
           'border-color': 'red',
-          'border-width': 5
+          'border-width': 5,
+          'line-color': 'red',
+          'target-arrow-color': 'red',
         }
       }
     ],
@@ -243,7 +245,7 @@ function loadNewCytoscapeWith(elements) {
       if (val.selected) {
         if (val.classes.includes("buildingBlock")) {
             if (evt.cyTarget.id() != val.data.id) {
-              cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}}]);
+              cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}, classes: "Learner_Action"}]);
               new_id = new_id + 1;
             } else {
               cy.remove(evt.cyTarget);
@@ -274,9 +276,10 @@ function loadNewCytoscapeWith(elements) {
           //cy.load();
           cy.resize();
           //console.log(cy.$('node'));
-        } else {
-          cy.remove(evt.cyTarget);
-        }
+          } else {
+            cy.remove(evt.cyTarget);
+            toggleSidebar(0, evt);
+          }
         }
       }
     });
@@ -309,7 +312,14 @@ function loadNewCytoscapeWith(elements) {
   });
 
   cy.on('select', 'edge', function(evt) {
+    evt.cyTarget.addClass('selected');
     toggleSidebar(2, evt);
+    selectedId = evt.cyTarget.id();
+  });
+
+  cy.on('unselect', 'edge', function(evt) {
+    evt.cyTarget.removeClass('selected');
+    toggleSidebar(0, evt);
   });
 
   cy.on('cxttap', 'edge', function(evt) {

@@ -23,8 +23,8 @@ function drop(ev) {
             label: context.context_type}, classes: ct + " context"
         }]);
     } else {
-    	var description = "test";
-    	var buildingBlock = {id: new_id, method: data, description: description, block_type: data};
+    	var description = "{Enter a description}";
+    	var buildingBlock = {id: new_id, method: "", description: description, block_type: data};
         var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: data + " \n\n\n\n " + description}, classes: "buildingBlock " + data}]);
     }
     cy.resize();
