@@ -24,7 +24,9 @@ function drop(ev) {
         }]);
     } else if (data.includes("startstop")) {
         cy.add({group: "nodes", data: {id: new_id}, style: {class: "startstop"}, classes: "startstop"});
-    } else {
+    } else if (data.includes("exampleLems")) {
+			loadLocalLem(data);
+		} else {
     	var description = "{Enter a description}";
     	var buildingBlock = {id: new_id, method: "", description: description, block_type: data};
         var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: data + " \n\n\n\n " + description}, classes: "buildingBlock " + data}]);

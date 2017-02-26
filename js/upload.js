@@ -16,13 +16,13 @@ $(function() {
   $("#fileOpener").change(loadFile);
   $("#fileOpener").on('click', function() {this.value = null;});
 
-  // $("#downloadPNG").on('click', function() {
-  //   downloadImage(ImageType.PNG);
-  // });
+  $("#downloadPNG").on('click', function() {
+     downloadImage(ImageType.PNG);
+  });
 
-  // $("#downloadJPEG").on('click', function() {
-  //   downloadImage(ImageType.JPEG);
-  // });
+  $("#downloadJPEG").on('click', function() {
+    downloadImage(ImageType.JPEG);
+  });
 });
 
 function downloadImage(fileType) {
@@ -66,9 +66,15 @@ function uploadLem() {
   $("#fileOpener").click();
 }
 
+function loadLocalLem(fileName) {
+  $.getJSON(fileName, function(lem) {
+    renderLem(lem);
+  });
+}
+
 // Set up LEM JSON file processing
 function loadFile() {
-  // from http://stackoverflow.com/a/21446426/6004931
+  // adapted from http://stackoverflow.com/a/21446426/6004931
   var input, file, fr;
 
   if (typeof window.FileReader !== 'function') {
@@ -167,7 +173,7 @@ function renderLem(json) {
       var classes = styleClass + " buildingBlock";
 
       // Set data to buildingBlock because contbuildingBlockext already includes 'id', 'parent', and all other info
-      elements.push({data: buildingBlock, style: {label:buildingBlock.block_type + " \n\n\n\n " + buildingBlock.description}, classes: classes});
+      elements.push({data: buildingBlock, style: {label:buildingBlock.description + " \n\n\n\n " + buildingBlock.method}, classes: classes});
     }
   }
 
