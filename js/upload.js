@@ -167,7 +167,7 @@ function renderLem(json) {
       var classes = styleClass + " buildingBlock";
 
       // Set data to buildingBlock because contbuildingBlockext already includes 'id', 'parent', and all other info
-      elements.push({data: buildingBlock, style: {label:buildingBlock.block_type + " \n\n\n\n " + buildingBlock.description}, classes: classes});
+      elements.push({data: buildingBlock, style: {label:buildingBlock.description + " \n\n\n\n " + buildingBlock.method}, classes: classes});
     }
   }
 
