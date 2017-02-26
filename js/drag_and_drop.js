@@ -23,10 +23,12 @@ function drop(ev) {
             label: context.context_type}, classes: ct + " context"
         }]);
     } else if (data.includes("startstop")) {
-        cy.add({group: "nodes", data: {id: new_id}, style: {class: "startstop"}, classes: "startstop"});
+        cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {class: "startstop"}, classes: "startstop"});
     } else if (data.includes("exampleLems")) {
 			loadLocalLem(data);
-		} else {
+	} else if (data.includes("objective")) {
+        cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
+    } else {
     	var description = "{Enter a description}";
     	var buildingBlock = {id: new_id, method: "", description: description, block_type: data};
         var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: data + " \n\n\n\n " + description}, classes: "buildingBlock " + data}]);

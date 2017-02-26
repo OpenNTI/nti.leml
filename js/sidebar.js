@@ -361,3 +361,9 @@ function startstopChange(start) {
 		document.getElementById('inputStartstop').value = 'Stop';
 	}
 }
+
+function objectiveChange() {
+	var new_description = document.getElementById('inputObjective').value;			
+	cy.$('#' + selectedId).data('description', new_description);
+	cy.$('#' + selectedId).css({label: new_description});
+}

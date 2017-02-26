@@ -47,8 +47,8 @@ function loadNewCytoscapeWith(elements) {
         style: {
           'text-valign':'center',
           'text-halign':'center',
-          'width': 45,
-          'height': 10,
+          'width': 'label',
+          'height': 'label',
           'shape': 'ellipse',
           'background-color':'#fff',
           'border-color':'#000',
@@ -258,7 +258,6 @@ function loadNewCytoscapeWith(elements) {
             if (!evt.cyTarget.json().classes.includes("context")) {
 
           var data = evt.cyTarget.json().data;
-          console.log(evt.cyTarget.parent().json());
           var classes = evt.cyTarget.json().classes;
           var label = evt.cyTarget.style().label;
           var position = evt.cyTarget.position();
