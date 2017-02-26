@@ -1,5 +1,5 @@
 #cy {
-  width: 75%;
+  width: 74%;
   height: 75%;
   position: fixed;
   display: block;
@@ -15,8 +15,8 @@
   	border: 1px solid lightgray;
 }
 
-#export_pane {
-	width: 25%;
+#template_pane {
+	width: 24%;
 	height: 15%;
 	bottom: 0;
 	position: fixed;
