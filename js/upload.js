@@ -66,9 +66,15 @@ function uploadLem() {
   $("#fileOpener").click();
 }
 
+function loadLocalLem(fileName) {
+  $.getJSON(fileName, function(lem) {
+    renderLem(lem);
+  });
+}
+
 // Set up LEM JSON file processing
 function loadFile() {
-  // from http://stackoverflow.com/a/21446426/6004931
+  // adapted from http://stackoverflow.com/a/21446426/6004931
   var input, file, fr;
 
   if (typeof window.FileReader !== 'function') {
