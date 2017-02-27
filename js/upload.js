@@ -282,12 +282,12 @@ function generateJson() {
           convertIdToInt(node.data);
           lem.building_blocks.push(node.data);
       } else if (node.classes.includes("notation")) {
-          var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1];
+          var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
           var buildingBlockIDNumeric = buildingBlockID * 1;
 
           convertIdToInt(node.data);
           node.data.building_block = buildingBlockIDNumeric;
-          
+
           lem.notations.push(node.data);
       }
     });
