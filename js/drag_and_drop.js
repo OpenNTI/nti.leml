@@ -23,7 +23,7 @@ function drop(ev) {
             label: context.context_type}, classes: ct + " context"
         }]);
     } else if (data.includes("startstop")) {
-        cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {class: "startstop"}, classes: "startstop"});
+        cy.add({group: "nodes", data: {id: new_id, start: true}, position: {x: x_coord, y: y_coord}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
     } else if (data.includes("exampleLems")) {
 			loadLocalLem(data);
 	} else if (data.includes("objective")) {
