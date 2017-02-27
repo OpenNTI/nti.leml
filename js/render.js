@@ -149,7 +149,7 @@ function loadNewCytoscapeWith(elements) {
       {
         selector: '.Information',
         style: {
-          'background-image': '../img/information.png'
+          'background-image': '../img/Information.png'
         }
       },
       {
