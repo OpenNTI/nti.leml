@@ -220,6 +220,7 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('gridOn');
 
   cy.on('select', 'node', function(evt) {
+    console.log(evt.cyTarget);
     evt.cyTarget.addClass('selected');
     selectedId = evt.cyTarget.id();
     //console.log(evt.cyTarget);
