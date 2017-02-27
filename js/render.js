@@ -220,6 +220,7 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('gridOn');
 
   cy.on('select', 'node', function(evt) {
+    console.log(evt.cyTarget);
     evt.cyTarget.addClass('selected');
     selectedId = evt.cyTarget.id();
     //console.log(evt.cyTarget);
@@ -245,7 +246,7 @@ function loadNewCytoscapeWith(elements) {
     var nodes = cy.json().elements.nodes;
     nodes.map(function(val) {
       if (val.selected) {
-        if (val.classes.includes("buildingBlock") || val.classes.includes("startstop")) {
+        if (val.classes.includes("buildingBlock") || val.classes.includes("startstop") || val.classes.includes("notation")) {
             if (evt.cyTarget.id() != val.data.id) {
               cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}, classes: "Learner_Action"}]);
               new_id = new_id + 1;
