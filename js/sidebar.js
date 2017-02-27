@@ -272,7 +272,7 @@ function descriptionChange() {
 
 function updateLabel() {
 	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.method + "\n\n\n\n" + json.data.description});
+	cy.$('#' + selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
 }
 
 function actionChange(i) {
