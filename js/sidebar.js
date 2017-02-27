@@ -367,3 +367,14 @@ function objectiveChange() {
 	cy.$('#' + selectedId).data('description', new_description);
 	cy.$('#' + selectedId).css({label: new_description});
 }
+
+function redraw() {
+	var layout = cy.makeLayout({
+      // https://github.com/cytoscape/cytoscape.js-dagre
+      name: 'dagre',
+      rankDir: 'LR',
+      avoidOverlap: true,
+      avoidOverlapPadding: 40
+    });
+	layout.run();
+}
