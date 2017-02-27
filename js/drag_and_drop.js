@@ -30,8 +30,8 @@ function drop(ev) {
         cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
     } else {
     	var description = "{Enter a description}";
-    	var buildingBlock = {id: new_id, method: "", description: description, block_type: data};
-        var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: data + " \n\n\n\n " + description}, classes: "buildingBlock " + data}]);
+    	var buildingBlock = {id: new_id, method: "{Enter a method}", description: description, block_type: data};
+        var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a method}" + " \n\n\n\n " + description}, classes: "buildingBlock " + data}]);
     }
     cy.resize();
     new_id = new_id + 1;
