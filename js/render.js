@@ -247,8 +247,16 @@ function loadNewCytoscapeWith(elements) {
     nodes.map(function(val) {
       if (val.selected) {
         if (val.classes.includes("buildingBlock") || val.classes.includes("startstop") || val.classes.includes("notation")) {
+            var defaultActionType = "Learner Action";
+            var defaultClass = "Learner_Action";
+
+            if (val.classes.includes("notation")) {
+              defaultActionType = "notationEdge";
+              defaultClass = "notationEdge";
+            }
+
             if (evt.cyTarget.id() != val.data.id) {
-              cy.add([{group: "edges", data: {id: new_id, action_type: "Learner Action", source: val.data.id, target: evt.cyTarget.id()}, classes: "Learner_Action"}]);
+              cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
               new_id = new_id + 1;
             } else {
               cy.remove(evt.cyTarget);
