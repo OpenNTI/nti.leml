@@ -272,7 +272,12 @@ function loadNewCytoscapeWith(elements) {
           //cy.$('#' + data.id).data(data);
           cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
           //evt.cyTarget.data('parent', val.data.id);
-          val.data.building_blocks.push(evt.cyTarget.id());
+
+          // Convert id from string to int
+          var addedBuildingBlockID = evt.cyTarget.id() * 1;
+          val.data.building_blocks.push(addedBuildingBlockID);
+
+          // Add edges
           for (index = 0; index < edges.length; index++) {
             cy.add({group: "edges", data: edges[index]});
           }

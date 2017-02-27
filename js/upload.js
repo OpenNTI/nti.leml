@@ -51,15 +51,21 @@ function downloadImage(fileType) {
 function downloadLemJson() {
   var lemJson = generateJson();
 
-  var content = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lemJson));
+  if (validateLem(lemJson)) {
+    var content = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lemJson));
 
-  var downloadLink = $('#downloadLink')[0];
-  downloadLink.setAttribute('href', content);
+    var downloadLink = $('#downloadLink')[0];
+    downloadLink.setAttribute('href', content);
 
-  var fileName = 'model.lem';
-  downloadLink.setAttribute('download', fileName);
+    var fileName = 'model.lem';
+    downloadLink.setAttribute('download', fileName);
 
-  downloadLink.click();
+    downloadLink.click();
+  } else {
+    console.error('JSON not valid for LEM schema');
+    console.log(ajv.errors);
+    console.log(lemJson);
+  }
 }
 
 function importLem() {
@@ -227,46 +233,52 @@ function generateJson() {
   var edges = elements.edges;
   var nodes = elements.nodes;
 
-  edges.map(function(edge) {
-    var id = edge.data.id;
-    if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
-      convertIdToInt(edge.data);
-      lem.actions.push(edge.data);
-    }
-  });
-
-  nodes.map(function(node) {
-    if (node.classes.includes("context")) {
-        convertIdToInt(node.data);
-        lem.contexts.push(node.data);
-    } else if (node.classes.includes("startstop")) {
-      var id = node.data.id;
-      if (node.data.start) {
-        var startID = id.split("start")[1] * 1;
-        lem.startIDs.push(startID);
-      } else {
-        var stopID = id.split("stop")[1] * 1;
-        lem.stopIDs.push(stopID);
+  if (edges) {
+    edges.map(function(edge) {
+      var id = edge.data.id;
+      if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
+        convertIdToInt(edge.data);
+        lem.actions.push(edge.data);
       }
-    } else if (node.classes.includes("buildingBlock")) {
-        convertIdToInt(node.data);
-        lem.building_blocks.push(node.data);
-    } else if (node.classes.includes("notation")) {
-        convertIdToInt(node.data);
-        lem.notations.push(node.data);
-    }
-  });
+    });
+  }
+
+  if (nodes) {
+    nodes.map(function(node) {
+      if (node.classes.includes("context")) {
+          convertIdToInt(node.data);
+          lem.contexts.push(node.data);
+      } else if (node.classes.includes("startstop")) {
+        var id = node.data.id;
+
+        if (node.data.start) {
+          cy.$("#" + id).outgoers().map(function(element) {
+            if (element.hasClass("buildingBlock")) {
+              var numericID = element.id() * 1
+              lem.startIDs.push(numericID);
+            }
+          });
+        } else {
+          cy.$("#" + id).incomers().map(function(element) {
+            if (element.hasClass("buildingBlock")) {
+              var numericID = element.id() * 1
+              lem.stopIDs.push(numericID);
+            }
+          });
+        }
+      } else if (node.classes.includes("buildingBlock")) {
+          convertIdToInt(node.data);
+          lem.building_blocks.push(node.data);
+      } else if (node.classes.includes("notation")) {
+          convertIdToInt(node.data);
+          lem.notations.push(node.data);
+      }
+    });
+  }
 
   var json = {lem: lem};
 
-  if (validateLem(json)) {
-    return json;
-  } else {
-    console.error('JSON not valid for LEM schema');
-    console.log(ajv.errors);
-
-    return null;
-  }
+  return json;
 }
 
 function convertIdToInt(object) {
