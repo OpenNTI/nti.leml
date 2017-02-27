@@ -382,4 +382,5 @@ function redraw() {
 function clearCanvas() {
 	cy.remove("");
 	cy.center();
+	cy.zoom(1);
 }
