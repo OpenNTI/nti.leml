@@ -63,8 +63,8 @@ function toggleSidebar(i, evt) {
 				$('#sidebar5').removeClass('open');
 				$('#sidebar5').addClass('hidden');
 			}
-			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;			
-			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;			
+			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;
+			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;
 			document.getElementById('inputDescription').value = evt.cyTarget.json().data.description;
 
 			break;
@@ -205,7 +205,7 @@ function toggleSidebar(i, evt) {
 				}
 			}
 			break;
-		
+
 	}
 }
 
@@ -259,13 +259,13 @@ function typeChange(i) {
 }
 
 function methodChange() {
-	var new_method = document.getElementById('inputMethod').value;			
+	var new_method = document.getElementById('inputMethod').value;
 	cy.$('#' + selectedId).data('method', new_method);
 	updateLabel();
 }
 
 function descriptionChange() {
-	var new_description = document.getElementById('inputDescription').value;			
+	var new_description = document.getElementById('inputDescription').value;
 	cy.$('#' + selectedId).data('description', new_description);
 	updateLabel();
 }
@@ -363,7 +363,7 @@ function startstopChange(start) {
 }
 
 function objectiveChange() {
-	var new_description = document.getElementById('inputObjective').value;			
+	var new_description = document.getElementById('inputObjective').value;
 	cy.$('#' + selectedId).data('description', new_description);
 	cy.$('#' + selectedId).css({label: new_description});
 }
@@ -377,4 +377,9 @@ function redraw() {
       avoidOverlapPadding: 40
     });
 	layout.run();
+}
+
+function clearCanvas() {
+	cy.remove("");
+	cy.center();
 }
