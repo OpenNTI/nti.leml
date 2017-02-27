@@ -62,7 +62,7 @@ function downloadLemJson() {
   downloadLink.click();
 }
 
-function uploadLem() {
+function importLem() {
   $("#fileOpener").click();
 }
 
