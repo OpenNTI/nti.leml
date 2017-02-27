@@ -236,7 +236,19 @@ function generateJson() {
   if (edges) {
     edges.map(function(edge) {
       var id = edge.data.id;
-      if (!(id.includes("start") || id.includes("stop") || id.includes("objectivelink"))) {
+      var source = cy.$("#" + id).source();
+      var target = cy.$("#" + id).target();
+      var startStopNotation = false;
+
+      if (source.hasClass("startstop") || source.hasClass("notation")) {
+        startStopNotation = true;
+      }
+
+      if (target.hasClass("startstop")) {
+        startStopNotation = true;
+      }
+
+      if (!startStopNotation) {
         convertIdToInt(edge.data);
         lem.actions.push(edge.data);
       }
