@@ -1,202 +1,63 @@
+var numberOfSidebars = 6;
+var actionTypes = ['Learner_Action', 'Facilitator_Action', 'System_Action'];
+var blockTypes = ['Information','Dialogue','Feedback','Practice','Evidence'];
+var contextTypes = ['Classroom', 'Online_Synchronous', 'Online_Asynchronous', 'Experiential'];
+
+function openSidebar(sidebar) {
+	if (sidebar.hasClass('hidden')) {
+		sidebar.addClass('col-md-3');
+		sidebar.removeClass('hidden');
+		sidebar.addClass('open');
+	}
+}
+
+function closeSidebar(sidebar) {
+	if (sidebar.hasClass('open')) {
+		sidebar.removeClass('col-md-3');
+		sidebar.removeClass('open');
+		sidebar.addClass('hidden');
+	}
+}
+
+function showOnlySidebar(sidebarNumber) {
+	var desiredSidebar = $('#sidebar' + sidebarNumber);
+
+	openSidebar(desiredSidebar);
+
+	for (var index = 0; index < numberOfSidebars; ++index) {
+		if (index == sidebarNumber) {
+			continue; // Don't close the sidebar that we want open
+		}
+
+		var undesiredSidebar = $('#sidebar' + index);
+		closeSidebar(undesiredSidebar);
+	}
+}
+
 function toggleSidebar(i, evt) {
 	switch (i) {
 		case 0: // default
-			if ($('#sidebar0').hasClass('hidden')) {
-				$('#sidebar0').addClass('col-md-3');
-				$('#sidebar0').removeClass('hidden');
-				$('#sidebar0').addClass('open');
-			}
-			if ($('#sidebar1').hasClass('open')) {
-				$('#sidebar1').removeClass('col-md-3');
-				$('#sidebar1').removeClass('open');
-				$('#sidebar1').addClass('hidden');
-			}
-			if ($('#sidebar2').hasClass('open')) {
-				$('#sidebar2').removeClass('col-md-3');
-				$('#sidebar2').removeClass('open');
-				$('#sidebar2').addClass('hidden');
-			}
-			if ($('#sidebar3').hasClass('open')) {
-				$('#sidebar3').removeClass('col-md-3');
-				$('#sidebar3').removeClass('open');
-				$('#sidebar3').addClass('hidden');
-			}
-			if ($('#sidebar4').hasClass('open')) {
-				$('#sidebar4').removeClass('col-md-3');
-				$('#sidebar4').removeClass('open');
-				$('#sidebar4').addClass('hidden');
-			}
-			if ($('#sidebar5').hasClass('open')) {
-				$('#sidebar5').removeClass('col-md-3');
-				$('#sidebar5').removeClass('open');
-				$('#sidebar5').addClass('hidden');
-			}
+			showOnlySidebar(0);
 			break;
 		case 1: // block
-		if ($('#sidebar1').hasClass('hidden')) {
-				$('#sidebar1').addClass('col-md-3');
-				$('#sidebar1').removeClass('hidden');
-				$('#sidebar1').addClass('open');
-			}
-			if ($('#sidebar0').hasClass('open')) {
-				$('#sidebar0').removeClass('col-md-3');
-				$('#sidebar0').removeClass('open');
-				$('#sidebar0').addClass('hidden');
-			}
-			if ($('#sidebar2').hasClass('open')) {
-				$('#sidebar2').removeClass('col-md-3');
-				$('#sidebar2').removeClass('open');
-				$('#sidebar2').addClass('hidden');
-			}
-			if ($('#sidebar3').hasClass('open')) {
-				$('#sidebar3').removeClass('col-md-3');
-				$('#sidebar3').removeClass('open');
-				$('#sidebar3').addClass('hidden');
-			}
-			if ($('#sidebar4').hasClass('open')) {
-				$('#sidebar4').removeClass('col-md-3');
-				$('#sidebar4').removeClass('open');
-				$('#sidebar4').addClass('hidden');
-			}
-			if ($('#sidebar5').hasClass('open')) {
-				$('#sidebar5').removeClass('col-md-3');
-				$('#sidebar5').removeClass('open');
-				$('#sidebar5').addClass('hidden');
-			}
+			showOnlySidebar(1);
 			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;
 			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;
 			document.getElementById('inputDescription').value = evt.cyTarget.json().data.description;
-
 			break;
 		case 2: // action
-			if ($('#sidebar2').hasClass('hidden')) {
-				$('#sidebar2').addClass('col-md-3');
-				$('#sidebar2').removeClass('hidden');
-				$('#sidebar2').addClass('open');
-			}
-			if ($('#sidebar1').hasClass('open')) {
-				$('#sidebar1').removeClass('col-md-3');
-				$('#sidebar1').removeClass('open');
-				$('#sidebar1').addClass('hidden');
-			}
-			if ($('#sidebar0').hasClass('open')) {
-				$('#sidebar0').removeClass('col-md-3');
-				$('#sidebar0').removeClass('open');
-				$('#sidebar0').addClass('hidden');
-			}
-			if ($('#sidebar3').hasClass('open')) {
-				$('#sidebar3').removeClass('col-md-3');
-				$('#sidebar3').removeClass('open');
-				$('#sidebar3').addClass('hidden');
-			}
-			if ($('#sidebar4').hasClass('open')) {
-				$('#sidebar4').removeClass('col-md-3');
-				$('#sidebar4').removeClass('open');
-				$('#sidebar4').addClass('hidden');
-			}
-			if ($('#sidebar5').hasClass('open')) {
-				$('#sidebar5').removeClass('col-md-3');
-				$('#sidebar5').removeClass('open');
-				$('#sidebar5').addClass('hidden');
-			}
+			showOnlySidebar(2);
 			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
 			break;
 		case 3: // context
-			if ($('#sidebar3').hasClass('hidden')) {
-				$('#sidebar3').addClass('col-md-3');
-				$('#sidebar3').removeClass('hidden');
-				$('#sidebar3').addClass('open');
-			}
-			if ($('#sidebar1').hasClass('open')) {
-				$('#sidebar1').removeClass('col-md-3');
-				$('#sidebar1').removeClass('open');
-				$('#sidebar1').addClass('hidden');
-			}
-			if ($('#sidebar2').hasClass('open')) {
-				$('#sidebar2').removeClass('col-md-3');
-				$('#sidebar2').removeClass('open');
-				$('#sidebar2').addClass('hidden');
-			}
-			if ($('#sidebar0').hasClass('open')) {
-				$('#sidebar0').removeClass('col-md-3');
-				$('#sidebar0').removeClass('open');
-				$('#sidebar0').addClass('hidden');
-			}
-			if ($('#sidebar4').hasClass('open')) {
-				$('#sidebar4').removeClass('col-md-3');
-				$('#sidebar4').removeClass('open');
-				$('#sidebar4').addClass('hidden');
-			}
-			if ($('#sidebar5').hasClass('open')) {
-				$('#sidebar5').removeClass('col-md-3');
-				$('#sidebar5').removeClass('open');
-				$('#sidebar5').addClass('hidden');
-			}
+			showOnlySidebar(3);
 			document.getElementById('inputContext').value = evt.cyTarget.json().data.context_type;
 			break;
 		case 4: // objective
-			if ($('#sidebar4').hasClass('hidden')) {
-				$('#sidebar4').addClass('col-md-3');
-				$('#sidebar4').removeClass('hidden');
-				$('#sidebar4').addClass('open');
-			}
-			if ($('#sidebar1').hasClass('open')) {
-				$('#sidebar1').removeClass('col-md-3');
-				$('#sidebar1').removeClass('open');
-				$('#sidebar1').addClass('hidden');
-			}
-			if ($('#sidebar2').hasClass('open')) {
-				$('#sidebar2').removeClass('col-md-3');
-				$('#sidebar2').removeClass('open');
-				$('#sidebar2').addClass('hidden');
-			}
-			if ($('#sidebar3').hasClass('open')) {
-				$('#sidebar3').removeClass('col-md-3');
-				$('#sidebar3').removeClass('open');
-				$('#sidebar3').addClass('hidden');
-			}
-			if ($('#sidebar0').hasClass('open')) {
-				$('#sidebar0').removeClass('col-md-3');
-				$('#sidebar0').removeClass('open');
-				$('#sidebar0').addClass('hidden');
-			}
-			if ($('#sidebar5').hasClass('open')) {
-				$('#sidebar5').removeClass('col-md-3');
-				$('#sidebar5').removeClass('open');
-				$('#sidebar5').addClass('hidden');
-			}
+			showOnlySidebar(4);
 			break;
 		case 5: // startstop
-			if ($('#sidebar5').hasClass('hidden')) {
-				$('#sidebar5').addClass('col-md-3');
-				$('#sidebar5').removeClass('hidden');
-				$('#sidebar5').addClass('open');
-			}
-			if ($('#sidebar1').hasClass('open')) {
-				$('#sidebar1').removeClass('col-md-3');
-				$('#sidebar1').removeClass('open');
-				$('#sidebar1').addClass('hidden');
-			}
-			if ($('#sidebar2').hasClass('open')) {
-				$('#sidebar2').removeClass('col-md-3');
-				$('#sidebar2').removeClass('open');
-				$('#sidebar2').addClass('hidden');
-			}
-			if ($('#sidebar3').hasClass('open')) {
-				$('#sidebar3').removeClass('col-md-3');
-				$('#sidebar3').removeClass('open');
-				$('#sidebar3').addClass('hidden');
-			}
-			if ($('#sidebar0').hasClass('open')) {
-				$('#sidebar0').removeClass('col-md-3');
-				$('#sidebar0').removeClass('open');
-				$('#sidebar0').addClass('hidden');
-			}
-			if ($('#sidebar4').hasClass('open')) {
-				$('#sidebar4').removeClass('col-md-3');
-				$('#sidebar4').removeClass('open');
-				$('#sidebar4').addClass('hidden');
-			}
+			showOnlySidebar(5);
 			if (typeof(evt.cyTarget.json().data.start) != 'undefined') {
 				if (evt.cyTarget.json().data.start) {
 					document.getElementById('inputStartstop').value = "Start";
@@ -205,57 +66,78 @@ function toggleSidebar(i, evt) {
 				}
 			}
 			break;
-
 	}
 }
 
 function typeChange(i) {
 	var ele = cy.$('#' + selectedId);
-	if (ele.hasClass('Information')) {
-		ele.removeClass('Information');
-	}
-	if (ele.hasClass('Practice')) {
-		ele.removeClass('Practice');
-	}
-	if (ele.hasClass('Dialogue')) {
-		ele.removeClass('Dialogue');
-	}
-	if (ele.hasClass('Feedback')) {
-		ele.removeClass('Feedback');
-	}
-	if (ele.hasClass('Evidence')) {
-		ele.removeClass('Evidence');
+
+	// Remove classes for all block types
+	for (var index in blockTypes) {
+		if (ele.hasClass(blockTypes[index])) {
+			ele.removeClass(blockTypes[index]);
+		}
 	}
 
-	switch (i) {
-		case 0:
-			ele.addClass('Information');
-			document.getElementById('inputType').value = 'Information';
-			ele.data('block_type', 'Information');
-			break;
-		case 1:
-			ele.addClass('Dialogue');
-			document.getElementById('inputType').value = 'Dialogue';
-			ele.data('block_type', 'Dialogue');
-			break;
-		case 2:
-			ele.addClass('Feedback');
-			document.getElementById('inputType').value = 'Feedback';
-			ele.data('block_type', 'Feedback');
-			break;
-		case 3:
-			ele.addClass('Practice');
-			document.getElementById('inputType').value = 'Practice';
-			ele.data('block_type', 'Practice');
-			break;
-		case 4:
-			ele.addClass('Evidence');
-			document.getElementById('inputType').value = 'Evidence';
-			ele.data('block_type', 'Evidence');
-			break;
+	setBlockType(ele, blockTypes[i]);
+}
+
+function setBlockType(element, blockType) {
+	element.addClass(blockType);
+
+	var spaceBlockType = blockType.replace("_"," ");
+	document.getElementById('inputType').value = spaceBlockType;
+	element.data('block_type', spaceBlockType);
+}
+
+function actionChange(i) {
+	var ele = cy.$('#' + selectedId);
+
+	// Remove classes for all action types
+	for (var index in actionTypes) {
+		if (ele.hasClass(actionTypes[index])) {
+			ele.removeClass(actionTypes[index]);
+		}
 	}
 
+	setActionType(ele, actionTypes[i]);
+}
 
+function setActionType(element, actionType) {
+	element.addClass(actionType);
+
+	var spaceActionType = actionType.replace("_"," ");
+	document.getElementById('inputAction').value = spaceActionType;
+	element.data('action_type', spaceActionType);
+}
+
+function actionDescriptionChange() {
+	var new_description = document.getElementById('actionDescription').value;
+	cy.$('#' + selectedId).data('description', new_description);
+	var json = cy.$('#' + selectedId).json();
+	cy.$('#' + selectedId).css({label: json.data.description});
+}
+
+function contextChange(i) {
+	var ele = cy.$('#' + selectedId);
+
+	// Remove classes for all action types
+	for (var index in contextTypes) {
+		if (ele.hasClass(contextTypes[index])) {
+			ele.removeClass(contextTypes[index]);
+		}
+	}
+
+	setContextType(ele, contextTypes[i]);
+}
+
+function setContextType(element, contextType) {
+	element.addClass(contextType);
+
+	var spaceContextType = contextType.replace("_"," ");
+	document.getElementById('inputContext').value = spaceContextType;
+	element.data('context_type', spaceContextType);
+	element.css({label: spaceContextType});
 }
 
 function methodChange() {
@@ -268,92 +150,6 @@ function descriptionChange() {
 	var new_description = document.getElementById('inputDescription').value;
 	cy.$('#' + selectedId).data('description', new_description);
 	updateLabel();
-}
-
-function updateLabel() {
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
-}
-
-function actionChange(i) {
-	var ele = cy.$('#' + selectedId);
-	if (ele.hasClass('Learner_Action')) {
-		ele.removeClass('Learner_Action');
-	}
-	if (ele.hasClass('Facilitator_Action')) {
-		ele.removeClass('Facilitator_Action');
-	}
-	if (ele.hasClass('System_Action')) {
-		ele.removeClass('System_Action');
-	}
-
-	switch(i) {
-		case 0:
-			ele.addClass('Learner_Action');
-			document.getElementById('inputAction').value = 'Learner Action';
-			ele.data('action_type', 'Learner Action');
-			break;
-		case 1:
-			ele.addClass('Facilitator_Action');
-			document.getElementById('inputAction').value = 'Facilitator Action';
-			ele.data('action_type', 'Facilitator Action');
-			break;
-		case 2:
-			ele.addClass('System_Action');
-			document.getElementById('inputAction').value = 'System Action';
-			ele.data('action_type', 'System Action');
-			break;
-	}
-}
-
-function actionDescriptionChange() {
-	var new_description = document.getElementById('actionDescription').value;
-	cy.$('#' + selectedId).data('description', new_description);
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description});
-}
-
-function contextChange(i) {
-	var ele = cy.$('#' + selectedId);
-	if (ele.hasClass('Classroom')) {
-		ele.removeClass('Classroom');
-	}
-	if (ele.hasClass('Online_Synchronous')) {
-		ele.removeClass('Online_Synchronous');
-	}
-	if (ele.hasClass('Online_Asynchronous')) {
-		ele.removeClass('Online_Asynchronous');
-	}
-	if (ele.hasClass('Experiential')) {
-		ele.removeClass('Experiential');
-	}
-
-	switch (i) {
-		case 0:
-			ele.addClass('Classroom');
-			document.getElementById('inputContext').value = 'Classroom';
-			ele.data('context_type', 'Classroom');
-			ele.css({label: 'Classroom'});
-			break;
-		case 1:
-			ele.addClass('Online_Synchronous');
-			document.getElementById('inputContext').value = 'Online Synchronous';
-			ele.data('context_type', 'Online Synchronous');
-			ele.css({label: 'Online Synchronous'});
-			break;
-		case 2:
-			ele.addClass('Online_Asynchronous');
-			document.getElementById('inputContext').value = 'Online Asynchronous';
-			ele.data('context_type', 'Online Asynchronous');
-			ele.css({label: 'Online Asynchronous'});
-			break;
-		case 3:
-			ele.addClass('Experiential');
-			document.getElementById('inputContext').value = 'Experiential';
-			ele.data('context_type', 'Experiential');
-			ele.css({label: 'Experiential'});
-			break;
-	}
 }
 
 function startstopChange(start) {
@@ -375,18 +171,24 @@ function objectiveChange() {
 	cy.$('#' + selectedId).css({label: new_description});
 }
 
+function updateLabel() {
+	var json = cy.$('#' + selectedId).json();
+	cy.$('#' + selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
+}
+
 function redraw() {
 	var layout = cy.makeLayout({
-      // https://github.com/cytoscape/cytoscape.js-dagre
-      name: 'dagre',
-      rankDir: 'LR',
-      avoidOverlap: true,
-      avoidOverlapPadding: 40
-    });
+		// https://github.com/cytoscape/cytoscape.js-dagre
+		name: 'dagre',
+		rankDir: 'LR',
+		avoidOverlap: true,
+		avoidOverlapPadding: 40
+	});
 	layout.run();
 }
 
 function clearCanvas() {
 	cy.remove("");
 	cy.center();
+	cy.zoom(1);
 }
