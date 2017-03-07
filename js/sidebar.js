@@ -306,6 +306,13 @@ function actionChange(i) {
 	}
 }
 
+function actionDescriptionChange() {
+	var new_description = document.getElementById('actionDescription').value;
+	cy.$('#' + selectedId).data('description', new_description);
+	var json = cy.$('#' + selectedId).json();
+	cy.$('#' + selectedId).css({label: json.data.description});
+}
+
 function contextChange(i) {
 	var ele = cy.$('#' + selectedId);
 	if (ele.hasClass('Classroom')) {
