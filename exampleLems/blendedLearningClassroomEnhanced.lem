@@ -1,0 +1,139 @@
+{
+  "lem": {
+    "contexts": [
+      {
+        "id": 108,
+        "context_type": "Classroom",
+        "building_blocks": [
+          104,
+          105
+        ],
+        "actions": [],
+        "notations": []
+      },
+      {
+        "id": 116,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          109,
+          111,
+          113
+        ],
+        "actions": [],
+        "notations": []
+      },
+      {
+        "id": 124,
+        "context_type": "Classroom",
+        "building_blocks": [
+          117,
+          118
+        ],
+        "actions": [],
+        "notations": []
+      }
+    ],
+    "building_blocks": [
+      {
+        "id": 104,
+        "method": "Live Presentation",
+        "description": "Introduction",
+        "block_type": "Information",
+        "parent": "108"
+      },
+      {
+        "id": 105,
+        "method": "Discussion Excercise",
+        "description": "Getting to Know You",
+        "block_type": "Dialogue",
+        "parent": "108"
+      },
+      {
+        "id": 109,
+        "method": "Video",
+        "description": "Lecture",
+        "block_type": "Information",
+        "parent": "116"
+      },
+      {
+        "id": 111,
+        "method": "Discussion",
+        "description": "Topic Discussion",
+        "block_type": "Dialogue",
+        "parent": "116"
+      },
+      {
+        "id": 113,
+        "method": "Dropbox",
+        "description": "Exercise Practice",
+        "block_type": "Practice",
+        "parent": "116"
+      },
+      {
+        "id": 117,
+        "method": "Live Presentation",
+        "description": "Presentation",
+        "block_type": "Evidence",
+        "parent": "124"
+      },
+      {
+        "id": 118,
+        "method": "Instructor Feedback",
+        "description": "Feedback on Presentation",
+        "block_type": "Feedback",
+        "parent": "124"
+      }
+    ],
+    "notations": [
+      {
+        "id": 123,
+        "description": "Objective ID",
+        "building_block":117
+      }
+    ],
+    "actions": [
+      {
+        "id": 107,
+        "action_type": "Facilitator Action",
+        "source": 104,
+        "target": 105
+      },
+      {
+        "id": 110,
+        "action_type": "Learner Action",
+        "source": 105,
+        "target": 109
+      },
+      {
+        "id": 114,
+        "action_type": "Learner Action",
+        "source": 109,
+        "target": 111
+      },
+      {
+        "id": 115,
+        "action_type": "Learner Action",
+        "source": 111,
+        "target": 113
+      },
+      {
+        "id": 120,
+        "action_type": "Learner Action",
+        "source": 113,
+        "target": 117
+      },
+      {
+        "id": 119,
+        "action_type": "Facilitator Action",
+        "source": 118,
+        "target": 117
+      }
+    ],
+    "startIDs": [
+      104
+    ],
+    "stopIDs": [
+      117
+    ]
+  }
+}

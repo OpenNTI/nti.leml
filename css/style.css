@@ -1,0 +1,25 @@
+#cy {
+  width: 74%;
+  height: 75%;
+  position: fixed;
+  display: block;
+  border: 1px solid lightgray;
+}
+
+#dd_pane {
+	width: 74%;
+	height: 15%;
+	bottom: 0;
+	position: fixed;
+  	display: block;
+  	border: 1px solid lightgray;
+}
+
+#template_pane {
+	width: 24%;
+	height: 15%;
+	bottom: 0;
+	position: fixed;
+  	display: block;
+  	border: 1px solid lightgray;
+}

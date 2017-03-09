@@ -89,21 +89,21 @@
       {
         "id": 14,
         "context_type": "Online Asynchronous",
-        "building blocks": [1,2,3],
+        "building_blocks": [1,2,3],
         "actions": [],
         "notations": []
       },
       {
         "id": 15,
         "context_type": "Classroom",
-        "building blocks": [4,5],
+        "building_blocks": [4,5],
         "actions": [],
         "notations": []
       },
       {
         "id": 16,
         "context_type": "Online Asynchronous",
-        "building blocks": [6,7],
+        "building_blocks": [6,7],
         "actions": [],
         "notations": []
       }
