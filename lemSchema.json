@@ -17,31 +17,31 @@
             "type": "integer"
           }
         },
-        "building blocks": {
+        "building_blocks": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer",
+                "type": "integer"
               },
-              "type": {
+              "block_type": {
                 "type": "string",
                 "enum": ["Information", "Dialogue", "Feedback", "Practice", "Evidence"]
               },
               "description": {
-                "type": "string",
+                "type": "string"
               },
               "method": {
-                "type": "string",
+                "type": "string"
               }
             },
             "required": [
               "id",
-              "type",
+              "block_type",
               "method"
             ]
-          },
+          }
         },
         "contexts": {
           "type": "array",
@@ -51,11 +51,11 @@
               "id": {
                 "type": "integer"
               },
-              "type": {
+              "context_type": {
                 "type": "string",
                 "enum": ["Classroom", "Online Synchronous", "Online Asynchronous", "Experiential"]
               },
-              "building blocks": {
+              "building_blocks": {
                 "type": "array",
                 "items": {
                   "type": "integer"
@@ -76,9 +76,9 @@
             },
             "required": [
               "id",
-              "type"
+              "context_type"
             ]
-          },
+          }
         },
         "actions": {
           "type": "array",
@@ -88,7 +88,7 @@
               "id": {
                 "type": "integer"
               },
-              "type": {
+              "action_type": {
                 "type": "string",
                 "enum": ["Learner Action", "Facilitator Action", "System Action"]
               },
@@ -101,11 +101,11 @@
             },
             "required": [
               "id",
-              "type",
+              "action_type",
               "source",
               "target"
             ]
-          },
+          }
         },
         "notations": {
           "type": "array",
@@ -115,7 +115,7 @@
               "id": {
                 "type": "integer"
               },
-              "building block": {
+              "building_block": {
                 "type": "integer"
               },
               "description": {
@@ -124,14 +124,14 @@
             },
             "required": [
               "id",
-              "building block",
+              "building_block",
               "description"
             ]
           }
         }
       },
       "required": [
-        "building blocks",
+        "building_blocks",
         "contexts",
         "actions",
         "notations"
