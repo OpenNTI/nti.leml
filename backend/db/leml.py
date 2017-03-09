@@ -37,6 +37,7 @@ class Notation(EmbeddedDocument):
 # LEM Model
 class Lem(Document):
 	lem_id = IntField(required=True, unique=True)
+	name = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
 	startIDs = ListField(IntField())
