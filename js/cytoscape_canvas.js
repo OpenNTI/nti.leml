@@ -203,6 +203,9 @@ function loadNewCytoscapeWith(elements) {
 
   });
 
+  cy.add({group: "nodes", data: {id: "start", start: true}, position: {x: 0, y: 0}, style: {label: "Start", class: "startstop"}, classes: "startstop"})
+  cy.add({group: "nodes", data: {id: "stop", start: false}, position: {x: 1000, y: 0}, style: {label: "Stop", class: "startstop"}, classes: "startstop"})
+  cy.center();
   cy.snapToGrid();
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');

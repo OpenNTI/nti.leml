@@ -193,7 +193,7 @@ function redraw() {
 }
 
 function clearCanvas() {
-	cy.remove("");
+	cy.remove('[id != "stop"][id != "start"]');
 	cy.center();
 	cy.zoom(1);
 }
