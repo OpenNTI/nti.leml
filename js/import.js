@@ -72,7 +72,7 @@ function renderLem(json) {
       var startNodeID = "start" + startID;
 
       elements.push({data: {id: startNodeID, start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'},
-        {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
+        {data: {id: startNodeID + startID, source: startNodeID, target: startID, action_type: "Learner Action"}, classes: "Learner_Action"}
       );
     }
   }
@@ -125,7 +125,7 @@ function renderLem(json) {
       var stopNodeID = "stop" + stopID;
 
       elements.push({data: {id: stopNodeID, start: false}, style: {label:"Stop"}, classes: "startstop"},
-        {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
+        {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID, action_type: "Learner Action"}, classes: "Learner_Action"}
       );
     }
   }

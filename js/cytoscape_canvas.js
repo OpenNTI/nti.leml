@@ -13,6 +13,8 @@ var lemStyle = [ // the stylesheet for the graph
     selector: 'edge',
     style: {
       'width': 4,
+      'text-wrap': 'wrap',
+      'text-margin-y': -12,
       'line-color': '#000',
       'target-arrow-color': '#000',
       'target-arrow-shape': 'triangle',
@@ -292,8 +294,8 @@ function loadNewCytoscapeWith(elements) {
 
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
-    toggleSidebar(2, evt);
     selectedId = evt.cyTarget.id();
+    toggleSidebar(2, evt);
   });
 
   cy.on('unselect', 'edge', function(evt) {
