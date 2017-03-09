@@ -6,6 +6,7 @@ import json
 
 init()
 application = get_global_app()
+login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
 in_use_id = [0]
@@ -33,9 +34,7 @@ def lemall():
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
-	'''json_string = '{"lem_id": 45, "startIDs": [1], "stopIDs": [3], "building_blocks": [{"id": 1, "block_type": "Information", "description": "Demonstration", "method": "Video"}, {"id": 2, "block_type": "Practice", "description": "Application Exercise", "method": "Assignment"}, {"id": 3, "block_type": "Dialogue", "description": "Lessons Learned", "method": "Discussion"}], "contexts": [{"id": 4, "context_type": "Online Asynchronous", "building_blocks": [1, 2, 3], "notations": []}], "actions": [{"id": 5, "action_type": "Learner Action", "source": 1, "target": 2}, {"id": 6, "action_type": "Learner Action", "source": 2, "target": 3}], "notations": []}'''
 	json_string = request.args.get('obj')
-	#db = connect(db_name)	
 	db = connect(name, host = host)
 	toLem(json_string).save()
 	db.close()
@@ -55,6 +54,14 @@ def delete():
 @app.route("/nextid", methods = ['GET', 'POST'])
 def nextid():
 	return str(in_use_id[-1] + 1)
+
+@login_manager.userloader
+def load_user(id):
+	db = connect(name, host=host)
+	for user in User.objects(user_id = id):
+		if user.username == id:
+			return User(user.username, user.password)
+	return None
 
 #Start the application
 if __name__ == '__main__':
