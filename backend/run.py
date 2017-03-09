@@ -50,17 +50,23 @@ def delete():
 	db.close()
 	return 'complete'
 
-#URL for getting next available id
-@app.route("/nextid", methods = ['GET', 'POST'])
-def nextid():
-	return str(in_use_id[-1] + 1)
+#URL for registering users
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	name = request.args.get('email')
+	password = request.args.get('pass')
+	pwd_hash = getHash(password)
+	db = connect(name, host = host)
+	
+	db.close()
+	return 'complete'
 
-@login_manager.userloader
+@login_manager.user_loader
 def load_user(id):
 	db = connect(name, host=host)
 	for user in User.objects(user_id = id):
-		if user.username == id:
-			return User(user.username, user.password)
+		if user.email == id:
+			return User(user.email, user.password)
 	return None
 
 #Start the application
