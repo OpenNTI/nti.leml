@@ -31,11 +31,24 @@ def lemall():
 		allobj.append(lem.to_json())
 	db.close()
 	return json.dumps(allobj)
+
+#URL for getting user lems
+@app.route('/lemuser', methods = ['GET', 'POST'])
+def lemuser():
+	db = connect(name, host = host)
+	allobj = []
+	for lem in Lem.objects(created_by = request.args.get('email')):
+		allobj.append(lem.to_json())
+	db.close()
+	return json.dumps(allobj)
 	
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
 	json_string = request.args.get('obj')
+	is_valid = validate_json(json_string)
+	if is_valid is False:
+		return "created_by user not in database"
 	db = connect(name, host = host)
 	toLem(json_string).save()
 	db.close()
@@ -65,10 +78,18 @@ def register():
 @login_manager.user_loader
 def load_user(id):
 	db = connect(name, host=host)
-	for user in User.objects(user_id = id):
+	for user in User.objects(email = id):
 		if user.email == id:
 			return User(user.email, user.password)
 	return None
+
+def validate_json(json_s):
+	p_dict = json.loads(json_s)
+	email = p_dict["created_by"]
+	t_user = load_user(email)
+	if t_user is None:
+		return False
+	return True	
 
 #Start the application
 if __name__ == '__main__':
