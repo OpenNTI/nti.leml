@@ -16,13 +16,13 @@ $(function() {
 
 function downloadImage(fileType) {
 
-  var error = validateLem();
+  var error = checkLemStructure();
 
   if (error.length > 0) {
     showError(error);
     return;
   }
-  
+
   var content;
 
   if (fileType == ImageType.JPEG) {
