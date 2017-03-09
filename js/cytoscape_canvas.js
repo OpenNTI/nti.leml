@@ -180,6 +180,8 @@ var lemStyle = [ // the stylesheet for the graph
 ];
 
 function loadNewCytoscapeWith(elements) {
+  new_id = elements.length;
+
   cy = cytoscape({
 
     container: document.getElementById('cy'), // container to render in
