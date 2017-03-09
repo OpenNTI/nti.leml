@@ -90,7 +90,8 @@ function downloadLemJson() {
   var error = checkLemStructure();
 
   if (error.length > 0) {
-    showError(error);
+    $("#exportErrorDescription").text(error);
+    $("#exportInvalidLEM").modal('show');
     return;
   }
 

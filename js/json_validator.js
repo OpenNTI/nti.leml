@@ -5,12 +5,6 @@ $.getJSON("../lemSchema.json", function(schema) {
   validateLem = ajv.compile(schema);
 });
 
-
-function showError(error) {
-  $("#errorDescription").text(error);
-  $("#myModal").modal('show');
-}
-
 function checkLemStructure() {
   var totalCount = cy.$().length;
   var predecessorsCount = cy.$("#stop").predecessors().length;
