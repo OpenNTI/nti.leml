@@ -250,8 +250,10 @@ function loadNewCytoscapeWith(elements) {
               cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
               new_id = new_id + 1;
             } else {
-              cy.remove(evt.cyTarget);
-              toggleSidebar(0, evt);
+              if (!val.classes.includes("startstop")) {
+                cy.remove(evt.cyTarget);
+                toggleSidebar(0, evt);
+              }
             }
         } else if (val.classes.includes("context")) {
           if (evt.cyTarget.id() != val.data.id) {
