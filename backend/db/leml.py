@@ -1,5 +1,7 @@
 from mongoengine import *
+from user import User
 import json
+import datetime
 
 BLOCK_TYPE = ("Information", "Dialogue", "Feedback", "Practice", "Evidence")
 CONTEXT_TYPE = ("Classroom", "Online Synchronous", "Online Asynchronous", "Experiential")
@@ -23,6 +25,7 @@ class Context(EmbeddedDocument):
 class Action(EmbeddedDocument):
 	id = IntField(required=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
+	description = StringField ()
 	source = IntField(required=True)
 	target = IntField(required=True)
 
@@ -34,6 +37,8 @@ class Notation(EmbeddedDocument):
 # LEM Model
 class Lem(Document):
 	lem_id = IntField(required=True, unique=True)
+	created_by = ReferenceField(User)
+	date_created = DateTimeField(default=datetime.datetime.now())
 	startIDs = ListField(IntField())
 	stopIDs = ListField(IntField())
 	building_blocks = ListField(EmbeddedDocumentField(Block), required=True)
