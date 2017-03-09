@@ -246,13 +246,21 @@ function loadNewCytoscapeWith(elements) {
               defaultClass = "notationEdge";
             }
 
-            if (evt.cyTarget.id() != val.data.id) {
-              cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
-              new_id = new_id + 1;
+            var duplicateActionSelector = "[source = '" + val.data.id + "'][target = '" + evt.cyTarget.id() + "']";
+            var duplicateActions = cy.$(duplicateActionSelector);
+
+            if (duplicateActions.length > 0) {
+              showCanvasError("Cannot draw two edges between one pair of items.");
+              console.error("Cannot draw two edges between one pair of items.");
             } else {
-              if (!val.classes.includes("startstop")) {
-                cy.remove(evt.cyTarget);
-                toggleSidebar(0, evt);
+              if (evt.cyTarget.id() != val.data.id) {
+                cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+                new_id = new_id + 1;
+              } else {
+                if (!val.classes.includes("startstop")) {
+                  cy.remove(evt.cyTarget);
+                  toggleSidebar(0, evt);
+                }
               }
             }
         } else if (val.classes.includes("context")) {
@@ -322,6 +330,16 @@ function loadDefaultCytoscape() {
   var x2 = wind.x2 - (wind.w / 10);
   cy.add({group: "nodes", data: {id: "start", start: true}, position: {x: x1, y: 0}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
   cy.add({group: "nodes", data: {id: "stop", start: false}, position: {x: x2, y: 0}, style: {label: "Stop", class: "startstop"}, classes: "startstop"});
+}
+
+function showCanvasError(error) {
+  $("#canvasErrorLabel").text(error);
+  $("#canvasErrorLabel").fadeIn();
+
+  // Fade out after three seconds
+  window.setTimeout(function() {
+    $("#canvasErrorLabel").fadeOut()
+  }, 3000);
 }
 
 $(loadDefaultCytoscape());
