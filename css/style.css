@@ -23,3 +23,8 @@
   	display: block;
   	border: 1px solid lightgray;
 }
+
+#canvasErrorLabel {
+  color: red;
+  display: none;
+}
