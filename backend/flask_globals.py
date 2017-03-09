@@ -5,7 +5,7 @@ from mongoengine import *
 
 login_manager = LoginManager()
 app = Flask(__name__)
-bcrpyt = Bcrypt()
+bcrypt = Bcrypt()
 
 def init():
 	login_manager.init_app(app)
@@ -16,10 +16,10 @@ def get_login_manager():
 def get_global_app():
 	return app
 
-def getHash(password)
+def getHash(password):
 	return bcrypt.generate_password_hash(password)
 
-def chckHash(password_hash, password)
+def chckHash(password_hash, password):
 	return bcrypt.check_password_hash(password_hash, password)
 
 class User(UserMixin):

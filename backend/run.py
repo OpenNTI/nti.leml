@@ -1,6 +1,7 @@
 from flask_globals import *
 from flask import request
 from db.leml import Lem, toLem
+from db.user import User 
 from mongoengine import *
 import json
 
@@ -57,7 +58,7 @@ def register():
 	password = request.args.get('pass')
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
-	
+	User(name, pwd_hash).save()
 	db.close()
 	return 'complete'
 
