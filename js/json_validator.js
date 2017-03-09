@@ -12,6 +12,7 @@ function showError(error) {
 }
 
 function checkLemStructure() {
+  var totalCount = cy.$().length;
   var predecessorsCount = cy.$("#stop").predecessors().length;
 
   var contextCount = 0;
@@ -22,8 +23,8 @@ function checkLemStructure() {
   });
 
   // Minus 1 for stop node which is not a predecessor of itself
-  var unconnectedObjects = (predecessorsCount - contextCount - 1);
-  if (unconnectedObjects == 0) {
+  var unconnectedObjects = totalCount - predecessorsCount - contextCount - 1;
+  if (unconnectedObjects > 0) {
     return "Graph has " + unconnectedObjects + " unconnected objects";
   }
 
