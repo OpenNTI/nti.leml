@@ -203,6 +203,9 @@ function loadNewCytoscapeWith(elements) {
 
   });
 
+  cy.add({group: "nodes", data: {id: "start", start: true}, position: {x: 0, y: 0}, style: {label: "Start", class: "startstop"}, classes: "startstop"})
+  cy.add({group: "nodes", data: {id: "stop", start: false}, position: {x: 1000, y: 0}, style: {label: "Stop", class: "startstop"}, classes: "startstop"})
+  cy.center();
   cy.snapToGrid();
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
@@ -247,8 +250,10 @@ function loadNewCytoscapeWith(elements) {
               cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
               new_id = new_id + 1;
             } else {
-              cy.remove(evt.cyTarget);
-              toggleSidebar(0, evt);
+              if (!val.classes.includes("startstop")) {
+                cy.remove(evt.cyTarget);
+                toggleSidebar(0, evt);
+              }
             }
         } else if (val.classes.includes("context")) {
           if (evt.cyTarget.id() != val.data.id) {
