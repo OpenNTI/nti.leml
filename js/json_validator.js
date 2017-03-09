@@ -4,3 +4,27 @@ var validateLem = function(schema) { console.error("Schema could not be loaded!"
 $.getJSON("../lemSchema.json", function(schema) {
   validateLem = ajv.compile(schema);
 });
+
+
+function showError(error) {
+  $("#errorDescription").text(error);
+  $("#myModal").modal('show');
+}
+
+function validateLem() {
+  var predecessorsCount = cy.$("#stop").predecessors().length;
+
+  var contextCount = 0;
+  cy.nodes.map(function(node) {
+    if (node.hasClass("context")) {
+      ++contextCount;
+    }
+  });
+
+  // Minus 1 for stop node which is not a predecessor of itself
+  if ((predecessorsCount - contextCount - 1) == 0) {
+    return "Graph is not connected";
+  }
+
+  return "";
+}

@@ -87,6 +87,13 @@ function convertIdToInt(object) {
 }
 
 function downloadLemJson() {
+  var error = validateLem();
+
+  if (error.length > 0) {
+    showError(error);
+    return;
+  }
+
   var lemJson = generateJson();
 
   if (validateLem(lemJson)) {
