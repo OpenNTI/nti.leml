@@ -97,6 +97,9 @@
               },
               "target": {
                 "type": "integer"
+              },
+              "description": {
+                "type": "string"
               }
             },
             "required": [

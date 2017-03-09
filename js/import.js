@@ -138,7 +138,7 @@ function renderLem(json) {
       var styleClass = action.action_type.replace(" ", "_");
 
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
-      elements.push({data: action, classes: styleClass});
+      elements.push({data: action, classes: styleClass, style: {label: action.description}});
     }
   }
 
