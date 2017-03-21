@@ -1,7 +1,7 @@
 from flask_globals import *
 from flask import request
 from db.leml import Lem, toLem
-from db.user import User 
+from db.user import User as DBUser 
 from mongoengine import *
 import json
 
@@ -75,10 +75,25 @@ def register():
 	db.close()
 	return 'complete'
 
+#URL for login
+@app.route('/login',methods = ['GET','POST'])
+def login():
+	name = request.args.get('email')
+	password = request.args.get('pass')
+	usr_ver = load_user(name)
+	if usr_ver is None:
+		return 'User not found'
+	pwd_ver = chckHash(usr_ver.password, password)
+	if pwd_ver is True:
+		login_user(usr_ver)
+		return 'logged in'
+	else:
+		return 'Invalid username or password'
+
 @login_manager.user_loader
 def load_user(id):
 	db = connect(name, host=host)
-	for user in User.objects(email = id):
+	for user in DBUser.objects(email = id):
 		if user.email == id:
 			return User(user.email, user.password)
 	return None
