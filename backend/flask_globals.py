@@ -1,10 +1,13 @@
 from flask import Flask
-from flask_login import LoginManager, login_user, logout_user, UserMixin
+from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user
 from flask_bcrypt import Bcrypt
 from mongoengine import *
+import os
 
 login_manager = LoginManager()
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
+app.config['SESSION_TYPE'] = 'filesystem'
 bcrypt = Bcrypt()
 
 def init():
@@ -25,19 +28,10 @@ def chckHash(password_hash, password):
 class User(UserMixin):
 	email = ""
 	password = ""	
-
+	is_authenticated = False
 	def __init__(self, email, password):
 		self.email = email
 		self.password = password
 
 	def get_id(self):
 		return self.email
-
-	def is_authenticated(self):
-		return True
-
-	def is_active(self):
-		return True
-
-	def is_anonymous(self):
-		return False

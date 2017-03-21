@@ -1,7 +1,7 @@
 from flask_globals import *
 from flask import request
 from db.leml import Lem, toLem
-from db.user import User as DBUser
+from db.user import User as DBUser 
 from mongoengine import *
 import json
 
@@ -16,8 +16,8 @@ in_use_id = [0]
 @app.route('/lem', methods = ['GET', 'POST'])
 def lem():
 	db = connect(name,host=host)
-	obj = "error"
-	for lem in Lem.objects(lem_id = request.args.get('id')):
+	obj = "Error"
+	for lem in Lem.objects(_id = request.args.get('id')):
 		obj = lem.to_json()
 	db.close()
 	return obj
@@ -35,34 +35,41 @@ def lemall():
 #URL for getting user lems
 @app.route('/lemuser', methods = ['GET', 'POST'])
 def lemuser():
-	db = connect(name, host = host)
-	allobj = []
-	for lem in Lem.objects(created_by = request.args.get('email')):
-		allobj.append(lem.to_json())
-	db.close()
-	return json.dumps(allobj)
+	if current_user.is_authenticated:
+		db = connect(name, host = host)
+		allobj = []
+		for lem in Lem.objects(created_by = current_user.email):
+			print(lem)
+			allobj.append(lem.to_json())
+		db.close()
+		return json.dumps(allobj)
+	else:
+		return "User not logged in."
 	
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
-	json_string = request.args.get('obj')
-	is_valid = validate_json(json_string)
-	if is_valid is False:
-		return "created_by user not in database"
-	db = connect(name, host = host)
-	toLem(json_string).save()
-	db.close()
-	return "complete"
+	if current_user.is_authenticated:
+		json_string = request.args.get('obj')
+		is_valid = validate_json(json_string)
+		if is_valid is False:
+			return "created_by user not in database."
+		db = connect(name, host = host)
+		toLem(json_string).save()
+		db.close()
+		return "Complete"
+	else:
+		return "User not logged in. Cannot save LEM."
 
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['GET', 'POST'])
 def delete():
 	id = request.args.get('id')
 	db = connect(name, host = host)
-	for lem in Lem.objects(lem_id = id):
+	for lem in Lem.objects(_id = id):
 		lem.delete()
 	db.close()
-	return 'complete'
+	return "Complete"
 
 #URL for registering users
 @app.route('/register', methods = ['GET', 'POST'])
@@ -73,7 +80,31 @@ def register():
 	db = connect(name, host = host)
 	DBUser(name, pwd_hash).save()
 	db.close()
-	return 'complete'
+	return "Complete"
+
+@app.route('/userexists', methods = ['GET'])
+def user_exists():
+	email = request.args.get('email')
+	db = connect(name, host = host)
+	exist = DBUser.objects(email__exists)
+	db.close()
+	return exist
+
+#URL for login
+@app.route('/login',methods = ['GET','POST'])
+def login():
+	name = request.args.get('email')
+	password = request.args.get('pass')
+	usr_ver = load_user(name)
+	if usr_ver is None:
+		return "User not found"
+	pwd_ver = chckHash(usr_ver.password, password)
+	if pwd_ver is True:
+		login_user(usr_ver)
+		usr_ver.is_authenticated = True
+		return "Logged in"
+	else:
+		return "Invalid username or password"
 
 @login_manager.user_loader
 def load_user(id):

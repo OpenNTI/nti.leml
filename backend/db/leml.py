@@ -36,7 +36,6 @@ class Notation(EmbeddedDocument):
 
 # LEM Model
 class Lem(Document):
-	lem_id = IntField(primary_key=True, required=True, unique=True)
 	name = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
@@ -61,5 +60,5 @@ def toLem(json_string):
 	action_objs = []
 	for action in python_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"])) 
-	lem = Lem(lem_id=python_dict["lem_id"], name=python_dict["name"], created_by=User(python_dict["created_by"], ""), startIDs=python_dict["startIDs"], stopIDs=python_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs)
+	lem = Lem(name=python_dict["name"], created_by=User(python_dict["created_by"], ""), startIDs=python_dict["startIDs"], stopIDs=python_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs)
 	return lem
