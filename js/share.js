@@ -6,12 +6,20 @@ $(function() {
 
 function shareLem() {
   var lemName = $("#lemNameText")[0].value;
-  var lem = generateJson();
+  var lem = generateJson().lem;
   lem.name = lemName;
 
-  console.log(lem);
+  // TODO Hardcoded because it's the only user right now
+  lem.created_by = "austingpgraham@gmail.com";
+
+
+  $.post(saveRoute, lem, function(data, status){
+      alert("Data: " + data + "\nStatus: " + status);
+  });
 }
 
 function openShareDialog() {
+  // Clear name field
+  $("#lemNameText")[0].value = "";
   $("#shareLEM").modal('show');
 }
