@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_login import LoginManager, login_user, logout_user, UserMixin
+from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user
 from flask_bcrypt import Bcrypt
 from mongoengine import *
 import os
