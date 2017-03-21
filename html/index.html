@@ -43,6 +43,7 @@
 
 
   <!-- Local JS files-->
+  <script type="text/javascript" src="../js/share.js"></script>
   <script type="text/javascript" src="../js/json_validator.js"></script>
   <script type="text/javascript" src="../js/import.js"></script>
   <script type="text/javascript" src="../js/export.js"></script>
@@ -69,6 +70,7 @@
               <li><a href="#" id="downloadJPEG">JPEG</a></li>
             </ul>
           </li>
+          <li><a href="#" onclick="openShareDialog();">Share</a></li>
         </ul>
 
 
@@ -257,7 +259,7 @@
 
 
 
-<!-- Modal -->
+<!-- Export Error Modal -->
 <div id="exportInvalidLEM" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -278,7 +280,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Image Download Error Modal -->
 <div id="downloadInvalidLEM" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -294,6 +296,30 @@
       </div>
       <div class="modal-footer">
         <button id="downloadAnyway" type="button" class="btn btn-default" data-dismiss="modal">Download Anyway</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Share Modal -->
+<div id="shareLEM" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Share LEM</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+         <label for="lemName">Name</label>
+         <input type="text" class="form-control" id="lemNameText" placeholder="Enter a name for the LEM">
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button id="shareButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
       </div>
     </div>
 
