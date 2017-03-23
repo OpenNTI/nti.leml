@@ -110,31 +110,31 @@ var lemStyle = [ // the stylesheet for the graph
   {
     selector: '.Dialogue',
     style: {
-      'background-image': '../img/Dialogue.png'
+      'background-image': '/static/img/Dialogue.png'
     }
   },
   {
     selector: '.Evidence',
     style: {
-      'background-image': '../img/Evidence.png'
+      'background-image': '/static/img/Evidence.png'
     }
   },
   {
     selector: '.Feedback',
     style: {
-      'background-image': '../img/Feedback.png'
+      'background-image': '/static/img/Feedback.png'
     }
   },
   {
     selector: '.Information',
     style: {
-      'background-image': '../img/Information.png'
+      'background-image': '/static/img/Information.png'
     }
   },
   {
     selector: '.Practice',
     style: {
-      'background-image': '../img/Practice.png'
+      'background-image': '/static/img/Practice.png'
     }
   },
   {
