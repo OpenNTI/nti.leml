@@ -1,5 +1,3 @@
-var email;
-
 $(function() {
   $("#shareButton").on('click', function() {
     shareLem();
@@ -19,7 +17,16 @@ $(function() {
     $("#registerEmail").empty();
     $("#registerPassword").empty();
   });
+  $("#usernameField").change(resetStateLogin);
+  $("#passwordField").change(resetStateLogin)
+
 });
+
+function resetStateLogin() {
+  $("#usernameField").removeClass("invalid");
+  $("#passwordField").removeClass("invalid");
+  $("#loginErrorText").hide();
+}
 
 function register(email, password) {
   var registerInfo = {};
@@ -46,9 +53,17 @@ function login(email, password) {
   $.post(loginRoute, JSON.stringify(loginInfo), function(data, status){
     if (data === "User not found") {
       $("#usernameField").addClass("invalid");
+
+      $("#loginErrorText").empty();
+      $("#loginErrorText").append(data);
+      $("#loginErrorText").show();
     } else if (data === "Invalid username or password") {
       $("#usernameField").addClass("invalid");
       $("#passwordField").addClass("invalid");
+
+      $("#loginErrorText").empty();
+      $("#loginErrorText").append(data);
+      $("#loginErrorText").show();
     } else if (status == "success") {
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
