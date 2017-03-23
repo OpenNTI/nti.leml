@@ -51,7 +51,7 @@
   <script type="text/javascript" src="/static/js/sidebar.js"></script>
   <script type="text/javascript" src="/static/js/register.js"></script>
   <script type="text/javascript" src="/static/js/routes.js"></script>
-  <script type="text/javascript" src="/static/js/share.js"></script>
+  <script type="text/javascript" src="/static/js/user.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -76,16 +76,22 @@
           <li><a href="#" onclick="openShareDialog();">Share</a></li>
         </ul>
 
-        <form class="navbar-form navbar-right">
+        <form id="loginForm" class="navbar-form navbar-right">
           <div class="form-group">
             <input id="usernameField" type="text" class="form-control" placeholder="Username">
-            <input id= "passwordField" type="password" class="form-control" placeholder="Password">
+            <input id="passwordField" type="password" class="form-control" placeholder="Password">
+            <button id="loginButton" type="submit" class="btn btn-default">Log In</button>
           </div>
-          <button id ="loginButton" type="submit" class="btn btn-default">Log In</button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Register
-          </button>
+          <button id="registerButton"type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Register</button>
         </form>
+
+        <div class="navbar-form navbar-right dropdown" id="currentUserInfo" style="display:none">
+          <button class="btn btn-default dropdown-toggle" type="button" id="currentUserEmail" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a id="logoutButton" href="#">Log Out</a></li>
+          </ul>
+        </div>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -314,7 +320,7 @@
 </div>
 
 <!-- Register Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -338,7 +344,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button id="registerSubmitButton" type="submit" class="btn btn-primary">Register</button>
       </div>
     </div>
   </div>
