@@ -56,7 +56,7 @@ def save():
 		if is_valid is False:
 			return "created_by user not in database."
 		db = connect(name, host = host)
-		toLem(json_string).save()
+		toLem(json_string, current_user.email).save()
 		db.close()
 		return "Complete"
 	else:
