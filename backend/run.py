@@ -17,7 +17,7 @@ in_use_id = [0]
 def lem():
 	db = connect(name,host=host)
 	obj = "Error"
-	for lem in Lem.objects(_id = request.args.get('id')):
+	for lem in Lem.objects(_id = request.args.post('id')):
 		obj = lem.to_json()
 	db.close()
 	return obj
@@ -50,7 +50,7 @@ def lemuser():
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
 	if current_user.is_authenticated:
-		json_string = request.args.get('obj')
+		json_string = request.args.post('obj')
 		is_valid = validate_json(json_string)
 		if is_valid is False:
 			return "created_by user not in database."
@@ -64,7 +64,7 @@ def save():
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['GET', 'POST'])
 def delete():
-	id = request.args.get('id')
+	id = request.args.post('id')
 	db = connect(name, host = host)
 	for lem in Lem.objects(_id = id):
 		lem.delete()
@@ -74,17 +74,17 @@ def delete():
 #URL for registering users
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
-	name = request.args.get('email')
-	password = request.args.get('pass')
+	name = request.args.post('email')
+	password = request.args.post('pass')
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
-	User(name, pwd_hash).save()
+	DBUser(name, pwd_hash).save()
 	db.close()
 	return "Complete"
 
 @app.route('/userexists', methods = ['GET'])
 def user_exists():
-	email = request.args.get('email')
+	email = request.args.post('email')
 	db = connect(name, host = host)
 	exist = DBUser.objects(email__exists)
 	db.close()
@@ -93,8 +93,8 @@ def user_exists():
 #URL for login
 @app.route('/login',methods = ['GET','POST'])
 def login():
-	name = request.args.get('email')
-	password = request.args.get('pass')
+	name = request.args.post('email')
+	password = request.args.post('pass')
 	usr_ver = load_user(name)
 	if usr_ver is None:
 		return "User not found"
