@@ -2,6 +2,16 @@ $(function() {
   $("#shareButton").on('click', function() {
     shareLem();
   });
+  $("#loginButton").on('click', function() {
+    var loginInfo = {};
+
+    loginInfo.email = $("#usernameField")[0].value;
+    loginInfo.pass = $("#passwordField")[0].value;
+
+    $.post(loginRoute, JSON.stringify(loginInfo), function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+  });
 });
 
 function shareLem() {
