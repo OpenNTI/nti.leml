@@ -1,7 +1,7 @@
 from flask_globals import *
 from flask import request, render_template
 from db.leml import Lem, toLem
-from db.user import User as DBUser 
+from db.user import User as DBUser
 from mongoengine import *
 import json
 
@@ -45,7 +45,7 @@ def lemuser():
 		return json.dumps(allobj)
 	else:
 		return "User not logged in."
-	
+
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
@@ -122,6 +122,10 @@ def logout():
 def home():
 	return render_template("index.html")
 
+@app.route('/public')
+def public():
+	return render_template("public.html")
+
 @login_manager.user_loader
 def load_user(id):
 	db = connect(name, host=host)
@@ -136,7 +140,7 @@ def validate_json(json_s):
 	t_user = load_user(email)
 	if t_user is None:
 		return False
-	return True	
+	return True
 
 #Start the application
 if __name__ == '__main__':
