@@ -1,7 +1,7 @@
 from flask_globals import *
 from flask import request, render_template
 from db.leml import Lem, toLem
-from db.user import User as DBUser 
+from db.user import User as DBUser
 from mongoengine import *
 import json
 
@@ -34,29 +34,33 @@ def lemall():
 
 #URL for getting user lems
 @app.route('/lemuser', methods = ['GET', 'POST'])
-@login_required
 def lemuser():
-	db = connect(name, host = host)
-	allobj = []
-	for lem in Lem.objects(created_by = current_user.email):
-		print(lem)
-		allobj.append(lem.to_json())
-	db.close()
-	return json.dumps(allobj)
-	
+	if current_user.is_authenticated:
+		db = connect(name, host = host)
+		allobj = []
+		for lem in Lem.objects(created_by = current_user.email):
+			print(lem)
+			allobj.append(lem.to_json())
+		db.close()
+		return json.dumps(allobj)
+	else:
+		return "User not logged in."
+
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
-@login_required
 def save():
-	data = request.get_json(force = True)
-	json_string = data['obj']
-	is_valid = validate_json(json_string)
-	if is_valid is False:
-		return "created_by user not in database."
-	db = connect(name, host = host)
-	toLem(json_string, current_user.email).save()
-	db.close()
-	return "Successfully saved LEM."
+	if current_user.is_authenticated:
+		data = request.get_json(force = True)
+		json_string = data['obj']
+		is_valid = validate_json(json_string)
+		if is_valid is False:
+			return "created_by user not in database."
+		db = connect(name, host = host)
+		toLem(json_string, current_user.email).save()
+		db.close()
+		return "Complete"
+	else:
+		return "User not logged in. Cannot save LEM."
 
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['GET', 'POST'])
@@ -67,7 +71,7 @@ def delete():
 	for lem in Lem.objects(_id = id):
 		lem.delete()
 	db.close()
-	return "Successfully deleted LEM."
+	return "Complete"
 
 #URL for registering users
 @app.route('/register', methods = ['GET', 'POST'])
@@ -79,7 +83,7 @@ def register():
 	db = connect(name, host = host)
 	DBUser(name, pwd_hash).save()
 	db.close()
-	return "Successfully registered user."
+	return "Complete"
 
 @app.route('/userexists', methods = ['GET'])
 def user_exists():
@@ -102,25 +106,32 @@ def login():
 	pwd_ver = chckHash(usr_ver.password, password)
 	if pwd_ver is True:
 		login_user(usr_ver)
+		usr_ver.is_authenticated = True
 		return "Logged in"
 	else:
 		return "Invalid username or password"
+	return "Error"
 
 @app.route('/logout', methods = ['GET', 'POST'])
-@login_required
 def logout():
-	logout_user()
-	return redirect(url_for('home'))
+	if current_user.is_authenticated:
+		logout_user()
+	return 'Logged out'
 
 @app.route('/')
 def home():
 	return render_template("index.html")
 
+@app.route('/public')
+def public():
+	return render_template("public.html")
+
 @login_manager.user_loader
-def load_user(id, remember=True):
+def load_user(id):
 	db = connect(name, host=host)
 	for user in DBUser.objects(email = id):
-		return User(user.email, user.password)
+		if user.email == id:
+			return User(user.email, user.password)
 	return None
 
 def validate_json(json_s):
@@ -129,7 +140,7 @@ def validate_json(json_s):
 	t_user = load_user(email)
 	if t_user is None:
 		return False
-	return True	
+	return True
 
 #Start the application
 if __name__ == '__main__':

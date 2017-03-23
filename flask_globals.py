@@ -1,5 +1,5 @@
-from flask import Flask
-from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user
+from flask import Flask, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user, login_required
 from flask_bcrypt import Bcrypt
 from mongoengine import *
 import os
@@ -28,7 +28,7 @@ def chckHash(password_hash, password):
 class User(UserMixin):
 	email = ""
 	password = ""	
-	is_authenticated = False
+
 	def __init__(self, email, password):
 		self.email = email
 		self.password = password
