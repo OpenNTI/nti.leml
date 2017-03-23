@@ -112,6 +112,12 @@ def login():
 		return "Invalid username or password"
 	return "Error"
 
+@app.route('/logout', methods = ['GET', 'POST'])
+def logout():
+	if current_user.is_authenticated:
+		logout_user()
+	return 'Logged out'
+
 @app.route('/')
 def home():
 	return render_template("index.html")
