@@ -34,33 +34,29 @@ def lemall():
 
 #URL for getting user lems
 @app.route('/lemuser', methods = ['GET', 'POST'])
+@login_required
 def lemuser():
-	if current_user.is_authenticated:
-		db = connect(name, host = host)
-		allobj = []
-		for lem in Lem.objects(created_by = current_user.email):
-			print(lem)
-			allobj.append(lem.to_json())
-		db.close()
-		return json.dumps(allobj)
-	else:
-		return "User not logged in."
+	db = connect(name, host = host)
+	allobj = []
+	for lem in Lem.objects(created_by = current_user.email):
+		print(lem)
+		allobj.append(lem.to_json())
+	db.close()
+	return json.dumps(allobj)
 	
 #URL for saving a lem object
 @app.route('/save', methods = ['GET', 'POST'])
+@login_required
 def save():
-	if current_user.is_authenticated:
-		data = request.get_json(force = True)
-		json_string = data['obj']
-		is_valid = validate_json(json_string)
-		if is_valid is False:
-			return "created_by user not in database."
-		db = connect(name, host = host)
-		toLem(json_string, current_user.email).save()
-		db.close()
-		return "Complete"
-	else:
-		return "User not logged in. Cannot save LEM."
+	data = request.get_json(force = True)
+	json_string = data['obj']
+	is_valid = validate_json(json_string)
+	if is_valid is False:
+		return "created_by user not in database."
+	db = connect(name, host = host)
+	toLem(json_string, current_user.email).save()
+	db.close()
+	return "Successfully saved LEM."
 
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['GET', 'POST'])
@@ -71,7 +67,7 @@ def delete():
 	for lem in Lem.objects(_id = id):
 		lem.delete()
 	db.close()
-	return "Complete"
+	return "Successfully deleted LEM."
 
 #URL for registering users
 @app.route('/register', methods = ['GET', 'POST'])
@@ -83,7 +79,7 @@ def register():
 	db = connect(name, host = host)
 	DBUser(name, pwd_hash).save()
 	db.close()
-	return "Complete"
+	return "Successfully registered user."
 
 @app.route('/userexists', methods = ['GET'])
 def user_exists():
@@ -111,9 +107,9 @@ def login():
 		return "Invalid username or password"
 
 @app.route('/logout', methods = ['GET', 'POST'])
+@login_required
 def logout():
-	if current_user.is_authenticated:
-		logout_user()
+	logout_user()
 	return 'Logged out'
 
 @app.route('/')
