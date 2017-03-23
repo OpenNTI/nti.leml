@@ -49,6 +49,7 @@
   <script type="text/javascript" src="../js/image_download.js"></script>
   <script type="text/javascript" src="../js/drag_and_drop.js"></script>
   <script type="text/javascript" src="../js/sidebar.js"></script>
+  <script type="text/javascript" src="../js/register.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -60,7 +61,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#" onclick="importLem();">Import LEM</a></li>
+          <li><a onclick="importLem();">Import LEM</a></li>
           <li><a href="#" onclick="downloadLemJson()">Export LEM</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download As <span class="caret"></span></a>
@@ -69,6 +70,7 @@
               <li><a href="#" id="downloadJPEG">JPEG</a></li>
             </ul>
           </li>
+          <li><a href="public.html">Public LEM's</a></li>
         </ul>
 
 
@@ -78,6 +80,9 @@
             <input type="password" class="form-control" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-default">Log In</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Register
+          </button>
         </form>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -303,6 +308,37 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm" class="form-signin" method="post" action="127.0.0.1:5000/">
+            <div class="form-group">
+    <label for="registerEmail">Email address</label>
+    <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email" required name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="registerPassword">Password</label>
+    <input type="password" class="form-control" id="registerPassword" placeholder="Password" required name="pass">
+  </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
   </div>
 </div>
 
