@@ -106,11 +106,9 @@ def login():
 	pwd_ver = chckHash(usr_ver.password, password)
 	if pwd_ver is True:
 		login_user(usr_ver)
-		usr_ver.is_authenticated = True
 		return "Logged in"
 	else:
 		return "Invalid username or password"
-	return "Error"
 
 @app.route('/logout', methods = ['GET', 'POST'])
 def logout():
@@ -123,11 +121,10 @@ def home():
 	return render_template("index.html")
 
 @login_manager.user_loader
-def load_user(id):
+def load_user(id, remember=True):
 	db = connect(name, host=host)
 	for user in DBUser.objects(email = id):
-		if user.email == id:
-			return User(user.email, user.password)
+		return User(user.email, user.password)
 	return None
 
 def validate_json(json_s):

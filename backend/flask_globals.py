@@ -28,7 +28,7 @@ def chckHash(password_hash, password):
 class User(UserMixin):
 	email = ""
 	password = ""	
-	is_authenticated = False
+
 	def __init__(self, email, password):
 		self.email = email
 		self.password = password
