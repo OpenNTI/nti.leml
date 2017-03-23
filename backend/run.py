@@ -1,5 +1,5 @@
 from flask_globals import *
-from flask import request
+from flask import request, render_template
 from db.leml import Lem, toLem
 from db.user import User as DBUser 
 from mongoengine import *
@@ -50,7 +50,8 @@ def lemuser():
 @app.route('/save', methods = ['GET', 'POST'])
 def save():
 	if current_user.is_authenticated:
-		json_string = request.args.post('obj')
+		data = request.get_json(force = True)
+		json_string = data['obj']
 		is_valid = validate_json(json_string)
 		if is_valid is False:
 			return "created_by user not in database."
@@ -64,7 +65,8 @@ def save():
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['GET', 'POST'])
 def delete():
-	id = request.args.post('id')
+	data = request.get_json(force = True)
+	id = data['id']
 	db = connect(name, host = host)
 	for lem in Lem.objects(_id = id):
 		lem.delete()
@@ -74,8 +76,9 @@ def delete():
 #URL for registering users
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
-	name = request.args.post('email')
-	password = request.args.post('pass')
+	data = request.get_json(force=True)
+	name = data['email']
+	password = data['pass']
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
 	DBUser(name, pwd_hash).save()
@@ -84,7 +87,8 @@ def register():
 
 @app.route('/userexists', methods = ['GET'])
 def user_exists():
-	email = request.args.post('email')
+	data = request.get_json(force = True)
+	email = data['email']
 	db = connect(name, host = host)
 	exist = DBUser.objects(email__exists)
 	db.close()
@@ -93,8 +97,9 @@ def user_exists():
 #URL for login
 @app.route('/login',methods = ['GET','POST'])
 def login():
-	name = request.args.post('email')
-	password = request.args.post('pass')
+	data=request.get_json(force=True)
+	name = data['email']
+	password = data['pass']
 	usr_ver = load_user(name)
 	if usr_ver is None:
 		return "User not found"
@@ -105,6 +110,11 @@ def login():
 		return "Logged in"
 	else:
 		return "Invalid username or password"
+	return "Error"
+
+@app.route('/')
+def home():
+	return render_template("index.html")
 
 @login_manager.user_loader
 def load_user(id):

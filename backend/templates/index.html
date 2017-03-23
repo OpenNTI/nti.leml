@@ -7,7 +7,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>LEML Project</title>
 
-  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <link rel="shortcut icon" href="/static/img/favicon.ico" />
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -25,7 +25,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <link rel="stylesheet" href="../css/style.css"></style>
+  <link rel="stylesheet" href="/static/css/style.css"></style>
 
   <!-- Cytoscape -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.15/cytoscape.js"></script>
@@ -43,12 +43,12 @@
 
 
   <!-- Local JS files-->
-  <script type="text/javascript" src="../js/json_validator.js"></script>
-  <script type="text/javascript" src="../js/import.js"></script>
-  <script type="text/javascript" src="../js/export.js"></script>
-  <script type="text/javascript" src="../js/image_download.js"></script>
-  <script type="text/javascript" src="../js/drag_and_drop.js"></script>
-  <script type="text/javascript" src="../js/sidebar.js"></script>
+  <script type="text/javascript" src="/static/js/json_validator.js"></script>
+  <script type="text/javascript" src="/static/js/import.js"></script>
+  <script type="text/javascript" src="/static/js/export.js"></script>
+  <script type="text/javascript" src="/static/js/image_download.js"></script>
+  <script type="text/javascript" src="/static/js/drag_and_drop.js"></script>
+  <script type="text/javascript" src="/static/js/sidebar.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -87,7 +87,7 @@
     <div class="row">
       <div class="col-md-9" id="content">
         <div id="cy" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <script type="text/javascript" src="../js/cytoscape_canvas.js"></script>
+        <script type="text/javascript" src="/static/js/cytoscape_canvas.js"></script>
       </div>
 
       <div class="col-md-3 open" id="sidebar0">
@@ -106,9 +106,9 @@
       </div>
 
       <div class="panel-body" style="overflow-y: scroll">
-        <img id="../exampleLems/blendedLearningFlippedClassroom.lem" src="../img/templates/blendedLearningFlippedClassroom.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-        <img id="../exampleLems/absorbDoConnect.lem" src="../img/templates/absorbDoConnect.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-        <img id="../exampleLems/blendedLearningClassroomEnhanced.lem" src="../img/templates/blendedLearningClassroomEnhanced.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <img id="/static/exampleLems/blendedLearningFlippedClassroom.lem" src="/static/img/templates/blendedLearningFlippedClassroom.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <img id="/static/exampleLems/absorbDoConnect.lem" src="/static/img/templates/absorbDoConnect.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <img id="/static/exampleLems/blendedLearningClassroomEnhanced.lem" src="/static/img/templates/blendedLearningClassroomEnhanced.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
       </div>
         <!-- <h3> I am a sidebar</h3> -->
         <!--           <button type="button" class="btn btn-primary" onclick="downloadLemJson();">Export LEM</button>
@@ -237,17 +237,17 @@
           <h3 class="panel-title">Drag and Drop Toolbar</h3>
         </div>
         <div class="panel-body">
-          <img id="Information" src="../img/Information.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="Dialogue" src="../img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" width="5%" height="5%">
-          <img id="Feedback" src="../img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="Practice" src="../img/Practice.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="Evidence" src="../img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="startstop" src="../img/startstop.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="objective" src="../img/objective.png" draggable="true" ondragstart="drag(event, id)" height="10%" width="10%">
-          <img id="ClassroomContext" src="../img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-          <img id="Online_SynchronousContext" src="../img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-          <img id="Online_AsynchronousContext" src="../img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-          <img id="ExperientialContext" src="../img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
+          <img id="Information" src="/static/img/Information.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
+          <img id="Dialogue" src="/static/img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" width="5%" height="5%">
+          <img id="Feedback" src="/static/img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
+          <img id="Practice" src="/static/img/Practice.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
+          <img id="Evidence" src="/static/img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
+          <img id="startstop" src="/static/img/startstop.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
+          <img id="objective" src="/static/img/objective.png" draggable="true" ondragstart="drag(event, id)" height="10%" width="10%">
+          <img id="ClassroomContext" src="/static/img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
+          <img id="Online_SynchronousContext" src="/static/img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
+          <img id="Online_AsynchronousContext" src="/static/img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
+          <img id="ExperientialContext" src="/static/img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
         </div>
         </div>
         </div>
