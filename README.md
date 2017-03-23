@@ -1,7 +1,8 @@
 Steps to get it working in Chrome
-1. Download python
-2. Open terminal and run `python -m SimpleHTTPServer`
-3. Navigate to http://localhost:8000/html
+1. Download python3
+2. Install necessary modules `sudo pip3 install flask flask_login flask_bcrypt mongoengine`
+2. Run `python3 run.py`
+3. Navigate to http://localhost:5000
 
 UI Functionality:
 
