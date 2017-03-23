@@ -75,7 +75,7 @@ function login(email, password) {
 
 function logout() {
   $.post(logoutRoute, function(data, status){
-    if (data == "Logged out") {
+    if (status == "success") {
       $("#currentUserInfo").hide();
       $("#currentUserEmail").empty();
       $("#loginForm").show();
