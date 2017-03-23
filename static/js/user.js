@@ -19,7 +19,15 @@ $(function() {
     $("#registerEmail").empty();
     $("#registerPassword").empty();
   });
+  $("#usernameField").change(resetStateLogin);
+  $("#passwordField").change(resetStateLogin)
+
 });
+
+function resetStateLogin() {
+  $("#usernameField").removeClass("invalid");
+  $("#passwordField").removeClass("invalid");
+}
 
 function register(email, password) {
   var registerInfo = {};
