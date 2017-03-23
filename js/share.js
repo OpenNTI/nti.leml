@@ -13,7 +13,7 @@ function shareLem() {
 
   console.log(lem);
 
-  $.post(saveRoute, lem, function(data, status){
+  $.post(saveRoute, JSON.stringify(lem), function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
   });
 }
