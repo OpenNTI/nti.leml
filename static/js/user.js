@@ -1,5 +1,3 @@
-var email;
-
 $(function() {
   $("#shareButton").on('click', function() {
     shareLem();
