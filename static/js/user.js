@@ -1,4 +1,6 @@
 $(function() {
+  $("#shareNavBar").hide();
+
   $("#shareButton").on('click', function() {
     shareLem();
   });
@@ -92,6 +94,8 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
+      $("#shareNavBar").show();
+
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
       $("#currentUserEmail").append(loginInfo.email);
@@ -103,6 +107,8 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
+      $("#shareNavBar").hide();
+
       $("#currentUserInfo").hide();
       $("#currentUserEmail").empty();
       $("#loginForm").show();
