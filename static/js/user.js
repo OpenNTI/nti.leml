@@ -8,6 +8,8 @@ $(function() {
   $("#loginButton").on('click', function(e) {
     e.preventDefault();
 
+    loginState('loading');
+
     login($("#usernameField").val(), $("#passwordField").val());
 
     $("#usernameField").val("");
@@ -24,10 +26,31 @@ $(function() {
 
 });
 
+function loginState(state) {
+  switch (state) {
+    case "loading":
+      $("#usernameField")[0].disabled = true;
+      $("#passwordField")[0].disabled = true;
+      $("#loginButton")[0].disabled = true;
+      $("#loginButton").html('<span class="glyphicon glyphicon-refresh spinning"></span> Loading...');
+      $("#registerButton").hide();
+      break;
+    case "ready":
+      $("#usernameField")[0].disabled = false;
+      $("#passwordField")[0].disabled = false;
+      $("#loginButton")[0].disabled = false;
+      $("#loginButton").html('Login');
+      $("#registerButton").show();
+      break;
+  }
+
+}
+
 function resetStateLogin() {
   $("#usernameField").removeClass("invalid");
   $("#passwordField").removeClass("invalid");
   $("#loginErrorText").hide();
+  $("#loginButton").html("Login");
 }
 
 function register(email, password) {
@@ -53,6 +76,8 @@ function login(email, password) {
   loginInfo.pass = password;
 
   $.post(loginRoute, JSON.stringify(loginInfo), function(data, status){
+    loginState('ready');
+
     if (data === "User not found") {
       $("#usernameField").addClass("invalid");
 
