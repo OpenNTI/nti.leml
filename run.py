@@ -49,12 +49,11 @@ def lemuser():
 @login_required
 def save():
 	data = request.get_json(force = True)
-	json_string = data['obj']
-	is_valid = validate_json(json_string)
+	is_valid = validate_json(data)
 	if is_valid is False:
 		return "created_by user not in database."
 	db = connect(name, host = host)
-	toLem(json_string, current_user.email).save()
+	toLem(data, current_user.email).save()
 	db.close()
 	return "Successfully saved LEM."
 
@@ -123,10 +122,8 @@ def load_user(id, remember=True):
 		return User(user.email, user.password)
 	return None
 
-def validate_json(json_s):
-	p_dict = json.loads(json_s)
-	email = p_dict["created_by"]
-	t_user = load_user(email)
+def validate_json(json_dict):
+	t_user = load_user(current_user.email)
 	if t_user is None:
 		return False
 	return True	
