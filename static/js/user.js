@@ -5,14 +5,16 @@ $(function() {
   $("#logoutButton").on('click', function() {
     logout();
   });
-  $("#loginButton").on('click', function() {
-    login($("#usernameField")[0].value, $("#passwordField")[0].value);
+  $("#loginButton").on('click', function(e) {
+    e.preventDefault();
 
-    $("#usernameField").empty();
-    $("#passwordField").empty();
+    login($("#usernameField").val(), $("#passwordField").val());
+
+    $("#usernameField").val("");
+    $("#passwordField").val("");
   });
   $("#registerSubmitButton").on('click', function() {
-    register($("#registerEmail")[0].value, $("#registerPassword")[0].value);
+    register($("#registerEmail").val(), $("#registerPassword").val());
 
     $("#registerEmail").empty();
     $("#registerPassword").empty();
@@ -75,7 +77,7 @@ function login(email, password) {
 
 function logout() {
   $.post(logoutRoute, function(data, status){
-    if (data == "Logged out") {
+    if (status == "success") {
       $("#currentUserInfo").hide();
       $("#currentUserEmail").empty();
       $("#loginForm").show();
@@ -91,8 +93,6 @@ function shareLem() {
   var lemName = $("#lemNameText")[0].value;
   var lem = generateJson().lem;
   lem.name = lemName;
-
-  console.log(lem);
 
   $.post(saveRoute, JSON.stringify(lem), function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
