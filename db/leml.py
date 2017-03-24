@@ -46,19 +46,18 @@ class Lem(Document):
 	actions = ListField(EmbeddedDocumentField(Action), required=True)
 	notations = ListField(EmbeddedDocumentField(Notation))
 
-def toLem(json_string, user_email):
-	python_dict = json.loads(json_string)
+def toLem(json_dict, user_email):
 	block_objs = []
-	for block in python_dict["building_blocks"]:
+	for block in json_dict["building_blocks"]:
 		block_objs.append(Block(id=block["id"], block_type=block["block_type"], description=block["description"], method=block["method"]))
 	notation_objs = []
-	for notation in python_dict["notations"]:
+	for notation in json_dict["notations"]:
 		notation_objs.append(Notation(building_block=notation["building_block"], description=notation["description"]))
 	context_objs = []
-	for context in python_dict["contexts"]:
+	for context in json_dict["contexts"]:
 		context_objs.append(Context(id=context["id"], context_type=context["context_type"], building_blocks=context["building_blocks"], notations=context["notations"]))
 	action_objs = []
-	for action in python_dict["actions"]:
+	for action in json_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"])) 
-	lem = Lem(name=python_dict["name"], created_by=User(user_email, ""), startIDs=python_dict["startIDs"], stopIDs=python_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs)
+	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs)
 	return lem
