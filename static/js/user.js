@@ -7,14 +7,14 @@ $(function() {
   });
   $("#loginButton").on('click', function(e) {
     e.preventDefault();
-    
-    login($("#usernameField")[0].value, $("#passwordField")[0].value);
 
-    $("#usernameField").empty();
-    $("#passwordField").empty();
+    login($("#usernameField").val(), $("#passwordField").val());
+
+    $("#usernameField").val("");
+    $("#passwordField").val("");
   });
   $("#registerSubmitButton").on('click', function() {
-    register($("#registerEmail")[0].value, $("#registerPassword")[0].value);
+    register($("#registerEmail").val(), $("#registerPassword").val());
 
     $("#registerEmail").empty();
     $("#registerPassword").empty();
