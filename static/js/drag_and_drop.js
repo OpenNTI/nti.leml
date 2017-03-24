@@ -1,4 +1,4 @@
-var new_id = 100;
+var new_id = 0;
 
 function allowDrop(ev) {
 	ev.preventDefault();
@@ -10,6 +10,11 @@ function drag(ev, id) {
 
 function drop(ev) {
 	ev.preventDefault();
+
+	// Ensure id is unique
+	while(cy.$("#" + new_id).length > 0) {
+		++new_id;
+	}
 
 	var data = ev.dataTransfer.getData("text");
 	var el_h = ev['toElement']['offsetHeight'];
@@ -35,7 +40,8 @@ function drop(ev) {
 		var buildingBlock = {id: new_id, method: "{Enter a method}", description: description, block_type: data};
 		var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: description + " \n\n\n\n " + method}, classes: "buildingBlock " + data}]);
 	}
-	
+
 	cy.resize();
-	new_id = new_id + 1;
+
+	++new_id;
 }

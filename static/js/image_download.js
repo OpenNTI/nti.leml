@@ -12,6 +12,10 @@ $(function() {
   $("#downloadJPEG").on('click', function() {
     downloadImage(ImageType.JPEG);
   });
+
+  $("#downloadAnyway").on('click', function() {
+    $('#downloadLink')[0].click();
+  });
 });
 
 function downloadImage(fileType) {
@@ -34,5 +38,12 @@ function downloadImage(fileType) {
   var imgTag = $('#downloadImage')[0];
   imgTag.setAttribute('src', content);
 
-  downloadLink.click();
+  var error = checkLemStructure();
+
+  if (error.length > 0) {
+    $("#downloadErrorDescription").text(error);
+    $("#downloadInvalidLEM").modal('show');
+  } else {
+    downloadLink.click();
+  }
 }

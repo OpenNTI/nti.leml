@@ -87,6 +87,14 @@ function convertIdToInt(object) {
 }
 
 function downloadLemJson() {
+  var error = checkLemStructure();
+
+  if (error.length > 0) {
+    $("#exportErrorDescription").text(error);
+    $("#exportInvalidLEM").modal('show');
+    return;
+  }
+
   var lemJson = generateJson();
 
   if (validateLem(lemJson)) {

@@ -13,6 +13,8 @@ var lemStyle = [ // the stylesheet for the graph
     selector: 'edge',
     style: {
       'width': 4,
+      'text-wrap': 'wrap',
+      'text-margin-y': -12,
       'line-color': '#000',
       'target-arrow-color': '#000',
       'target-arrow-shape': 'triangle',
@@ -108,31 +110,31 @@ var lemStyle = [ // the stylesheet for the graph
   {
     selector: '.Dialogue',
     style: {
-      'background-image': '../img/Dialogue.png'
+      'background-image': '/static/img/Dialogue.png'
     }
   },
   {
     selector: '.Evidence',
     style: {
-      'background-image': '../img/Evidence.png'
+      'background-image': '/static/img/Evidence.png'
     }
   },
   {
     selector: '.Feedback',
     style: {
-      'background-image': '../img/Feedback.png'
+      'background-image': '/static/img/Feedback.png'
     }
   },
   {
     selector: '.Information',
     style: {
-      'background-image': '../img/Information.png'
+      'background-image': '/static/img/Information.png'
     }
   },
   {
     selector: '.Practice',
     style: {
-      'background-image': '../img/Practice.png'
+      'background-image': '/static/img/Practice.png'
     }
   },
   {
@@ -178,6 +180,8 @@ var lemStyle = [ // the stylesheet for the graph
 ];
 
 function loadNewCytoscapeWith(elements) {
+  new_id = elements.length;
+
   cy = cytoscape({
 
     container: document.getElementById('cy'), // container to render in
@@ -201,6 +205,7 @@ function loadNewCytoscapeWith(elements) {
 
   });
 
+  cy.center();
   cy.snapToGrid();
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
@@ -241,12 +246,22 @@ function loadNewCytoscapeWith(elements) {
               defaultClass = "notationEdge";
             }
 
-            if (evt.cyTarget.id() != val.data.id) {
-              cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
-              new_id = new_id + 1;
+            var duplicateActionSelector = "[source = '" + val.data.id + "'][target = '" + evt.cyTarget.id() + "']";
+            var duplicateActions = cy.$(duplicateActionSelector);
+
+            if (duplicateActions.length > 0) {
+              showCanvasError("Cannot draw two edges between one pair of items.");
+              console.error("Cannot draw two edges between one pair of items.");
             } else {
-              cy.remove(evt.cyTarget);
-              toggleSidebar(0, evt);
+              if (evt.cyTarget.id() != val.data.id) {
+                cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+                new_id = new_id + 1;
+              } else {
+                if (!val.classes.includes("startstop")) {
+                  cy.remove(evt.cyTarget);
+                  toggleSidebar(0, evt);
+                }
+              }
             }
         } else if (val.classes.includes("context")) {
           if (evt.cyTarget.id() != val.data.id) {
@@ -292,8 +307,8 @@ function loadNewCytoscapeWith(elements) {
 
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
-    toggleSidebar(2, evt);
     selectedId = evt.cyTarget.id();
+    toggleSidebar(2, evt);
   });
 
   cy.on('unselect', 'edge', function(evt) {
@@ -307,4 +322,24 @@ function loadNewCytoscapeWith(elements) {
   });
 }
 
-$(loadNewCytoscapeWith([]));
+function loadDefaultCytoscape() {
+  loadNewCytoscapeWith([]);
+
+  var wind = cy.extent();
+  var x1 = wind.x1 + (wind.w / 10);
+  var x2 = wind.x2 - (wind.w / 10);
+  cy.add({group: "nodes", data: {id: "start", start: true}, position: {x: x1, y: 0}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
+  cy.add({group: "nodes", data: {id: "stop", start: false}, position: {x: x2, y: 0}, style: {label: "Stop", class: "startstop"}, classes: "startstop"});
+}
+
+function showCanvasError(error) {
+  $("#canvasErrorLabel").text(error);
+  $("#canvasErrorLabel").fadeIn();
+
+  // Fade out after three seconds
+  window.setTimeout(function() {
+    $("#canvasErrorLabel").fadeOut()
+  }, 3000);
+}
+
+$(loadDefaultCytoscape());

@@ -48,6 +48,11 @@ function toggleSidebar(i, evt) {
 		case 2: // action
 			showOnlySidebar(2);
 			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
+			if (evt.cyTarget.json().data.description) {
+				document.getElementById('actionDescription').value = evt.cyTarget.json().data.description;
+			} else {
+				document.getElementById('actionDescription').value = "";
+			}
 			break;
 		case 3: // context
 			showOnlySidebar(3);
@@ -188,7 +193,7 @@ function redraw() {
 }
 
 function clearCanvas() {
-	cy.remove("");
+	cy.remove('[id != "stop"][id != "start"]');
 	cy.center();
 	cy.zoom(1);
 }

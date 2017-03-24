@@ -49,18 +49,21 @@
   <script type="text/javascript" src="/static/js/image_download.js"></script>
   <script type="text/javascript" src="/static/js/drag_and_drop.js"></script>
   <script type="text/javascript" src="/static/js/sidebar.js"></script>
+  <script type="text/javascript" src="/static/js/register.js"></script>
+  <script type="text/javascript" src="/static/js/routes.js"></script>
+  <script type="text/javascript" src="/static/js/user.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">UCO LEML Project</a>
+        <a class="navbar-brand" href="/">UCO LEML Project</a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#" onclick="importLem();">Import LEM</a></li>
+          <li><a onclick="importLem();">Import LEM</a></li>
           <li><a href="#" onclick="downloadLemJson()">Export LEM</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download As <span class="caret"></span></a>
@@ -69,16 +72,27 @@
               <li><a href="#" id="downloadJPEG">JPEG</a></li>
             </ul>
           </li>
+          <li><a href="/public">Public LEMs</a></li>
+          <li><a href="#" onclick="openShareDialog();">Share</a></li>
         </ul>
 
-
-        <form class="navbar-form navbar-right">
+        <form id="loginForm" class="navbar-form navbar-right">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username">
-            <input type="password" class="form-control" placeholder="Password">
+            <input id="usernameField" type="text" class="form-control" placeholder="Username">
+            <input id="passwordField" type="password" class="form-control" placeholder="Password">
+            <button id="loginButton" class="btn btn-default">Log In</button>
+            <br><small id="loginErrorText" class="text-warning" style="display:none">User not found</small>
           </div>
-          <button type="submit" class="btn btn-default">Log In</button>
+          <button id="registerButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
         </form>
+
+        <div class="navbar-form navbar-right dropdown" id="currentUserInfo" style="display:none">
+          <button class="btn btn-default dropdown-toggle" type="button" id="currentUserEmail" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a id="logoutButton" href="#">Log Out</a></li>
+          </ul>
+        </div>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -104,11 +118,17 @@
         <div class="panel-heading">
         <h3 class="panel-title">Templates</h3>
       </div>
-
-      <div class="panel-body" style="overflow-y: scroll">
+      <hr>
+      <div id="templatePanel" class="panel-body" style="overflow-y: scroll">
+        <label for="/static/exampleLems/blendedLearningFlippedClassroom.lem">Blended Learning Flipped Classroom</label>
         <img id="/static/exampleLems/blendedLearningFlippedClassroom.lem" src="/static/img/templates/blendedLearningFlippedClassroom.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <hr>
+        <label for="/static/exampleLems/absorbDoConnect.lem">Absorb Do Connect</label>
         <img id="/static/exampleLems/absorbDoConnect.lem" src="/static/img/templates/absorbDoConnect.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <hr>
+        <label for="/static/exampleLems/blendedLearningClassroomEnhanced.lem">Blended Learning Classroom Enhanced</label>
         <img id="/static/exampleLems/blendedLearningClassroomEnhanced.lem" src="/static/img/templates/blendedLearningClassroomEnhanced.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
+        <hr>
       </div>
         <!-- <h3> I am a sidebar</h3> -->
         <!--           <button type="button" class="btn btn-primary" onclick="downloadLemJson();">Export LEM</button>
@@ -172,6 +192,7 @@
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
+    <br>
     <div class="form-group">
       <label for="actionDescription" class="col-sm-3 control-label">Description</label>
       <div class="col-sm-9">
@@ -235,6 +256,7 @@
       <div id="dd_pane" class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Drag and Drop Toolbar</h3>
+          <label id="canvasErrorLabel"></label>
         </div>
         <div class="panel-body">
           <img id="Information" src="/static/img/Information.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
@@ -242,7 +264,6 @@
           <img id="Feedback" src="/static/img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
           <img id="Practice" src="/static/img/Practice.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
           <img id="Evidence" src="/static/img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-          <img id="startstop" src="/static/img/startstop.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
           <img id="objective" src="/static/img/objective.png" draggable="true" ondragstart="drag(event, id)" height="10%" width="10%">
           <img id="ClassroomContext" src="/static/img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
           <img id="Online_SynchronousContext" src="/static/img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
@@ -256,22 +277,98 @@
 
 
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<!-- Export Error Modal -->
+<div id="exportInvalidLEM" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Building Block</h4>
+        <h4 class="modal-title">Invalid LEM - Cannot Export</h4>
       </div>
       <div class="modal-body">
-        <label for="modal-text-area">Enter a description</label>
-        <textarea class="form-control" id="modal-text-area" rows="1"></textarea>
+        <label id="exportErrorDescription" for="modal-text-area">Error description</label>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Enter</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Image Download Error Modal -->
+<div id="downloadInvalidLEM" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Invalid LEM</h4>
+      </div>
+      <div class="modal-body">
+        <label id="downloadErrorDescription" for="modal-text-area">ErrorDescription</label>
+        <br>If you would still like to download the image, click 'Download Anyway'
+      </div>
+      <div class="modal-footer">
+        <button id="downloadAnyway" type="button" class="btn btn-default" data-dismiss="modal">Download Anyway</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm" class="form-signin" method="post" action="127.0.0.1:5000/">
+            <div class="form-group">
+    <label for="registerEmail">Email address</label>
+    <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email" required name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="registerPassword">Password</label>
+    <input type="password" class="form-control" id="registerPassword" placeholder="Password" required name="pass">
+  </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="registerSubmitButton" type="submit" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Modal -->
+<div id="shareLEM" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Share LEM</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+         <label for="lemName">Name</label>
+         <input type="text" class="form-control" id="lemNameText" placeholder="Enter a name for the LEM">
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button id="shareButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
       </div>
     </div>
 

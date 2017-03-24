@@ -67,13 +67,14 @@ function renderLem(json) {
 
   // Start dots
   if (startIDs) {
+    // Add one stop node
+    elements.push({data: {id: "start", start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'});
+
     for (var index in startIDs) {
       var startID = startIDs[index];
       var startNodeID = "start" + startID;
 
-      elements.push({data: {id: startNodeID, start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'},
-        {data: {id: startNodeID + startID, source: startNodeID, target: startID}}
-      );
+      elements.push({data: {id: startNodeID + startID, source: "start", target: startID, action_type: "Learner Action"}, classes: "Learner_Action"});
     }
   }
 
@@ -120,13 +121,15 @@ function renderLem(json) {
 
   // Stop dots
   if (stopIDs) {
+    // Add one stop node
+    elements.push({data: {id: "stop", start: false}, style: {label:"Stop"}, classes: "startstop"});
+
+    // Add all arrows to stop node
     for (var index in stopIDs) {
       var stopID = stopIDs[index];
       var stopNodeID = "stop" + stopID;
 
-      elements.push({data: {id: stopNodeID, start: false}, style: {label:"Stop"}, classes: "startstop"},
-        {data: {id: stopNodeID + stopID, source: stopID, target: stopNodeID}}
-      );
+      elements.push({data: {id: stopNodeID + stopID, source: stopID, target: "stop", action_type: "Learner Action"}, classes: "Learner_Action"});
     }
   }
 
@@ -138,7 +141,7 @@ function renderLem(json) {
       var styleClass = action.action_type.replace(" ", "_");
 
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
-      elements.push({data: action, classes: styleClass});
+      elements.push({data: action, classes: styleClass, style: {label: action.description}});
     }
   }
 
@@ -149,14 +152,11 @@ function renderLem(json) {
       var notationID = "object" + notation.building_block;
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info
-      console.log(notation);
       elements.push({data: notation, style: {label: notation.description}, classes: "notation"},
         {data: {id: "objectivelink" + notation.id, source: notation.id, target: notation.building_block}, classes: 'notationEdge'}
       );
     }
   }
-
-  console.log(elements);
 
   loadNewCytoscapeWith(elements);
 }
