@@ -13,7 +13,7 @@ name = 'leml'
 in_use_id = [0]
 
 #URL for getting a lem item
-@app.route('/lem', methods = ['GET', 'POST'])
+@app.route('/lem', methods = ['GET'])
 def lem():
 	db = connect(name,host=host)
 	obj = "Error"
@@ -23,7 +23,7 @@ def lem():
 	return obj
 
 #URL for getting all current lem objects in the database
-@app.route('/lemall', methods = ['GET', 'POST'])
+@app.route('/lemall', methods = ['GET'])
 def lemall():
 	db = connect(name,host=host)
 	allobj = []
@@ -33,7 +33,7 @@ def lemall():
 	return json.dumps(allobj)
 
 #URL for getting user lems
-@app.route('/lemuser', methods = ['GET', 'POST'])
+@app.route('/lemuser', methods = ['GET'])
 @login_required
 def lemuser():
 	db = connect(name, host = host)
@@ -45,7 +45,7 @@ def lemuser():
 	return json.dumps(allobj)
 	
 #URL for saving a lem object
-@app.route('/save', methods = ['GET', 'POST'])
+@app.route('/save', methods = ['POST'])
 @login_required
 def save():
 	data = request.get_json(force = True)
@@ -58,7 +58,7 @@ def save():
 	return "Successfully saved LEM."
 
 #URL for deleting a lem objects
-@app.route('/delete', methods = ['GET', 'POST'])
+@app.route('/delete', methods = ['DELETE'])
 def delete():
 	data = request.get_json(force = True)
 	id = data['id']
@@ -69,7 +69,7 @@ def delete():
 	return "Successfully deleted LEM."
 
 #URL for registering users
-@app.route('/register', methods = ['GET', 'POST'])
+@app.route('/register', methods = ['POST'])
 def register():
 	data = request.get_json(force=True)
 	name = data['email']
@@ -90,7 +90,7 @@ def user_exists():
 	return exist
 
 #URL for login
-@app.route('/login',methods = ['GET','POST'])
+@app.route('/login',methods = ['POST'])
 def login():
 	data=request.get_json(force=True)
 	name = data['email']
@@ -105,7 +105,7 @@ def login():
 	else:
 		return "Invalid username or password"
 
-@app.route('/logout', methods = ['GET', 'POST'])
+@app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
 	logout_user()
