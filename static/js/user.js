@@ -33,12 +33,14 @@ function loginState(state) {
       $("#passwordField")[0].disabled = true;
       $("#loginButton")[0].disabled = true;
       $("#loginButton").html('<span class="glyphicon glyphicon-refresh spinning"></span> Loading...');
+      $("#registerButton").hide();
       break;
     case "ready":
       $("#usernameField")[0].disabled = false;
       $("#passwordField")[0].disabled = false;
       $("#loginButton")[0].disabled = false;
       $("#loginButton").html('Login');
+      $("#registerButton").show();
       break;
   }
 
