@@ -5,7 +5,9 @@ $(function() {
   $("#logoutButton").on('click', function() {
     logout();
   });
-  $("#loginButton").on('click', function() {
+  $("#loginButton").on('click', function(e) {
+    e.preventDefault();
+    
     login($("#usernameField")[0].value, $("#passwordField")[0].value);
 
     $("#usernameField").empty();
