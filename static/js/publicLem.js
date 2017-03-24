@@ -4,11 +4,14 @@ $(function() {
 
     var lemSection = $("#lemList");
 
+    var lemDivs = "";
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
 
-      lemSection.append(generateLemRow("../static/img/templates/absorbDoConnect.png", lem.created_by));
+      lemDivs += generateLemRow("../static/img/templates/absorbDoConnect.png", lem.created_by);
     }
+
+    lemSection.html(lemDivs);
   })
 })
 
