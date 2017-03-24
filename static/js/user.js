@@ -92,11 +92,7 @@ function shareLem() {
   var lem = generateJson().lem;
   lem.name = lemName;
 
-  console.log(lem);
-
-  var postObj = {obj: JSON.stringify(lem)};
-
-  $.post(saveRoute, JSON.stringify(postObj), function(data, status){
+  $.post(saveRoute, JSON.stringify(lem), function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
   });
 }
