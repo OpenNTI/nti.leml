@@ -1,6 +1,6 @@
 from flask_globals import *
 from flask import request, render_template
-from db.leml import Lem, toLem
+from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
 import json
@@ -39,9 +39,13 @@ def lemuser():
 	db = connect(name, host = host)
 	allobj = []
 	for lem in Lem.objects(created_by = current_user.email):
-		print(lem)
 		allobj.append(lem.to_json())
+		#comments = []
+		#for comment in Comment.objects(lem = lem.name):
+		#	comments.append(comment.to_json())
+		#allobj.append(comments)
 	db.close()
+	#print(allobj)
 	return json.dumps(allobj)
 
 #URL for saving a lem object
@@ -72,11 +76,11 @@ def delete():
 @app.route('/register', methods = ['POST'])
 def register():
 	data = request.get_json(force=True)
-	name = data['email']
+	usr_name = data['email']
 	password = data['pass']
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
-	DBUser(name, pwd_hash).save()
+	DBUser(usr_name, pwd_hash).save()
 	db.close()
 	return "Successfully registered user."
 
@@ -118,6 +122,20 @@ def public():
 @app.route('/')
 def home():
 	return render_template("index.html")
+
+@app.route('/comment', methods = ['POST'])
+@login_required
+def comment():
+	data = request.get_json(force=True)
+	lem_com = data["lem"]
+	text = data["text"]
+	created_by = current_user.email
+	db = connect(name, host = host)
+	for lem in Lem.objects(name = lem_com):
+		lem.comments.append(Comment(text = text, created_by = created_by))
+		lem.update()
+	db.close()
+	return "Commented"
 
 @login_manager.user_loader
 def load_user(id, remember=True):
