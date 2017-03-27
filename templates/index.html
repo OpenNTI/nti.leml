@@ -78,11 +78,11 @@
               if ($("#main_window").hasClass('hidden')) {
                 $('#main_window').removeClass('hidden');
                 $('#lemList').addClass('hidden');
-                $('#public_button').value = "Canvas Editor";
+                document.getElementById("public_button").firstChild.data = "Public LEMs";
               } else {
                 $('#main_window').addClass('hidden');
                 $('#lemList').removeClass('hidden');
-                $('#public_button').value = "Public LEMs";
+                document.getElementById("public_button").firstChild.data = "Canvas Editor";
               }
             }
           </script>
