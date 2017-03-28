@@ -3,6 +3,7 @@ from flask import request, render_template
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
+from bson import ObjectId
 import json
 from bson import ObjectId
 
@@ -22,9 +23,10 @@ def allowed_file(filename):
 #URL for getting a lem item
 @app.route('/lem', methods = ['GET'])
 def lem():
-	db = connect(name,host=host)
+	id = ObjectId(request.args.get('id'))
+	db = connect(name, host = host)
 	obj = "Error"
-	for lem in Lem.objects(_id = request.args.post('id')):
+	for lem in Lem.objects(pk = id):
 		obj = lem.to_json()
 	db.close()
 	return obj
@@ -49,7 +51,7 @@ def uploaded_file(filename):
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
 def lemall():
-	db = connect(name,host=host)
+	db = connect(name, host = host)
 	allobj = []
 	for lem in Lem.objects:
 		allobj.append(lem.to_json())
@@ -88,10 +90,9 @@ def save():
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['DELETE'])
 def delete():
-	data = request.get_json(force = True)
-	id = data['id']
+	id = ObjectId(request.args.get('id'))
 	db = connect(name, host = host)
-	for lem in Lem.objects(_id = id):
+	for lem in Lem.objects(pk = id):
 		lem.delete()
 	db.close()
 	return "Successfully deleted LEM."
