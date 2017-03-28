@@ -42,7 +42,7 @@ class Comment(EmbeddedDocument):
 
 # LEM Model
 class Lem(Document):
-	name = StringField(primary_key=True, required=True)
+	name = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
 	startIDs = ListField(IntField())

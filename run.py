@@ -4,6 +4,7 @@ from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
 import json
+from bson import ObjectId
 
 init()
 application = get_global_app()
@@ -127,11 +128,11 @@ def home():
 @login_required
 def comment():
 	data = request.get_json(force=True)
-	lem_com = data["lem"]
+	lem_id = ObjectId(data["id"])
 	text = data["text"]
 	created_by = current_user.email
 	db = connect(name, host = host)
-	for lem in Lem.objects(name = lem_com):
+	for lem in Lem.objects(pk = lem_id):
 		lem.comments.append(Comment(text = text, created_by = created_by))
 		lem.update()
 	db.close()
