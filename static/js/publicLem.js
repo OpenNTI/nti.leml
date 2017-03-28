@@ -24,10 +24,17 @@ $(function() {
 })
 
 function generateLemRow(title, username, imgURL, id) {
-  return '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src=' + imgURL + '><div id="' + id + '" class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button" onclick="dosomething(this.parentElement.parentElement);">Add to Canvas</a></p></div></div></div>';
+  return '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src=' + imgURL + '><div id="' + id + '" class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p></div></div></div>';
 }
 
-function dosomething(test) {
-  var t = $.get("http://localhost:5000/lem", {"id": test.id});
-  console.log(t);
+function addToCanvas(test) {
+  togglePublic(0);
+  $.get("http://localhost:5000/lem", {"id": test.id}, function(data, status) {
+    var lem = JSON.parse('{"lem": ' + data + '}');
+    console.log(lem);
+    renderLem(lem);
+  });
+  redraw();
+  //console.log(t);
+  //renderLem(t.responseText);
 }
