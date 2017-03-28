@@ -5,6 +5,7 @@ from db.user import User as DBUser
 from mongoengine import *
 import json
 from werkzeug.utils import secure_filename
+from binascii import a2b_base64
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -31,31 +32,15 @@ def lem():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('upload_file',
-                                    filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input id="fileinput" type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-    '''
+  if request.method == 'POST':
+    # check if the post request has the file par
+    json = request.get_json(force=True)
+    data = json['data']
+    binary_data = a2b_base64(data)
+    fd = open('thumbnailUploads/image.png', 'wb')
+    fd.write(binary_data)
+    fd.close()
+    return data
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
