@@ -18,3 +18,4 @@ $(function() {
 function generateLemRow(title, username, imgURL) {
   return '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src=' + imgURL + '><div class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button">Add to Canvas</a></p></div></div></div>'
 }
+

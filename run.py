@@ -6,12 +6,18 @@ from mongoengine import *
 import json
 from bson import ObjectId
 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 init()
 application = get_global_app()
 login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
 in_use_id = [0]
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #URL for getting a lem item
 @app.route('/lem', methods = ['GET'])
@@ -22,6 +28,23 @@ def lem():
 		obj = lem.to_json()
 	db.close()
 	return obj
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+  if request.method == 'POST':
+    # check if the post request has the file par
+    json = request.get_json(force=True)
+    data = json['data']
+    binary_data = a2b_base64(data)
+    fd = open('thumbnailUploads/image.png', 'wb')
+    fd.write(binary_data)
+    fd.close()
+    return data
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
@@ -119,7 +142,7 @@ def logout():
 @app.route('/public')
 def public():
 	return render_template("public.html")
-	
+
 @app.route('/')
 def home():
 	return render_template("index.html")
