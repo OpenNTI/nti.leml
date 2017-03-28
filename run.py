@@ -1,11 +1,10 @@
 from flask_globals import *
-from flask import render_template, Flask, request, redirect, url_for, send_from_directory
-from db.leml import Lem, toLem
+from flask import request, render_template
+from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
 import json
-from werkzeug.utils import secure_filename
-from binascii import a2b_base64
+from bson import ObjectId
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -64,9 +63,13 @@ def lemuser():
 	db = connect(name, host = host)
 	allobj = []
 	for lem in Lem.objects(created_by = current_user.email):
-		print(lem)
 		allobj.append(lem.to_json())
+		#comments = []
+		#for comment in Comment.objects(lem = lem.name):
+		#	comments.append(comment.to_json())
+		#allobj.append(comments)
 	db.close()
+	#print(allobj)
 	return json.dumps(allobj)
 
 #URL for saving a lem object
@@ -97,11 +100,11 @@ def delete():
 @app.route('/register', methods = ['POST'])
 def register():
 	data = request.get_json(force=True)
-	name = data['email']
+	usr_name = data['email']
 	password = data['pass']
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
-	DBUser(name, pwd_hash).save()
+	DBUser(usr_name, pwd_hash).save()
 	db.close()
 	return "Successfully registered user."
 
@@ -143,6 +146,39 @@ def public():
 @app.route('/')
 def home():
 	return render_template("index.html")
+
+@app.route('/comment', methods = ['POST'])
+@login_required
+def comment():
+	data = request.get_json(force=True)
+	lem_id_c = ObjectId(data["lem"])
+	text = data["text"]
+	created_by = current_user.email
+	db = connect(name, host = host)
+	for lem in Lem.objects(pk = lem_id_c):
+		Comment(lem_id = str(lem_id_c), text = text, created_by = created_by).save()
+	db.close()
+	return "Commented"
+
+@app.route('/getComments', methods = ['POST'])
+def getComments():
+	data = request.get_json(force=True)
+	lem_id_c = data["lem"]
+	comments = []
+	for comment in Comment.objects(lem_id = lem_id_c):
+		comments.append(comment.to_json())
+	return json.dumps(comments)
+
+@app.route('/rate', methods = ['POST'])
+def rate():
+	data = request.get_json(force=True)
+	new_rating = float(data["rating"])
+	lem_id = ObjectId(data["lem"])
+	for lem in Lem.objects(pk = lem_id):
+		lem.ratings.append(new_rating)
+		lem.avgRating = sum(lem.ratings) / float(len(lem.ratings))
+		lem.save()
+	return "Done"
 
 @login_manager.user_loader
 def load_user(id, remember=True):
