@@ -126,13 +126,7 @@ function shareLem() {
   lem.name = lemName;
 
   // Save thumbnail
-  var imageDataURLParts = cy.png().split(",");
-  // Remove descriptor
-  imageDataURLParts.splice(0,1);
-  // Add commas from encoding
-  var imageDataURL = imageDataURLParts.join(",");
-
-  $.post("http://localhost:5000/upload", JSON.stringify({"data": imageDataURL}));
+  lem.thumbnail = cy.png();
 
   $.post(saveRoute, JSON.stringify(lem), function(data, status){
       alert("Data: " + data + "\nStatus: " + status);
