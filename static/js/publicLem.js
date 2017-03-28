@@ -3,7 +3,7 @@ $(function() {
     var lems = JSON.parse(data);
 
     var lemSection = $("#lemList");
-
+    console.log(lems);
     var lemDivs = "";
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
@@ -16,6 +16,10 @@ $(function() {
 })
 
 function generateLemRow(title, username, imgURL) {
-  return '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src=' + imgURL + '><div class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button">Add to Canvas</a></p></div></div></div>'
+  return '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src=' + imgURL + '><div class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button" onclick="dosomething(this.parentElement.parentElement);">Add to Canvas</a></p></div></div></div>';
 }
 
+function dosomething(test) {
+  console.log('something');
+  console.log(test);
+}
