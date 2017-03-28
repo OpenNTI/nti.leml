@@ -139,10 +139,23 @@ def comment():
 
 @app.route('/getComments', methods = ['POST'])
 def getComments():
+	data = request.get_json(force=True)
+	lem_id_c = data["lem"]
 	comments = []
-	for comment in Comment.objects():
-		print("NI")	
-	return json_dumps(comments)
+	for comment in Comment.objects(lem_id = lem_id_c):
+		comments.append(comment.to_json())
+	return json.dumps(comments)
+
+@app.route('/rate', methods = ['POST'])
+def rate():
+	data = request.get_json(force=True)
+	new_rating = float(data["rating"])
+	lem_id = ObjectId(data["lem"])
+	for lem in Lem.objects(pk = lem_id):
+		lem.ratings.append(new_rating)
+		lem.avgRating = sum(lem.ratings) / float(len(lem.ratings))
+		lem.save()
+	return "Done"
 
 @login_manager.user_loader
 def load_user(id, remember=True):

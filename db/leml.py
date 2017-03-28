@@ -52,7 +52,8 @@ class Lem(Document):
 	contexts = ListField(EmbeddedDocumentField(Context), required=True)
 	actions = ListField(EmbeddedDocumentField(Action), required=True)
 	notations = ListField(EmbeddedDocumentField(Notation))
-	rating  = IntField(default = 0)
+	ratings  = ListField(FloatField(default = 0))
+	avgRating = FloatField(default = 0)
 
 def toLem(json_dict, user_email):
 	block_objs = []
