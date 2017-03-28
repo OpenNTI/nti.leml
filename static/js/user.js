@@ -125,8 +125,11 @@ function shareLem() {
   var lem = generateJson().lem;
   lem.name = lemName;
 
+  // Save thumbnail
+  lem.thumbnail = cy.png();
+
   $.post(saveRoute, JSON.stringify(lem), function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
+      // alert("Data: " + data + "\nStatus: " + status);
   });
 }
 
