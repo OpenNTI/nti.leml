@@ -128,15 +128,21 @@ def home():
 @login_required
 def comment():
 	data = request.get_json(force=True)
-	lem_id = ObjectId(data["id"])
+	lem_id_c = ObjectId(data["lem"])
 	text = data["text"]
 	created_by = current_user.email
 	db = connect(name, host = host)
-	for lem in Lem.objects(pk = lem_id):
-		lem.comments.append(Comment(text = text, created_by = created_by))
-		lem.update()
+	for lem in Lem.objects(pk = lem_id_c):
+		Comment(lem_id = str(lem_id_c), text = text, created_by = created_by).save()
 	db.close()
 	return "Commented"
+
+@app.route('/getComments', methods = ['POST'])
+def getComments():
+	comments = []
+	for comment in Comment.objects():
+		print("NI")	
+	return json_dumps(comments)
 
 @login_manager.user_loader
 def load_user(id, remember=True):
