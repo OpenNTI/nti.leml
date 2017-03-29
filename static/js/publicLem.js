@@ -24,7 +24,14 @@ $(function() {
 })
 
 function generateLemRow(title, username, imgURL, id) {
-  return '<div class="col-sm-6 col-md-4 lems"><div class="thumbnail"><img src=' + imgURL + '><div id="' + id + '" class="caption"><h3>' + title + '</h3><p>Created by @'+ username + '</p><p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p></div></div></div>';
+  const header = '<h3>' + title + '</h3>';
+  const createdBy = '<p>Created by @'+ username + '</p>';
+  const addToCanvas = '<p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p>';
+
+  const thumbnail = '<img src=' + imgURL + '>';
+  const caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas + '</div>';
+
+  return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
 }
 
 function addToCanvas(test) {
