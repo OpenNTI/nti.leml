@@ -27,7 +27,7 @@ function generateLemRow(title, username, imgURL, id) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p>';
-  const deleteButton = '<p><a href="#" class="btn btn-primary" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a></p>';
+  const deleteButton = '<p><a href="#" class="btn btn-danger" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a></p>';
 
   const thumbnail = '<img src=' + imgURL + '>';
   const caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas + deleteButton + '</div>';
