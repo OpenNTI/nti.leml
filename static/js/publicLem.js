@@ -27,9 +27,10 @@ function generateLemRow(title, username, imgURL, id) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p>';
+  const deleteButton = '<p><a href="#" class="btn btn-primary" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a></p>';
 
   const thumbnail = '<img src=' + imgURL + '>';
-  const caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas + '</div>';
+  const caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas + deleteButton + '</div>';
 
   return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
 }
@@ -46,14 +47,11 @@ function addToCanvas(test) {
   //renderLem(t.responseText);
 }
 
-function searchLems() {
-  var searchValue = $('#search_field').val();
-
-  $(".lems").each(function(){
-    if($(this).html().toLowerCase().indexOf(searchValue.toLowerCase()) > -1){
-     $(this).removeClass('hidden');
-    } else {
-      $(this).addClass('hidden');
-    }
-  });
-}
+function deleteLem(json) {
+  $.ajax({
+      url: deleteRoute+ '?id=' + json.id,
+      type: 'DELETE',
+      success: function(result) {
+          // Do something with the result
+      }
+  });}
