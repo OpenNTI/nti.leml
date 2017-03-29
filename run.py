@@ -69,12 +69,16 @@ def save():
 #URL for deleting a lem objects
 @app.route('/delete', methods = ['DELETE'])
 def delete():
+	#print(request.args.get('id'))
 	id = ObjectId(request.args.get('id'))
+	#print(id)
 	db = connect(name, host = host)
 	for lem in Lem.objects(pk = id):
 		lem.delete()
+		db.close()
+		return "Successfully deleted LEM."
 	db.close()
-	return "Successfully deleted LEM."
+	return "Lem not found"
 
 #URL for registering users
 @app.route('/register', methods = ['POST'])
