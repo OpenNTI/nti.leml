@@ -100,6 +100,8 @@ function login(email, password) {
       $("#currentUserEmail").empty();
       $("#currentUserEmail").append(loginInfo.email);
       $("#currentUserInfo").show();
+
+      loadUserLEMs();
     }
   });
 }
