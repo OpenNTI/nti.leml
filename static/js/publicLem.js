@@ -18,8 +18,8 @@ $(function() {
 
       lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id);
     }
-
-    lemSection.html('<div class="row">' + lemDivs + '</div>');
+    var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+    lemSection.html(str_test + '<div class="row">' + lemDivs + '</div>');
   })
 })
 
@@ -31,7 +31,7 @@ function generateLemRow(title, username, imgURL, id) {
   const thumbnail = '<img src=' + imgURL + '>';
   const caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas + '</div>';
 
-  return '<div class="col-sm-6 col-md-4"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
+  return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
 }
 
 function addToCanvas(test) {
@@ -44,4 +44,16 @@ function addToCanvas(test) {
   redraw();
   //console.log(t);
   //renderLem(t.responseText);
+}
+
+function searchLems() {
+  var searchValue = $('#search_field').val();
+
+  $(".lems").each(function(){
+    if($(this).html().toLowerCase().indexOf(searchValue.toLowerCase()) > -1){
+     $(this).removeClass('hidden');
+    } else {
+      $(this).addClass('hidden');
+    }
+  });
 }
