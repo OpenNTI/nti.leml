@@ -13,7 +13,7 @@ $(function() {
 
       // default img
       if (!imgURL) {
-        imgURL = "../static/img/templates/absorbDoConnect.png";
+        imgURL = "../static/img/templates/no_thumbnail.png";
       }
 
       lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id);
