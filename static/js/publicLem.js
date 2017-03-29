@@ -84,7 +84,8 @@ function loadUserLEMs() {
       lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, true);
     }
 
-    var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+    // This search bar searches the public lem page, not user lems
+    //var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
     lemSection.html(str_test + '<div class="row">' + lemDivs + '</div>');
   });
 }
