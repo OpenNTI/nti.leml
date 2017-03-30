@@ -121,8 +121,8 @@
             <li><a href="#" id="downloadPNG">PNG</a></li>
             <li><a href="#" id="downloadJPEG">JPEG</a></li>
             <li><a href="#" onclick="downloadLemJson()">LEM</a></li>
-            <li id="shareDropdown" style="display:none;"><a href="#" onclick="openShareDialog();">Share</a></li>
-            <li id="saveDropdown" style="display:none;"><a href="#" onclick="">Save</a></li>
+            <li id="shareDropdown" style="display:none;"><a href="#" onclick="openExportDialog(true);">Share</a></li>
+            <li id="saveDropdown" style="display:none;"><a href="#" onclick="openExportDialog(false);">Save</a></li>
           </ul>
         </div>
 
@@ -382,7 +382,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Share LEM</h4>
+        <h4 id="exportModalTitle" class="modal-title">Share LEM</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -391,7 +391,7 @@
        </div>
       </div>
       <div class="modal-footer">
-        <button id="shareButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
+        <button id="exportSubmitButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
       </div>
     </div>
 

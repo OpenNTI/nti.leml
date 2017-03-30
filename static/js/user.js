@@ -1,9 +1,6 @@
 $(function() {
   $("#shareNavBar").hide();
 
-  $("#shareButton").on('click', function() {
-    shareLem();
-  });
   $("#logoutButton").on('click', function() {
     logout();
   });
@@ -133,12 +130,24 @@ function logout() {
   });
 }
 
-function shareLem() {
-  // TODO check if logged in
+function saveLem() {
+  exportLem(false);
+}
 
+function shareLem() {
+  exportLem(true);
+}
+
+function exportLem(public) {
   var lemName = $("#lemNameText")[0].value;
   var lem = generateJson().lem;
   lem.name = lemName;
+
+  if (public) {
+    lem.public = 1;
+  } else {
+    lem.public = 0;
+  }
 
   // Save thumbnail
   lem.thumbnail = cy.png();
@@ -148,8 +157,21 @@ function shareLem() {
   });
 }
 
-function openShareDialog() {
+function openExportDialog(share) {
   // Clear name field
   $("#lemNameText")[0].value = "";
+
+  if (share) {
+    setupExportModal("Share LEM", "Share", shareLem);
+  } else {
+    setupExportModal("Save LEM", "Save", saveLem);
+  }
+
   $("#shareLEM").modal('show');
+}
+
+function setupExportModal(title, submitName, submitAction) {
+  $("#exportSubmitButton").on('click', submitAction);
+  $("#exportSubmitButton").text(submitName);
+  $("#exportModalTitle").text(title);
 }
