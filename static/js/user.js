@@ -94,7 +94,12 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      $("#shareNavBar").show();
+      loggedIn = true;
+
+      if (globalPage == 'canvas') {
+        $("#shareNavBar").show();
+      }
+      $("#user_button").show();
 
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
@@ -109,7 +114,14 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
+      loggedIn = false;
+
+      if (globalPage == 'user') {
+        showPage('canvas');
+      }
+
       $("#shareNavBar").hide();
+      $("#user_button").hide();
 
       $("#currentUserInfo").hide();
       $("#currentUserEmail").empty();
