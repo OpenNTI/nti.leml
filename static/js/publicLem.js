@@ -26,16 +26,16 @@ $(function() {
 function generateLemRow(title, username, imgURL, id, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
-  const addToCanvas = '<p><a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a></p>';
-  const deleteButton = '<p><a href="#" class="btn btn-danger" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a></p>';
+  const addToCanvas = '<a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const deleteButton = '<a href="#" class="btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const thumbnail = '<img style="width:300px;height:150px;" src=' + imgURL + '>';
-  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + addToCanvas;
+  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas;
 
   if (showDelete) {
-    caption += deleteButton + '</div>';
+    caption += deleteButton + '</p></div>';
   } else {
-    caption += '</div>';
+    caption += '</p></div>';
   }
 
   return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';

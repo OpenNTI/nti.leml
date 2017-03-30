@@ -69,8 +69,7 @@
         <ul class="nav navbar-nav">
           <li id="canvas_button" class="active"><a href="#" onclick="showPage('canvas');">Canvas Editor<span class="sr-only">(current)</span></a></li>
           <li id="public_button"><a href="#" onclick="showPage('public');">Public LEMs</a></li>
-          <li id="user_button"><a href="#" onclick="showPage('user');">My LEMs</a></li>
-          <li><a href="#" id="shareNavBar" onclick="openShareDialog();">Share</a></li>
+          <li style="display:none;" id="user_button"><a href="#" onclick="showPage('user');">My LEMs</a></li>
         </ul>
 
         <form id="loginForm" class="navbar-form navbar-right">
@@ -102,28 +101,36 @@
       </div>
 
       <div class="col-md-3 open" id="sidebar0">
-      <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Canvas
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#" onclick="importLem();">Import LEM</a></li>
-    <li><a href="#" onclick="redraw()">Redraw</a></li>
-    <li><a href="#" onclick="clearCanvas()">Clear</a></li>
-    <li><a href="#" onclick="undo()">Undo</a></li>
-    <li><a href="#" onclick="redo()">Redo</a></li>
-  </ul>
 
-  <li class="dropdown btn btn-default">
-    <a href="#" style="color:black;text-decoration:none;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download As <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a href="#" id="downloadPNG">PNG</a></li>
-      <li><a href="#" id="downloadJPEG">JPEG</a></li>
-      <li><a href="#" onclick="downloadLemJson()">LEM</a></li>
-    </ul>
-  </li>
-</div>
+        <div class="dropdown col-md-6">
+          <button class="btn btn-default dropdown-toggle" type="button" id="canvasDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Canvas
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="canvasDropdown">
+            <li><a href="#" onclick="importLem();">Import LEM</a></li>
+            <li><a href="#" onclick="redraw()">Redraw</a></li>
+            <li><a href="#" onclick="clearCanvas()">Clear</a></li>
+          </ul>
+        </div>
+
+        <div class="dropdown col-md-6">
+          <button class="btn btn-default dropdown-toggle" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Export
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+            <li><a href="#" id="downloadPNG">PNG</a></li>
+            <li><a href="#" id="downloadJPEG">JPEG</a></li>
+            <li><a href="#" onclick="downloadLemJson()">LEM</a></li>
+            <li id="shareDropdown" style="display:none;"><a href="#" onclick="openExportDialog(true);">Share</a></li>
+            <li id="saveDropdown" style="display:none;"><a href="#" onclick="openExportDialog(false);">Save</a></li>
+          </ul>
+        </div>
+
+        <br>
+        <br>
+
         <div class="panel-heading">
         <h3 class="panel-title">Templates</h3>
       </div>
@@ -377,7 +384,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Share LEM</h4>
+        <h4 id="exportModalTitle" class="modal-title">Share LEM</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -386,7 +393,7 @@
        </div>
       </div>
       <div class="modal-footer">
-        <button id="shareButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
+        <button id="exportSubmitButton" type="button" class="btn btn-default" data-dismiss="modal">Share</button>
       </div>
     </div>
 
