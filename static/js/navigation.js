@@ -9,10 +9,6 @@ function showPage(page) {
     $('#main_window').removeClass('hidden');
     $('#canvas_button').addClass('active');
 
-    if (loggedIn) {
-      $("#shareNavBar").show();
-    }
-
     // Hide
     $('#publicLemList').addClass('hidden');
     $('#public_button').removeClass('active');
@@ -29,8 +25,6 @@ function showPage(page) {
     $('#public_button').addClass('active');
 
     // Hide
-    $("#shareNavBar").hide();
-
     $('#main_window').addClass('hidden');
     $('#canvas_button').removeClass('active');
 
@@ -48,8 +42,6 @@ function showPage(page) {
     }
 
     // Hide
-    $("#shareNavBar").hide();
-
     $('#main_window').addClass('hidden');
     $('#canvas_button').removeClass('active');
 

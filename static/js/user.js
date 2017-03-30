@@ -96,9 +96,9 @@ function login(email, password) {
     } else if (status == "success") {
       loggedIn = true;
 
-      if (globalPage == 'canvas') {
-        $("#shareNavBar").show();
-      }
+      $("#shareDropdown").show();
+      $("#saveDropdown").show();
+
       $("#user_button").show();
 
       $("#loginForm").hide();
@@ -120,7 +120,8 @@ function logout() {
         showPage('canvas');
       }
 
-      $("#shareNavBar").hide();
+      $("#shareDropdown").hide();
+      $("#saveDropdown").hide();
       $("#user_button").hide();
 
       $("#currentUserInfo").hide();
