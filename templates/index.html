@@ -41,6 +41,8 @@
   <!-- AJV Another Json Validator-->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/4.11.3/ajv.bundle.js"></script>
 
+  <!-- Undo Redo -->
+  <script type="text/javascript" src="https://rawgit.com/iVis-at-Bilkent/cytoscape.js-undo-redo/master/cytoscape-undo-redo.js"></script>
 
   <!-- Local JS files-->
   <script type="text/javascript" src="/static/js/json_validator.js"></script>
@@ -108,6 +110,8 @@
     <li><a href="#" onclick="importLem();">Import LEM</a></li>
     <li><a href="#" onclick="redraw()">Redraw</a></li>
     <li><a href="#" onclick="clearCanvas()">Clear</a></li>
+    <li><a href="#" onclick="undo()">Undo</a></li>
+    <li><a href="#" onclick="redo()">Redo</a></li>
   </ul>
 
   <li class="dropdown btn btn-default">
