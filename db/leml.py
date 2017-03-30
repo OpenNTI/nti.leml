@@ -35,8 +35,7 @@ class Notation(EmbeddedDocument):
 	description = StringField(required=True)
 
 #Comment Model
-class Comment(Document):
-	lem_id = StringField(required=True)
+class Comment(EmbeddedDocument):
 	text = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
@@ -52,9 +51,9 @@ class Lem(Document):
 	contexts = ListField(EmbeddedDocumentField(Context), required=True)
 	actions = ListField(EmbeddedDocumentField(Action), required=True)
 	notations = ListField(EmbeddedDocumentField(Notation))
-	ratings  = ListField(FloatField(default = 0))
-	avgRating = FloatField(default = 0)
-	thumbnail = StringField(default = "")
+	rating  = IntField(default = 0)
+	comments = ListField(EmbeddedDocumentField(Comment))
+	public = IntField(default = 0)
 
 def toLem(json_dict, user_email):
 	block_objs = []
@@ -69,5 +68,8 @@ def toLem(json_dict, user_email):
 	action_objs = []
 	for action in json_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"])) 
-	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"])
+	comment_objs = []
+	for comment in json_dict["comments"]:
+		comment_objs.append(Comment(text = comment["text"], created_by = comment["created_by"]))
+	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, comments = comment_objs, public = json_dict["public"])
 	return lem

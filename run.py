@@ -5,6 +5,7 @@ from db.user import User as DBUser
 from mongoengine import *
 import json
 from bson import ObjectId
+from getFuncs import *
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -13,21 +14,26 @@ application = get_global_app()
 login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
-in_use_id = [0]
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #URL for getting a lem item
-@app.route('/lem', methods = ['GET'])
+@app.route('/lem', methods = ['GET', 'POST', 'PUT', 'DELETE'])
+@login_required
 def lem():
-	db = connect(name,host=host)
-	obj = "Error"
-	for lem in Lem.objects(_id = request.args.post('id')):
-		obj = lem.to_json()
-	db.close()
-	return obj
+	data = request.get_json(force = True)
+	if request.method == 'GET':
+		return getById(data['id'], name, host)
+	elif request.method == 'POST':
+		if validate_json(data['json']) not True:
+			return "Cannot find user"
+		save(data['json'], current_user, name, host)
+	elif request.method == 'PUT':
+		save(data['json'], current_user, name, host)
+	elif request.method == 'DELETE':
+		delete(data['id'], name, host)		
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -51,7 +57,7 @@ def uploaded_file(filename):
 def lemall():
 	db = connect(name,host=host)
 	allobj = []
-	for lem in Lem.objects:
+	for lem in Lem.objects():
 		allobj.append(lem.to_json())
 	db.close()
 	return json.dumps(allobj)
@@ -64,37 +70,8 @@ def lemuser():
 	allobj = []
 	for lem in Lem.objects(created_by = current_user.email):
 		allobj.append(lem.to_json())
-		#comments = []
-		#for comment in Comment.objects(lem = lem.name):
-		#	comments.append(comment.to_json())
-		#allobj.append(comments)
 	db.close()
-	#print(allobj)
 	return json.dumps(allobj)
-
-#URL for saving a lem object
-@app.route('/save', methods = ['POST'])
-@login_required
-def save():
-	data = request.get_json(force = True)
-	is_valid = validate_json(data)
-	if is_valid is False:
-		return "created_by user not in database."
-	db = connect(name, host = host)
-	toLem(data, current_user.email).save()
-	db.close()
-	return "Successfully saved LEM."
-
-#URL for deleting a lem objects
-@app.route('/delete', methods = ['DELETE'])
-def delete():
-	data = request.get_json(force = True)
-	id = data['id']
-	db = connect(name, host = host)
-	for lem in Lem.objects(_id = id):
-		lem.delete()
-	db.close()
-	return "Successfully deleted LEM."
 
 #URL for registering users
 @app.route('/register', methods = ['POST'])
