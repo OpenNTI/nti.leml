@@ -1,16 +1,40 @@
-function togglePublic(i) {
-  if (i == 0) {
+function showPage(page) {
+  if (page == 'canvas') {
+    // Show
     $('#main_window').removeClass('hidden');
-    $('#lemList').addClass('hidden');
     $('#canvas_button').addClass('active');
+
+    // Hide
+    $('#publicLemList').addClass('hidden');
     $('#public_button').removeClass('active');
-    //document.getElementById("public_button").firstChild.data = "Public LEMs";
+
+    $('#userLemList').addClass('hidden');
+    $('#user_button').removeClass('active');
+  } else if (page == 'public') {
+    // Show
+    $('#publicLemList').removeClass('hidden');
+    $('#public_button').addClass('active');
+
+    // Hide
+    $('#main_window').addClass('hidden');
+    $('#canvas_button').removeClass('active');
+
+    $('#userLemList').addClass('hidden');
+    $('#user_button').removeClass('active');
+  } else if (page == 'user') {
+    // Show
+    $('#userLemList').removeClass('hidden');
+    $('#user_button').addClass('active');
+
+    // Hide
+    $('#main_window').addClass('hidden');
+    $('#canvas_button').removeClass('active');
+
+    $('#publicLemList').addClass('hidden');
+    $('#public_button').removeClass('active');
+
 
   } else {
-    $('#main_window').addClass('hidden');
-    $('#lemList').removeClass('hidden');
-    $('#canvas_button').removeClass('active');
-    $('#public_button').addClass('active');
-    //document.getElementById("public_button").firstChild.data = "Canvas Editor";
+    console.log("Invalid page: " + page + " requested")
   }
 }
