@@ -61,14 +61,20 @@ def register():
 	db.close()
 	return "Successfully registered user."
 
-@app.route('/userexists', methods = ['GET'])
-def user_exists():
-	data = request.get_json(force = True)
-	email = data['email']
-	db = connect(name, host = host)
-	exist = DBUser.objects(email__exists)
-	db.close()
-	return exist
+@app.route('/user', methods = ['GET'])
+def user():
+	email = request.args.get('id')
+	user = load_user(email)
+	if user is None:
+		return "{}"
+	return user.to_json()
+
+@app.route('/currentuser', methods = ['GET'])
+def currentuser():
+	if current_user is None:
+		return "{}"
+	user = load_user(current_user.email)
+	return user.to_json()
 
 #URL for login
 @app.route('/login',methods = ['POST'])
@@ -136,7 +142,7 @@ def rate():
 @login_manager.user_loader
 def load_user(id, remember=True):
 	db = connect(name, host=host)
-	for user in DBUser.objects(email = id):
+	for user in DBUser.objects(pk = id):
 		return User(user.email, user.password)
 	return None
 

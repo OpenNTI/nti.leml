@@ -38,3 +38,7 @@ class User(UserMixin):
 
 	def get_id(self):
 		return self.email
+
+	def to_json(self):
+		jsonstr = '{"email": "'+self.email+'"}'
+		return jsonstr
