@@ -172,6 +172,7 @@ function openExportDialog(share) {
 }
 
 function setupExportModal(title, submitName, submitAction) {
+  $("#exportSubmitButton").unbind('click');
   $("#exportSubmitButton").on('click', submitAction);
   $("#exportSubmitButton").text(submitName);
   $("#exportModalTitle").text(title);
