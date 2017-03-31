@@ -4,10 +4,13 @@ from flask_bcrypt import Bcrypt
 from mongoengine import *
 import os
 
+UPLOAD_FOLDER = '/Users/nickgraham/Desktop'
+
 login_manager = LoginManager()
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 bcrypt = Bcrypt()
 
 def init():
@@ -27,7 +30,7 @@ def chckHash(password_hash, password):
 
 class User(UserMixin):
 	email = ""
-	password = ""	
+	password = ""
 
 	def __init__(self, email, password):
 		self.email = email

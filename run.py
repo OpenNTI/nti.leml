@@ -3,9 +3,12 @@ from flask import request, render_template
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
+from bson import ObjectId
 import json
 from bson import ObjectId
 from getFuncs import *
+
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 init()
 application = get_global_app()
@@ -32,7 +35,7 @@ def lem():
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
 def lemall():
-	db = connect(name,host=host)
+	db = connect(name, host = host)
 	allobj = []
 	for lem in Lem.objects():
 		allobj.append(lem.to_json())
@@ -96,7 +99,7 @@ def logout():
 @app.route('/public')
 def public():
 	return render_template("public.html")
-	
+
 @app.route('/')
 def home():
 	return render_template("index.html")

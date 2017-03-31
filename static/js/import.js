@@ -149,7 +149,7 @@ function renderLem(json) {
   if (notations) {
     for (var index in notations) {
       var notation = notations[index];
-      var notationID = "object" + notation.building_block;
+      notation.id = "object" + notation.building_block;
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info
       elements.push({data: notation, style: {label: notation.description}, classes: "notation"},
