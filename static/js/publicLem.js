@@ -1,27 +1,6 @@
 $(function() {
-  $.get(lemallRoute, function(data, status) {
-    var lems = JSON.parse(data);
-
-    var lemSection = $("#publicLemList");
-    console.log(lems);
-    var lemDivs = "";
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-
-      var imgURL = lem.thumbnail;
-      var id = lem._id.$oid;
-
-      // default img
-      if (!imgURL) {
-        imgURL = "../static/img/templates/no_thumbnail.png";
-      }
-
-      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, false);
-    }
-    var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
-    lemSection.html(str_test + '<div class="row">' + lemDivs + '</div>');
-  });
-})
+  loadPublicLEMs();
+});
 
 function generateLemRow(title, username, imgURL, id, showDelete) {
   const header = '<h3>' + title + '</h3>';
@@ -66,6 +45,33 @@ function searchLems() {
 
 }
 
+function loadPublicLEMs() {
+  $.get(lemallRoute, function(data, status) {
+    var lems = JSON.parse(data);
+
+    var lemSection = $("#publicLemList");
+    console.log(lems);
+    var lemDivs = "";
+    for (lemIndex in lems) {
+      var lem = JSON.parse(lems[lemIndex]);
+
+      var imgURL = lem.thumbnail;
+      var id = lem._id.$oid;
+
+      // default img
+      if (!imgURL) {
+        imgURL = "../static/img/templates/no_thumbnail.png";
+      }
+
+      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, false);
+    }
+
+    var refreshButton = '<button class="btn" onclick="loadPublicLEMs();" style="margin-bottom:10px;">Refresh</button>';
+    var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+    lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
+  });
+}
+
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
@@ -89,7 +95,10 @@ function loadUserLEMs() {
 
     // This search bar searches the public lem page, not user lems
     //var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
-    lemSection.html('<div class="row">' + lemDivs + '</div>');
+
+    var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+
+    lemSection.html(refreshButton + '<div class="row">' + lemDivs + '</div>');
   });
 }
 
