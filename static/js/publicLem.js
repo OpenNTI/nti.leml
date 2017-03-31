@@ -42,8 +42,8 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
 }
 
 function addToCanvas(test) {
-  togglePublic(0);
-  $.get("http://localhost:5000/lem", {"id": test.id}, function(data, status) {
+  showPage('canvas');
+  $.get(lemRoute, {"id": test.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     console.log(lem);
     renderLem(lem);
@@ -94,7 +94,8 @@ function loadUserLEMs() {
 }
 
 function deleteLem(lemJson) {
-    $.delete(lemRoute, {"id": lemJson.id}, function(data, status) {
+    var lemBody = {"id": lemJson.id};
+    $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
       var lem = JSON.parse('{"lem": ' + data + '}');
       console.log(lem);
       renderLem(lem);
