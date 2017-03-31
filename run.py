@@ -24,15 +24,9 @@ def lem():
 		id = request.args.get('id')
 		return getById(ObjectId(id), name, host)
 	data = request.get_json(force = True)
-	if request.method == 'POST':
-		if validate_json(data) is False:
-			return "Cannot find user"
-		return save(data, current_user, name, host)
-	elif request.method == 'PUT':
-		return save(data['json'], current_user, name, host)
-	elif request.method == 'DELETE':
+	if request.method == 'DELETE':
 		return delete(ObjectId(data['id']), name, host)
-	return 'No work was done'
+	return save(data, current_user, name, host)
 
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
