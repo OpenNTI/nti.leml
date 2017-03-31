@@ -103,8 +103,14 @@ function loadUserLEMs() {
 }
 
 function deleteLem(lemJson) {
+  var lemSection = $("#userLemList");
+
+  var loader = '<div id="userLoader" class="loader"></div>';
+  lemSection.html(loader);
+
     var lemBody = {"id": lemJson.id};
     $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
+      loadUserLEMs();
       // TODO Remove thumbnail
       // This works from the console, but not here...
       // var id = lemJson.id;
