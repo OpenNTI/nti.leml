@@ -8,6 +8,8 @@ $(function() {
     if (userJson.email) {
       username = userJson.email;
       loginState('loggedIn');
+    } else {
+      loginState('ready');
     }
   });
 });
