@@ -33,7 +33,7 @@ def lem():
 def lemall():
 	db = connect(name, host = host)
 	allobj = []
-	for lem in Lem.objects():
+	for lem in Lem.objects(public = 1):
 		allobj.append(lem.to_json())
 	db.close()
 	return json.dumps(allobj)
