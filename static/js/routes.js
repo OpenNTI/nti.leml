@@ -7,4 +7,5 @@ const logoutRoute = backendURL + "/logout";
 const registerRoute = backendURL + "/register";
 const lemallRoute = backendURL + "/lemall";
 const lemuserRoute = backendURL + "/lemuser";
-const deleteRoute = backendURL + "/delete";
+const userRoute = backendURL + "/user";
+const currentuserRoute = backendURL + "/currentuser";
