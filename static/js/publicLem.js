@@ -96,8 +96,9 @@ function loadUserLEMs() {
 function deleteLem(lemJson) {
     var lemBody = {"id": lemJson.id};
     $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
-      var lem = JSON.parse('{"lem": ' + data + '}');
-      console.log(lem);
-      renderLem(lem);
+      // TODO Remove thumbnail
+      // This works from the console, but not here...
+      // var id = lemJson.id;
+      // $('#'+id).parent().remove();
     });
 }
