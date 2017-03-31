@@ -42,8 +42,8 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
 }
 
 function addToCanvas(test) {
-  togglePublic(0);
-  $.get("http://localhost:5000/lem", {"id": test.id}, function(data, status) {
+  showPage('canvas');
+  $.get(lemRoute, {"id": test.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     console.log(lem);
     renderLem(lem);
@@ -93,19 +93,12 @@ function loadUserLEMs() {
   });
 }
 
-$.delete = function(url, data, callback, type){
-
-  if ( $.isFunction(data) ){
-    type = type || callback,
-        callback = data,
-        data = {}
-  }
-
-  return $.ajax({
-    url: url,
-    type: 'DELETE',
-    success: callback,
-    data: data,
-    contentType: type
-  });
-};
+function deleteLem(lemJson) {
+    var lemBody = {"id": lemJson.id};
+    $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
+      // TODO Remove thumbnail
+      // This works from the console, but not here...
+      // var id = lemJson.id;
+      // $('#'+id).parent().remove();
+    });
+}

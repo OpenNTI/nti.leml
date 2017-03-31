@@ -14,12 +14,6 @@ $(function() {
     $("#usernameField").val("");
     $("#passwordField").val("");
   });
-  $("#registerSubmitButton").on('click', function() {
-    register($("#registerEmail").val(), $("#registerPassword").val());
-
-    $("#registerEmail").empty();
-    $("#registerPassword").empty();
-  });
   $("#usernameField").change(resetStateLogin);
   $("#passwordField").change(resetStateLogin)
 
@@ -50,6 +44,13 @@ function resetStateLogin() {
   $("#passwordField").removeClass("invalid");
   $("#loginErrorText").hide();
   $("#loginButton").html("Login");
+}
+
+function registerSubmitClicked() {
+  register($("#registerEmail").val(), $("#registerPassword").val());
+
+  $("#registerEmail").empty();
+  $("#registerPassword").empty();
 }
 
 function register(email, password) {
@@ -152,7 +153,7 @@ function exportLem(public) {
   // Save thumbnail
   lem.thumbnail = cy.png();
 
-  $.post(saveRoute, JSON.stringify(lem), function(data, status){
+  $.post(lemRoute, JSON.stringify(lem), function(data, status){
       // alert("Data: " + data + "\nStatus: " + status);
   });
 }

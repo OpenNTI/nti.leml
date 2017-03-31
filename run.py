@@ -6,6 +6,7 @@ from mongoengine import *
 from bson import ObjectId
 import json
 from bson import ObjectId
+from getFuncs import *
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -14,25 +15,25 @@ application = get_global_app()
 login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
-in_use_id = [0]
 
 #URL for getting a lem item
-@app.route('/lem', methods = ['GET'])
+@app.route('/lem', methods = ['GET', 'POST', 'PUT', 'DELETE'])
+@login_required
 def lem():
-	id = ObjectId(request.args.get('id'))
-	db = connect(name, host = host)
-	obj = "Error"
-	for lem in Lem.objects(pk = id):
-		obj = lem.to_json()
-	db.close()
-	return obj
+	if request.method == 'GET':
+		id = request.args.get('id')
+		return getById(ObjectId(id), name, host)
+	data = request.get_json(force = True)
+	if request.method == 'DELETE':
+		return delete(ObjectId(data['id']), name, host)
+	return save(data, current_user, name, host)
 
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
 def lemall():
 	db = connect(name, host = host)
 	allobj = []
-	for lem in Lem.objects:
+	for lem in Lem.objects(public = 1):
 		allobj.append(lem.to_json())
 	db.close()
 	return json.dumps(allobj)
@@ -45,40 +46,8 @@ def lemuser():
 	allobj = []
 	for lem in Lem.objects(created_by = current_user.email):
 		allobj.append(lem.to_json())
-		#comments = []
-		#for comment in Comment.objects(lem = lem.name):
-		#	comments.append(comment.to_json())
-		#allobj.append(comments)
 	db.close()
-	#print(allobj)
 	return json.dumps(allobj)
-
-#URL for saving a lem object
-@app.route('/save', methods = ['POST'])
-@login_required
-def save():
-	data = request.get_json(force = True)
-	is_valid = validate_json(data)
-	if is_valid is False:
-		return "created_by user not in database."
-	db = connect(name, host = host)
-	toLem(data, current_user.email).save()
-	db.close()
-	return "Successfully saved LEM."
-
-#URL for deleting a lem objects
-@app.route('/delete', methods = ['DELETE'])
-def delete():
-	#print(request.args.get('id'))
-	id = ObjectId(request.args.get('id'))
-	#print(id)
-	db = connect(name, host = host)
-	for lem in Lem.objects(pk = id):
-		lem.delete()
-		db.close()
-		return "Successfully deleted LEM."
-	db.close()
-	return "Lem not found"
 
 #URL for registering users
 @app.route('/register', methods = ['POST'])
