@@ -69,6 +69,13 @@ def user():
 		return "{}"
 	return user.to_json()
 
+@app.route('/currentuser', methods = ['GET'])
+def currentuser():
+	if current_user is None:
+		return "{}"
+	user = load_user(current_user.email)
+	return user.to_json()
+
 #URL for login
 @app.route('/login',methods = ['POST'])
 def login():
