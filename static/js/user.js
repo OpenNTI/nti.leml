@@ -152,7 +152,7 @@ function exportLem(public) {
   // Save thumbnail
   lem.thumbnail = cy.png();
 
-  $.post(saveRoute, JSON.stringify(lem), function(data, status){
+  $.post(lemRoute, JSON.stringify(lem), function(data, status){
       // alert("Data: " + data + "\nStatus: " + status);
   });
 }

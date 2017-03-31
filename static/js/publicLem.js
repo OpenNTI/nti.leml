@@ -93,19 +93,10 @@ function loadUserLEMs() {
   });
 }
 
-$.delete = function(url, data, callback, type){
-
-  if ( $.isFunction(data) ){
-    type = type || callback,
-        callback = data,
-        data = {}
-  }
-
-  return $.ajax({
-    url: url,
-    type: 'DELETE',
-    success: callback,
-    data: data,
-    contentType: type
-  });
-};
+function deleteLem(lemJson) {
+    $.delete(lemRoute, {"id": lemJson.id}, function(data, status) {
+      var lem = JSON.parse('{"lem": ' + data + '}');
+      console.log(lem);
+      renderLem(lem);
+    });
+}

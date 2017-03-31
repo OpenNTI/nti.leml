@@ -25,13 +25,13 @@ def lem():
 		return getById(ObjectId(id), name, host)
 	data = request.get_json(force = True)
 	if request.method == 'POST':
-		if validate_json(data['json']) is False:
+		if validate_json(data) is False:
 			return "Cannot find user"
-		return save(data['json'], current_user, name, host)
+		return save(data, current_user, name, host)
 	elif request.method == 'PUT':
 		return save(data['json'], current_user, name, host)
 	elif request.method == 'DELETE':
-		return delete(ObjectId(data['id']), name, host)		
+		return delete(ObjectId(data['id']), name, host)
 	return 'No work was done'
 
 #URL for getting all current lem objects in the database
