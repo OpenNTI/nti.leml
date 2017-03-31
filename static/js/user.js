@@ -35,6 +35,19 @@ function loginState(state) {
       $("#loginButton").html('Login');
       $("#registerButton").show();
       break;
+    case "loggedIn":
+      $("#shareDropdown").show();
+      $("#saveDropdown").show();
+
+      $("#user_button").show();
+
+      $("#loginForm").hide();
+      $("#currentUserEmail").empty();
+      $("#currentUserEmail").append(username);
+      $("#currentUserInfo").show();
+
+      loadUserLEMs();
+      break;
   }
 
 }
@@ -92,19 +105,9 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      loggedIn = true;
+      username = loginInfo.email;
 
-      $("#shareDropdown").show();
-      $("#saveDropdown").show();
-
-      $("#user_button").show();
-
-      $("#loginForm").hide();
-      $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(loginInfo.email);
-      $("#currentUserInfo").show();
-
-      loadUserLEMs();
+      loginState('loggedIn');
     }
   });
 }
@@ -112,7 +115,7 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
-      loggedIn = false;
+      username = false;
 
       if (globalPage == 'user') {
         showPage('canvas');
