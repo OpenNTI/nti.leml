@@ -3,6 +3,7 @@ from flask import request, render_template
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
+from bson import ObjectId
 import json
 from bson import ObjectId
 from getFuncs import *
@@ -15,47 +16,28 @@ login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 #URL for getting a lem item
 @app.route('/lem', methods = ['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def lem():
-	data = request.get_json(force = True)
 	if request.method == 'GET':
-		return getById(data['id'], name, host)
-	elif request.method == 'POST':
-		if validate_json(data['json']) not True:
+		id = request.args.get('id')
+		return getById(ObjectId(id), name, host)
+	data = request.get_json(force = True)
+	if request.method == 'POST':
+		if validate_json(data['json']) is False:
 			return "Cannot find user"
-		save(data['json'], current_user, name, host)
+		return save(data['json'], current_user, name, host)
 	elif request.method == 'PUT':
-		save(data['json'], current_user, name, host)
+		return save(data['json'], current_user, name, host)
 	elif request.method == 'DELETE':
-		delete(data['id'], name, host)		
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-  if request.method == 'POST':
-    # check if the post request has the file par
-    json = request.get_json(force=True)
-    data = json['data']
-    binary_data = a2b_base64(data)
-    fd = open('thumbnailUploads/image.png', 'wb')
-    fd.write(binary_data)
-    fd.close()
-    return data
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+		return delete(ObjectId(data['id']), name, host)		
+	return 'No work was done'
 
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
 def lemall():
-	db = connect(name,host=host)
+	db = connect(name, host = host)
 	allobj = []
 	for lem in Lem.objects():
 		allobj.append(lem.to_json())

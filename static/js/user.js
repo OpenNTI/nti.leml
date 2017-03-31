@@ -129,7 +129,7 @@ function shareLem() {
   lem.thumbnail = cy.png();
 
   $.post(saveRoute, JSON.stringify(lem), function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
+      // alert("Data: " + data + "\nStatus: " + status);
   });
 }
 
