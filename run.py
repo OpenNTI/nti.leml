@@ -20,17 +20,19 @@ name = 'leml'
 @app.route('/lem', methods = ['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def lem():
-	data = request.get_json(force = True)
 	if request.method == 'GET':
-		return getById(data['id'], name, host)
-	elif request.method == 'POST':
-		if validate_json(data['json']) not True:
+		id = request.args.get('id')
+		return getById(ObjectId(id), name, host)
+	data = request.get_json(force = True)
+	if request.method == 'POST':
+		if validate_json(data['json']) is False:
 			return "Cannot find user"
-		save(data['json'], current_user, name, host)
+		return save(data['json'], current_user, name, host)
 	elif request.method == 'PUT':
-		save(data['json'], current_user, name, host)
+		return save(data['json'], current_user, name, host)
 	elif request.method == 'DELETE':
-		delete(data['id'], name, host)		
+		return delete(ObjectId(data['id']), name, host)		
+	return 'No work was done'
 
 #URL for getting all current lem objects in the database
 @app.route('/lemall', methods = ['GET'])
