@@ -5,8 +5,8 @@ $(function() {
   $.get(currentuserRoute, function(data, status) {
     var userJson = JSON.parse(data);
 
-    if (userJson.username) {
-      username = userJson.username;
+    if (userJson.email) {
+      username = userJson.email;
       loginState('loggedIn');
     }
   });
