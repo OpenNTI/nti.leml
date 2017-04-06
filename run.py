@@ -1,5 +1,5 @@
 from flask_globals import *
-from flask import request, render_template
+from flask import request, render_template, session
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from mongoengine import *
@@ -72,7 +72,7 @@ def user():
 
 @app.route('/currentuser', methods = ['GET'])
 def currentuser():
-	if current_user is None:
+	if not session.get('logged_in'):
 		return "{}"
 	user = load_user(current_user.email)
 	return user.to_json()
@@ -88,6 +88,7 @@ def login():
 		return "User not found"
 	pwd_ver = chckHash(usr_ver.password, password)
 	if pwd_ver is True:
+		session['logged_in'] = True
 		login_user(usr_ver)
 		return "Logged in"
 	else:
@@ -96,6 +97,7 @@ def login():
 @app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
+	session['logged_in'] = False
 	logout_user()
 	return redirect(url_for('home'))
 
