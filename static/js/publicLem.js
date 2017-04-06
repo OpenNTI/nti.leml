@@ -120,17 +120,21 @@ function deleteLem(lemJson) {
 }
 
 function favoriteLem(lemJson) {
+  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
+  favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
+  favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
+
   $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
-    var favoriteButton = $("#" + lemJson.id).children(".favoriteButton");
-    favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
-    favoriteButton.onlick('unfavoriteLem(this.parentElement.parentElement);')
+
   });
 }
 
 function unfavoriteLem(lemJson) {
+  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
+  favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+  favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+
   $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
-    var favoriteButton = $("#" + lemJson.id).children(".favoriteButton");
-    favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-    favoriteButton.onlick('favoriteLem(this.parentElement.parentElement);')
+
   });
 }
