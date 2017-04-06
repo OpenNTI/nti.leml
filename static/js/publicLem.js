@@ -51,8 +51,19 @@ function showDetail(title, username, imgURL, id, showDelete) {
     caption += '</p></div>';
   }
 
-  const contentHtml =  thumbnail + caption;
+  // TODO
+  var comments = [ {"owner":"Nick Graham", "time":"yesterday", "message": "This is a comment"}];
+  var commentsHtml = "";
 
+  for (var commentIndex in comments) {
+    var comment = comments[commentIndex];
+
+    commentsHtml += generateComment(comment.owner, comment.time, comment.message);
+  }
+
+  $("#commentsList").html(commentsHtml);
+
+  const contentHtml =  thumbnail + caption;
   $("div#lemContent").html(contentHtml);
 
   $('#lemDetailModal').modal('show')
@@ -161,4 +172,8 @@ function unfavoriteLem(lemJson) {
   $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
 
   });
+}
+
+function generateComment(owner, time, message) {
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }
