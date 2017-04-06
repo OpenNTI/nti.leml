@@ -9,7 +9,7 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const onclickShowDetail = "$('#lemDetailModal').modal('show')";
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "','" + showDelete + "')";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
@@ -32,6 +32,30 @@ function addToCanvas(test) {
   redraw();
   //console.log(t);
   //renderLem(t.responseText);
+}
+
+function showDetail(title, username, imgURL, id, showDelete) {
+  const header = '<h3>' + title + '</h3>';
+  const createdBy = '<p>Created by @'+ username + '</p>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+
+  const onclickShowDetail = "$('#lemDetailModal').modal('show')";
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
+  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+
+  if (showDelete) {
+    caption += deleteButton + '</p></div>';
+  } else {
+    caption += '</p></div>';
+  }
+
+  const contentHtml =  thumbnail + caption;
+
+  $("div#lemContent").html(contentHtml);
+
+  $('#lemDetailModal').modal('show')
 }
 
 function searchLems() {
