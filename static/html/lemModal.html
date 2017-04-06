@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="/static/css/commentsStyle.css"></style>
+
+<script>
+function addComment(){
+    var userComment = document.getElementById("userComment").value;
+	document.getElementById("ui-state-default").innerHTML = userComment;
+}
+</script>
+
 <!-- Image Download Error Modal -->
 <div id="lemDetailModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -9,65 +18,32 @@
         <h4 class="modal-title">LEM detail</h4>
       </div>
       <div class="modal-body">
-        <ul id="post-list" class="post-list">
-          <li class="post" id="post-3200462498">
-
-            <div data-role="post-content" class="post-content">
-              <ul class="post-menu dropdown" data-role="menu">
-                <li class="collapse">
-                  <a href="#" data-action="collapse" title="Collapse"><span>−</span></a>
-                </li>
-                <li class="expand">
-                  <a href="#" data-action="collapse" title="Expand"><span>+</span></a>
-                </li>
-
-                <li class="" role="menu">
-                  <a class="dropdown-toggle" href="#" data-action="flag" data-role="flag" title="Flag as inappropriate">
-                    <i aria-hidden="true" class="icon icon-flag"></i>
-                  </a>
-                </li>
-              </ul>
-              <div class="indicator"></div>
-
-              <div class="avatar">
-                <div class="user"><img src="//a.disquscdn.com/1490734007/images/noavatar92.png" class="user" alt="Avatar"></div>
+        <!-- from http://bootsnipp.com/snippets/featured/simple-comment-block -->
+          <div class="col-lg-4 col-sm-6 text-center" style="width:100%">
+            <div class="well">
+              <h4>What is on your mind?</h4>
+              <div class="input-group">
+                <input type="text" id="userComment" class="form-control input-sm chat-input" placeholder="Write your message here..." />
+                <span class="input-group-btn" onclick="addComment()">
+                  <a href="#" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span> Add Comment</a>
+                </span>
               </div>
+              <hr data-brackets-id="12673">
+              <ul data-brackets-id="12674" id="sortable" class="list-unstyled ui-sortable">
+                <strong class="pull-left primary-font">James</strong>
+                <small class="pull-right text-muted">
+                  <span class="glyphicon glyphicon-time"></span>7 mins ago</small>
+                </br>
+                <li class="ui-state-default">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
+              </br>
+              <strong class="pull-left primary-font">Taylor</strong>
+              <small class="pull-right text-muted">
+                <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+              </br>
+              <li class="ui-state-default">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
 
-              <div class="post-body">
-                <header class="comment__header">
-                  <span class="post-byline">
-                    <span class="author">asdfasdf</span>
-
-                  </span>
-
-                  <span class="post-meta">
-                    <span class="bullet time-ago-bullet" aria-hidden="true">•</span>
-
-                    <a href="http://bootsnipp.com/snippets/featured/comment-box#comment-3200462498" data-role="relative-time" class="time-ago" title="Sunday, March 12, 2017 10:45 AM">25 days ago</a>
-                  </span>
-
-                </header>
-
-                <div class="post-body-inner">
-                  <div class="post-message-container" data-role="message-container">
-                    <div class="publisher-anchor-color" data-role="message-content">
-                      <div class="post-message " data-role="message" dir="auto">
-                        <p>asdfasdf</p>
-                      </div>
-
-                      <span class="post-media"><ul data-role="post-media-list"></ul></span>
-                    </div>
-                  </div>
-                  <a class="see-more hidden" title="see more" data-action="see-more">see more</a>
-                </div>
-
-              </div>
-
-              <div data-role="blacklist-form"></div>
-              <div class="reply-form-container" data-role="reply-form"></div>
-            </div>
-          </li>
-        </ul>
+            </ul>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
