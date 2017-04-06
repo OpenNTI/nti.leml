@@ -5,11 +5,12 @@ $(function() {
 function generateLemRow(title, username, imgURL, id, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
-  const addToCanvas = '<a href="#" class="btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const deleteButton = '<a href="#" class="btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const thumbnail = '<img style="width:300px;height:150px;" src=' + imgURL + '>';
-  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas;
+  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (showDelete) {
     caption += deleteButton + '</p></div>';
@@ -115,4 +116,24 @@ function deleteLem(lemJson) {
       // var id = lemJson.id;
       // $('#'+id).parent().remove();
     });
+}
+
+function favoriteLem(lemJson) {
+  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
+  favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
+  favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
+
+  $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
+
+  });
+}
+
+function unfavoriteLem(lemJson) {
+  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
+  favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+  favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+
+  $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
+
+  });
 }
