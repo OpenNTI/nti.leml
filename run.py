@@ -7,6 +7,7 @@ from bson import ObjectId
 import json
 from bson import ObjectId
 from getFuncs import *
+import sys
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -154,4 +155,7 @@ def validate_json(json_dict):
 
 #Start the application
 if __name__ == '__main__':
-	application.run(debug=True)
+	if len(sys.argv) > 1:
+		application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
+	else:
+		application.run(debug=True)
