@@ -2,13 +2,14 @@ from flask_globals import *
 from flask import request, render_template, session
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
+from db.user_favorite_lems import User_Favorite_Lems
 from mongoengine import *
 from bson import ObjectId
 import json
-from bson import ObjectId
 from getFuncs import *
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+DEFAULT_FAVORITES = ["58de81a29a93ac144a594fa7"]
 
 init()
 application = get_global_app()
@@ -25,6 +26,10 @@ def lem():
 		return getById(ObjectId(id), name, host)
 	data = request.get_json(force = True)
 	if request.method == 'DELETE':
+		db = connect(name, host = host)
+		for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
+			fave.update(pull__favorites = ObjectId(data['id']))
+		db.close()
 		return delete(ObjectId(data['id']), name, host)
 	return save(data, current_user, name, host)
 
@@ -58,6 +63,7 @@ def register():
 	pwd_hash = getHash(password)
 	db = connect(name, host = host)
 	DBUser(usr_name, pwd_hash).save()
+	User_Favorite_Lems(usr_name, DEFAULT_FAVORITES).save()
 	db.close()
 	return "Successfully registered user."
 
@@ -140,6 +146,26 @@ def rate():
 		lem.avgRating = sum(lem.ratings) / float(len(lem.ratings))
 		lem.save()
 	return "Done"
+
+@app.route('/favorite', methods = ['GET', 'PUT', 'DELETE'])
+@login_required
+def favorite():
+	db = connect(name, host = host)
+	if request.method == 'GET':
+		allobj = []
+		user = User_Favorite_Lems.objects(pk = current_user.email)
+		for lem in Lem.objects(pk in user.favorites):
+			allobj.append(lem.to_json())
+		db.close()
+		return json.dumps(allobj)
+	id = ObjectId(request.args.get('id'))
+	if request.method == 'DELETE':
+		user_favorite_lems.objects(pk = current_user.email).update(pull__favorites = id)
+		db.close()
+		return "Removed Lem from favorites."
+	user_favorite_lems.objects(pk = current_user.email).update(push__favorites = id)
+	db.close()
+	return "Added Lem to favorites."
 
 @login_manager.user_loader
 def load_user(id, remember=True):
