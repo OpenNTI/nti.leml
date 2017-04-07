@@ -56,7 +56,7 @@ function receivedText(e) {
 function renderLem(json) {
   // Build cytoscape elements here
   var elements = [];
-  console.log(json);
+
   // Get lem parts
   var buildingBlocks = json.lem.building_blocks;
   var startIDs = json.lem.startIDs;
@@ -64,7 +64,9 @@ function renderLem(json) {
   var actions = json.lem.actions;
   var contexts = json.lem.contexts;
   var notations = json.lem.notations;
-  elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\n\nBy: "+json.lem.created_by+"\n"+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});	
+  if(json.lem.date_created){
+  	elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\nBy: "+json.lem.created_by+" on "+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});	
+  }
   
   // Start dots
   if (startIDs) {
