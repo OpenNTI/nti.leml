@@ -7,6 +7,7 @@ from bson import ObjectId
 import json
 from bson import ObjectId
 from getFuncs import *
+import sys
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -108,27 +109,28 @@ def public():
 def home():
 	return render_template("index.html")
 
-@app.route('/comment', methods = ['POST'])
+@app.route('/comment', methods = ['GET', 'POST'])
 @login_required
 def comment():
-	data = request.get_json(force=True)
-	lem_id_c = ObjectId(data["lem"])
-	text = data["text"]
-	created_by = current_user.email
-	db = connect(name, host = host)
-	for lem in Lem.objects(pk = lem_id_c):
-		Comment(lem_id = str(lem_id_c), text = text, created_by = created_by).save()
-	db.close()
-	return "Commented"
-
-@app.route('/getComments', methods = ['POST'])
-def getComments():
-	data = request.get_json(force=True)
-	lem_id_c = data["lem"]
-	comments = []
-	for comment in Comment.objects(lem_id = lem_id_c):
-		comments.append(comment.to_json())
-	return json.dumps(comments)
+	if request.method == 'GET':
+		lem_id = request.args.get('lem')
+		comments = []
+		for comment in Comment.objects(lem_id = lem_id):
+			comments.append(comment.to_json())
+		return json.dumps(comments)
+	elif request.method == 'POST':
+		data = request.get_json(force=True)
+		lem_id_c = ObjectId(data["lem"])
+		text = data["text"]
+		created_by = current_user.email
+		db = connect(name, host = host)
+		resultComment = {}
+		for lem in Lem.objects(pk = lem_id_c):
+			comment = Comment(lem_id = str(lem_id_c), text = text, created_by = created_by)
+			comment.save()
+			resultComment = comment.to_json()
+		db.close()
+		return resultComment
 
 @app.route('/rate', methods = ['POST'])
 def rate():
@@ -156,4 +158,7 @@ def validate_json(json_dict):
 
 #Start the application
 if __name__ == '__main__':
-	application.run(debug=True)
+	if len(sys.argv) > 1:
+		application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
+	else:
+		application.run(debug=True)

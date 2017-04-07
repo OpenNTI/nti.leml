@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="/static/css/commentsStyle.css"></style>
+
+<!-- Image Download Error Modal -->
+<div id="lemDetailModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">LEM detail</h4>
+      </div>
+      <div class="modal-body">
+        <div id="lemContent"></div>
+        <!-- from http://bootsnipp.com/snippets/featured/simple-comment-block -->
+          <div class="col-lg-4 col-sm-6 text-center" style="width:100%">
+            <div class="well">
+              <form id="newCommentForm" class="input-group" action="" method="post" onsubmit="addComment();return false;">
+                <input type="text" id="userComment" class="form-control input-sm chat-input" placeholder="Write your message here..." />
+                <span class="input-group-btn">
+                  <input type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span> Add Comment</a>
+                </span>
+              </form>
+              <hr data-brackets-id="12673">
+              <ul data-brackets-id="12674" id="commentsList" class="list-unstyled ui-sortable">
+                <strong class="pull-left primary-font">James</strong>
+                <small class="pull-right text-muted">
+                  <span class="glyphicon glyphicon-time"></span>7 mins ago</small>
+                </br>
+                <li class="ui-state-default">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
+              </br>
+              <strong class="pull-left primary-font">Taylor</strong>
+              <small class="pull-right text-muted">
+                <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+              </br>
+              <li class="ui-state-default">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+
+            </ul>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
