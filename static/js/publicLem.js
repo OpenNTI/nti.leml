@@ -9,7 +9,7 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "','" + showDelete + "')";
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + showDelete + ")";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
@@ -34,7 +34,7 @@ function addToCanvas(test) {
   //renderLem(t.responseText);
 }
 
-function showDetail(title, username, imgURL, id, showDelete) {
+function showDetail(title, username, imgURL, id, privateLems) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
@@ -42,10 +42,10 @@ function showDetail(title, username, imgURL, id, showDelete) {
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
-  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
-  if (showDelete) {
+  if (privateLems) {
     caption += deleteButton + '</p></div>';
   } else {
     caption += '</p></div>';
@@ -54,10 +54,18 @@ function showDetail(title, username, imgURL, id, showDelete) {
   const contentHtml =  thumbnail + caption;
   $("div#lemContent").html(contentHtml);
 
-  // TODO
   $("#newCommentForm").attr('lemid', id);
 
-  $.get(commentRoute + "?lem=" + id, function (data, success) {
+  if (globalUsername) {
+    $("#newCommentForm").show()
+    $("#loginRequiredToComment").hide()
+  } else {
+    $("#newCommentForm").hide()
+    $("#loginRequiredToComment").show()
+  }
+
+  var route = privateLems ? commentRoute : publicCommentRoute;
+  $.get(route + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
 
     var commentsHtml = "";
@@ -187,9 +195,10 @@ function addComment(){
     const postBody = {"lem":lemId, "text": userComment};
     $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
       if (status == "success") {
-      const createdComment = JSON.parse(data);
-      const date = Date(createdComment.date_created.$date);
-      addCommentToList(createdComment.created_by, date, createdComment.text);
+        const createdComment = JSON.parse(data);
+        const date = Date(createdComment.date_created.$date);
+        addCommentToList(createdComment.created_by, date, createdComment.text);
+        $("#userComment").val("");
       } else {
         console.error("Could not create comment");
       }
