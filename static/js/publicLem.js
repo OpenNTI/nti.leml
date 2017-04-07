@@ -64,6 +64,7 @@ function showDetail(title, username, imgURL, id, privateLems) {
     $("#loginRequiredToComment").show()
   }
 
+  $("ul#commentsList").html("");
   var route = privateLems ? commentRoute : publicCommentRoute;
   $.get(route + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
