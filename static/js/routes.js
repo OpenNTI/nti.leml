@@ -9,3 +9,6 @@ const lemallRoute = backendURL + "/lemall";
 const lemuserRoute = backendURL + "/lemuser";
 const userRoute = backendURL + "/user";
 const currentuserRoute = backendURL + "/currentuser";
+const favoriteRoute = backendURL + "/favorite";
+const commentRoute = backendURL + "/comment";
+const publicCommentRoute  = backendURL + "/publicComment";

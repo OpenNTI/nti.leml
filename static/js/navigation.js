@@ -1,18 +1,4 @@
-var username = undefined;
 var globalPage = 'canvas';
-
-$(function() {
-  $.get(currentuserRoute, function(data, status) {
-    var userJson = JSON.parse(data);
-
-    if (userJson.email) {
-      username = userJson.email;
-      loginState('loggedIn');
-    } else {
-      loginState('ready');
-    }
-  });
-});
 
 function showPage(page) {
   if (page == 'canvas') {
@@ -26,7 +12,7 @@ function showPage(page) {
     $('#publicLemList').addClass('hidden');
     $('#public_button').removeClass('active');
 
-    if (username) {
+    if (globalUsername) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
@@ -41,7 +27,7 @@ function showPage(page) {
     $('#main_window').addClass('hidden');
     $('#canvas_button').removeClass('active');
 
-    if (username) {
+    if (globalUsername) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
@@ -49,7 +35,7 @@ function showPage(page) {
     globalPage = page;
 
     // Show
-    if (username) {
+    if (globalUsername) {
       $('#userLemList').removeClass('hidden');
       $('#user_button').addClass('active');
     }
