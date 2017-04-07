@@ -6,7 +6,7 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + showDelete + ")";
@@ -35,10 +35,12 @@ function addToCanvas(test) {
 }
 
 function showDetail(title, username, imgURL, id, privateLems) {
+  // TODO set favorite button accurately
+
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" data-dismiss="modal" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" data-dismiss="modal" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
@@ -171,9 +173,12 @@ function deleteLem(lemJson) {
 }
 
 function favoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
-  favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == "58de90cfcf367e0e111d96f1"})
+
+  favoriteButtonsForLem.map(function(index) {
+    $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
+    $(favoriteButtonsForLem[index]).attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
+  })
 
   $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
 
@@ -181,9 +186,13 @@ function favoriteLem(lemJson) {
 }
 
 function unfavoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-  favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == "58de90cfcf367e0e111d96f1"})
+
+  favoriteButtonsForLem.map(function(index) {
+    $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+    $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+  })
 
   $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
 
