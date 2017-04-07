@@ -116,21 +116,48 @@ def comment():
 		lem_id = request.args.get('lem')
 		comments = []
 		for comment in Comment.objects(lem_id = lem_id):
-			comments.append(comment.to_json())
+			include = True
+			for lem in Lem.objects(pk = lem_id):
+				if lem.public == 0 and lem.created_by != current_user.email:
+					include = False
+					break
+			if include:
+				comments.append(comment.to_json())
 		return json.dumps(comments)
 	elif request.method == 'POST':
 		data = request.get_json(force=True)
-		lem_id_c = ObjectId(data["lem"])
+		lem_id = ObjectId(data["lem"])
 		text = data["text"]
 		created_by = current_user.email
+
 		db = connect(name, host = host)
+
+		# Check that a private lem is not being accessed
+		for lem in Lem.objects(pk = lem_id):
+			if lem.public == 0 and lem.created_by != current_user.email:
+				return "Cannnot comment on a private lem from this route. Try /privateComment"
+
 		resultComment = {}
-		for lem in Lem.objects(pk = lem_id_c):
-			comment = Comment(lem_id = str(lem_id_c), text = text, created_by = created_by)
+		for lem in Lem.objects(pk = lem_id):
+			comment = Comment(lem_id = str(lem_id), text = text, created_by = created_by)
 			comment.save()
 			resultComment = comment.to_json()
 		db.close()
 		return resultComment
+
+@app.route('/publicComment', methods = ['GET'])
+def publicComment():
+	lem_id = request.args.get('lem')
+	comments = []
+	for comment in Comment.objects(lem_id = lem_id):
+		include = True
+		for lem in Lem.objects(pk = lem_id):
+			if lem.public == 0:
+				include = False
+				break
+		if include:
+			comments.append(comment.to_json())
+	return json.dumps(comments)
 
 @app.route('/rate', methods = ['POST'])
 def rate():

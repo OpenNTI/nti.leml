@@ -1,18 +1,4 @@
-var username = undefined;
 var globalPage = 'canvas';
-
-$(function() {
-  $.get(currentuserRoute, function(data, status) {
-    var userJson = JSON.parse(data);
-
-    if (userJson.email) {
-      username = userJson.email;
-      loginState('loggedIn');
-    } else {
-      loginState('ready');
-    }
-  });
-});
 
 function showPage(page) {
   if (page == 'canvas') {
