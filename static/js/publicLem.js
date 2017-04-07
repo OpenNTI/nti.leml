@@ -51,22 +51,25 @@ function showDetail(title, username, imgURL, id, showDelete) {
     caption += '</p></div>';
   }
 
+  const contentHtml =  thumbnail + caption;
+  $("div#lemContent").html(contentHtml);
+
   // TODO
   $("#newCommentForm").attr('lemid', id);
 
-  var comments = [ {"owner":"Nick Graham", "time":"yesterday", "message": "This is a comment"}];
-  var commentsHtml = "";
+  $.get(commentRoute + "?lem=" + id, function (data, success) {
+    var commentsStrings = JSON.parse(data);
 
-  for (var commentIndex in comments) {
-    var comment = comments[commentIndex];
+    var commentsHtml = "";
+    for (var commentIndex in commentsStrings) {
+      var comment = JSON.parse(commentsStrings[commentIndex]);
+      var date = Date(comment.date_created.$date);
 
-    commentsHtml += generateComment(comment.owner, comment.time, comment.message);
-  }
+      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+    }
 
-  $("ul#commentsList").html(commentsHtml);
-
-  const contentHtml =  thumbnail + caption;
-  $("div#lemContent").html(contentHtml);
+    $("ul#commentsList").html(commentsHtml);
+  });
 
   $('#lemDetailModal').modal('show')
 }
@@ -186,7 +189,7 @@ function addComment(){
       if (status == "success") {
       const createdComment = JSON.parse(data);
       const date = Date(createdComment.date_created.$date);
-      addCommentToList(createdComment.created_by, date.toString(), createdComment.text);
+      addCommentToList(createdComment.created_by, date, createdComment.text);
       } else {
         console.error("Could not create comment");
       }
@@ -194,7 +197,7 @@ function addComment(){
 }
 
 function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time, message);
+  const newComment = generateComment(owner, time.toString(), message);
   $("#commentsList").prepend(newComment);
 }
 
