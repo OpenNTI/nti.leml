@@ -173,7 +173,7 @@ function deleteLem(lemJson) {
 }
 
 function favoriteLem(lemJson) {
-  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == "58de90cfcf367e0e111d96f1"})
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
 
   favoriteButtonsForLem.map(function(index) {
     $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
@@ -187,7 +187,7 @@ function favoriteLem(lemJson) {
 
 function unfavoriteLem(lemJson) {
 
-  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == "58de90cfcf367e0e111d96f1"})
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
 
   favoriteButtonsForLem.map(function(index) {
     $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
