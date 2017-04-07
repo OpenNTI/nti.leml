@@ -21,3 +21,5 @@ def delete(id, name, host):
 		lem.delete()
 	db.close()
 	return "Successfully deleted LEM."
+
+

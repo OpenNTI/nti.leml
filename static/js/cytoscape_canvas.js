@@ -177,6 +177,27 @@ var lemStyle = [ // the stylesheet for the graph
       'line-color': 'red',
       'target-arrow-color': 'red',
     }
+  },
+  {
+    selector: '.authorship',
+    style: {
+      'text-valign':'center',
+      'text-halign':'center',
+      'text-wrap': 'wrap',
+      'shape': 'roundrectangle',
+      'width': 'label',
+      'height': 70,
+      'background-fit': 'contain',
+      'background-color':'#fff',
+      'border-color':'#000',
+      'border-width': 2,
+      'border-opacity': 0.5,
+      'padding': 30,
+      'background-image': '/static/img/opicon.png',
+      'background-width': '20%',
+      'background-height': '50%',
+      'background-padding-bottom': 20
+    }
   }
 ];
 
