@@ -65,6 +65,7 @@ function showDetail(title, username, imgURL, id, privateLems) {
   }
 
   $("ul#commentsList").html("");
+  $("#commentsLoading").show();
   var route = privateLems ? commentRoute : publicCommentRoute;
   $.get(route + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
@@ -77,6 +78,7 @@ function showDetail(title, username, imgURL, id, privateLems) {
       commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
     }
 
+    $("#commentsLoading").hide();
     $("ul#commentsList").html(commentsHtml);
   });
 
