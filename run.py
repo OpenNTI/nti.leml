@@ -134,7 +134,7 @@ def comment():
 		for comment in Comment.objects(lem_id = lem_id):
 			include = True
 			for lem in Lem.objects(pk = lem_id):
-				if lem.public == 0 and lem.created_by != current_user.email:
+				if lem.public == 0 and lem.created_by.email != current_user.email:
 					include = False
 					break
 			if include:
@@ -150,8 +150,8 @@ def comment():
 
 		# Check that a private lem is not being accessed
 		for lem in Lem.objects(pk = lem_id):
-			if lem.public == 0 and lem.created_by != current_user.email:
-				return "Cannnot comment on a private lem from this route. Try /privateComment"
+			if lem.public == 0 and lem.created_by.email != current_user.email:
+				return "Cannnot comment on a private lem not owned by you"
 
 		resultComment = {}
 		for lem in Lem.objects(pk = lem_id):
