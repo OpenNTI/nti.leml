@@ -117,10 +117,13 @@ def comment():
 	text = data["text"]
 	created_by = current_user.email
 	db = connect(name, host = host)
+	resultComment = {}
 	for lem in Lem.objects(pk = lem_id_c):
-		Comment(lem_id = str(lem_id_c), text = text, created_by = created_by).save()
+		comment = Comment(lem_id = str(lem_id_c), text = text, created_by = created_by)
+		comment.save()
+		resultComment = comment.to_json()
 	db.close()
-	return "Commented"
+	return resultComment
 
 @app.route('/getComments', methods = ['POST'])
 def getComments():
