@@ -73,9 +73,9 @@ function showDetail(title, username, imgURL, id, privateLems) {
     var commentsHtml = "";
     for (var commentIndex in commentsStrings) {
       var comment = JSON.parse(commentsStrings[commentIndex]);
-      var date = Date(comment.date_created.$date);
+      var date = new Date(comment.date_created.$date);
 
-      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+      commentsHtml += generateComment(comment.created_by, date.toLocaleString(), comment.text);
     }
 
     $("#commentsLoading").hide();
@@ -199,7 +199,7 @@ function addComment(){
     $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
       if (status == "success") {
         const createdComment = JSON.parse(data);
-        const date = Date(createdComment.date_created.$date);
+        const date = new Date(createdComment.date_created.$date);
         addCommentToList(createdComment.created_by, date, createdComment.text);
         $("#userComment").val("");
       } else {
@@ -209,10 +209,10 @@ function addComment(){
 }
 
 function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time.toString(), message);
+  const newComment = generateComment(owner, time.toLocaleString(), message);
   $("#commentsList").prepend(newComment);
 }
 
 function generateComment(owner, time, message) {
-  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }
