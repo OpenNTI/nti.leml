@@ -9,7 +9,8 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const thumbnail = '<img style="width:300px;height:150px;" src=' + imgURL + '>';
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "','" + showDelete + "')";
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (showDelete) {
@@ -31,6 +32,46 @@ function addToCanvas(test) {
   redraw();
   //console.log(t);
   //renderLem(t.responseText);
+}
+
+function showDetail(title, username, imgURL, id, showDelete) {
+  const header = '<h3>' + title + '</h3>';
+  const createdBy = '<p>Created by @'+ username + '</p>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+
+  const onclickShowDetail = "$('#lemDetailModal').modal('show')";
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
+  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+
+  if (showDelete) {
+    caption += deleteButton + '</p></div>';
+  } else {
+    caption += '</p></div>';
+  }
+
+  const contentHtml =  thumbnail + caption;
+  $("div#lemContent").html(contentHtml);
+
+  // TODO
+  $("#newCommentForm").attr('lemid', id);
+
+  $.get(commentRoute + "?lem=" + id, function (data, success) {
+    var commentsStrings = JSON.parse(data);
+
+    var commentsHtml = "";
+    for (var commentIndex in commentsStrings) {
+      var comment = JSON.parse(commentsStrings[commentIndex]);
+      var date = Date(comment.date_created.$date);
+
+      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+    }
+
+    $("ul#commentsList").html(commentsHtml);
+  });
+
+  $('#lemDetailModal').modal('show')
 }
 
 function searchLems() {
@@ -136,4 +177,30 @@ function unfavoriteLem(lemJson) {
   $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
 
   });
+}
+
+function addComment(){
+    var source = event.target;
+    const userComment = source.children.namedItem("userComment").value;
+    const lemId = source.getAttribute('lemid');
+
+    const postBody = {"lem":lemId, "text": userComment};
+    $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
+      if (status == "success") {
+      const createdComment = JSON.parse(data);
+      const date = Date(createdComment.date_created.$date);
+      addCommentToList(createdComment.created_by, date, createdComment.text);
+      } else {
+        console.error("Could not create comment");
+      }
+    });
+}
+
+function addCommentToList(owner, time, message) {
+  const newComment = generateComment(owner, time.toString(), message);
+  $("#commentsList").prepend(newComment);
+}
+
+function generateComment(owner, time, message) {
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }
