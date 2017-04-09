@@ -185,11 +185,12 @@ def favorite():
         db.close()
         return json.dumps(allobj)
     id = ObjectId(request.args.get('id'))
+    user_email = ObjectId(current_user.email)
     if request.method == 'DELETE':
-        user_favorite_lems.objects(pk=current_user.email).update(pull__favorites=id)
+        User_Favorite_Lems.objects(pk=user_email).update(pull__favorites=id)
         db.close()
         return "Removed Lem from favorites."
-    user_favorite_lems.objects(pk=current_user.email).update(push__favorites=id)
+    User_Favorite_Lems.objects(pk=user_email).update(push__favorites=id)
     db.close()
     return "Added Lem to favorites."
 
@@ -211,11 +212,7 @@ def validate_json(json_dict):
 
 # Start the application
 if __name__ == '__main__':
-<<<<<<< HEAD
 	if len(sys.argv) > 1:
 		application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
 	else:
 		application.run(debug=True)
-=======
-    application.run(debug=True)
->>>>>>> jared
