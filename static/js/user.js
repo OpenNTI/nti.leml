@@ -1,3 +1,20 @@
+var globalUsername = undefined;
+var globalPage = 'canvas';
+
+$(function() {
+  $.get(currentuserRoute, function(data, status) {
+    var userJson = JSON.parse(data);
+
+    if (userJson.email) {
+      globalUsername = userJson.email;
+      loginState('loggedIn');
+    } else {
+      globalUsername = undefined;
+      loginState('ready');
+    }
+  });
+});
+
 $(function() {
   $("#shareNavBar").hide();
 
@@ -43,7 +60,7 @@ function loginState(state) {
 
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(username);
+      $("#currentUserEmail").append(globalUsername);
       $("#currentUserInfo").show();
 
       loadUserLEMs();
@@ -105,7 +122,7 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      username = loginInfo.email;
+      globalUsername = loginInfo.email;
 
       loginState('loggedIn');
     }
@@ -115,7 +132,7 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
-      username = false;
+      globalUsername = undefined;
 
       if (globalPage == 'user') {
         showPage('canvas');

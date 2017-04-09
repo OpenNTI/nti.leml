@@ -9,7 +9,8 @@ function generateLemRow(title, username, imgURL, id, showDelete) {
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const thumbnail = '<img style="width:300px;height:150px;" src=' + imgURL + '>';
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + showDelete + ")";
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (showDelete) {
@@ -33,10 +34,58 @@ function addToCanvas(test) {
   //renderLem(t.responseText);
 }
 
-function searchLems() {
+function showDetail(title, username, imgURL, id, privateLems) {
+  const header = '<h3>' + title + '</h3>';
+  const createdBy = '<p>Created by @'+ username + '</p>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
+  const onclickShowDetail = "$('#lemDetailModal').modal('show')";
+  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
+  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+
+  if (privateLems) {
+    caption += deleteButton + '</p></div>';
+  } else {
+    caption += '</p></div>';
+  }
+
+  const contentHtml =  thumbnail + caption;
+  $("div#lemContent").html(contentHtml);
+
+  $("#newCommentForm").attr('lemid', id);
+
+  if (globalUsername) {
+    $("#newCommentForm").show()
+    $("#loginRequiredToComment").hide()
+  } else {
+    $("#newCommentForm").hide()
+    $("#loginRequiredToComment").show()
+  }
+
+  $("ul#commentsList").html("");
+  var route = privateLems ? commentRoute : publicCommentRoute;
+  $.get(route + "?lem=" + id, function (data, success) {
+    var commentsStrings = JSON.parse(data);
+
+    var commentsHtml = "";
+    for (var commentIndex in commentsStrings) {
+      var comment = JSON.parse(commentsStrings[commentIndex]);
+      var date = Date(comment.date_created.$date);
+
+      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+    }
+
+    $("ul#commentsList").html(commentsHtml);
+  });
+
+  $('#lemDetailModal').modal('show')
+}
+
+function searchLems() {
+  var searchValue = $("#search_field").val();
   $(".lems").each(function(){
-    console.log($(this).html());
     if($(this).html().toLowerCase().indexOf(searchValue.toLowerCase()) > -1){
      $(this).removeClass('hidden');
     } else {
@@ -137,4 +186,31 @@ function unfavoriteLem(lemJson) {
   $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
+}
+
+function addComment(){
+    var source = event.target;
+    const userComment = source.children.namedItem("userComment").value;
+    const lemId = source.getAttribute('lemid');
+
+    const postBody = {"lem":lemId, "text": userComment};
+    $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
+      if (status == "success") {
+        const createdComment = JSON.parse(data);
+        const date = Date(createdComment.date_created.$date);
+        addCommentToList(createdComment.created_by, date, createdComment.text);
+        $("#userComment").val("");
+      } else {
+        console.error("Could not create comment");
+      }
+    });
+}
+
+function addCommentToList(owner, time, message) {
+  const newComment = generateComment(owner, time.toString(), message);
+  $("#commentsList").prepend(newComment);
+}
+
+function generateComment(owner, time, message) {
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }
