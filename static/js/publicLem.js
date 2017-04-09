@@ -173,7 +173,7 @@ function favoriteLem(lemJson) {
   favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
   favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
 
-  $.post(favoriteRoute, {"id": lemJson.id}, function(data, status) {
+  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
