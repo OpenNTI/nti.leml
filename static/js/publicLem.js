@@ -124,7 +124,7 @@ function favoriteLem(lemJson) {
   favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
   favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
 
-  $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
+  $.post(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
@@ -134,7 +134,7 @@ function unfavoriteLem(lemJson) {
   favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
   favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
 
-  $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
+  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
