@@ -12,3 +12,4 @@ const currentuserRoute = backendURL + "/currentuser";
 const favoriteRoute = backendURL + "/favorite";
 const commentRoute = backendURL + "/comment";
 const publicCommentRoute  = backendURL + "/publicComment";
+const rateRoute  = backendURL + "/rate";

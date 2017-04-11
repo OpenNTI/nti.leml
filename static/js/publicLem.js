@@ -2,14 +2,14 @@ $(function() {
   loadPublicLEMs();
 });
 
-function generateLemRow(title, username, imgURL, id, showDelete) {
+function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + showDelete + ")";
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
@@ -34,8 +34,9 @@ function addToCanvas(test) {
   //renderLem(t.responseText);
 }
 
-function showDetail(title, username, imgURL, id, privateLems) {
-  const header = '<h3>' + title + '</h3>';
+function showDetail(title, username, imgURL, id, avgRating, privateLems) {
+  $("#lemModalTitle").text(title);
+
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
   const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
@@ -43,7 +44,8 @@ function showDetail(title, username, imgURL, id, privateLems) {
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
-  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+  const rating = avgRating + ' <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>'
+  var caption = '<div id="' + id + '" class="caption">' + createdBy + '<p>' + rating + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (privateLems) {
     caption += deleteButton + '</p></div>';
@@ -53,6 +55,56 @@ function showDetail(title, username, imgURL, id, privateLems) {
 
   const contentHtml =  thumbnail + caption;
   $("div#lemContent").html(contentHtml);
+
+  $(".first-star").hover(function() {
+    star("first");
+  }, function() {
+    unstar("first");
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
+
+  $(".second-star").hover(function() {
+    star("first");
+    star("second");
+  }, function() {
+    unstar("first");
+    unstar("second");
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
+
+  $(".third-star").hover(function() {
+    star("first");
+    star("second");
+    star("third");
+  }, function() {
+    unstar("first");
+    unstar("second");
+    unstar("third");
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
+
+  $(".fourth-star").hover(function() {
+    star("first");
+    star("second");
+    star("third");
+    star("fourth");
+  }, function() {
+    unstar("first");
+    unstar("second");
+    unstar("third");
+    unstar("fourth");
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
+
+  $(".fifth-star").hover(function() {
+    star("first");
+    star("second");
+    star("third");
+    star("fourth");
+    star("fifth");
+  }, function() {
+    unstar("first");
+    unstar("second");
+    unstar("third");
+    unstar("fourth");
+    unstar("fifth");
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
 
   $("#newCommentForm").attr('lemid', id);
 
@@ -81,6 +133,14 @@ function showDetail(title, username, imgURL, id, privateLems) {
   });
 
   $('#lemDetailModal').modal('show')
+}
+
+function star(number) {
+  $("." + number + "-star").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+}
+
+function unstar(number) {
+  $("." + number + "-star").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
 }
 
 function searchLems() {
@@ -113,7 +173,7 @@ function loadPublicLEMs() {
         imgURL = "../static/img/templates/no_thumbnail.png";
       }
 
-      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, false);
+      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, lem.avgRating, false);
     }
 
     var refreshButton = '<button class="btn" onclick="loadPublicLEMs();" style="margin-bottom:10px;">Refresh</button>';
@@ -184,6 +244,13 @@ function unfavoriteLem(lemJson) {
   favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
 
   $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
+
+  });
+}
+
+function rate(lemJson, rating) {
+  const ratingPostBody = {"lem": lemJson.id, "rating": rating};
+  $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
 
   });
 }
