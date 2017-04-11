@@ -172,12 +172,9 @@ function exportLem(public) {
 
   // Save thumbnail
   lem.thumbnail = cy.png();
-<<<<<<< HEAD
-  $.post("http://localhost:5000/lem", JSON.stringify(lem), function(data, status){
-=======
 
   $.post(lemRoute, JSON.stringify(lem), function(data, status){
->>>>>>> master
+
       // alert("Data: " + data + "\nStatus: " + status);
   });
 }
@@ -201,3 +198,8 @@ function setupExportModal(title, submitName, submitAction) {
   $("#exportSubmitButton").text(submitName);
   $("#exportModalTitle").text(title);
 }
+
+
+
+
+

@@ -1,11 +1,7 @@
 // TODO currently set to localhost
 const backendURL = "http://localhost:5000";
-
-<<<<<<< HEAD
 const saveRoute = backendURL + "/lem";
-=======
 const lemRoute = backendURL + "/lem";
->>>>>>> master
 const loginRoute = backendURL + "/login";
 const logoutRoute = backendURL + "/logout";
 const registerRoute = backendURL + "/register";
