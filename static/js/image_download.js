@@ -12,11 +12,11 @@ $(function() {
   $("#downloadJPEG").on('click', function() {
     downloadImage(ImageType.JPEG);
   });
-
-  $("#downloadAnyway").on('click', function() {
-    $('#downloadLink')[0].click();
-  });
 });
+
+function downloadAnywayClicked() {
+  $('#downloadLink')[0].click();
+}
 
 function downloadImage(fileType) {
   var content;

@@ -1,9 +1,23 @@
+var globalUsername = undefined;
+var globalPage = 'canvas';
+
+$(function() {
+  $.get(currentuserRoute, function(data, status) {
+    var userJson = JSON.parse(data);
+
+    if (userJson.email) {
+      globalUsername = userJson.email;
+      loginState('loggedIn');
+    } else {
+      globalUsername = undefined;
+      loginState('ready');
+    }
+  });
+});
+
 $(function() {
   $("#shareNavBar").hide();
 
-  $("#shareButton").on('click', function() {
-    shareLem();
-  });
   $("#logoutButton").on('click', function() {
     logout();
   });
@@ -16,12 +30,6 @@ $(function() {
 
     $("#usernameField").val("");
     $("#passwordField").val("");
-  });
-  $("#registerSubmitButton").on('click', function() {
-    register($("#registerEmail").val(), $("#registerPassword").val());
-
-    $("#registerEmail").empty();
-    $("#registerPassword").empty();
   });
   $("#usernameField").change(resetStateLogin);
   $("#passwordField").change(resetStateLogin)
@@ -44,6 +52,19 @@ function loginState(state) {
       $("#loginButton").html('Login');
       $("#registerButton").show();
       break;
+    case "loggedIn":
+      $("#shareDropdown").show();
+      $("#saveDropdown").show();
+
+      $("#user_button").show();
+
+      $("#loginForm").hide();
+      $("#currentUserEmail").empty();
+      $("#currentUserEmail").append(globalUsername);
+      $("#currentUserInfo").show();
+
+      loadUserLEMs();
+      break;
   }
 
 }
@@ -53,6 +74,13 @@ function resetStateLogin() {
   $("#passwordField").removeClass("invalid");
   $("#loginErrorText").hide();
   $("#loginButton").html("Login");
+}
+
+function registerSubmitClicked() {
+  register($("#registerEmail").val(), $("#registerPassword").val());
+
+  $("#registerEmail").empty();
+  $("#registerPassword").empty();
 }
 
 function register(email, password) {
@@ -94,12 +122,9 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      $("#shareNavBar").show();
+      globalUsername = loginInfo.email;
 
-      $("#loginForm").hide();
-      $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(loginInfo.email);
-      $("#currentUserInfo").show();
+      loginState('loggedIn');
     }
   });
 }
@@ -107,7 +132,15 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
-      $("#shareNavBar").hide();
+      globalUsername = undefined;
+
+      if (globalPage == 'user') {
+        showPage('canvas');
+      }
+
+      $("#shareDropdown").hide();
+      $("#saveDropdown").hide();
+      $("#user_button").hide();
 
       $("#currentUserInfo").hide();
       $("#currentUserEmail").empty();
@@ -118,22 +151,53 @@ function logout() {
   });
 }
 
-function shareLem() {
-  // TODO check if logged in
+function saveLem() {
+  exportLem(false);
+}
 
+function shareLem() {
+  exportLem(true);
+}
+
+function exportLem(public) {
   var lemName = $("#lemNameText")[0].value;
   var lem = generateJson().lem;
   lem.name = lemName;
 
+  if (public) {
+    lem.public = 1;
+  } else {
+    lem.public = 0;
+  }
+
   // Save thumbnail
   lem.thumbnail = cy.png();
+<<<<<<< HEAD
   $.post("http://localhost:5000/lem", JSON.stringify(lem), function(data, status){
+=======
+
+  $.post(lemRoute, JSON.stringify(lem), function(data, status){
+>>>>>>> master
       // alert("Data: " + data + "\nStatus: " + status);
   });
 }
 
-function openShareDialog() {
+function openExportDialog(share) {
   // Clear name field
   $("#lemNameText")[0].value = "";
+
+  if (share) {
+    setupExportModal("Share LEM", "Share", shareLem);
+  } else {
+    setupExportModal("Save LEM", "Save", saveLem);
+  }
+
   $("#shareLEM").modal('show');
+}
+
+function setupExportModal(title, submitName, submitAction) {
+  $("#exportSubmitButton").unbind('click');
+  $("#exportSubmitButton").on('click', submitAction);
+  $("#exportSubmitButton").text(submitName);
+  $("#exportModalTitle").text(title);
 }

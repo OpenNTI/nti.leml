@@ -1,4 +1,5 @@
 var cy;
+var ur;
 var selectedId;
 
 var lemStyle = [ // the stylesheet for the graph
@@ -176,6 +177,24 @@ var lemStyle = [ // the stylesheet for the graph
       'line-color': 'red',
       'target-arrow-color': 'red',
     }
+  },
+  {
+    selector: '.authorship',
+    style: {
+      'text-valign':'center',
+      'text-halign':'center',
+      'text-wrap': 'wrap',
+      'shape': 'roundrectangle',
+      'width': 'label',
+      'height': 60,
+      'background-fit': 'contain',
+      'background-color':'#fff',
+      'border-color':'#000',
+      'border-width': 2,
+      'border-opacity': 0.5,
+      'padding': 30,
+      'background-image': '/static/img/opicon.png'
+    }
   }
 ];
 
@@ -209,6 +228,18 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid();
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
+
+  var options = {
+      isDebug: false, // Debug mode for console messages
+      actions: {},// actions to be added
+      undoableDrag: true, // Whether dragging nodes are undoable can be a function as well
+      stackSizeLimit: undefined, // Size limit of undo stack, note that the size of redo stack cannot exceed size of undo stack
+      ready: function () { // callback when undo-redo is ready
+
+      }
+  }
+        
+  ur = cy.undoRedo(options); // Can also be set whenever wanted.
 
   cy.on('select', 'node', function(evt) {
     console.log(evt.cyTarget);

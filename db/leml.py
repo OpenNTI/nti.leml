@@ -55,6 +55,7 @@ class Lem(Document):
 	ratings  = ListField(FloatField(default = 0))
 	avgRating = FloatField(default = 0)
 	thumbnail = StringField(default = "")
+	public  = IntField(default = 0)
 
 def toLem(json_dict, user_email):
 	block_objs = []
@@ -69,5 +70,5 @@ def toLem(json_dict, user_email):
 	action_objs = []
 	for action in json_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"])) 
-	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"])
+	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
 	return lem
