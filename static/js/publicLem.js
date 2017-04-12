@@ -172,6 +172,8 @@ function deleteLem(lemJson) {
     });
 }
 
+
+
 function favoriteLem(lemJson) {
   var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
 
@@ -180,7 +182,7 @@ function favoriteLem(lemJson) {
     $(favoriteButtonsForLem[index]).attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
   })
 
-  $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
+  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
@@ -194,7 +196,7 @@ function unfavoriteLem(lemJson) {
     $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
   })
 
-  $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
+  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
