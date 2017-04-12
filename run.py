@@ -171,7 +171,7 @@ def rate():
         new_avg = sum(lem.ratings) / float(len(lem.ratings))
         lem.avgRating = new_avg
         lem.save()
-    return new_avg
+    return '{"new_avg":' + str(new_avg) + '}'
 
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
@@ -186,6 +186,7 @@ def favorite():
         db.close()
         return json.dumps(allobj)
     id = ObjectId(request.args.get('id'))
+    user_email = ObjectId(current_user.email)
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=User(current_user.email)).update(pull__favorites=id)
         db.close()
