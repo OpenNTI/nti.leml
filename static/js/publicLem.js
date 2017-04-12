@@ -44,7 +44,7 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
-  const rating = avgRating + ' <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>'
+  const rating = '<span id="ratingNumber"></span> <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>'
   var caption = '<div id="' + id + '" class="caption">' + createdBy + '<p>' + rating + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (privateLems) {
@@ -56,55 +56,7 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   const contentHtml =  thumbnail + caption;
   $("div#lemContent").html(contentHtml);
 
-  $(".first-star").hover(function() {
-    star("first");
-  }, function() {
-    unstar("first");
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
-
-  $(".second-star").hover(function() {
-    star("first");
-    star("second");
-  }, function() {
-    unstar("first");
-    unstar("second");
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
-
-  $(".third-star").hover(function() {
-    star("first");
-    star("second");
-    star("third");
-  }, function() {
-    unstar("first");
-    unstar("second");
-    unstar("third");
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
-
-  $(".fourth-star").hover(function() {
-    star("first");
-    star("second");
-    star("third");
-    star("fourth");
-  }, function() {
-    unstar("first");
-    unstar("second");
-    unstar("third");
-    unstar("fourth");
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
-
-  $(".fifth-star").hover(function() {
-    star("first");
-    star("second");
-    star("third");
-    star("fourth");
-    star("fifth");
-  }, function() {
-    unstar("first");
-    unstar("second");
-    unstar("third");
-    unstar("fourth");
-    unstar("fifth");
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
+  setupStars(avgRating);
 
   $("#newCommentForm").attr('lemid', id);
 
@@ -135,6 +87,69 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   });
 
   $('#lemDetailModal').modal('show')
+}
+
+function setupStars(defaultRating) {
+  // Round to one decimal place
+  var defaultRating = Math.round(defaultRating * 10) / 10;
+
+  $("#ratingNumber").text(defaultRating);
+
+  setRating(defaultRating);
+
+  $(".first-star").hover(function() {
+    setRating(1);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
+
+  $(".second-star").hover(function() {
+    setRating(2);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
+
+  $(".third-star").hover(function() {
+    setRating(3);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
+
+  $(".fourth-star").hover(function() {
+    setRating(4);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
+
+  $(".fifth-star").hover(function() {
+    setRating(5);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
+}
+
+function setRating(rating) {
+  unstar("first");
+  unstar("second");
+  unstar("third");
+  unstar("fourth");
+  unstar("fifth");
+
+  if (rating > 0.5) {
+    star("first");
+  }
+  if (rating > 1.5) {
+    star("second");
+  }
+  if (rating > 2.5) {
+    star("third");
+  }
+  if (rating > 3.5) {
+    star("fourth");
+  }
+  if (rating > 4.5) {
+    star("fifth");
+  }
 }
 
 function star(number) {
@@ -255,7 +270,8 @@ function unfavoriteLem(lemJson) {
 function rate(lemJson, rating) {
   const ratingPostBody = {"lem": lemJson.id, "rating": rating};
   $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
-
+    var response = JSON.parse(data);
+    setupStars(response.new_avg);
   });
 }
 
