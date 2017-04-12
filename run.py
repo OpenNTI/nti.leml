@@ -171,7 +171,7 @@ def rate():
         new_avg = sum(lem.ratings) / float(len(lem.ratings))
         lem.avgRating = new_avg
         lem.save()
-    return new_avg
+    return '{"new_avg":' + str(new_avg) + '}'
 
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
