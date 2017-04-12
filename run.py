@@ -33,8 +33,8 @@ def lem():
 		for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
 		    fave.update(pull__favorites=ObjectId(data['id']))
 		db.close()
-		return delete(ObjectId(data['id']), name, host)	
-	return save(data['json'], current_user, name, host)	
+		return delete(ObjectId(data['id']), name, host)
+	return save(data['json'], current_user, name, host)
 
 # URL for getting all current lem objects in the database
 @app.route('/lemall', methods=['GET'])
@@ -165,11 +165,13 @@ def rate():
     data = request.get_json(force=True)
     new_rating = float(data["rating"])
     lem_id = ObjectId(data["lem"])
+    new_avg = 0
     for lem in Lem.objects(pk=lem_id):
         lem.ratings.append(new_rating)
-        lem.avgRating = sum(lem.ratings) / float(len(lem.ratings))
+        new_avg = sum(lem.ratings) / float(len(lem.ratings))
+        lem.avgRating = new_avg
         lem.save()
-    return "Done"
+    return '{"new_avg":' + str(new_avg) + '}'
 
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
@@ -184,6 +186,7 @@ def favorite():
         db.close()
         return json.dumps(allobj)
     id = ObjectId(request.args.get('id'))
+    user_email = ObjectId(current_user.email)
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=User(current_user.email)).update(pull__favorites=id)
         db.close()
