@@ -242,8 +242,6 @@ function favoriteLem(lemJson) {
 
 function unfavoriteLem(lemJson) {
 
-  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
-
   favoriteButtonsForLem.map(function(index) {
     $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
     $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
