@@ -202,7 +202,6 @@ def favorite():
         db.close()
         return json.dumps(allobj)
     id = ObjectId(request.args.get('id'))
-    user_email = ObjectId(current_user.email)
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=User(current_user.email)).update(pull__favorites=id)
         db.close()
