@@ -174,6 +174,7 @@ function exportLem(public) {
   lem.thumbnail = cy.png();
 
   $.post(lemRoute, JSON.stringify(lem), function(data, status){
+
       // alert("Data: " + data + "\nStatus: " + status);
   });
 }
@@ -197,3 +198,8 @@ function setupExportModal(title, submitName, submitAction) {
   $("#exportSubmitButton").text(submitName);
   $("#exportModalTitle").text(title);
 }
+
+
+
+
+

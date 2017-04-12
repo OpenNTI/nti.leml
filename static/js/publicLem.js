@@ -6,7 +6,7 @@ function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
@@ -38,9 +38,9 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   $("#lemModalTitle").text(title);
 
   const createdBy = '<p>Created by @'+ username + '</p>';
-  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
-  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" data-dismiss="modal" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" data-dismiss="modal" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
@@ -117,6 +117,7 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   }
 
   $("ul#commentsList").html("");
+  $("#commentsLoading").show();
   var route = privateLems ? commentRoute : publicCommentRoute;
   $.get(route + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
@@ -124,11 +125,12 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
     var commentsHtml = "";
     for (var commentIndex in commentsStrings) {
       var comment = JSON.parse(commentsStrings[commentIndex]);
-      var date = Date(comment.date_created.$date);
+      var date = new Date(comment.date_created.$date);
 
-      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+      commentsHtml += generateComment(comment.created_by, date.toLocaleString(), comment.text);
     }
 
+    $("#commentsLoading").hide();
     $("ul#commentsList").html(commentsHtml);
   });
 
@@ -228,10 +230,12 @@ function deleteLem(lemJson) {
     });
 }
 
+
+
 function favoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
-  favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+
+  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
@@ -239,9 +243,13 @@ function favoriteLem(lemJson) {
 }
 
 function unfavoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-  favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+
+  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
+
+  favoriteButtonsForLem.map(function(index) {
+    $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+    $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+  })
 
   $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
@@ -264,7 +272,7 @@ function addComment(){
     $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
       if (status == "success") {
         const createdComment = JSON.parse(data);
-        const date = Date(createdComment.date_created.$date);
+        const date = new Date(createdComment.date_created.$date);
         addCommentToList(createdComment.created_by, date, createdComment.text);
         $("#userComment").val("");
       } else {
@@ -274,10 +282,10 @@ function addComment(){
 }
 
 function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time.toString(), message);
+  const newComment = generateComment(owner, time.toLocaleString(), message);
   $("#commentsList").prepend(newComment);
 }
 
 function generateComment(owner, time, message) {
-  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }

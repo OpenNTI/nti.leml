@@ -3,7 +3,7 @@ from db.leml import Lem, toLem, Comment
 
 def getById(id, name, host):
 	db = connect(name,host=host)
-	obj = "Error"
+	obj = "No LEM found"
 	for lem in Lem.objects(pk = id):
 		obj = lem.to_json()
 	db.close()
@@ -17,9 +17,13 @@ def save(data, current_user, name, host):
 
 def delete(id, name, host):
 	db = connect(name, host = host)
+	happened = False
 	for lem in Lem.objects(pk = id):
+		happened = True
 		lem.delete()
 	db.close()
-	return "Successfully deleted LEM."
-
-
+	if happened is True:
+		return "Successfully deleted LEM."
+	elif happened is False:
+		return "No LEM found"
+	return "No work done."

@@ -23,18 +23,18 @@ name = 'leml'
 @app.route('/lem', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def lem():
-    if request.method == 'GET':
-        id = request.args.get('id')
-        return getById(ObjectId(id), name, host)
-    data = request.get_json(force=True)
-    if request.method == 'DELETE':
-        db = connect(name, host=host)
-        for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
-            fave.update(pull__favorites=ObjectId(data['id']))
-        db.close()
-        return delete(ObjectId(data['id']), name, host)
-    return save(data, current_user, name, host)
-
+	data = request.get_json(force=True)
+	print(data)
+	if request.method == 'GET':
+		id = request.args.get('id')
+		return getById(ObjectId(id), name, host)
+	if request.method == 'DELETE':
+		db = connect(name, host=host)
+		for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
+		    fave.update(pull__favorites=ObjectId(data['id']))
+		db.close()
+		return delete(ObjectId(data['id']), name, host)
+	return save(data['json'], current_user, name, host)
 
 # URL for getting all current lem objects in the database
 @app.route('/lemall', methods=['GET'])
@@ -45,7 +45,6 @@ def lemall():
         allobj.append(lem.to_json())
     db.close()
     return json.dumps(allobj)
-
 
 # URL for getting user lems
 @app.route('/lemuser', methods=['GET'])
@@ -166,11 +165,13 @@ def rate():
     data = request.get_json(force=True)
     new_rating = float(data["rating"])
     lem_id = ObjectId(data["lem"])
+    new_avg = 0
     for lem in Lem.objects(pk=lem_id):
         lem.ratings.append(new_rating)
-        lem.avgRating = sum(lem.ratings) / float(len(lem.ratings))
+        new_avg = sum(lem.ratings) / float(len(lem.ratings))
+        lem.avgRating = new_avg
         lem.save()
-    return "Done"
+    return new_avg
 
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
@@ -179,7 +180,7 @@ def favorite():
     db = connect(name, host=host)
     if request.method == 'GET':
         allobj = []
-        user = User_Favorite_Lems.objects(pk=current_user.email)
+        user = User_Favorite_Lems.objects(pk=User(current_user.email))
         for lem in Lem.objects(pk in user.favorites):
             allobj.append(lem.to_json())
         db.close()
@@ -187,10 +188,10 @@ def favorite():
     id = ObjectId(request.args.get('id'))
     user_email = ObjectId(current_user.email)
     if request.method == 'DELETE':
-        User_Favorite_Lems.objects(pk=user_email).update(pull__favorites=id)
+        User_Favorite_Lems.objects(pk=User(current_user.email)).update(pull__favorites=id)
         db.close()
         return "Removed Lem from favorites."
-    User_Favorite_Lems.objects(pk=user_email).update(push__favorites=id)
+    User_Favorite_Lems.objects(pk=User(current_user.email)).update(push__favorites=id)
     db.close()
     return "Added Lem to favorites."
 
