@@ -1,12 +1,19 @@
 $(function() {
-  loadPublicLEMs();
+  resetLocalFavoritesList(loadPublicLEMs);
 });
+
+var favoriteIDList = [];
 
 function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  var favoriteButton;
+  if (favoriteIDList.includes(id)) {
+    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
+  } else {
+    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  }
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
@@ -39,7 +46,12 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
 
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" data-dismiss="modal" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  var favoriteButton;
+  if (favoriteIDList.includes(id)) {
+    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
+  } else {
+    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  }
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" data-dismiss="modal" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
@@ -199,6 +211,24 @@ function loadPublicLEMs() {
   });
 }
 
+function resetLocalFavoritesList(callback) {
+  $.get(favoriteRoute, function(data, status) {
+    var lemStringList = JSON.parse(data);
+
+    var newList = [];
+
+    for (var lemIndex in lemStringList) {
+      var lem = JSON.parse(lemStringList[lemIndex]);
+      var lemID = lem._id.$oid;
+      newList.push(lemID);
+    }
+
+    favoriteIDList = newList;
+
+    callback();
+  });
+}
+
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
@@ -255,6 +285,18 @@ function favoriteLem(lemJson) {
       $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
       $(favoriteButtonsForLem[index]).attr('onclick', 'unfavoriteLem(this.parentElement.parentElement);');
     });
+
+    var lemStringList = JSON.parse(data);
+
+    var newList = [];
+
+    for (var lemIndex in lemStringList) {
+      var lem = JSON.parse(lemStringList[lemIndex]);
+      var lemID = lem._id.$oid;
+      newList.push(lemID);
+    }
+
+    favoriteIDList = newList;
   });
 }
 
@@ -266,6 +308,18 @@ function unfavoriteLem(lemJson) {
       $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
       $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
     });
+
+    var lemStringList = JSON.parse(data);
+
+    var newList = [];
+
+    for (var lemIndex in lemStringList) {
+      var lem = JSON.parse(lemStringList[lemIndex]);
+      var lemID = lem._id.$oid;
+      newList.push(lemID);
+    }
+
+    favoriteIDList = newList;
   });
 }
 
