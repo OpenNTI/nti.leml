@@ -2,14 +2,14 @@ $(function() {
   loadPublicLEMs();
 });
 
-function generateLemRow(title, username, imgURL, id, showDelete) {
+function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
   const createdBy = '<p>Created by @'+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + showDelete + ")";
+  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
   var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
 
@@ -34,16 +34,18 @@ function addToCanvas(test) {
   //renderLem(t.responseText);
 }
 
-function showDetail(title, username, imgURL, id, privateLems) {
-  const header = '<h3>' + title + '</h3>';
+function showDetail(title, username, imgURL, id, avgRating, privateLems) {
+  $("#lemModalTitle").text(title);
+
   const createdBy = '<p>Created by @'+ username + '</p>';
-  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  const favoriteButton = '<a href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
-  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" data-dismiss="modal" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+  const favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" data-dismiss="modal" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
   const onclickShowDetail = "$('#lemDetailModal').modal('show')";
   const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
-  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+  const rating = '<span id="ratingNumber"></span> <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>'
+  var caption = '<div id="' + id + '" class="caption">' + createdBy + '<p>' + rating + '<p>' + addToCanvas + '  ' + favoriteButton;
 
   if (privateLems) {
     caption += deleteButton + '</p></div>';
@@ -53,6 +55,8 @@ function showDetail(title, username, imgURL, id, privateLems) {
 
   const contentHtml =  thumbnail + caption;
   $("div#lemContent").html(contentHtml);
+
+  setupStars(avgRating);
 
   $("#newCommentForm").attr('lemid', id);
 
@@ -65,6 +69,7 @@ function showDetail(title, username, imgURL, id, privateLems) {
   }
 
   $("ul#commentsList").html("");
+  $("#commentsLoading").show();
   var route = privateLems ? commentRoute : publicCommentRoute;
   $.get(route + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
@@ -72,15 +77,87 @@ function showDetail(title, username, imgURL, id, privateLems) {
     var commentsHtml = "";
     for (var commentIndex in commentsStrings) {
       var comment = JSON.parse(commentsStrings[commentIndex]);
-      var date = Date(comment.date_created.$date);
+      var date = new Date(comment.date_created.$date);
 
-      commentsHtml += generateComment(comment.created_by, date.toString(), comment.text);
+      commentsHtml += generateComment(comment.created_by, date.toLocaleString(), comment.text);
     }
 
+    $("#commentsLoading").hide();
     $("ul#commentsList").html(commentsHtml);
   });
 
   $('#lemDetailModal').modal('show')
+}
+
+function setupStars(defaultRating) {
+  // Round to one decimal place
+  var defaultRating = Math.round(defaultRating * 10) / 10;
+
+  $("#ratingNumber").text(defaultRating);
+
+  setRating(defaultRating);
+
+  $(".first-star").hover(function() {
+    setRating(1);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
+
+  $(".second-star").hover(function() {
+    setRating(2);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
+
+  $(".third-star").hover(function() {
+    setRating(3);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
+
+  $(".fourth-star").hover(function() {
+    setRating(4);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
+
+  $(".fifth-star").hover(function() {
+    setRating(5);
+  }, function() {
+    setRating(defaultRating);
+  }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
+}
+
+function setRating(rating) {
+  unstar("first");
+  unstar("second");
+  unstar("third");
+  unstar("fourth");
+  unstar("fifth");
+
+  if (rating > 0.5) {
+    star("first");
+  }
+  if (rating > 1.5) {
+    star("second");
+  }
+  if (rating > 2.5) {
+    star("third");
+  }
+  if (rating > 3.5) {
+    star("fourth");
+  }
+  if (rating > 4.5) {
+    star("fifth");
+  }
+}
+
+function star(number) {
+  $("." + number + "-star").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+}
+
+function unstar(number) {
+  $("." + number + "-star").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
 }
 
 function searchLems() {
@@ -113,7 +190,7 @@ function loadPublicLEMs() {
         imgURL = "../static/img/templates/no_thumbnail.png";
       }
 
-      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, false);
+      lemDivs += generateLemRow(lem.name, lem.created_by, imgURL, id, lem.avgRating, false);
     }
 
     var refreshButton = '<button class="btn" onclick="loadPublicLEMs();" style="margin-bottom:10px;">Refresh</button>';
@@ -168,23 +245,33 @@ function deleteLem(lemJson) {
     });
 }
 
-function favoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
-  favoriteButton.attr('onclick', 'unfavoriteLem(this.parentElement.parentElement)');
 
-  $.post(favoriteLem, {"id": lemJson.id}, function(data, status) {
+
+function favoriteLem(lemJson) {
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+
+  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
   });
 }
 
 function unfavoriteLem(lemJson) {
-  var favoriteButton = $("#" + lemJson.id).children().children(".favoriteButton");
-  favoriteButton.html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-  favoriteButton.attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
 
-  $.delete(favoriteLem, {"id": lemJson.id}, function(data, status) {
+  favoriteButtonsForLem.map(function(index) {
+    $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+    $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+  })
 
+  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
+
+  });
+}
+
+function rate(lemJson, rating) {
+  const ratingPostBody = {"lem": lemJson.id, "rating": rating};
+  $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
+    var response = JSON.parse(data);
+    setupStars(response.new_avg);
   });
 }
 
@@ -197,7 +284,7 @@ function addComment(){
     $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
       if (status == "success") {
         const createdComment = JSON.parse(data);
-        const date = Date(createdComment.date_created.$date);
+        const date = new Date(createdComment.date_created.$date);
         addCommentToList(createdComment.created_by, date, createdComment.text);
         $("#userComment").val("");
       } else {
@@ -207,10 +294,10 @@ function addComment(){
 }
 
 function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time.toString(), message);
+  const newComment = generateComment(owner, time.toLocaleString(), message);
   $("#commentsList").prepend(newComment);
 }
 
 function generateComment(owner, time, message) {
-  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
+  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }

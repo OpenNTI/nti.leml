@@ -64,7 +64,10 @@ function renderLem(json) {
   var actions = json.lem.actions;
   var contexts = json.lem.contexts;
   var notations = json.lem.notations;
-
+  if(json.lem.date_created){
+  	elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\nBy: "+json.lem.created_by+" on "+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});	
+  }
+  
   // Start dots
   if (startIDs) {
     // Add one stop node
