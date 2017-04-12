@@ -237,8 +237,6 @@ function favoriteLem(lemJson) {
 
   $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
 
-  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
-
   });
 }
 
