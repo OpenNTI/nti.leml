@@ -160,6 +160,22 @@ def comment():
 		db.close()
 		return resultComment
 
+
+@app.route('/publicComment', methods = ['GET'])
+def publicComment():
+	lem_id = request.args.get('lem')
+	comments = []
+	for comment in Comment.objects(lem_id = lem_id):
+		include = True
+		for lem in Lem.objects(pk = lem_id):
+			if lem.public == 0:
+				include = False
+				break
+		if include:
+			comments.append(comment.to_json())
+	return json.dumps(comments)
+
+
 @app.route('/rate', methods=['POST'])
 def rate():
     data = request.get_json(force=True)
