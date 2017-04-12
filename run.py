@@ -194,21 +194,24 @@ def rate():
 @login_required
 def favorite():
     db = connect(name, host=host)
-    if request.method == 'GET':
-        allobj = []
-        user = User_Favorite_Lems.objects(pk=User(current_user.email))
-        for lem in Lem.objects(pk in user.favorites):
-            allobj.append(lem.to_json())
-        db.close()
-        return json.dumps(allobj)
+
     id = ObjectId(request.args.get('id'))
+    for lem in Lem.objects(pk = id):
+        favoritedLem = lem
+
     if request.method == 'DELETE':
-        User_Favorite_Lems.objects(pk=User(current_user.email)).update(pull__favorites=id)
-        db.close()
-        return "Removed Lem from favorites."
-    User_Favorite_Lems.objects(pk=User(current_user.email)).update(push__favorites=id)
+        User_Favorite_Lems.objects(pk=current_user.email).update(pull__favorites=favoritedLem)
+    if request.method == 'PUT':
+        User_Favorite_Lems.objects(pk=current_user.email).update(add_to_set__favorites=favoritedLem)
+
+    # else if GET, also return new favorites on PUT and DELETE
+    new_favs = []
+    for favs in User_Favorite_Lems.objects(pk=current_user.email):
+        for lem in favs.favorites:
+            new_favs.append(lem.to_json())
     db.close()
-    return "Added Lem to favorites."
+
+    return json.dumps(new_favs)
 
 
 @login_manager.user_loader

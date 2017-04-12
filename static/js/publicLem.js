@@ -248,22 +248,24 @@ function deleteLem(lemJson) {
 
 
 function favoriteLem(lemJson) {
-  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+  $.put(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
+    var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
 
-  $.put(favoriteRoute, {"id": lemJson.id}, function(data, status) {
-
+    favoriteButtonsForLem.map(function(index) {
+      $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
+      $(favoriteButtonsForLem[index]).attr('onclick', 'unfavoriteLem(this.parentElement.parentElement);');
+    });
   });
 }
 
 function unfavoriteLem(lemJson) {
+  $.delete(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
+    var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
 
-  favoriteButtonsForLem.map(function(index) {
-    $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-    $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
-  })
-
-  $.delete(favoriteRoute, {"id": lemJson.id}, function(data, status) {
-
+    favoriteButtonsForLem.map(function(index) {
+      $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
+      $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
+    });
   });
 }
 
