@@ -224,7 +224,9 @@ function resetLocalFavoritesList(callback) {
     }
 
     favoriteIDList = newList;
-
+    callback();
+  }).error(function() {
+    favoriteIDList = [];
     callback();
   });
 }
