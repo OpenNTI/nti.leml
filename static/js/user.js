@@ -13,6 +13,26 @@ $(function() {
       loginState('ready');
     }
   });
+
+  $.get(favoriteRoute, function(data, status) {
+    var lemStringList = JSON.parse(data);
+
+    var newList = [];
+    var newLemList = [];
+
+    for (var lemIndex in lemStringList) {
+      var lem = JSON.parse(lemStringList[lemIndex]);
+      var lemID = lem._id.$oid;
+      newList.push(lemID);
+      newLemList.push(lem);
+    }
+
+    globalFavoriteLemsList = newLemList;
+    favoriteIDList = newList;
+  }).error(function () {
+    globalFavoriteLemsList = [];
+    favoriteIDList = [];
+  });
 });
 
 $(function() {
@@ -198,8 +218,3 @@ function setupExportModal(title, submitName, submitAction) {
   $("#exportSubmitButton").text(submitName);
   $("#exportModalTitle").text(title);
 }
-
-
-
-
-

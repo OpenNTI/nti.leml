@@ -3,6 +3,7 @@ $(function() {
 });
 
 var favoriteIDList = [];
+var globalFavoriteLemsList = [];
 
 function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
@@ -295,13 +296,16 @@ function favoriteLem(lemJson) {
     var lemStringList = JSON.parse(data);
 
     var newList = [];
+    var newLemList = [];
 
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
       newList.push(lemID);
+      newLemList.push(lem);
     }
-
+    
+    globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
   });
 }
@@ -321,13 +325,16 @@ function unfavoriteLem(lemJson) {
     var lemStringList = JSON.parse(data);
 
     var newList = [];
+    var newLemList = [];
 
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
       newList.push(lemID);
+      newLemList.push(lem);
     }
 
+    globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
   });
 }
