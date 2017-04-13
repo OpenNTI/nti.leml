@@ -112,29 +112,6 @@ function resetStateLogin() {
   $("#loginButton").html("Login");
 }
 
-function registerSubmitClicked() {
-  register($("#registerEmail").val(), $("#registerPassword").val());
-
-  $("#registerEmail").empty();
-  $("#registerPassword").empty();
-}
-
-function register(email, password) {
-  var registerInfo = {};
-
-  registerInfo.email = email;
-  registerInfo.pass = password;
-
-  $.post(registerRoute, JSON.stringify(registerInfo), function(data, status){
-    if (data == "Complete") {
-      $("#registerModal").modal('hide');
-      login(email, password);
-    } else {
-      alert(data + "\n" + status)
-    }
-  });
-}
-
 function login(email, password) {
   var loginInfo = {};
 
