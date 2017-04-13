@@ -18,13 +18,11 @@ login_manager = get_login_manager()
 host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
 name = 'leml'
 
-
 # URL for getting a lem item
 @app.route('/lem', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def lem():
 	data = request.get_json(force=True)
-	print(data)
 	if request.method == 'GET':
 		id = request.args.get('id')
 		return getById(ObjectId(id), name, host)
@@ -189,8 +187,7 @@ def rate():
         lem.save()
     return '{"new_avg":' + str(new_avg) + '}'
 
-
-@app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/favorite', methods=['PUT', 'DELETE'])
 @login_required
 def favorite():
     db = connect(name, host=host)
