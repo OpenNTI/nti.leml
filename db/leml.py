@@ -34,6 +34,10 @@ class Notation(EmbeddedDocument):
 	building_block = IntField(required=True)
 	description = StringField(required=True)
 
+class Rating(EmbeddedDocument):
+	rating = FloatField(required = True)
+	user = StringField(required = True, unique = True)
+
 #Comment Model
 class Comment(Document):
 	lem_id = StringField(required=True)
@@ -52,7 +56,7 @@ class Lem(Document):
 	contexts = ListField(EmbeddedDocumentField(Context), required=True)
 	actions = ListField(EmbeddedDocumentField(Action), required=True)
 	notations = ListField(EmbeddedDocumentField(Notation))
-	ratings  = ListField(FloatField(default = 0))
+	ratings  = ListField(EmbeddedDocument(Rating))
 	avgRating = FloatField(default = 0)
 	thumbnail = StringField(default = "")
 	public  = IntField(default = 0)
