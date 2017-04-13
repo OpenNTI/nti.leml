@@ -1,7 +1,3 @@
-$(function() {
-  resetLocalFavoritesList(loadPublicLEMs);
-});
-
 var favoriteIDList = [];
 var globalFavoriteLemsList = [];
 
@@ -212,26 +208,6 @@ function loadPublicLEMs() {
   });
 }
 
-function resetLocalFavoritesList(callback) {
-  $.get(favoriteRoute, function(data, status) {
-    var lemStringList = JSON.parse(data);
-
-    var newList = [];
-
-    for (var lemIndex in lemStringList) {
-      var lem = JSON.parse(lemStringList[lemIndex]);
-      var lemID = lem._id.$oid;
-      newList.push(lemID);
-    }
-
-    favoriteIDList = newList;
-    callback();
-  }).error(function() {
-    favoriteIDList = [];
-    callback();
-  });
-}
-
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
@@ -304,9 +280,11 @@ function favoriteLem(lemJson) {
       newList.push(lemID);
       newLemList.push(lem);
     }
-    
+
     globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
+  }).error(function () {
+    alert("You must login to favorite");
   });
 }
 

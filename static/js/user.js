@@ -13,11 +13,11 @@ $(function() {
       loginState('ready');
     }
   });
-
-  updateLocalFavoritesList();
 });
 
-function updateLocalFavoritesList() {
+function resetLocalFavoritesList() {
+  var topArgs = arguments;
+
   $.get(favoriteRoute, function(data, status) {
     var lemStringList = JSON.parse(data);
 
@@ -33,9 +33,19 @@ function updateLocalFavoritesList() {
 
     globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
+
+    // Call all callbacks
+    for (var i = 0; i < topArgs.length; i++) {
+      topArgs[i]();
+    }
   }).error(function () {
     globalFavoriteLemsList = [];
     favoriteIDList = [];
+
+    // Call all callbacks
+    for (var i = 0; i < topArgs.length; i++) {
+      topArgs[i]();
+    }
   });
 }
 
@@ -147,7 +157,7 @@ function login(email, password) {
       $("#loginErrorText").show();
     } else if (status == "success") {
       globalUsername = loginInfo.email;
-      updateLocalFavoritesList();
+      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
 
       loginState('loggedIn');
     }
@@ -158,7 +168,7 @@ function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
       globalUsername = undefined;
-      updateLocalFavoritesList();
+      resetLocalFavoritesList(loadPublicLEMs);
 
       if (globalPage == 'user') {
         showPage('canvas');
