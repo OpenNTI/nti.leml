@@ -13,6 +13,8 @@ $(function() {
       loginState('ready');
     }
   });
+
+  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
 });
 
 function resetLocalFavoritesList() {
