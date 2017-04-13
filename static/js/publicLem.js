@@ -98,77 +98,6 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   $('#lemDetailModal').modal('show')
 }
 
-function setupStars(defaultRating) {
-  // Round to one decimal place
-  var defaultRating = Math.round(defaultRating * 10) / 10;
-
-  $("#ratingNumber").text(defaultRating);
-
-  setRating(defaultRating);
-
-  $(".first-star").hover(function() {
-    setRating(1);
-  }, function() {
-    setRating(defaultRating);
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
-
-  $(".second-star").hover(function() {
-    setRating(2);
-  }, function() {
-    setRating(defaultRating);
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
-
-  $(".third-star").hover(function() {
-    setRating(3);
-  }, function() {
-    setRating(defaultRating);
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
-
-  $(".fourth-star").hover(function() {
-    setRating(4);
-  }, function() {
-    setRating(defaultRating);
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
-
-  $(".fifth-star").hover(function() {
-    setRating(5);
-  }, function() {
-    setRating(defaultRating);
-  }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
-}
-
-function setRating(rating) {
-  unstar("first");
-  unstar("second");
-  unstar("third");
-  unstar("fourth");
-  unstar("fifth");
-
-  if (rating > 0.5) {
-    star("first");
-  }
-  if (rating > 1.5) {
-    star("second");
-  }
-  if (rating > 2.5) {
-    star("third");
-  }
-  if (rating > 3.5) {
-    star("fourth");
-  }
-  if (rating > 4.5) {
-    star("fifth");
-  }
-}
-
-function star(number) {
-  $("." + number + "-star").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
-}
-
-function unstar(number) {
-  $("." + number + "-star").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
-}
-
 function searchLems() {
   var searchValue = $("#search_field").val();
   $(".lems").each(function(){
@@ -178,7 +107,6 @@ function searchLems() {
       $(this).addClass('hidden');
     }
   });
-
 }
 
 function loadPublicLEMs() {
@@ -252,102 +180,4 @@ function deleteLem(lemJson) {
       // var id = lemJson.id;
       // $('#'+id).parent().remove();
     });
-}
-
-
-
-function favoriteLem(lemJson) {
-  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
-  favoriteButtonsForLem.prop('disabled', true);
-
-  $.put(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
-
-    favoriteButtonsForLem.prop('disabled', false);
-
-    favoriteButtonsForLem.map(function(index) {
-      $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
-      $(favoriteButtonsForLem[index]).attr('onclick', 'unfavoriteLem(this.parentElement.parentElement);');
-    });
-
-    var lemStringList = JSON.parse(data);
-
-    var newList = [];
-    var newLemList = [];
-
-    for (var lemIndex in lemStringList) {
-      var lem = JSON.parse(lemStringList[lemIndex]);
-      var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
-    }
-
-    globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
-  }).error(function () {
-    alert("You must login to favorite");
-  });
-}
-
-function unfavoriteLem(lemJson) {
-  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
-  favoriteButtonsForLem.prop('disabled', true);
-
-  $.delete(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
-    favoriteButtonsForLem.prop('disabled', false);
-
-    favoriteButtonsForLem.map(function(index) {
-      $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
-      $(favoriteButtonsForLem[index]).attr('onclick', 'favoriteLem(this.parentElement.parentElement);');
-    });
-
-    var lemStringList = JSON.parse(data);
-
-    var newList = [];
-    var newLemList = [];
-
-    for (var lemIndex in lemStringList) {
-      var lem = JSON.parse(lemStringList[lemIndex]);
-      var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
-    }
-
-    globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
-  });
-}
-
-function rate(lemJson, rating) {
-  const ratingPostBody = {"lem": lemJson.id, "rating": rating};
-  $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
-    var response = JSON.parse(data);
-    setupStars(response.new_avg);
-  });
-}
-
-function addComment(){
-    var source = event.target;
-    const userComment = source.children.namedItem("userComment").value;
-    const lemId = source.getAttribute('lemid');
-
-    const postBody = {"lem":lemId, "text": userComment};
-    $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
-      if (status == "success") {
-        const createdComment = JSON.parse(data);
-        const date = new Date(createdComment.date_created.$date);
-        addCommentToList(createdComment.created_by, date, createdComment.text);
-        $("#userComment").val("");
-      } else {
-        console.error("Could not create comment");
-      }
-    });
-}
-
-function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time.toLocaleString(), message);
-  $("#commentsList").prepend(newComment);
-}
-
-function generateComment(owner, time, message) {
-  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 }
