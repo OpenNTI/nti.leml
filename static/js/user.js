@@ -14,10 +14,12 @@ $(function() {
     }
   });
 
-  updateLocalFavoritesList();
+  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
 });
 
-function updateLocalFavoritesList() {
+function resetLocalFavoritesList() {
+  var topArgs = arguments;
+
   $.get(favoriteRoute, function(data, status) {
     var lemStringList = JSON.parse(data);
 
@@ -33,9 +35,19 @@ function updateLocalFavoritesList() {
 
     globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
+
+    // Call all callbacks
+    for (var i = 0; i < topArgs.length; i++) {
+      topArgs[i]();
+    }
   }).error(function () {
     globalFavoriteLemsList = [];
     favoriteIDList = [];
+
+    // Call all callbacks
+    for (var i = 0; i < topArgs.length; i++) {
+      topArgs[i]();
+    }
   });
 }
 
@@ -100,29 +112,6 @@ function resetStateLogin() {
   $("#loginButton").html("Login");
 }
 
-function registerSubmitClicked() {
-  register($("#registerEmail").val(), $("#registerPassword").val());
-
-  $("#registerEmail").empty();
-  $("#registerPassword").empty();
-}
-
-function register(email, password) {
-  var registerInfo = {};
-
-  registerInfo.email = email;
-  registerInfo.pass = password;
-
-  $.post(registerRoute, JSON.stringify(registerInfo), function(data, status){
-    if (data == "Complete") {
-      $("#registerModal").modal('hide');
-      login(email, password);
-    } else {
-      alert(data + "\n" + status)
-    }
-  });
-}
-
 function login(email, password) {
   var loginInfo = {};
 
@@ -147,7 +136,7 @@ function login(email, password) {
       $("#loginErrorText").show();
     } else if (status == "success") {
       globalUsername = loginInfo.email;
-      updateLocalFavoritesList();
+      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
 
       loginState('loggedIn');
     }
@@ -158,7 +147,7 @@ function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
       globalUsername = undefined;
-      updateLocalFavoritesList();
+      resetLocalFavoritesList(loadPublicLEMs);
 
       if (globalPage == 'user') {
         showPage('canvas');

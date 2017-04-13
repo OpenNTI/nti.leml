@@ -114,11 +114,6 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/public')
-def public():
-    return render_template("public.html")
-
-
 @app.route('/')
 def home():
     return render_template("index.html")

@@ -56,7 +56,7 @@ class Lem(Document):
 	contexts = ListField(EmbeddedDocumentField(Context), required=True)
 	actions = ListField(EmbeddedDocumentField(Action), required=True)
 	notations = ListField(EmbeddedDocumentField(Notation))
-	ratings  = ListField(EmbeddedDocument(Rating))
+	ratings  = ListField(EmbeddedDocumentField(Rating))
 	avgRating = FloatField(default = 0)
 	thumbnail = StringField(default = "")
 	public  = IntField(default = 0)
@@ -73,6 +73,6 @@ def toLem(json_dict, user_email):
 		context_objs.append(Context(id=context["id"], context_type=context["context_type"], building_blocks=context["building_blocks"], notations=context["notations"]))
 	action_objs = []
 	for action in json_dict["actions"]:
-		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"])) 
+		action_objs.append(Action(id=action["id"], action_type=action["action_type"], source=action["source"], target=action["target"]))
 	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
 	return lem
