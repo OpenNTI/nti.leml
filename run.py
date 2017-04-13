@@ -202,7 +202,7 @@ def favorite():
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=current_user.email).update(pull__favorites=favoritedLem)
     if request.method == 'PUT':
-        User_Favorite_Lems.objects(pk=current_user.email).update(add_to_set__favorites=favoritedLem)
+        User_Favorite_Lems.objects(pk=current_user.email).update(add_to_set__favorites=favoritedLem, upsert = True)
 
     # else if GET, also return new favorites on PUT and DELETE
     new_favs = []
