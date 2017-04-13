@@ -14,6 +14,10 @@ $(function() {
     }
   });
 
+  updateLocalFavoritesList();
+});
+
+function updateLocalFavoritesList() {
   $.get(favoriteRoute, function(data, status) {
     var lemStringList = JSON.parse(data);
 
@@ -33,7 +37,7 @@ $(function() {
     globalFavoriteLemsList = [];
     favoriteIDList = [];
   });
-});
+}
 
 $(function() {
   $("#shareNavBar").hide();
@@ -143,6 +147,7 @@ function login(email, password) {
       $("#loginErrorText").show();
     } else if (status == "success") {
       globalUsername = loginInfo.email;
+      updateLocalFavoritesList();
 
       loginState('loggedIn');
     }
@@ -153,6 +158,7 @@ function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
       globalUsername = undefined;
+      updateLocalFavoritesList();
 
       if (globalPage == 'user') {
         showPage('canvas');
