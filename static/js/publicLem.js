@@ -278,8 +278,12 @@ function deleteLem(lemJson) {
 
 
 function favoriteLem(lemJson) {
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+  favoriteButtonsForLem.prop('disabled', true);
+
   $.put(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
-    var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+
+    favoriteButtonsForLem.prop('disabled', false);
 
     favoriteButtonsForLem.map(function(index) {
       $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star"></span> Unfavorite</a>');
@@ -301,8 +305,11 @@ function favoriteLem(lemJson) {
 }
 
 function unfavoriteLem(lemJson) {
+  var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+  favoriteButtonsForLem.prop('disabled', true);
+
   $.delete(favoriteRoute + "?id=" + lemJson.id, function(data, status) {
-    var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
+    favoriteButtonsForLem.prop('disabled', false);
 
     favoriteButtonsForLem.map(function(index) {
       $(favoriteButtonsForLem[index]).html('<span class="glyphicon glyphicon-star-empty"></span> Favorite</a>');
