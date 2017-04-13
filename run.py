@@ -65,6 +65,8 @@ def register():
     password = data['pass']
     pwd_hash = getHash(password)
     db = connect(name, host=host)
+    if  DBUser.objects(pk = usr_name).count() > 0:
+        return "Email already exists."
     DBUser(usr_name, pwd_hash).save()
     User_Favorite_Lems(usr_name, DEFAULT_FAVORITES).save()
     db.close()
