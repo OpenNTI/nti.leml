@@ -76,8 +76,7 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
 
   $("ul#commentsList").html("");
   $("#commentsLoading").show();
-  var route = privateLems ? commentRoute : publicCommentRoute;
-  $.get(route + "?lem=" + id, function (data, success) {
+  $.get(commentRoute + "?lem=" + id, function (data, success) {
     var commentsStrings = JSON.parse(data);
 
     var commentsHtml = "";
