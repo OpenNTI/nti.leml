@@ -30,12 +30,9 @@ function addToCanvas(test) {
   showPage('canvas');
   $.get(lemRoute, {"id": test.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
-    console.log(lem);
     renderLem(lem);
   });
   redraw();
-  //console.log(t);
-  //renderLem(t.responseText);
 }
 
 function showDetail(title, username, imgURL, id, avgRating, privateLems) {
@@ -114,7 +111,6 @@ function loadPublicLEMs() {
     var lems = JSON.parse(data);
 
     var lemSection = $("#publicLemList");
-    console.log(lems);
     var lemDivs = "";
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);

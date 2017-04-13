@@ -238,11 +238,10 @@ function loadNewCytoscapeWith(elements) {
 
       }
   }
-        
+
   ur = cy.undoRedo(options); // Can also be set whenever wanted.
 
   cy.on('select', 'node', function(evt) {
-    console.log(evt.cyTarget);
     evt.cyTarget.addClass('selected');
     selectedId = evt.cyTarget.id();
 
