@@ -179,6 +179,13 @@ def favorite():
     for lem in Lem.objects(pk = id):
         favoritedLem = lem
 
+    # Create favorite entry for this user if there isn't one
+    count = 0
+    for userFav in User_Favorite_Lems.objects(pk=current_user.email):
+        count += 1
+    if count == 0:
+	    User_Favorite_Lems(current_user.email, DEFAULT_FAVORITES).save()
+
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=current_user.email).update(pull__favorites=favoritedLem)
     if request.method == 'PUT':
