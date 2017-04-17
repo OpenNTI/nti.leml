@@ -32,7 +32,7 @@ def lem():
 			    fave.update(pull__favorites=ObjectId(data['id']))
 			db.close()
 			return delete(ObjectId(data['id']), name, host)
-		return save(data['json'], current_user, name, host)
+		return save(data, current_user, name, host)
 	return login_manager.unauthorized()
 
 # URL for getting all current lem objects in the database
