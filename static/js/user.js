@@ -14,7 +14,7 @@ $(function() {
     }
   });
 
-  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
+  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
 });
 
 function resetLocalFavoritesList() {
