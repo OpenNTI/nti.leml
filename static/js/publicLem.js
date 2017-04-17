@@ -3,7 +3,7 @@ var globalFavoriteLemsList = [];
 
 function generateLemRow(title, username, imgURL, id, rating, showDelete) {
   const header = '<h3>' + title + '</h3>';
-  const createdBy = '<p>Created by @'+ username + '</p>';
+  const createdBy = '<p>Created by '+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
   var favoriteButton;
   if (favoriteIDList.includes(id)) {
