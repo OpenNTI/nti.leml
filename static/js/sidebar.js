@@ -211,6 +211,15 @@ function loadFavoriteTemplates() {
     var lemSection = $("#templatePanel");
 
     var lemDivs = "";
+
+		if (globalUsername == undefined) {
+			$("#loginForFavorites").show();
+			$("#templatePanel").hide()
+		} else {
+			$("#loginForFavorites").hide();
+			$("#templatePanel").show()
+		}
+
     for (lemIndex in globalFavoriteLemsList) {
       var lem = globalFavoriteLemsList[lemIndex];
 
