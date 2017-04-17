@@ -25,6 +25,8 @@ function favoriteLem(lemJson) {
 
     globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
+
+    loadFavoriteTemplates();
   }).error(function () {
     alert("You must login to favorite");
   });
@@ -56,5 +58,9 @@ function unfavoriteLem(lemJson) {
 
     globalFavoriteLemsList = newLemList;
     favoriteIDList = newList;
+
+    loadFavoriteTemplates();
+  }).error(function () {
+    alert("Failed to unfavorite. Are you logged in?");
   });
 }

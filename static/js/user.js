@@ -14,7 +14,7 @@ $(function() {
     }
   });
 
-  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
+  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
 });
 
 function resetLocalFavoritesList() {
@@ -136,7 +136,7 @@ function login(email, password) {
       $("#loginErrorText").show();
     } else if (status == "success") {
       globalUsername = loginInfo.email;
-      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs);
+      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
 
       loginState('loggedIn');
     }
@@ -147,7 +147,7 @@ function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
       globalUsername = undefined;
-      resetLocalFavoritesList(loadPublicLEMs);
+      resetLocalFavoritesList(loadPublicLEMs, loadFavoriteTemplates);
 
       if (globalPage == 'user') {
         showPage('canvas');

@@ -10,7 +10,7 @@ from getFuncs import *
 import sys
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-DEFAULT_FAVORITES = ["58de81a29a93ac144a594fa7"]
+DEFAULT_FAVORITES = ["58f50621cf367e67548e0e80","58f50667cf367e67548e0e81", "58f50696cf367e67548e0e82"]
 
 init()
 application = get_global_app()
@@ -32,7 +32,7 @@ def lem():
 			    fave.update(pull__favorites=ObjectId(data['id']))
 			db.close()
 			return delete(ObjectId(data['id']), name, host)
-		return save(data['json'], current_user, name, host)
+		return save(data, current_user, name, host)
 	return login_manager.unauthorized()
 
 # URL for getting all current lem objects in the database
