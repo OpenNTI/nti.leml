@@ -121,57 +121,41 @@ function searchLems() {
 function loadPublicLEMs() {
   $.get(lemallRoute, function(data, status) {
     var lems = JSON.parse(data);
-
-    var lemSection = $("#publicLemList");
-    var lemDivs = "";
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-
-      var imgURL = lem.thumbnail;
-      var id = lem._id.$oid;
-
-      // default img
-      if (!imgURL) {
-        imgURL = "../static/img/templates/no_thumbnail.png";
-      }
-
-      lemDivs += generateLemRowHtml(lem.name, lem.created_by, imgURL, id, lem.avgRating, false);
-    }
-
-    var refreshButton = '<button class="btn" onclick="loadPublicLEMs();" style="margin-bottom:10px;">Refresh</button>';
-    var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
-    lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
+    loadLemsHtml(lems, "publicLemList", true);
   });
 }
 
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
+    loadLemsHtml(lems, "userLemList", false);
+  });
+}
 
-    var lemSection = $("#userLemList");
+function loadLemsHtml(lems, sectionID, showSearch) {
+  var lemSection = $("#" + sectionID);
 
-    var lemDivs = "";
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
+  var lemDivs = "";
+  for (lemIndex in lems) {
+    var lem = JSON.parse(lems[lemIndex]);
 
-      var imgURL = lem.thumbnail;
-      var id = lem._id.$oid;
+    var imgURL = lem.thumbnail;
+    var id = lem._id.$oid;
 
-      // default img
-      if (!imgURL) {
-        imgURL = "../static/img/templates/no_thumbnail.png";
-      }
-
-      lemDivs += generateLemRowHtml(lem.name, lem.created_by, imgURL, id, true);
+    // default img
+    if (!imgURL) {
+      imgURL = "../static/img/templates/no_thumbnail.png";
     }
 
-    // This search bar searches the public lem page, not user lems
-    //var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+    lemDivs += generateLemRowHtml(lem.name, lem.created_by, imgURL, id, true);
+  }
 
-    var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+  // This search bar searches the public lem page, not user lems
+  //var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
 
-    lemSection.html(refreshButton + '<div class="row">' + lemDivs + '</div>');
-  });
+  var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+
+  lemSection.html(refreshButton + '<div class="row">' + lemDivs + '</div>');
 }
 
 function deleteLem(lemJson) {
