@@ -1,26 +1,30 @@
 function addComment(){
-    var source = event.target;
+    // Only source should be the new comment form in the lem detail modal
+    const source = event.target;
     const userComment = source.children.namedItem("userComment").value;
     const lemId = source.getAttribute('lemid');
 
     const postBody = {"lem":lemId, "text": userComment};
     $.post(commentRoute, JSON.stringify(postBody), function(data, status) {
-      if (status == "success") {
-        const createdComment = JSON.parse(data);
-        const date = new Date(createdComment.date_created.$date);
-        addCommentToList(createdComment.created_by, date, createdComment.text);
-        $("#userComment").val("");
-      } else {
-        console.error("Could not create comment");
-      }
+      const createdComment = JSON.parse(data);
+      const dateCreated = new Date(createdComment.date_created.$date);
+      addCommentToList(createdComment.created_by, dateCreated, createdComment.text);
+      // On success, clear new comment field
+      $("#userComment").val("");
+    }).error(function() {
+      alert("Count not create comment");
     });
 }
 
 function addCommentToList(owner, time, message) {
-  $("#commentsList").prepend(newComment);
   const newCommentHtml = generateCommentHtml(owner, time.toLocaleString(), message);
+  // Adds comment to top of the list (newer comments will be at the top)
+  $("#commentsList").prepend(newCommentHtml);
 }
 
-  return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
 function generateCommentHtml(owner, time, message) {
+  const commentOwner = '<strong class="pull-left primary-font">' + owner + '</strong>';
+  const commentTime = '<small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small>';
+  const commentText = '</br><li class="ui-state-default">' + message + '</li></br>';
+  return commentOwner + commentTime + commentText;
 }
