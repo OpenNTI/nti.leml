@@ -15,9 +15,9 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
 
   var thumbnail = '<img ';
   if (thumbnailClickable) {
-    const showDetailFunctionCall = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
-    const onclickShowDetail = 'onclick="' + showDetailFunctionCall + '" ';
-    thumbnail += onclickShowDetail;
+    const showLemDetailModalFunctionCall = "showLemDetailModal('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
+    const onclickshowLemDetailModal = 'onclick="' + showLemDetailModalFunctionCall + '" ';
+    thumbnail += onclickshowLemDetailModal;
   }
   thumbnail += 'style="width:300px;height:150px;" src=' + imgURL + ' />';
 
@@ -55,29 +55,40 @@ function addToCanvas(lemDetailBlockHtml) {
   });
 }
 
-function showDetail(title, username, imgURL, id, avgRating, privateLems) {
+function showLemDetailModal(title, username, imgURL, id, avgRating, privateLems) {
   $("#lemModalTitle").text(title);
 
-  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);;
+  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);
   $("div#lemContent").html(contentHtml);
 
-  setupStars(avgRating);
+  setupRatingStars(avgRating);
+  generateCommentSectionHtml(id);
 
+  $('#lemDetailModal').modal('show')
+}
+
+function generateCommentSectionHtml(id) {
+  // Set form id so comments can be added to correct lems
   $("#newCommentForm").attr('lemid', id);
 
   if (globalUsername) {
+    // Show commenting for if logged in
     $("#newCommentForm").show()
     $("#loginRequiredToComment").hide()
   } else {
+    // If not logged in, show message informing user to login for commenting
     $("#newCommentForm").hide()
     $("#loginRequiredToComment").show()
   }
 
+  // Clear comment list and show loading symbol
   $("ul#commentsList").html("");
   $("#commentsLoading").show();
+
   $.get(commentRoute, {"lem": id}, function (data, success) {
     var commentsStrings = JSON.parse(data);
 
+    // Create new comments html
     var commentsHtml = "";
     for (var commentIndex in commentsStrings) {
       var comment = JSON.parse(commentsStrings[commentIndex]);
@@ -86,11 +97,14 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
       commentsHtml += generateCommentHtml(comment.created_by, date.toLocaleString(), comment.text);
     }
 
+    // Hide loading symbol and update comments
     $("#commentsLoading").hide();
     $("ul#commentsList").html(commentsHtml);
+  }).error(function() {
+    // On error, remove loading symbol and show alert
+    $("#commentsLoading").hide();
+    alert("Could not add comment");
   });
-
-  $('#lemDetailModal').modal('show')
 }
 
 function searchLems() {
@@ -166,12 +180,9 @@ function deleteLem(lemJson) {
   var loader = '<div id="userLoader" class="loader"></div>';
   lemSection.html(loader);
 
-    var lemBody = {"id": lemJson.id};
-    $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
-      loadUserLEMs();
-      // TODO Remove thumbnail
-      // This works from the console, but not here...
-      // var id = lemJson.id;
-      // $('#'+id).parent().remove();
-    });
+  var lemBody = {"id": lemJson.id};
+  $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
+    // Reload lems so that deleted lem is removed
+    loadUserLEMs();
+  });
 }
