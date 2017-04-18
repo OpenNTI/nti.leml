@@ -78,9 +78,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li id="canvas_button" class="active"><a href="#" onclick="showPage('canvas');">Canvas Editor<span class="sr-only">(current)</span></a></li>
-          <li id="public_button"><a href="#" onclick="showPage('public');">Public LEMs</a></li>
-          <li style="display:none;" id="user_button"><a href="#" onclick="showPage('user');">My LEMs</a></li>
+          <li id="canvas_button" class="active"><a  onclick="showPage('canvas');">Canvas Editor<span class="sr-only">(current)</span></a></li>
+          <li id="public_button"><a  onclick="showPage('public');">Public LEMs</a></li>
+          <li style="display:none;" id="user_button"><a  onclick="showPage('user');">My LEMs</a></li>
         </ul>
 
         <form id="loginForm" class="navbar-form navbar-right">
@@ -97,7 +97,7 @@
           <button class="btn btn-default dropdown-toggle" type="button" id="currentUserEmail" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a id="logoutButton" href="#">Log Out</a></li>
+            <li><a id="logoutButton" >Log Out</a></li>
           </ul>
         </div>
       </div><!-- /.navbar-collapse -->
@@ -119,9 +119,9 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="canvasDropdown">
-            <li><a href="#" onclick="importLem();">Import LEM</a></li>
-            <li><a href="#" onclick="redraw()">Redraw</a></li>
-            <li><a href="#" onclick="clearCanvas()">Clear</a></li>
+            <li><a  onclick="importLem();">Import LEM</a></li>
+            <li><a  onclick="redraw()">Redraw</a></li>
+            <li><a  onclick="clearCanvas()">Clear</a></li>
           </ul>
         </div>
 
@@ -131,11 +131,11 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-            <li><a href="#" id="downloadPNG">PNG</a></li>
-            <li><a href="#" id="downloadJPEG">JPEG</a></li>
-            <li><a href="#" onclick="downloadLemJson()">LEM</a></li>
-            <li id="shareDropdown" style="display:none;"><a href="#" onclick="openExportDialog(true);">Share</a></li>
-            <li id="saveDropdown" style="display:none;"><a href="#" onclick="openExportDialog(false);">Save</a></li>
+            <li><a  id="downloadPNG">PNG</a></li>
+            <li><a  id="downloadJPEG">JPEG</a></li>
+            <li><a  onclick="downloadLemJson()">LEM</a></li>
+            <li id="shareDropdown" style="display:none;"><a  onclick="openExportDialog(true);">Share</a></li>
+            <li id="saveDropdown" style="display:none;"><a  onclick="openExportDialog(false);">Save</a></li>
           </ul>
         </div>
 
@@ -164,13 +164,13 @@
         <button type="button" class="btn btn-primary" onclick="uploadLem();">Upload LEM</button>
 
         <div class="dropdown show">
-        <a class="btn btn-primary dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-primary dropdown-toggle"  id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Download as
       </a>
 
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <a class="dropdown-item" href="#" id="downloadPNG">PNG</a>
-      <a class="dropdown-item" href="#" id="downloadJPEG">JPEG</a>
+      <a class="dropdown-item"  id="downloadPNG">PNG</a>
+      <a class="dropdown-item"  id="downloadJPEG">JPEG</a>
     </div>
   </div> -->
 </div>
@@ -196,11 +196,11 @@
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#" onclick="typeChange(0);">Information</a></li>
-          <li><a href="#" onclick="typeChange(1);">Dialogue</a></li>
-          <li><a href="#" onclick="typeChange(2);">Feedback</a></li>
-          <li><a href="#" onclick="typeChange(3);">Practice</a></li>
-          <li><a href="#" onclick="typeChange(4);">Evidence</a></li>
+          <li><a  onclick="typeChange(0);">Information</a></li>
+          <li><a  onclick="typeChange(1);">Dialogue</a></li>
+          <li><a  onclick="typeChange(2);">Feedback</a></li>
+          <li><a  onclick="typeChange(3);">Practice</a></li>
+          <li><a  onclick="typeChange(4);">Evidence</a></li>
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
@@ -215,9 +215,9 @@
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action Type <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#" onclick="actionChange(0);">Learner Action</a></li>
-          <li><a href="#" onclick="actionChange(1);">Facilitator Action</a></li>
-          <li><a href="#" onclick="actionChange(2);">System Action</a></li>
+          <li><a  onclick="actionChange(0);">Learner Action</a></li>
+          <li><a  onclick="actionChange(1);">Facilitator Action</a></li>
+          <li><a  onclick="actionChange(2);">System Action</a></li>
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
@@ -239,10 +239,10 @@
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Context Type <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#" onclick="contextChange(0);">Classroom</a></li>
-          <li><a href="#" onclick="contextChange(1);">Online Synchronous</a></li>
-          <li><a href="#" onclick="contextChange(2);">Online Asynchronous</a></li>
-          <li><a href="#" onclick="contextChange(3);">Experiential</a></li>
+          <li><a  onclick="contextChange(0);">Classroom</a></li>
+          <li><a  onclick="contextChange(1);">Online Synchronous</a></li>
+          <li><a  onclick="contextChange(2);">Online Asynchronous</a></li>
+          <li><a  onclick="contextChange(3);">Experiential</a></li>
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
@@ -271,8 +271,8 @@
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#" onclick="startstopChange(true);">Start</a></li>
-          <li><a href="#" onclick="startstopChange(false);">Stop</a></li>
+          <li><a  onclick="startstopChange(true);">Start</a></li>
+          <li><a  onclick="startstopChange(false);">Stop</a></li>
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
