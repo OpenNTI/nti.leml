@@ -1,4 +1,4 @@
-var favoriteIDList = [];
+var globalFavoriteIDList = [];
 var globalFavoriteLemsList = [];
 
 function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
@@ -6,8 +6,8 @@ function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
   const createdBy = '<p>Created by '+ username + '</p>';
   const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
   var favoriteButton;
-  if (favoriteIDList.includes(id)) {
     favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
+  if (globalFavoriteIDList.includes(id)) {
   } else {
     favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   }

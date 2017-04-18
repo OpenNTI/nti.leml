@@ -24,7 +24,7 @@ function favoriteLem(lemJson) {
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
+    globalFavoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {
@@ -57,7 +57,7 @@ function unfavoriteLem(lemJson) {
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
+    globalFavoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {

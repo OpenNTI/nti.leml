@@ -34,7 +34,7 @@ function resetLocalFavoritesList() {
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
+    globalFavoriteIDList = newList;
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
@@ -42,7 +42,7 @@ function resetLocalFavoritesList() {
     }
   }).error(function () {
     globalFavoriteLemsList = [];
-    favoriteIDList = [];
+    globalFavoriteIDList = [];
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
