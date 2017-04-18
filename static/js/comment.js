@@ -17,10 +17,10 @@ function addComment(){
 }
 
 function addCommentToList(owner, time, message) {
-  const newComment = generateComment(owner, time.toLocaleString(), message);
   $("#commentsList").prepend(newComment);
+  const newCommentHtml = generateCommentHtml(owner, time.toLocaleString(), message);
 }
 
-function generateComment(owner, time, message) {
   return '<strong class="pull-left primary-font">' + owner + '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span> ' + time + '</small></br><li class="ui-state-default">' + message + '</li></br>';
+function generateCommentHtml(owner, time, message) {
 }

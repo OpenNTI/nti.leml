@@ -84,7 +84,7 @@ function showDetail(title, username, imgURL, id, avgRating, privateLems) {
       var comment = JSON.parse(commentsStrings[commentIndex]);
       var date = new Date(comment.date_created.$date);
 
-      commentsHtml += generateComment(comment.created_by, date.toLocaleString(), comment.text);
+      commentsHtml += generateCommentHtml(comment.created_by, date.toLocaleString(), comment.text);
     }
 
     $("#commentsLoading").hide();
