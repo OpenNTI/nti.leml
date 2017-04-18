@@ -37,11 +37,13 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
   }
   caption += '</p></div>';
 
-  return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
+  return thumbnail + caption;
 }
 
 function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
-  return createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true);
+  const lemDetailContentHtml = createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true);
+  const lemBlockHtml = '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + lemDetailContentHtml + '</div> </div>'
+  return lemBlockHtml;
 }
 
 function addToCanvas(lemDetailBlockHtml) {
@@ -49,14 +51,14 @@ function addToCanvas(lemDetailBlockHtml) {
   $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
-    //  redraw();
+    redraw();
   });
 }
 
 function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   $("#lemModalTitle").text(title);
 
-  const contentHtml =  createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);;
+  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);;
   $("div#lemContent").html(contentHtml);
 
   setupStars(avgRating);
