@@ -1,65 +1,62 @@
 var globalFavoriteIDList = [];
 var globalFavoriteLemsList = [];
 
-function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
-  const header = '<h3>' + title + '</h3>';
+function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, showDelete, thumbnailClickable) {
   const createdBy = '<p>Created by '+ username + '</p>';
-  const addToCanvas = '<a href="#" class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  var favoriteButton;
-    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
+  const addToCanvasButton = '<a  class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
+
+  // Set state of favorite button if this lem is favorited by this user or not
+  var favoriteButton = '<a lemid=' + id + '  class="favoriteButton btn btn-warning" role="button"';
   if (globalFavoriteIDList.includes(id)) {
+    favoriteButton += ' onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
   } else {
-    favoriteButton = '<a lemid=' + id + ' href="#" class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
+    favoriteButton += ' onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   }
-  const deleteButton = '<a href="#" class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
 
-  const onclickShowDetail = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
-  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:300px;height:150px;" src=' + imgURL + '>';
-  var caption = '<div id="' + id + '" class="caption">' + header + createdBy + '<p>' + addToCanvas + '  ' + favoriteButton;
+  var thumbnail = '<img ';
+  if (thumbnailClickable) {
+    const showDetailFunctionCall = "showDetail('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
+    const onclickShowDetail = 'onclick="' + showDetailFunctionCall + '" ';
+    thumbnail += onclickShowDetail;
+  }
+  thumbnail += 'style="width:300px;height:150px;" src=' + imgURL + ' />';
 
+  var caption = '<div id="' + id + '" class="caption">';
+
+  // Optionally show header, given input (lem detail modal has title on top of modal so doesn't need this header)
+  if (showHeader) {
+    const header = '<h3>' + title + '</h3>';
+    caption += header;
+  }
+  caption += createdBy + '<p>' + addToCanvasButton + '  ' + favoriteButton;
+
+  // Optionally show delete button, given input (show delete for user lems)
   if (showDelete) {
-    caption += deleteButton + '</p></div>';
-  } else {
-    caption += '</p></div>';
+    const deleteButton = '<a  class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
+    caption += deleteButton;
   }
+  caption += '</p></div>';
 
   return '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + thumbnail + caption + '</div> </div>';
 }
 
-function addToCanvas(test) {
+function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
+  return createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true);
+}
+
+function addToCanvas(lemDetailBlockHtml) {
   showPage('canvas');
-  $.get(lemRoute, {"id": test.id}, function(data, status) {
+  $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
+    //  redraw();
   });
-  redraw();
 }
 
 function showDetail(title, username, imgURL, id, avgRating, privateLems) {
   $("#lemModalTitle").text(title);
 
-  const createdBy = '<p>Created by @'+ username + '</p>';
-  const addToCanvas = '<a class="addToCanvas btn btn-primary" role="button" data-dismiss="modal" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
-  var favoriteButton;
-  if (favoriteIDList.includes(id)) {
-    favoriteButton = '<a lemid=' + id + ' class="favoriteButton btn btn-warning" role="button" onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
-  } else {
-    favoriteButton = '<a lemid=' + id + ' class="favoriteButton btn btn-warning" role="button" onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
-  }
-  const deleteButton = '<a class="deleteButton btn btn-danger pull-right" role="button" data-dismiss="modal" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
-
-  const onclickShowDetail = "$('#lemDetailModal').modal('show')";
-  const thumbnail = '<img onclick="' + onclickShowDetail + '" style="width:50%;margin-left:25%;margin-right:25%;" src=' + imgURL + '>';
-  const rating = '<span id="ratingNumber"></span> <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>'
-  var caption = '<div id="' + id + '" class="caption">' + createdBy + '<p>' + rating + '<p>' + addToCanvas + '  ' + favoriteButton;
-
-  if (privateLems) {
-    caption += deleteButton + '</p></div>';
-  } else {
-    caption += '</p></div>';
-  }
-
-  const contentHtml =  thumbnail + caption;
+  const contentHtml =  createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);;
   $("div#lemContent").html(contentHtml);
 
   setupStars(avgRating);
