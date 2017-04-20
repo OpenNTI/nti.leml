@@ -140,6 +140,8 @@ function login(email, password) {
 
       loginState('loggedIn');
     }
+  }).error(function() {
+    alert("Failed to login");
   });
 }
 
@@ -163,6 +165,8 @@ function logout() {
     } else {
       alert("Logout failed");
     }
+  }).error(function() {
+    alert("Failed to login");
   });
 }
 
