@@ -3,10 +3,10 @@ function rate(lemJson, rating) {
   $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
     var response = JSON.parse(data);
     setupRatingStars(response.new_avg);
-    if (globalPublicLemsDict[lemJson.id]) {
-      globalPublicLemsDict[lemJson.id].avgRating = response.new_avg;
+    if (globalPublicLemsDict[response.lem_id]) {
+      globalPublicLemsDict[response.lem_id].avgRating = response.new_avg;
     } else {
-      globalPrivateLemsDict[lemJson.id].avgRating = response.new_avg;
+      globalPrivateLemsDict[response.lem_id].avgRating = response.new_avg;
     }
   });
 }
