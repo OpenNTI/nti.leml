@@ -3,6 +3,7 @@ from flask import request, render_template, session
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from db.user_favorite_lems import User_Favorite_Lems
+from db.ratings import Ratings
 from mongoengine import *
 from bson import ObjectId
 import json
@@ -163,11 +164,15 @@ def rate():
     new_rating = float(data["rating"])
     lem_id = ObjectId(data["lem"])
     new_avg = 0
-    for lem in Lem.objects(pk=lem_id):
-        lem.ratings.append(new_rating)
-        new_avg = sum(lem.ratings) / float(len(lem.ratings))
-        lem.avgRating = new_avg
-        lem.save()
+    rating_item = Ratings.objects.filter(Q(lem = lem_id) & Q(user = current_user.email))
+    if len(rating_item) == 0:
+        Ratings(user = current_user.email, lem = lem_id, rating = new_rating).save()
+    else:
+        rating_item[0].update(rating = new_rating)
+    ratings = Ratings.objects(lem = lem_id)
+    new_avg = sum(r.rating for r in ratings) / len(ratings)
+    print(Lem.objects(pk = lem_id))
+    Lem.objects(pk = lem_id).update(avgRating = new_avg)
     return '{"new_avg":' + str(new_avg) + '}'
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
