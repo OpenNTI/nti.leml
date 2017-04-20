@@ -35,19 +35,40 @@ Authentication:
 *Body*: Stringify-ed JSON
 ```
 {
-  "email": myemail@example.com,
-  "password": password123
-}```
+  "email": "myemail@example.com",
+  "password": "password123"
+}
+```
+*Success Response*: 200 "Successfully registered user."  
+*Error Responses*: 404 "Email already exists.", 500 "Invalid email address"
 
 **/login**  
 *POST*: logs in user given email and password.  
+*Body*: Stringify-ed JSON
+```
+{
+  "email": "myemail@example.com",
+  "password": "password123"
+}
+```
+*Success Response*: 200 "Logged in"  
+*Error Responses*: 400 "Invalid username or password", 404 "User not found"
 
 **/logout**  
 *Precondition*: Must be logged in.  
 *POST*: logs out the current user.  
+*Body*: Empty
+*Success Response*: 200 "Logged out"
 
 **/currentuser**  
 *GET*: retrieves the email of the currently logged in user.  
+*Success Response*: 200  
+```
+{
+  "email": "myemail@example.com"
+}
+```
+*Error Response*: 401 "Not logged in"
 
 Lem's:
 ------
