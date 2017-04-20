@@ -31,63 +31,69 @@ API Routes:
 Authentication:
 ---------------
 **/register**  
-POST: creates an account given an email and password.  
+*POST*: creates an account given an email and password.  
+*Body*: Stringify-ed JSON
+```
+{
+  "email": myemail@example.com,
+  "password": password123
+}```
 
 **/login**  
-POST: logs in user given email and password.  
+*POST*: logs in user given email and password.  
 
 **/logout**  
-Precondition: Must be logged in.  
-POST: logs out the current user.  
+*Precondition*: Must be logged in.  
+*POST*: logs out the current user.  
 
 **/currentuser**  
-GET: retrieves the email of the currently logged in user.  
+*GET*: retrieves the email of the currently logged in user.  
 
 Lem's:
 ------
 **/lem**  
-GET: retrieves lem given its id.  
+*GET*: retrieves lem given its id.  
 
-Precondition: Must be logged in.  
-POST: takes in json object representing lem and saves to database.  
+*Precondition*: Must be logged in.  
+*POST*: takes in json object representing lem and saves to database.  
 
-Precondition: Must be logged in.  
-DELETE: deletes lem given id.  
+*Precondition*: Must be logged in.  
+*DELETE*: *DELETE*s lem given id.  
 
 **/lemall**  
-GET: retrieves all public lem**s.  
+*GET*: retrieves all public lem**s.  
 
 **/lemuser**  
-Precondition: Must be logged in.  
-GET: retrieves all lem's created by the currently logged in user.  
+*Precondition*: Must be logged in.  
+*GET*: retrieves all lem's created by the currently logged in user.  
 
 Users:
 ------
 **/user**  
-GET: retrieves the user object given its email.  
+*GET*: retrieves the user object given its email.  
 
 Comments:
 ---------
 **/comment**  
-GET: retrieves all of the comments for a given a lem id.  
+*GET*: retrieves all of the comments for a given a lem id.  
 
-Precondition: Must be logged in.  
-POST: adds a comment to a public lem given a lem id and text.  
+*Precondition*: Must be logged in.  
+*POST*: adds a comment to a public lem given a lem id and text.  
 
 Ratings:
 --------
 **/rate**  
-Precondition: Must be logged in.  
-POST: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
+*Precondition*: Must be logged in.  
+*POST*: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
 
 Favorites:
 ----------
 **/favorite**  
-Precondition: Must be logged in.  
-GET: retrieves the lem's that have been favorited by the currently logged in user.  
+*Precondition*: Must be logged in.  
+*GET*: retrieves the lem's that have been favorited by the currently logged in user.  
 
-Precondition: Must be logged in.  
-PUT: adds a given lem id to the currently logged in user's list of favorited lems.  
+*Precondition*: Must be logged in.  
+*PUT*: adds a given lem id to the currently logged in user's list of favorited lems.  
 
-Precondition: Must be logged in.  
-DELETE: removes a given lem id from the currently logged in user's list of favorited lems.  
+*Precondition*: Must be logged in.  
+*DELETE*: removes a given lem id from the currently logged in user's list of favorited lems.  
