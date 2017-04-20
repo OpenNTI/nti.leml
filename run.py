@@ -86,7 +86,7 @@ def user():
 @app.route('/currentuser', methods=['GET'])
 def currentuser():
     if not session.get('logged_in'):
-        return "{}"
+        return "Not logged in", status.HTTP_401_UNAUTHORIZED
     user = load_user(current_user.email)
     return user.to_json()
 
@@ -114,7 +114,7 @@ def login():
 def logout():
     session['logged_in'] = False
     logout_user()
-    return "Logged out."
+    return "Logged out"
 
 
 @app.route('/')
