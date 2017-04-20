@@ -7,6 +7,10 @@ Steps to run application in Chrome; other browsers have not been tested.
 2. Run `python3 run.py` to spin up the server.
 3. Navigate to http://localhost:5000.
 
+Future Improvements:
+====================
+Most API calls from the browser just show the default alert on error. A better UI should be created to handle API errors.
+
 UI Functionality:
 =================
 
