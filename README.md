@@ -14,15 +14,15 @@ Most API calls from the browser just show the default alert on error. A better U
 UI Functionality:
 =================
 
--Click a node to select it (border becomes red).
--Right click a selected node to delete it.
--Right click another node to draw an arrow between them.
--Click on the canvas to remove selection.
--Right click on a selected edge to remove it.
--Select a context, then right click nodes to add them to the context
+- Click a node to select it (border becomes red).
+- Right click a selected node to delete it.
+- Right click another node to draw an arrow between them.
+- Click on the canvas to remove selection.
+- Right click on a selected edge to remove it.
+- Select a context, then right click nodes to add them to the context
 
-Drag and Drop Functionality:
--Drag and drop from the toolbar to the canvas.
+#### Drag and Drop Functionality:
+- Drag and drop from the toolbar to the canvas.
 
 
 API Routes:
@@ -30,64 +30,64 @@ API Routes:
 
 Authentication:
 ---------------
-'/register'  
+**/register**  
 POST: creates an account given an email and password.  
-  
-'/login'  
+
+**/login**  
 POST: logs in user given email and password.  
 
-'/logout'  
+**/logout**  
 Precondition: Must be logged in.  
 POST: logs out the current user.  
-  
-'/currentuser'  
+
+**/currentuser**  
 GET: retrieves the email of the currently logged in user.  
-  
+
 Lem's:
------- 
-'/lem'  
+------
+**/lem**  
 GET: retrieves lem given its id.  
-  
+
 Precondition: Must be logged in.  
 POST: takes in json object representing lem and saves to database.  
-  
+
 Precondition: Must be logged in.  
 DELETE: deletes lem given id.  
-  
-'/lemall'  
-GET: retrieves all public lem's.  
-  
-'/lemuser'  
+
+**/lemall**  
+GET: retrieves all public lem**s.  
+
+**/lemuser**  
 Precondition: Must be logged in.  
 GET: retrieves all lem's created by the currently logged in user.  
-  
+
 Users:
 ------
-'/user'  
+**/user**  
 GET: retrieves the user object given its email.  
-  
+
 Comments:
 ---------
-'/comment'  
+**/comment**  
 GET: retrieves all of the comments for a given a lem id.  
-  
+
 Precondition: Must be logged in.  
 POST: adds a comment to a public lem given a lem id and text.  
-  
+
 Ratings:
 --------
-'/rate'  
+**/rate**  
 Precondition: Must be logged in.  
 POST: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
-  
+
 Favorites:
 ----------
-'/favorite'  
+**/favorite**  
 Precondition: Must be logged in.  
 GET: retrieves the lem's that have been favorited by the currently logged in user.  
-  
+
 Precondition: Must be logged in.  
 PUT: adds a given lem id to the currently logged in user's list of favorited lems.  
-  
+
 Precondition: Must be logged in.  
 DELETE: removes a given lem id from the currently logged in user's list of favorited lems.  
