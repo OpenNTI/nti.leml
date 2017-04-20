@@ -32,14 +32,14 @@ function resetLocalFavoritesList() {
       newLemList[lemID] = lem;
     }
 
-    globalFavoriteLemsList = newLemList;
+    globalFavoriteLemsDict = newLemList;
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
       topArgs[i]();
     }
   }).error(function () {
-    globalFavoriteLemsList = {};
+    globalFavoriteLemsDict = {};
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
