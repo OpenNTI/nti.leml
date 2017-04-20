@@ -8,6 +8,7 @@ from bson import ObjectId
 import json
 from getFuncs import *
 import sys
+from flask.ext.api import status
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 DEFAULT_FAVORITES = ["58f50621cf367e67548e0e80","58f50667cf367e67548e0e81", "58f50696cf367e67548e0e82"]
@@ -66,7 +67,7 @@ def register():
     pwd_hash = getHash(password)
     db = connect(name, host=host)
     if  DBUser.objects(pk = usr_name).count() > 0:
-        return "Email already exists."
+        return "Email already exists", status.HTTP_400_BAD_REQUEST
     DBUser(usr_name, pwd_hash).save()
     User_Favorite_Lems(usr_name, DEFAULT_FAVORITES).save()
     db.close()
@@ -98,14 +99,14 @@ def login():
     password = data['pass']
     usr_ver = load_user(name)
     if usr_ver is None:
-        return "User not found"
+        return "User not found", status.HTTP_404_NOT_FOUND
     pwd_ver = chckHash(usr_ver.password, password)
     if pwd_ver is True:
         session['logged_in'] = True
         login_user(usr_ver)
         return "Logged in"
     else:
-        return "Invalid username or password"
+        return "Invalid username or password", status.HTTP_400_BAD_REQUEST
 
 
 @app.route('/logout', methods=['POST'])
@@ -113,7 +114,7 @@ def login():
 def logout():
     session['logged_in'] = False
     logout_user()
-    return redirect(url_for('home'))
+    return "Logged out."
 
 
 @app.route('/')
@@ -146,7 +147,7 @@ def comment():
 			# Check that a private lem is not being accessed
 			for lem in Lem.objects(pk = lem_id):
 				if lem.public == 0 and lem.created_by.email != current_user.email:
-					return "Cannnot comment on a private lem not owned by you"
+					return "Cannnot comment on a private lem not owned by you", status.HTTP_403_FORBIDDEN
 
 			resultComment = {}
 			for lem in Lem.objects(pk = lem_id):
