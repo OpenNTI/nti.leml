@@ -1,3 +1,5 @@
+var globalFavoriteIDList = {};
+
 function favoriteLem(lemJson) {
   var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
   favoriteButtonsForLem.prop('disabled', true);

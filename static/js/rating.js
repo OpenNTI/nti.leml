@@ -2,7 +2,12 @@ function rate(lemJson, rating) {
   const ratingPostBody = {"lem": lemJson.id, "rating": rating};
   $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
     var response = JSON.parse(data);
-    setupStars(response.new_avg);
+    setupRatingStars(response.new_avg);
+    if (globalPublicLemsDict[lemJson.id]) {
+      globalPublicLemsDict[lemJson.id].avgRating = response.new_avg;
+    } else {
+      globalPrivateLemsDict[lemJson.id].avgRating = response.new_avg;
+    }
   });
 }
 

@@ -1,36 +1,49 @@
-var globalFavoriteIDList = {};
+var globalPublicLemsDict = {};
+var globalPrivateLemsDict = {};
 
-function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, showDelete, thumbnailClickable, showRating) {
+function createLemDetailHtml(lemID, isPrivate, isModal) {
+  var lem;
+  if (isPrivate) {
+    lem = globalPrivateLemsDict[lemID];
+  } else {
+    lem = globalPublicLemsDict[lemID];
+  }
+
+  const title = lem.name;
+  const username = lem.created_by;
+  const imgURL = lem.thumbnail;
+  const rating = lem.avgRating;
+
   const createdBy = '<p>Created by '+ username + '</p>';
   const addToCanvasButton = '<a  class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
 
   // Set state of favorite button if this lem is favorited by this user or not
-  var favoriteButton = '<a lemid=' + id + '  class="favoriteButton btn btn-warning" role="button"';
-  if (Object.keys(globalFavoriteIDList).includes(id)) {
+  var favoriteButton = '<a lemid=' + lemID + '  class="favoriteButton btn btn-warning" role="button"';
+  if (Object.keys(globalFavoriteIDList).includes(lemID)) {
     favoriteButton += ' onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
   } else {
     favoriteButton += ' onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
   }
 
   var thumbnail = '<img ';
-  if (thumbnailClickable) {
-    const showLemDetailModalFunctionCall = "showLemDetailModal('" + title + "','" + username + "','" + imgURL + "','" + id + "'," + rating + ","  + showDelete + ")";
+  if (!isModal) {
+    const showLemDetailModalFunctionCall = "showLemDetailModal('" + lemID + "',"  + isPrivate + ")";
     const onclickshowLemDetailModal = 'onclick="' + showLemDetailModalFunctionCall + '" ';
     thumbnail += onclickshowLemDetailModal;
   }
   thumbnail += 'style="width:300px;height:150px;" src=' + imgURL + ' />';
 
-  var caption = '<div id="' + id + '" class="caption">';
+  var caption = '<div id="' + lemID + '" class="caption">';
 
   // Optionally show header, given input (lem detail modal has title on top of modal so doesn't need this header)
-  if (showHeader) {
+  if (!isModal) {
     const header = '<h3>' + title + '</h3>';
     caption += header;
   }
 
   caption += createdBy + '<p>';
 
-  if (showRating) {
+  if (isModal) {
     const ratingHtml = '<span id="ratingNumber"></span> <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>';
     caption += ratingHtml + '<br>';
   }
@@ -38,7 +51,7 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
   caption += addToCanvasButton + '  ' + favoriteButton;
 
   // Optionally show delete button, given input (show delete for user lems)
-  if (showDelete) {
+  if (isPrivate) {
     const deleteButton = '<a  class="deleteButton btn btn-danger pull-right" role="button" onclick="deleteLem(this.parentElement.parentElement);">Delete</a>';
     caption += deleteButton;
   }
@@ -47,8 +60,8 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
   return thumbnail + caption;
 }
 
-function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
-  const lemDetailContentHtml = createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true, false);
+function generateLemRowHtml(lemID, isPrivate, isModal) {
+  const lemDetailContentHtml = createLemDetailHtml(lemID, isPrivate, isModal);
   const lemBlockHtml = '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + lemDetailContentHtml + '</div> </div>'
   return lemBlockHtml;
 }
@@ -62,14 +75,22 @@ function addToCanvas(lemDetailBlockHtml) {
   });
 }
 
-function showLemDetailModal(title, username, imgURL, id, avgRating, privateLems) {
-  $("#lemModalTitle").text(title);
+function showLemDetailModal(lemID, isPrivate) {
+  var lem;
+  if (isPrivate) {
+    lem = globalPrivateLemsDict[lemID];
+  } else {
+    lem = globalPublicLemsDict[lemID];
+  }
 
-  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false, true);
+  $("#lemModalTitle").text(lem.name);
+
+  const isModal = true;
+  const contentHtml = createLemDetailHtml(lemID, isPrivate, isModal);
   $("div#lemContent").html(contentHtml);
 
-  setupRatingStars(avgRating);
-  generateCommentSectionHtml(id);
+  setupRatingStars(lem.avgRating);
+  generateCommentSectionHtml(lemID);
 
   $('#lemDetailModal').modal('show')
 }
@@ -128,18 +149,45 @@ function searchLems() {
 function loadPublicLEMs() {
   $.get(lemallRoute, function(data, status) {
     var lems = JSON.parse(data);
-    loadLemsHtml(lems, "publicLemList", true);
+
+    globalPublicLemsDict = {}
+
+    for (lemIndex in lems) {
+      var lem = JSON.parse(lems[lemIndex]);
+      var lemID = lem._id.$oid;
+
+      globalPublicLemsDict[lemID] = lem;
+    }
+
+    loadLemsHtml(lems, false, true);
   });
 }
 
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
-    loadLemsHtml(lems, "userLemList", false);
+
+    globalPrivateLemsDict = {}
+
+    for (lemIndex in lems) {
+      var lem = JSON.parse(lems[lemIndex]);
+      var lemID = lem._id.$oid;
+
+      globalPrivateLemsDict[lemID] = lem;
+    }
+
+    loadLemsHtml(lems, true, false);
   });
 }
 
-function loadLemsHtml(lems, sectionID, showSearch) {
+function loadLemsHtml(lems, isPrivate, showSearch) {
+  var sectionID;
+  if  (isPrivate) {
+    sectionID = "userLemList";
+  } else {
+    sectionID = "publicLemList";
+  }
+
   var lemSection = $("#" + sectionID);
 
   var lemDivs = "";
@@ -154,7 +202,8 @@ function loadLemsHtml(lems, sectionID, showSearch) {
       imgURL = "../static/img/templates/no_thumbnail.png";
     }
 
-    lemDivs += generateLemRowHtml(lem.name, lem.created_by, imgURL, id, true);
+    const isModal = false;
+    lemDivs += generateLemRowHtml(id, isPrivate, isModal);
   }
 
   // This search bar searches the public lem page, not user lems
