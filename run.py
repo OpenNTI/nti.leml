@@ -9,7 +9,7 @@ from bson import ObjectId
 import json
 from getFuncs import *
 import sys
-from flask.ext.api import status
+from flask_api import status
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 DEFAULT_FAVORITES = ["58f50621cf367e67548e0e80","58f50667cf367e67548e0e81", "58f50696cf367e67548e0e82"]
@@ -160,6 +160,7 @@ def comment():
 		return login_manager.unauthorized()
 
 @app.route('/rate', methods=['POST'])
+@login_required
 def rate():
     data = request.get_json(force=True)
     new_rating = float(data["rating"])
@@ -174,7 +175,7 @@ def rate():
     new_avg = sum(r.rating for r in ratings) / len(ratings)
     print(Lem.objects(pk = lem_id))
     Lem.objects(pk = lem_id).update(avgRating = new_avg)
-    return '{"new_avg":' + str(new_avg) + '}'
+    return '{"new_avg":"' + str(new_avg) + '", "lem_id":"' + str(lem_id) + '"}'
 
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
 @login_required
