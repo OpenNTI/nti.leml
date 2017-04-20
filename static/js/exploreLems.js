@@ -19,7 +19,7 @@ function createLemDetailHtml(lemID, isPrivate, isModal) {
 
   // Set state of favorite button if this lem is favorited by this user or not
   var favoriteButton = '<a lemid=' + lemID + '  class="favoriteButton btn btn-warning" role="button"';
-  if (Object.keys(globalFavoriteIDList).includes(lemID)) {
+  if (Object.keys(globalFavoriteLemsDict).includes(lemID)) {
     favoriteButton += ' onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
   } else {
     favoriteButton += ' onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
