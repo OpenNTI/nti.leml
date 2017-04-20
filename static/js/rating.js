@@ -6,7 +6,7 @@ function rate(lemJson, rating) {
   });
 }
 
-function setupStars(defaultRating) {
+function setupRatingStars(defaultRating) {
   // Round to one decimal place
   var defaultRating = Math.round(defaultRating * 10) / 10;
 

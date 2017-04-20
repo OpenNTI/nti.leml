@@ -1,6 +1,6 @@
 var globalFavoriteIDList = {};
 
-function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, showDelete, thumbnailClickable) {
+function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, showDelete, thumbnailClickable, showRating) {
   const createdBy = '<p>Created by '+ username + '</p>';
   const addToCanvasButton = '<a  class="addToCanvas btn btn-primary" role="button" onclick="addToCanvas(this.parentElement.parentElement);">Add to Canvas</a>';
 
@@ -27,7 +27,15 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
     const header = '<h3>' + title + '</h3>';
     caption += header;
   }
-  caption += createdBy + '<p>' + addToCanvasButton + '  ' + favoriteButton;
+
+  caption += createdBy + '<p>';
+
+  if (showRating) {
+    const ratingHtml = '<span id="ratingNumber"></span> <span class="first-star glyphicon glyphicon-star-empty"></span><span class="second-star glyphicon glyphicon-star-empty"></span><span class="third-star glyphicon glyphicon-star-empty"></span><span class="fourth-star glyphicon glyphicon-star-empty"></span><span class="fifth-star glyphicon glyphicon-star-empty"></span>';
+    caption += ratingHtml + '<br>';
+  }
+
+  caption += addToCanvasButton + '  ' + favoriteButton;
 
   // Optionally show delete button, given input (show delete for user lems)
   if (showDelete) {
@@ -40,7 +48,7 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
 }
 
 function generateLemRowHtml(title, username, imgURL, id, rating, showDelete) {
-  const lemDetailContentHtml = createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true);
+  const lemDetailContentHtml = createLemDetailHtml(title, username, imgURL, id, rating, true, showDelete, true, false);
   const lemBlockHtml = '<div class="col-sm-6 col-md-4 lems"> <div class="thumbnail">' + lemDetailContentHtml + '</div> </div>'
   return lemBlockHtml;
 }
@@ -57,7 +65,7 @@ function addToCanvas(lemDetailBlockHtml) {
 function showLemDetailModal(title, username, imgURL, id, avgRating, privateLems) {
   $("#lemModalTitle").text(title);
 
-  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false);
+  const contentHtml = createLemDetailHtml(title, username, imgURL, id, avgRating, false, privateLems, false, true);
   $("div#lemContent").html(contentHtml);
 
   setupRatingStars(avgRating);
