@@ -57,7 +57,7 @@ Authentication:
 **/logout**  
 *Precondition*: Must be logged in.  
 *POST*: logs out the current user.  
-*Body*: Empty
+*Body*: Empty  
 *Success Response*: 200 "Logged out"
 
 **/currentuser**  
