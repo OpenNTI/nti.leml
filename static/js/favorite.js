@@ -19,12 +19,10 @@ function favoriteLem(lemJson) {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    globalFavoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {
@@ -52,12 +50,10 @@ function unfavoriteLem(lemJson) {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    globalFavoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {

@@ -1,5 +1,4 @@
-var globalFavoriteIDList = [];
-var globalFavoriteLemsList = [];
+var globalFavoriteIDList = {};
 
 function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, showDelete, thumbnailClickable) {
   const createdBy = '<p>Created by '+ username + '</p>';
@@ -7,7 +6,7 @@ function createLemDetailHtml(title, username, imgURL, id, rating, showHeader, sh
 
   // Set state of favorite button if this lem is favorited by this user or not
   var favoriteButton = '<a lemid=' + id + '  class="favoriteButton btn btn-warning" role="button"';
-  if (globalFavoriteIDList.includes(id)) {
+  if (Object.keys(globalFavoriteIDList).includes(id)) {
     favoriteButton += ' onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
   } else {
     favoriteButton += ' onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';

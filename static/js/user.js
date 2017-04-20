@@ -29,20 +29,17 @@ function resetLocalFavoritesList() {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    globalFavoriteIDList = newList;
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
       topArgs[i]();
     }
   }).error(function () {
-    globalFavoriteLemsList = [];
-    globalFavoriteIDList = [];
+    globalFavoriteLemsList = {};
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
