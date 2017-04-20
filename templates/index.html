@@ -113,7 +113,7 @@
 
       <div class="col-md-3 open" id="sidebar0">
 
-        <div class="dropdown col-md-6">
+        <div class="dropdown col-md-9">
           <button class="btn btn-default dropdown-toggle" type="button" id="canvasDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Canvas
             <span class="caret"></span>
@@ -123,9 +123,9 @@
             <li><a  onclick="redraw()">Redraw</a></li>
             <li><a  onclick="clearCanvas()">Clear</a></li>
           </ul>
-        </div>
+        <!-- </div> -->
 
-        <div class="dropdown col-md-6">
+        <!-- <div class="dropdown col-md-6"> -->
           <button class="btn btn-default dropdown-toggle" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Export
             <span class="caret"></span>
@@ -137,6 +137,7 @@
             <li id="shareDropdown" style="display:none;"><a  onclick="openExportDialog(true);">Share</a></li>
             <li id="saveDropdown" style="display:none;"><a  onclick="openExportDialog(false);">Save</a></li>
           </ul>
+          <button class="btn btn-default" type="button" onclick='$("#help_Modal").modal("show");'>Help</button>
         </div>
 
         <br>
@@ -149,15 +150,6 @@
           <span class="glyphicon glyphicon-info-sign"></span> Login or <a onclick="$('#registerModal').modal('show');">Register</a> to view favorites
         </div>
         <div id="templatePanel" class="panel-body" style="overflow-y: scroll">
-          <label for="/static/exampleLems/blendedLearningFlippedClassroom.lem">Blended Learning Flipped Classroom</label>
-          <img id="/static/exampleLems/blendedLearningFlippedClassroom.lem" src="/static/img/templates/blendedLearningFlippedClassroom.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-          <hr>
-          <label for="/static/exampleLems/absorbDoConnect.lem">Absorb Do Connect</label>
-          <img id="/static/exampleLems/absorbDoConnect.lem" src="/static/img/templates/absorbDoConnect.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-          <hr>
-          <label for="/static/exampleLems/blendedLearningClassroomEnhanced.lem">Blended Learning Classroom Enhanced</label>
-          <img id="/static/exampleLems/blendedLearningClassroomEnhanced.lem" src="/static/img/templates/blendedLearningClassroomEnhanced.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-          <hr>
         </div>
         <!-- <h3> I am a sidebar</h3> -->
         <!--           <button type="button" class="btn btn-primary" onclick="downloadLemJson();">Export LEM</button>
@@ -321,6 +313,7 @@
 <div data-include="registerModal"></div>
 <div data-include="shareModal"></div>
 <div data-include="lemModal"></div>
+<div data-include="helpModal"></div>
 
 <!-- hidden div for function elements -->
 <div style="display:none">
