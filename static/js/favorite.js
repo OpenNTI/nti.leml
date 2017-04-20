@@ -1,3 +1,5 @@
+var globalFavoriteIDList = {};
+
 function favoriteLem(lemJson) {
   var favoriteButtonsForLem = $(".favoriteButton").filter(function(el) { return $(".favoriteButton")[el].getAttribute("lemid") == lemJson.id})
   favoriteButtonsForLem.prop('disabled', true);
@@ -19,12 +21,10 @@ function favoriteLem(lemJson) {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {
@@ -52,12 +52,10 @@ function unfavoriteLem(lemJson) {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
 
     loadFavoriteTemplates();
   }).error(function () {

@@ -20,7 +20,12 @@ function register(email, password) {
 		var endIndexErrorDesc = data.responseText.lastIndexOf(")");
 		var lengthErrorDesc = endIndexErrorDesc - startIndexErrorDesc;
 
-		var errorDesc = responseText.substr(startIndexErrorDesc, lengthErrorDesc);
+    var errorDesc;
+    if (lengthErrorDesc > 0) {
+		  errorDesc = responseText.substr(startIndexErrorDesc, lengthErrorDesc);
+    } else {
+      errorDesc = responseText;
+    }
 
 		alert("Failed to register:\n" + errorDesc);
 	});

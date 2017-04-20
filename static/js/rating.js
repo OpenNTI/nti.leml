@@ -2,11 +2,16 @@ function rate(lemJson, rating) {
   const ratingPostBody = {"lem": lemJson.id, "rating": rating};
   $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
     var response = JSON.parse(data);
-    setupStars(response.new_avg);
+    setupRatingStars(response.new_avg);
+    if (globalPublicLemsDict[response.lem_id]) {
+      globalPublicLemsDict[response.lem_id].avgRating = response.new_avg;
+    } else {
+      globalPrivateLemsDict[response.lem_id].avgRating = response.new_avg;
+    }
   });
 }
 
-function setupStars(defaultRating) {
+function setupRatingStars(defaultRating) {
   // Round to one decimal place
   var defaultRating = Math.round(defaultRating * 10) / 10;
 

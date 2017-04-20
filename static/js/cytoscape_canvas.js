@@ -229,18 +229,7 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
 
-  var options = {
-      isDebug: false, // Debug mode for console messages
-      actions: {},// actions to be added
-      undoableDrag: true, // Whether dragging nodes are undoable can be a function as well
-      stackSizeLimit: undefined, // Size limit of undo stack, note that the size of redo stack cannot exceed size of undo stack
-      ready: function () { // callback when undo-redo is ready
-
-      }
-  }
-
-  ur = cy.undoRedo(options); // Can also be set whenever wanted.
-
+  // When a node is selected
   cy.on('select', 'node', function(evt) {
     evt.cyTarget.addClass('selected');
     selectedId = evt.cyTarget.id();
@@ -258,16 +247,18 @@ function loadNewCytoscapeWith(elements) {
     }
   });
 
+  // When a node is unselected
   cy.on('unselect', 'node', function(evt) {
     evt.cyTarget.removeClass('selected');
     toggleSidebar(0, evt);
   });
 
+  // When a node is right-clicked
   cy.on('cxttap', 'node', function(evt) {
     var nodes = cy.json().elements.nodes;
     nodes.map(function(val) {
-      if (val.selected) {
-        if (val.classes.includes("buildingBlock") || val.classes.includes("startstop") || val.classes.includes("notation")) {
+      if (val.selected) { // If a node is selected
+        if (val.classes.includes("buildingBlock") || val.classes.includes("startstop") || val.classes.includes("notation")) { // If the selected node is a buildingBlock, startstop, or notation
             var defaultActionType = "Learner Action";
             var defaultClass = "Learner_Action";
 
@@ -283,7 +274,7 @@ function loadNewCytoscapeWith(elements) {
               showCanvasError("Cannot draw two edges between one pair of items.");
               console.error("Cannot draw two edges between one pair of items.");
             } else {
-              if (evt.cyTarget.id() != val.data.id) {
+              if (evt.cyTarget.id() != val.data.id) { // If the selected node is NOT the one clicked
                 cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
                 new_id = new_id + 1;
               } else {
@@ -293,7 +284,7 @@ function loadNewCytoscapeWith(elements) {
                 }
               }
             }
-        } else if (val.classes.includes("context")) {
+        } else if (val.classes.includes("context")) { // If the selected node is a context
           if (evt.cyTarget.id() != val.data.id) {
             if (!evt.cyTarget.json().classes.includes("context")) {
 
@@ -309,9 +300,7 @@ function loadNewCytoscapeWith(elements) {
           }
           cy.remove(evt.cyTarget);
           data.parent = val.data.id;
-          //cy.$('#' + data.id).data(data);
           cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
-          //evt.cyTarget.data('parent', val.data.id);
 
           // Convert id from string to int
           var addedBuildingBlockID = evt.cyTarget.id() * 1;
@@ -321,12 +310,9 @@ function loadNewCytoscapeWith(elements) {
           for (index = 0; index < edges.length; index++) {
             cy.add({group: "edges", data: edges[index]});
           }
-          //cy.$('#' + val.data.id).data(val.data);
-          //cy.load();
           cy.resize();
-          //console.log(cy.$('node'));
             }
-          } else {
+          } else { // Go back to the start canvas
             cy.remove(evt.cyTarget);
             toggleSidebar(0, evt);
           }
@@ -335,17 +321,20 @@ function loadNewCytoscapeWith(elements) {
     });
   });
 
+  // When an edge is selected
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
     selectedId = evt.cyTarget.id();
     toggleSidebar(2, evt);
   });
 
+  // When an edge is unselected
   cy.on('unselect', 'edge', function(evt) {
     evt.cyTarget.removeClass('selected');
     toggleSidebar(0, evt);
   });
 
+  // When an edge is right-clicked
   cy.on('cxttap', 'edge', function(evt) {
     cy.remove(evt.cyTarget);
     toggleSidebar(0, evt);

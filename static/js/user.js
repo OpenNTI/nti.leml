@@ -29,20 +29,17 @@ function resetLocalFavoritesList() {
     for (var lemIndex in lemStringList) {
       var lem = JSON.parse(lemStringList[lemIndex]);
       var lemID = lem._id.$oid;
-      newList.push(lemID);
-      newLemList.push(lem);
+      newLemList[lemID] = lem;
     }
 
     globalFavoriteLemsList = newLemList;
-    favoriteIDList = newList;
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
       topArgs[i]();
     }
   }).error(function () {
-    globalFavoriteLemsList = [];
-    favoriteIDList = [];
+    globalFavoriteLemsList = {};
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
@@ -140,6 +137,8 @@ function login(email, password) {
 
       loginState('loggedIn');
     }
+  }).error(function() {
+    alert("Failed to login");
   });
 }
 
@@ -163,6 +162,8 @@ function logout() {
     } else {
       alert("Logout failed");
     }
+  }).error(function() {
+    alert("Failed to login");
   });
 }
 
