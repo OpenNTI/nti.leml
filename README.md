@@ -79,7 +79,7 @@ Lems:
 *Query String Parameters*: id  
 /lem?id=58de81a29a93ac144a594fa7  
 *Success Response*: 200  
-Abbreviated LEM JSON (click here for full):
+Abbreviated LEM JSON ([click here](#lemjson) for full):
 ```json
 {
   "_id": {
@@ -175,7 +175,7 @@ Favorites:
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
 *Precondition*: Must be logged in.  
 
-# LEM JSON:
+# LEM JSON:<a name="lemjson"></a>
 
 ![Blended Learning - Flipped Classroom LEM](https://raw.githubusercontent.com/NextThought/cs.capstone2017.leml/master/static/img/templates/blendedLearningFlippedClassroom.png?token=AKpYyhuxMtGxySLljcABsWEAnrwJYG9Uks5ZA1jowA%3D%3D)
 
