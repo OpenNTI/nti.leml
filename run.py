@@ -30,6 +30,9 @@ def lem():
 		data = request.get_json(force=True)
 		if request.method == 'DELETE':
 			db = connect(name, host=host)
+			for lem in Lem.objects(pk=ObjectId(data['id'])):
+			    if lem.created_by != current_user.email:
+			        return "Current user does not own lem: " + data['id'], status.HTTP_401_UNAUTHORIZED
 			for fave in User_Favorite_Lems.objects(favorites=ObjectId(data['id'])):
 			    fave.update(pull__favorites=ObjectId(data['id']))
 			db.close()
