@@ -30,7 +30,7 @@ def lem():
 		data = request.get_json(force=True)
 		if request.method == 'DELETE':
 			db = connect(name, host=host)
-			for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
+			for fave in User_Favorite_Lems.objects(favorites=ObjectId(data['id'])):
 			    fave.update(pull__favorites=ObjectId(data['id']))
 			db.close()
 			return delete(ObjectId(data['id']), name, host)
