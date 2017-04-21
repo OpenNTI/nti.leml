@@ -21,19 +21,19 @@ UI Functionality:
 - Right click on a selected edge to remove it.
 - Select a context, then right click nodes to add them to the context
 
-#### Drag and Drop Functionality:
+#### /Drag and Drop Functionality:
 - Drag and drop from the toolbar to the canvas.
 
 
 API Routes:
 ===========
-
 Authentication:
 ---------------
-**/register**  
-*POST*: creates an account given an email and password.  
+---
+#### */register*
+**POST**: creates an account given an email and password.  
 *Body*: Stringify-ed JSON
-```
+```json
 {
   "email": "myemail@example.com",
   "password": "password123"
@@ -42,10 +42,11 @@ Authentication:
 *Success Response*: 200 "Successfully registered user."  
 *Error Responses*: 404 "Email already exists.", 500 "Invalid email address"
 
-**/login**  
-*POST*: logs in user given email and password.  
+---
+#### */login*  
+**POST**: logs in user given email and password.  
 *Body*: Stringify-ed JSON
-```
+```json
 {
   "email": "myemail@example.com",
   "password": "password123"
@@ -54,67 +55,88 @@ Authentication:
 *Success Response*: 200 "Logged in"  
 *Error Responses*: 400 "Invalid username or password", 404 "User not found"
 
-**/logout**  
-*Precondition*: Must be logged in.  
-*POST*: logs out the current user.  
+---
+#### */logout*  
+**POST**: logs out the current user.
+*Precondition*: Must be logged in.    
 *Body*: Empty  
 *Success Response*: 200 "Logged out"
 
-**/currentuser**  
-*GET*: retrieves the email of the currently logged in user.  
+---
+#### */currentuser*  
+***GET***: retrieves the email of the currently logged in user.  
 *Success Response*: 200  
-```
+```json
 {
   "email": "myemail@example.com"
 }
 ```
-*Error Response*: 401 "Not logged in"
+*Error Response*: 401 "Not logged in"  
 
-Lem's:
+---
+Lems:
 ------
-**/lem**  
-*GET*: retrieves lem given its id.  
 
+---
+#### */lem*  
+**GET**: retrieves lem given its id.  
+
+**POST**: takes in json object representing lem and saves to database.  
 *Precondition*: Must be logged in.  
-*POST*: takes in json object representing lem and saves to database.  
 
+**DELETE**: deletes lem given id.  
 *Precondition*: Must be logged in.  
-*DELETE*: *DELETE*s lem given id.  
 
-**/lemall**  
-*GET*: retrieves all public lem**s.  
+---
+#### */lemall*  
+**GET**: retrieves all public lems.  
 
-**/lemuser**  
-*Precondition*: Must be logged in.  
-*GET*: retrieves all lem's created by the currently logged in user.  
+---
+#### */lemuser*  
+**GET**: retrieves all lem's created by the currently logged in user.  
+*Precondition*: Must be logged in.
 
+---
 Users:
 ------
-**/user**  
-*GET*: retrieves the user object given its email.  
 
+---
+#### */user*  
+**GET**: retrieves the user object given its email.  
+
+---
 Comments:
 ---------
-**/comment**  
-*GET*: retrieves all of the comments for a given a lem id.  
 
+---
+#### */comment*  
+**GET**: retrieves all of the comments for a given a lem id.  
+
+**POST**: adds a comment to a public lem given a lem id and text.  
 *Precondition*: Must be logged in.  
-*POST*: adds a comment to a public lem given a lem id and text.  
 
+---
 Ratings:
 --------
-**/rate**  
-*Precondition*: Must be logged in.  
-*POST*: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
 
+---
+#### */rate*  
+**POST**: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
+*Precondition*: Must be logged in.  
+
+---
 Favorites:
 ----------
-**/favorite**  
-*Precondition*: Must be logged in.  
-*GET*: retrieves the lem's that have been favorited by the currently logged in user.  
 
+---
+#### */favorite*  
+**GET**: retrieves the lem's that have been favorited by the currently logged in user.  
 *Precondition*: Must be logged in.  
-*PUT*: adds a given lem id to the currently logged in user's list of favorited lems.  
 
+**PUT**: adds a given lem id to the currently logged in user's list of favorited lems.  
 *Precondition*: Must be logged in.  
-*DELETE*: removes a given lem id from the currently logged in user's list of favorited lems.  
+
+**DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
+*Precondition*: Must be logged in.  
+
+---
