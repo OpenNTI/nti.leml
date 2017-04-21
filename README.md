@@ -132,7 +132,7 @@ Abbreviated LEM JSON ([full](#lem-json)):
 **POST**: takes in json object representing lem and saves to database.  
 *Precondition*: Must be logged in.  
 *Body*: Stringify-ed JSON  
-Abbreviated LEM JSON ([full](https://raw.githubusercontent.com/NextThought/cs.capstone2017.leml/documentation/static/FullAPIExamples#lem-post-body?token=AKpYyhuxMtGxySLljcABsWEAnrwJYG9Uks5ZA1jowA%3D%3D)):
+Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body)):
 ```json
 {
   "contexts": [
