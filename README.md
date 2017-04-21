@@ -130,8 +130,8 @@ Abbreviated LEM JSON ([click here](#lem-json) for full):
 ```
 
 **POST**: takes in json object representing lem and saves to database.  
-*Precondition*: Must be logged in.
-*Body*: Stringify-ed JSON (Abbreviate, [full](#complete-post))
+*Precondition*: Must be logged in.  
+*Body*: Stringify-ed JSON (Abbreviated, [full](#complete-post-example))
 ```json
 {
   "contexts": [
@@ -404,7 +404,7 @@ Favorites:
 }
 ```
 
-## Complete POST
+## Complete POST Example
 ``json
 ```json
 {
