@@ -29,7 +29,6 @@ API Routes:
 ===========
 Authentication:
 ---------------
----
 #### */register*
 **POST**: creates an account given an email and password.  
 *Body*: Stringify-ed JSON
@@ -73,11 +72,8 @@ Authentication:
 ```
 *Error Response*: 401 "Not logged in"  
 
----
 Lems:
 ------
-
----
 #### */lem*  
 **GET**: retrieves lem given its id.  
 *Query String Parameters*: id  
@@ -148,39 +144,27 @@ Abbreviated LEM JSON (click here for full):
 **GET**: retrieves all lem's created by the currently logged in user.  
 *Precondition*: Must be logged in.
 
----
 Users:
 ------
-
----
 #### */user*  
 **GET**: retrieves the user object given its email.  
 
----
 Comments:
 ---------
-
----
 #### */comment*  
 **GET**: retrieves all of the comments for a given a lem id.  
 
 **POST**: adds a comment to a public lem given a lem id and text.  
 *Precondition*: Must be logged in.  
 
----
 Ratings:
 --------
-
----
 #### */rate*  
 **POST**: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
 *Precondition*: Must be logged in.  
 
----
 Favorites:
 ----------
-
----
 #### */favorite*  
 **GET**: retrieves the lem's that have been favorited by the currently logged in user.  
 *Precondition*: Must be logged in.  
@@ -191,11 +175,9 @@ Favorites:
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
 *Precondition*: Must be logged in.  
 
----
+# LEM JSON:
 
-# LEM JSON
-
-![Blended Learning - Flipped Classroom LEM](cs.capstone2017.leml/static/img/templates/blendedLearningFlippedClassroom.png)
+![Blended Learning - Flipped Classroom LEM](https://raw.githubusercontent.com/NextThought/cs.capstone2017.leml/master/static/img/templates/blendedLearningFlippedClassroom.png?token=AKpYyhuxMtGxySLljcABsWEAnrwJYG9Uks5ZA1jowA%3D%3D)
 
 ```JSON
 {
