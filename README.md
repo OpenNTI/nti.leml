@@ -79,17 +79,13 @@ Lems:
 *Query String Parameters*: id  
 /lem?id=58de81a29a93ac144a594fa7  
 *Success Response*: 200  
-Abbreviated LEM JSON ([full](#lem-json)):
+Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lem-get-response)):
 ```json
 {
-  "_id": {
-    "$oid": "58de81a29a93ac144a594fa7"
-  },
+  "_id": {"$oid": "58de81a29a93ac144a594fa7"},
   "name": "test",
   "created_by": "newemail@email.com",
-  "date_created": {
-    "$date": 1490958997377
-  },
+  "date_created": {"$date": 149095899737},
   "startIDs": [1],
   "stopIDs": [7],
   "building_blocks": [
@@ -139,11 +135,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
     {
       "id": 14,
       "context_type": "Online Asynchronous",
-      "building_blocks": [
-        1,
-        2,
-        3
-      ],
+      "building_blocks": [1,2,3],
       "notations": []
     }
   ],
@@ -191,8 +183,9 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 
 ---
 #### */lemall*  
-**GET**: retrieves all public lems.
+**GET**: retrieves all public lems.  
 *Success Response*: 200
+Abbreviated LEM list JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lemall-response)):
 ```json
 [
   {
@@ -207,16 +200,28 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
   }
 ]
 ```
-
 ---
 #### */lemuser*  
-**GET**: retrieves all lem's created by the currently logged in user.  
-*Precondition*: Must be logged in.
+**GET**: retrieves all lems created by the currently logged in user.  
+*Precondition*: Must be logged in.  
+*Success Response*: 200  
+Returns a list with identical structure as [/lemall route](#lemall)  
+*Error Responses*: 401 Unauthorized
 
 Users:
 ------
 #### */user*  
-**GET**: retrieves the user object given its email.  
+**GET**: retrieves the user object given its email.
+
+---
+#### */currentuser*  
+*Precondition*: Must be logged in.  
+**GET**: retrieves the user object for currently logged in user.  
+*Success Response*: 200  
+```json
+{"email": "leml@uco.edu"}
+```
+*Error Responses*: 401 Unauthorized
 
 Comments:
 ---------
