@@ -9,7 +9,12 @@ Steps to run application in Chrome; other browsers have not been tested.
 
 Suggested Improvements:
 ====================
-Most API calls from the browser just show the default alert on error. A better UI should be created to handle API errors.
+- Add creative commons/ licensing info to share modal so that users know their lems are open source.
+- Paginate public and private LEM pages
+- Add a public/private label to user owed lems that they can click and change
+- Most API calls from the browser just show the default alert on error. A better UI should be created to handle API errors.
+- Add an undo and redo feature to the canvas. There should be libraries for this, or keep a stack of canvas states (using cy.json) that can be popped.
+
 
 UI Functionality:
 =================
