@@ -27,6 +27,14 @@ UI Functionality:
 
 API Routes:
 ===========
+
+- [Authentication](#authentication)
+- [Lems](#lems)
+- [Users](#users)
+- [Comments](#comments)
+- [Ratings](#ratings)
+- [Favorites](#favorites)
+
 Authentication:
 ---------------
 #### */register*
@@ -342,9 +350,9 @@ Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017
 ```
 
 **PUT**: adds a given lem id to the currently logged in user's list of favorited lems.  
-*Precondition*: Must be logged in.
+*Precondition*: Must be logged in.  
 *Query String Parameters*: id  
-`/favorite?id=58de81a29a93ac144a594fa7`
+`/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
 Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
 
@@ -352,6 +360,6 @@ Same format as **GET** `/favorite` but returns new favorites ([full format](http
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
 *Precondition*: Must be logged in.  
 *Query String Parameters*: id  
-`/favorite?id=58de81a29a93ac144a594fa7`
+`/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
 Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
