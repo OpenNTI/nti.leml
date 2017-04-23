@@ -897,3 +897,475 @@
   }
 ]
 ```
+
+## GET Favorites Response
+```JSON
+[
+  {
+    "_id": {
+      "$oid": "58de81a29a93ac144a594fa7"
+    },
+    "name": "test",
+    "created_by": "newemail@email.com",
+    "date_created": {
+      "$date": 1490958997377
+    },
+    "startIDs": [
+      1
+    ],
+    "stopIDs": [
+      7
+    ],
+    "building_blocks": [
+      {
+        "id": 1,
+        "block_type": "Information",
+        "description": "Topic Overview",
+        "method": "HTML File"
+      },
+      {
+        "id": 2,
+        "block_type": "Information",
+        "description": "Topic Concept Presentation",
+        "method": "Video"
+      },
+      {
+        "id": 3,
+        "block_type": "Information",
+        "description": "Skill Demonstration",
+        "method": "Video"
+      },
+      {
+        "id": 4,
+        "block_type": "Practice",
+        "description": "Problem Set",
+        "method": "Group Project Work"
+      },
+      {
+        "id": 5,
+        "block_type": "Feedback",
+        "description": "Feedback on Problem Sets",
+        "method": "Peer Feedback"
+      },
+      {
+        "id": 6,
+        "block_type": "Dialogue",
+        "description": "Reflection Discussion",
+        "method": "Discussion"
+      },
+      {
+        "id": 7,
+        "block_type": "Evidence",
+        "description": "Individual Problem Set",
+        "method": "Dropbox"
+      }
+    ],
+    "contexts": [
+      {
+        "id": 14,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          1,
+          2,
+          3
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 15,
+        "context_type": "Classroom",
+        "building_blocks": [
+          4,
+          5
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 16,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          6,
+          7
+        ],
+        "notations": [
+
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": 8,
+        "action_type": "Learner Action",
+        "source": 1,
+        "target": 2
+      },
+      {
+        "id": 9,
+        "action_type": "Learner Action",
+        "source": 2,
+        "target": 3
+      },
+      {
+        "id": 10,
+        "action_type": "Learner Action",
+        "source": 3,
+        "target": 4
+      },
+      {
+        "id": 11,
+        "action_type": "Learner Action",
+        "source": 4,
+        "target": 6
+      },
+      {
+        "id": 12,
+        "action_type": "Learner Action",
+        "source": 5,
+        "target": 4
+      },
+      {
+        "id": 13,
+        "action_type": "Learner Action",
+        "source": 6,
+        "target": 7
+      }
+    ],
+    "notations": [
+      {
+        "building_block": 7,
+        "description": "Objective 1"
+      }
+    ],
+    "ratings": [
+      6,
+      5,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      4,
+      4,
+      5,
+      5,
+      4,
+      5,
+      4,
+      1,
+      1
+    ],
+    "avgRating": 3,
+    "thumbnail": "data:image\/png;base64,iVBORw0KGgoAAAAN...UVORK5CYII=",
+    "public": 1
+  },
+  {
+    "_id": {
+      "$oid": "58de826e9a93ac14ffbaab6b"
+    },
+    "name": "anothertest",
+    "created_by": "newemail@email.com",
+    "date_created": {
+      "$date": 1490959352160
+    },
+    "startIDs": [
+      1
+    ],
+    "stopIDs": [
+      7
+    ],
+    "building_blocks": [
+      {
+        "id": 1,
+        "block_type": "Information",
+        "description": "Topic Overview",
+        "method": "HTML File"
+      },
+      {
+        "id": 2,
+        "block_type": "Information",
+        "description": "Topic Concept Presentation",
+        "method": "Video"
+      },
+      {
+        "id": 3,
+        "block_type": "Information",
+        "description": "Skill Demonstration",
+        "method": "Video"
+      },
+      {
+        "id": 4,
+        "block_type": "Practice",
+        "description": "Problem Set",
+        "method": "Group Project Work"
+      },
+      {
+        "id": 5,
+        "block_type": "Feedback",
+        "description": "Feedback on Problem Sets",
+        "method": "Peer Feedback"
+      },
+      {
+        "id": 6,
+        "block_type": "Dialogue",
+        "description": "Reflection Discussion",
+        "method": "Discussion"
+      },
+      {
+        "id": 7,
+        "block_type": "Evidence",
+        "description": "Individual Problem Set",
+        "method": "Dropbox"
+      }
+    ],
+    "contexts": [
+      {
+        "id": 14,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          1,
+          2,
+          3
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 15,
+        "context_type": "Classroom",
+        "building_blocks": [
+          4,
+          5
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 16,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          6,
+          7
+        ],
+        "notations": [
+
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": 8,
+        "action_type": "Learner Action",
+        "source": 1,
+        "target": 2
+      },
+      {
+        "id": 9,
+        "action_type": "Learner Action",
+        "source": 2,
+        "target": 3
+      },
+      {
+        "id": 10,
+        "action_type": "Learner Action",
+        "source": 3,
+        "target": 4
+      },
+      {
+        "id": 11,
+        "action_type": "Learner Action",
+        "source": 4,
+        "target": 6
+      },
+      {
+        "id": 12,
+        "action_type": "Learner Action",
+        "source": 5,
+        "target": 4
+      },
+      {
+        "id": 13,
+        "action_type": "Learner Action",
+        "source": 6,
+        "target": 7
+      }
+    ],
+    "notations": [
+      {
+        "building_block": 7,
+        "description": "Objective 1"
+      }
+    ],
+    "ratings": [
+      5,
+      5,
+      4,
+      3,
+      1,
+      3,
+      1
+    ],
+    "avgRating": 3.1428571428571,
+    "thumbnail": "data:image\/png;base64,iVBORw0KG...UVORK5CYII=",
+    "public": 1
+  },
+  {
+    "_id": {
+      "$oid": "58de94c29a93ac0ca69f1f47"
+    },
+    "name": "publicaustin",
+    "created_by": "newemail@email.com",
+    "date_created": {
+      "$date": 1490963948269
+    },
+    "startIDs": [
+      1
+    ],
+    "stopIDs": [
+      7
+    ],
+    "building_blocks": [
+      {
+        "id": 1,
+        "block_type": "Information",
+        "description": "Topic Overview",
+        "method": "HTML File"
+      },
+      {
+        "id": 2,
+        "block_type": "Information",
+        "description": "Topic Concept Presentation",
+        "method": "Video"
+      },
+      {
+        "id": 3,
+        "block_type": "Information",
+        "description": "Skill Demonstration",
+        "method": "Video"
+      },
+      {
+        "id": 4,
+        "block_type": "Practice",
+        "description": "Problem Set",
+        "method": "Group Project Work"
+      },
+      {
+        "id": 5,
+        "block_type": "Feedback",
+        "description": "Feedback on Problem Sets",
+        "method": "Peer Feedback"
+      },
+      {
+        "id": 6,
+        "block_type": "Dialogue",
+        "description": "Reflection Discussion",
+        "method": "Discussion"
+      },
+      {
+        "id": 7,
+        "block_type": "Evidence",
+        "description": "Individual Problem Set",
+        "method": "Dropbox"
+      }
+    ],
+    "contexts": [
+      {
+        "id": 14,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          1,
+          2,
+          3
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 15,
+        "context_type": "Classroom",
+        "building_blocks": [
+          4,
+          5
+        ],
+        "notations": [
+
+        ]
+      },
+      {
+        "id": 16,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          6,
+          7
+        ],
+        "notations": [
+
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": 8,
+        "action_type": "Learner Action",
+        "source": 1,
+        "target": 2
+      },
+      {
+        "id": 9,
+        "action_type": "Learner Action",
+        "source": 2,
+        "target": 3
+      },
+      {
+        "id": 10,
+        "action_type": "Learner Action",
+        "source": 3,
+        "target": 4
+      },
+      {
+        "id": 11,
+        "action_type": "Learner Action",
+        "source": 4,
+        "target": 6
+      },
+      {
+        "id": 12,
+        "action_type": "Learner Action",
+        "source": 5,
+        "target": 4
+      },
+      {
+        "id": 13,
+        "action_type": "Learner Action",
+        "source": 6,
+        "target": 7
+      }
+    ],
+    "notations": [
+      {
+        "building_block": 7,
+        "description": "Objective 1"
+      }
+    ],
+    "ratings": [
+
+    ],
+    "avgRating": 0,
+    "thumbnail": "data:image\/png;base64,iVBOR...uQmCC",
+    "public": 1
+  }
+]
+```

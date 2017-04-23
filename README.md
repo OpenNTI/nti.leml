@@ -254,7 +254,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 }
 ```
 *Success Response*: 200
-*Error Responses*: 401, 403 "Cannot comment on a private lem not owned by you"
+*Error Responses*: 401 Unauthorized, 403 "Cannot comment on a private lem not owned by you"
 
 
 Ratings:
@@ -262,15 +262,96 @@ Ratings:
 #### */rate*  
 **POST**: takes a given float rating and applies it to a given lem id, updating the lem's average rating as well.  
 *Precondition*: Must be logged in.  
+*Body*: Stringify-ed JSON  
+```json
+{
+  "lem":"58de81a29a93ac144a594fa7",
+  "rating":5
+}
+```
+*Success Response*: 200  
+```json
+{
+  "lem_id":"58de81a29a93ac144a594fa7",
+  "new_avg":4.7
+}
+```
+*Error Responses*: 401 Unauthorized
+
 
 Favorites:
 ----------
 #### */favorite*  
 **GET**: retrieves the lem's that have been favorited by the currently logged in user.  
 *Precondition*: Must be logged in.  
+*Success Response*: 200  
+Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+```JSON
+[
+  {
+    "_id": {"$oid": "58de826e9a93ac14ffbaab6b"},
+    "name": "anothertest",
+    "created_by": "newemail@email.com",
+    "date_created": {"$date": 1490959352160},
+    "startIDs": [1],
+    "stopIDs": [7],
+    "building_blocks": [
+      {
+        "id": 1,
+        "block_type": "Information",
+        "description": "Topic Overview",
+        "method": "HTML File"
+      },
+      "..."
+    ],
+    "contexts": [
+      {
+        "id": 14,
+        "context_type": "Online Asynchronous",
+        "building_blocks": [
+          1,
+          2,
+          3
+        ],
+        "notations": []
+      },
+      "..."
+    ],
+    "actions": [
+      {
+        "id": 8,
+        "action_type": "Learner Action",
+        "source": 1,
+        "target": 2
+      },
+      "..."
+    ],
+    "notations": [
+      {
+        "building_block": 7,
+        "description": "Objective 1"
+      }
+    ],
+    "ratings": [5,5,4,3,1,3,1],
+    "avgRating": 3.1428571428571,
+    "thumbnail": "data:image\/png;base64,iVBORw0KG...UVORK5CYII=",
+    "public": 1
+  },
+  "..."
+]
+```
 
 **PUT**: adds a given lem id to the currently logged in user's list of favorited lems.  
-*Precondition*: Must be logged in.  
+*Precondition*: Must be logged in.
+*Query String Parameters*: id  
+`/favorite?id=58de81a29a93ac144a594fa7`
+*Success Response*: 200  
+Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+
 
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
 *Precondition*: Must be logged in.  
+*Query String Parameters*: id  
+`/favorite?id=58de81a29a93ac144a594fa7`
+*Success Response*: 200  
+Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
