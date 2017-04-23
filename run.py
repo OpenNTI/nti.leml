@@ -23,19 +23,22 @@ name = 'leml'
 # URL for getting a lem item
 @app.route('/lem', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def lem():
-	if request.method == 'GET':
-		id = request.args.get('id')
-		return getById(ObjectId(id), name, host)
-	if current_user.is_authenticated:
-		data = request.get_json(force=True)
-		if request.method == 'DELETE':
-			db = connect(name, host=host)
-			for fave in User_Favorite_Lems.objects(ObjectId(data['id']) in favorites):
-			    fave.update(pull__favorites=ObjectId(data['id']))
-			db.close()
-			return delete(ObjectId(data['id']), name, host)
-		return save(data, current_user, name, host)
-	return login_manager.unauthorized()
+    if request.method == 'GET':
+        id = request.args.get('id')
+        return getById(ObjectId(id), name, host)
+    if current_user.is_authenticated:
+        data = request.get_json(force=True)
+        if request.method == 'DELETE':
+            db = connect(name, host=host)
+            for lem in Lem.objects(pk=ObjectId(data['id'])):
+                if lem.created_by.email != current_user.email:
+                    return "Current user (" + current_user.email + ") does not own lem: " + data['id'], status.HTTP_401_UNAUTHORIZED
+            for fave in User_Favorite_Lems.objects(favorites=ObjectId(data['id'])):
+                fave.update(pull__favorites=ObjectId(data['id']))
+            db.close()
+            return delete(ObjectId(data['id']), name, host)
+        return save(data, current_user, name, host)
+    return login_manager.unauthorized()
 
 # URL for getting all current lem objects in the database
 @app.route('/lemall', methods=['GET'])
@@ -124,40 +127,40 @@ def home():
 
 @app.route('/comment', methods = ['GET', 'POST'])
 def comment():
-	if request.method == 'GET':
-		lem_id = request.args.get('lem')
-		comments = []
-		for comment in Comment.objects(lem_id = lem_id):
-			include = True
-			for lem in Lem.objects(pk = lem_id):
-				if lem.public == 0 and lem.created_by.email != current_user.email:
-					include = False
-					break
-			if include:
-				comments.append(comment.to_json())
-		return json.dumps(comments)
-	elif request.method == 'POST':
-		if current_user.is_authenticated:
-			data = request.get_json(force=True)
-			lem_id = ObjectId(data["lem"])
-			text = data["text"]
-			created_by = current_user.email
+    if request.method == 'GET':
+        lem_id = request.args.get('lem')
+        comments = []
+        for comment in Comment.objects(lem_id = lem_id):
+            include = True
+            for lem in Lem.objects(pk = lem_id):
+                if lem.public == 0 and lem.created_by.email != current_user.email:
+                    include = False
+                    break
+            if include:
+                comments.append(comment.to_json())
+        return json.dumps(comments)
+    elif request.method == 'POST':
+        if current_user.is_authenticated:
+            data = request.get_json(force=True)
+            lem_id = ObjectId(data["lem"])
+            text = data["text"]
+            created_by = current_user.email
 
-			db = connect(name, host = host)
+            db = connect(name, host = host)
 
-			# Check that a private lem is not being accessed
-			for lem in Lem.objects(pk = lem_id):
-				if lem.public == 0 and lem.created_by.email != current_user.email:
-					return "Cannnot comment on a private lem not owned by you", status.HTTP_403_FORBIDDEN
+            # Check that a private lem is not being accessed
+            for lem in Lem.objects(pk = lem_id):
+                if lem.public == 0 and lem.created_by.email != current_user.email:
+                    return "Cannot comment on a private lem not owned by you", status.HTTP_403_FORBIDDEN
 
-			resultComment = {}
-			for lem in Lem.objects(pk = lem_id):
-				comment = Comment(lem_id = str(lem_id), text = text, created_by = created_by)
-				comment.save()
-				resultComment = comment.to_json()
-			db.close()
-			return resultComment
-		return login_manager.unauthorized()
+            resultComment = {}
+            for lem in Lem.objects(pk = lem_id):
+                comment = Comment(lem_id = str(lem_id), text = text, created_by = created_by)
+                comment.save()
+                resultComment = comment.to_json()
+            db.close()
+            return resultComment
+        return login_manager.unauthorized()
 
 @app.route('/rate', methods=['POST'])
 @login_required
@@ -191,7 +194,7 @@ def favorite():
     for userFav in User_Favorite_Lems.objects(pk=current_user.email):
         count += 1
     if count == 0:
-	    User_Favorite_Lems(current_user.email, DEFAULT_FAVORITES).save()
+        User_Favorite_Lems(current_user.email, DEFAULT_FAVORITES).save()
 
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(pk=current_user.email).update(pull__favorites=favoritedLem)
@@ -225,7 +228,7 @@ def validate_json(json_dict):
 
 # Start the application
 if __name__ == '__main__':
-	if len(sys.argv) > 1:
-		application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
-	else:
-		application.run(debug=True)
+    if len(sys.argv) > 1:
+        application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
+    else:
+        application.run(debug=True)

@@ -224,5 +224,8 @@ function deleteLem(lemJson) {
   $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
     // Reload lems so that deleted lem is removed
     loadUserLEMs();
+  }).error(function(data) {
+    alert("Failed to delete. \n " + JSON.stringify(data));
+    loadUserLEMs();
   });
 }
