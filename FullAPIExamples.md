@@ -781,3 +781,119 @@
   }
 ]
 ```
+
+## Get comments response
+```JSON
+[
+  {
+    "_id": {
+      "$oid": "58e79f20cf367e28e8e2624a"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "testagd",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491554899172
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a090cf367e28e8e2624b"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "dahgsdg",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491554899172
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a13dcf367e32e39c4d9f"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "adgs",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491557059524
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a174cf367e334fe0b798"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "ahdshs",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491557142159
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a195cf367e337e321174"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "adgag",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491557179550
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a203cf367e33fc346744"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "adg",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491557287673
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a29ccf367e33fc346745"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "My comment",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491557287673
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7a72dcf367e37f4208035"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "This is a test",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491558102337
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7bd17cf367e453cd2030b"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "das",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491564209226
+    }
+  },
+  {
+    "_id": {
+      "$oid": "58e7bd4dcf367e453cd2030c"
+    },
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "asgda",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {
+      "$date": 1491564209226
+    }
+  }
+]
+```

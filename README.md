@@ -77,7 +77,7 @@ Lems:
 #### */lem*  
 **GET**: retrieves lem given its id.  
 *Query String Parameters*: id  
-/lem?id=58de81a29a93ac144a594fa7  
+`/lem?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
 Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lem-get-response)):
 ```json
@@ -227,9 +227,35 @@ Comments:
 ---------
 #### */comment*  
 **GET**: retrieves all of the comments for a given a lem id.  
+*Query String Parameters*: id  
+`/comment?lem=58de81a29a93ac144a594fa7`  
+*Success Response*: 200  
+Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-comments-response)):
+```json
+[
+  {
+    "_id": {"$oid": "58e79f20cf367e28e8e2624a"},
+    "lem_id": "58de81a29a93ac144a594fa7",
+    "text": "testagd",
+    "created_by": "nickbgraham83@gmail.com",
+    "date_created": {"$date": 1491554899172}
+  },
+  "..."
+]
+```
 
 **POST**: adds a comment to a public lem given a lem id and text.  
-*Precondition*: Must be logged in.  
+*Precondition*: Must be logged in.
+*Body*: Stringify-ed JSON
+```json
+{
+  "lem":"58de81a29a93ac144a594fa7",
+  "text":"This is a comment!"
+}
+```
+*Success Response*: 200
+*Error Responses*: 401, 403 "Cannot comment on a private lem not owned by you"
+
 
 Ratings:
 --------

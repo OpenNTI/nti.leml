@@ -151,7 +151,7 @@ def comment():
             # Check that a private lem is not being accessed
             for lem in Lem.objects(pk = lem_id):
                 if lem.public == 0 and lem.created_by.email != current_user.email:
-                    return "Cannnot comment on a private lem not owned by you", status.HTTP_403_FORBIDDEN
+                    return "Cannot comment on a private lem not owned by you", status.HTTP_403_FORBIDDEN
 
             resultComment = {}
             for lem in Lem.objects(pk = lem_id):
