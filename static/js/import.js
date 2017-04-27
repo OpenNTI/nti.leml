@@ -65,9 +65,9 @@ function renderLem(json) {
   var contexts = json.lem.contexts;
   var notations = json.lem.notations;
   if(json.lem.date_created){
-  	elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\nBy: "+json.lem.created_by+" on "+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});	
+  	elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\nBy: "+json.lem.created_by+" on "+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});
   }
-  
+
   // Start dots
   if (startIDs) {
     // Add one stop node
@@ -152,6 +152,7 @@ function renderLem(json) {
   if (notations) {
     for (var index in notations) {
       var notation = notations[index];
+      console.log(notation);
       notation.id = "object" + notation.building_block;
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info

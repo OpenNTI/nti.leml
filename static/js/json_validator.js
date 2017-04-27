@@ -20,6 +20,8 @@ function checkLemStructure() {
   var unconnectedObjects = totalCount - predecessorsCount - contextCount - 1 - cy.$('.authorship').length;
   if (unconnectedObjects > 0) {
     return "Graph has " + unconnectedObjects + " unconnected objects";
+  } else if (unconnectedObjects < 0) {
+    return "This shouldn't happen";
   }
 
   return "";

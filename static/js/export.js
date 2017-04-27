@@ -54,11 +54,14 @@ function generateJson() {
           convertIdToInt(node.data);
           lem.building_blocks.push(node.data);
       } else if (node.classes.includes("notation")) {
+          //console.log(node);
           var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
           var buildingBlockIDNumeric = buildingBlockID * 1;
 
-          convertIdToInt(node.data);
+          //convertIdToInt(node.data);
           node.data.building_block = buildingBlockIDNumeric;
+          node.data.id = new_id;
+          new_id++;
 
           lem.notations.push(node.data);
       }
@@ -95,6 +98,8 @@ function downloadLemJson() {
     return;
   }
 
+  var author_node = cy.remove('.authorship');
+
   var lemJson = generateJson();
 
   if (validateLem(lemJson)) {
@@ -112,4 +117,6 @@ function downloadLemJson() {
     console.log(ajv.errors);
     console.log(lemJson);
   }
+
+  cy.add(author_node);
 }
