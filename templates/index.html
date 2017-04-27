@@ -112,31 +112,31 @@
       </div>
 
       <div class="col-md-3 open" id="sidebar0">
-
-        <div class="dropdown col-md-9">
-          <button class="btn btn-default dropdown-toggle" type="button" id="canvasDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Canvas
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="canvasDropdown">
-            <li><a  onclick="importLem();">Import LEM</a></li>
-            <li><a  onclick="redraw()">Redraw</a></li>
-            <li><a  onclick="clearCanvas()">Clear</a></li>
-          </ul>
-        <!-- </div> -->
-
-        <!-- <div class="dropdown col-md-6"> -->
-          <button class="btn btn-default dropdown-toggle" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Export
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-            <li><a  id="downloadPNG">PNG</a></li>
-            <li><a  id="downloadJPEG">JPEG</a></li>
-            <li><a  onclick="downloadLemJson()">LEM</a></li>
-            <li id="shareDropdown" style="display:none;"><a  onclick="openExportDialog(true);">Share</a></li>
-            <li id="saveDropdown" style="display:none;"><a  onclick="openExportDialog(false);">Save</a></li>
-          </ul>
+        <div class="btn-group" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="button" id="canvasDropdown" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Canvas
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="canvasDropdown">
+              <li><a onclick="importLem();">Import LEM</a></li>
+              <li><a onclick="redraw();">Redraw</a></li>
+              <li><a onclick="clearCanvas();">Clear Canvas</a></li>
+            </ul>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" id="exportDropdown" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Export
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+              <li><a id="downloadPNG">PNG</a></li>
+              <li><a id="downloadJPEG">JPEG</a></li>
+              <li><a  onclick="downloadLemJson()">LEM</a></li>
+              <li id="shareDropdown" style="display:none;"><a  onclick="openExportDialog(true);">Share</a></li>
+              <li id="saveDropdown" style="display:none;"><a  onclick="openExportDialog(false);">Save</a></li>
+            </ul>
+          </div>
           <button class="btn btn-default" type="button" onclick='$("#help_Modal").modal("show");'>Help</button>
         </div>
 
