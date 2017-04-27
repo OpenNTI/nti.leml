@@ -30,8 +30,8 @@ function drop(ev) {
 		var new_node = cy.add([{group: "nodes", data: context, position: {x: x_coord, y: y_coord}, style: {label: context.context_type}, classes: ct + " context"}]);
 	} else if (data.includes("startstop")) {
 		cy.add({group: "nodes", data: {id: new_id, start: true}, position: {x: x_coord, y: y_coord}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
-	} else if (data.includes("exampleLems")) {
-		loadLocalLem(data);
+	} else if (data.includes("favorite_")) {
+		addFavoriteToCanvas(data.split('_')[1]);
 	} else if (data.includes("objective")) {
 		cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
 	} else {
@@ -44,4 +44,12 @@ function drop(ev) {
 	cy.resize();
 
 	++new_id;
+}
+
+function addFavoriteToCanvas(lem_id) {
+  showPage('canvas');
+  var lem = globalFavoriteLemsDict[lem_id];
+  var json = {"lem": lem};
+  renderLem(json);
+  redraw();
 }

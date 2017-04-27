@@ -196,6 +196,14 @@ function exportLem(public) {
 }
 
 function openExportDialog(share) {
+  var error = checkLemStructure();
+
+  if (error.length > 0) {
+    $("#exportErrorDescription").text(error);
+    $("#exportInvalidLEM").modal('show');
+    return;
+  }
+
   // Clear name field
   $("#lemNameText")[0].value = "";
 

@@ -207,11 +207,14 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
   }
 
   // This search bar searches the public lem page, not user lems
-  //var str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+  var str_test = "";
+  if (showSearch) {
+    str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+  }
 
   var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
 
-  lemSection.html(refreshButton + '<div class="row">' + lemDivs + '</div>');
+  lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
 }
 
 function deleteLem(lemJson) {
