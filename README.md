@@ -1,4 +1,4 @@
-LEML Lemons First Phase: 
+LEML Lemons First Phase:
 
 Running the Application:
 ========================
@@ -188,12 +188,12 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 *Success Response*: 200  "Successfully saved LEM."  
 
 **DELETE**: deletes lem given id.  
-*Precondition*: Must be logged in. Must own the lem specified by the id.
+*Precondition*: Must be logged in. Must own the lem specified by the id.  
 *Body*: Stringify-ed JSON  
 ```json
 { "id": "58de81a29a93ac144a594fa7"}
 ```
-*Success Response*: 200 "Successfully deleted LEM."
+*Success Response*: 200 "Successfully deleted LEM."  
 *Error Responses*: 401 "Current user does not own lem: <id>"
 
 ---
@@ -260,7 +260,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 ```
 
 **POST**: adds a comment to a public lem given a lem id and text.  
-*Precondition*: Must be logged in.
+*Precondition*: Must be logged in.  
 *Body*: Stringify-ed JSON
 ```json
 {
@@ -268,7 +268,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
   "text":"This is a comment!"
 }
 ```
-*Success Response*: 200
+*Success Response*: 200  
 *Error Responses*: 401 Unauthorized, 403 "Cannot comment on a private lem not owned by you"
 
 
