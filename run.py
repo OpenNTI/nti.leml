@@ -1,5 +1,5 @@
-from flask_globals import *
 from flask import request, render_template, session
+from flask_globals import *
 from db.leml import Lem, toLem, Comment
 from db.user import User as DBUser
 from db.user_favorite_lems import User_Favorite_Lems
@@ -17,8 +17,8 @@ DEFAULT_FAVORITES = ["58f50621cf367e67548e0e80","58f50667cf367e67548e0e81", "58f
 init()
 application = get_global_app()
 login_manager = get_login_manager()
-host = 'mongodb://austinpgraham:lemldb@ds145289.mlab.com:45289/lemlcapstone'
-name = 'leml'
+
+mongo = {}
 
 # URL for getting a lem item
 @app.route('/lem', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -29,7 +29,10 @@ def lem():
     if current_user.is_authenticated:
         data = request.get_json(force=True)
         if request.method == 'DELETE':
-            db = connect(name, host=host)
+            db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
             for lem in Lem.objects(pk=ObjectId(data['id'])):
                 if lem.created_by.email != current_user.email:
                     return "Current user (" + current_user.email + ") does not own lem: " + data['id'], status.HTTP_401_UNAUTHORIZED
@@ -43,7 +46,10 @@ def lem():
 # URL for getting all current lem objects in the database
 @app.route('/lemall', methods=['GET'])
 def lemall():
-    db = connect(name, host=host)
+    db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
     allobj = []
     for lem in Lem.objects(public=1):
         allobj.append(lem.to_json())
@@ -54,7 +60,10 @@ def lemall():
 @app.route('/lemuser', methods=['GET'])
 @login_required
 def lemuser():
-    db = connect(name, host=host)
+    db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
     allobj = []
     for lem in Lem.objects(created_by=current_user.email):
         allobj.append(lem.to_json())
@@ -69,7 +78,10 @@ def register():
     usr_name = data['email']
     password = data['pass']
     pwd_hash = getHash(password)
-    db = connect(name, host=host)
+    db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
     if  DBUser.objects(pk = usr_name).count() > 0:
         return "Email already exists", status.HTTP_400_BAD_REQUEST
     DBUser(usr_name, pwd_hash).save()
@@ -146,7 +158,10 @@ def comment():
             text = data["text"]
             created_by = current_user.email
 
-            db = connect(name, host = host)
+            db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
 
             # Check that a private lem is not being accessed
             for lem in Lem.objects(pk = lem_id):
@@ -183,7 +198,10 @@ def rate():
 @app.route('/favorite', methods=['GET', 'PUT', 'DELETE'])
 @login_required
 def favorite():
-    db = connect(name, host=host)
+    db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
 
     id = ObjectId(request.args.get('id'))
     for lem in Lem.objects(pk = id):
@@ -213,7 +231,10 @@ def favorite():
 
 @login_manager.user_loader
 def load_user(id, remember=True):
-    db = connect(name, host=host)
+    db = connect(db=mongo["name"], 
+                         host=mongo["host"],
+                         username=mongo["username"],
+                         password=mongo["password"])
     for user in DBUser.objects(pk=id):
         return User(user.email, user.password)
     return None
@@ -229,6 +250,13 @@ def validate_json(json_dict):
 # Start the application
 if __name__ == '__main__':
     if len(sys.argv) > 1:
+        if sys.argv[1] == "--help":
+            print("-h\t\tHost to run server on")
+            print("-p\t\tPort to run server on")
+            print("-dh\t\tHost for database connection")
+            print("-dp\t\tPort for database connection")
+            print("-du\t\tUsername for database connection")
+            print("-dps\t\tPassword for database connection")
         application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
     else:
         application.run(debug=True)
