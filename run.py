@@ -246,17 +246,45 @@ def validate_json(json_dict):
         return False
     return True
 
+def _print_help():
+    print("\t[-p]\t[host port]\n\t\tThe host/port where the server will run. Default is local host port 5000.")
+    print("\t[-d]\t[hostname dbname username password]\n\t\tDatabase connection parameters. If these are not supplied, /db/config.py file will be used.")
+    
+def _write_to_config(parameters):
+    file = open("db/config.py", "w")
+    file.write('mongodb = {"host":"%s", "name": "%s", "username": "%s", "password": "%s"}' % (parameters["host"], parameters["name"], parameters["username"], parameters["password"]))
 
 # Start the application
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "--help":
-            print("-h\t\tHost to run server on")
-            print("-p\t\tPort to run server on")
-            print("-dh\t\tHost for database connection")
-            print("-dp\t\tPort for database connection")
-            print("-du\t\tUsername for database connection")
-            print("-dps\t\tPassword for database connection")
-        application.run(debug=True, host=sys.argv[1], port=int(sys.argv[2]))
+    if "--help" in sys.argv or '-h' in sys.argv:
+        _print_help()
+        sys.exit()
+    if "-d" in sys.argv:
+        start_arg = sys.argv.index("-d")
+        try:
+            mongo["host"] = sys.argv[start_arg+1]
+            mongo["name"] = sys.argv[start_arg+2]
+            mongo["username"] = sys.argv[start_arg+3]
+            mongo["password"] = sys.argv[start_arg+4]
+        except:
+            _print_help()
+            sys.exit()
+        _write_to_config(mongo)
+    else:
+        try:
+            from db.config import mongodb
+            mongo = mongodb
+        except:
+            _print_help()
+            sys.exit()
+    if "-p" in sys.argv:
+        start_arg = sys.argv.index("-p")
+        try:
+            host = sys.argv[start_arg + 1]
+            port = int(sys.argv[start_arg + 2])
+        except:
+            _print_help()
+            sys.exit()
+        application.run(debug=True, host=host, port=port)
     else:
         application.run(debug=True)
