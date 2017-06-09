@@ -1,0 +1,2 @@
+recursive-include cs.capstone2017.leml/templates *
+recursive-include cs.capstone2017.leml/static *
