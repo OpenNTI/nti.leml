@@ -1,13 +1,12 @@
-LEML Lemons First Phase:
-
 Running the Application:
 ========================
 
 Steps to run application in Chrome; other browsers have not been tested.
 1. Download python3.
-2. Install necessary modules by running `sudo pip3 install -r requirements.txt`.
-2. Run `python3 run.py` to spin up the server.
-3. Navigate to http://localhost:5000.
+2. Install MongoDB 3.2
+3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.
+2. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
+3. Navigate to http://[host]:[port]. The default is 127.0.0.1:5000.
 
 Suggested Improvements:
 ====================
