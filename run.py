@@ -12,10 +12,6 @@ import sys
 from flask_api import status
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-DEFAULT_FAVORITES = [
-    "58f50621cf367e67548e0e80",
-    "58f50667cf367e67548e0e81",
-    "58f50696cf367e67548e0e82"]
 
 init()
 application = get_global_app()
@@ -30,7 +26,7 @@ mongo = {}
 def lem():
     if request.method == 'GET':
         id = request.args.get('id')
-        return getById(ObjectId(id), name, host)
+        return getById(ObjectId(id), mongo)
     if current_user.is_authenticated:
         data = request.get_json(force=True)
         if request.method == 'DELETE':
@@ -46,8 +42,8 @@ def lem():
                     favorites=ObjectId(data['id'])):
                 fave.update(pull__favorites=ObjectId(data['id']))
             db.close()
-            return delete(ObjectId(data['id']), name, host)
-        return save(data, current_user, name, host)
+            return delete(ObjectId(data['id']), mongo)
+        return save(data, current_user, mongo)
     return login_manager.unauthorized()
 
 # URL for getting all current lem objects in the database
@@ -96,7 +92,6 @@ def register():
     if DBUser.objects(pk=usr_name).count() > 0:
         return "Email already exists", status.HTTP_400_BAD_REQUEST
     DBUser(usr_name, pwd_hash).save()
-    User_Favorite_Lems(usr_name, DEFAULT_FAVORITES).save()
     db.close()
     return "Successfully registered user."
 
@@ -229,8 +224,6 @@ def favorite():
     count = 0
     for userFav in User_Favorite_Lems.objects(pk=current_user.email):
         count += 1
-    if count == 0:
-        User_Favorite_Lems(current_user.email, DEFAULT_FAVORITES).save()
 
     if request.method == 'DELETE':
         User_Favorite_Lems.objects(

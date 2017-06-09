@@ -1,22 +1,31 @@
 from mongoengine import *
 from db.leml import Lem, toLem, Comment
 
-def getById(id, name, host):
-	db = connect(name,host=host)
+def getById(id, mongo):
+	db = connect(db=mongo["name"],
+                 host=mongo["host"],
+                 username=mongo["username"],
+                 password=mongo["password"])
 	obj = "No LEM found"
 	for lem in Lem.objects(pk = id):
 		obj = lem.to_json()
 	db.close()
 	return obj
 
-def save(data, current_user, name, host):
-	db = connect(name, host = host)
+def save(data, current_user, mongo):
+	db = connect(db=mongo["name"],
+                 host=mongo["host"],
+                 username=mongo["username"],
+                 password=mongo["password"])
 	toLem(data, current_user.email).save()
 	db.close()
 	return "Successfully saved LEM."
 
-def delete(id, name, host):
-	db = connect(name, host = host)
+def delete(id, mongo):
+	db = connect(db=mongo["name"],
+                 host=mongo["host"],
+                 username=mongo["username"],
+                 password=mongo["password"])
 	happened = False
 	for lem in Lem.objects(pk = id):
 		happened = True
