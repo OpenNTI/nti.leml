@@ -10,6 +10,7 @@ import json
 from getFuncs import *
 import sys
 from flask_api import status
+import argparse
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -262,53 +263,54 @@ def validate_json(json_dict):
         return False
     return True
 
-
-def _print_help():
-    print("\t[-p]\t[host port]\n\t\tThe host/port where the server will run. Default is local host port 5000.")
-    print("\t[-d]\t[hostname dbname username password]\n\t\tDatabase connection parameters. If these are not supplied, /db/config.py file will be used.")
-
-
-def _write_to_config(parameters):
-    file = open("db/config.py", "w")
-    file.write(
-        'mongodb = {"host":"%s", "name": "%s", "username": "%s", "password": "%s"}' %
-        (parameters["host"],
-         parameters["name"],
-         parameters["username"],
-         parameters["password"]))
-
+def _parse_args():
+    # Parse command line args
+    arg_parser = argparse.ArgumentParser( description="LEML Server" )
+    arg_parser.add_argument( '-c', '--config', dest='config', default=argparse.SUPPRESS, help="LEML server configuration file." )
+    arg_parser.add_argument( '-a', '--address', dest='address', default=argparse.SUPPRESS, help="Local IP address to bind to." )
+    arg_parser.add_argument( '-p', '--port', dest='port', default=argparse.SUPPRESS, help="Local port to bind to." )
+    arg_parser.add_argument( '--db-host', dest='host', default=argparse.SUPPRESS, help="Hostname of MongDB server." )
+    arg_parser.add_argument( '--db-name', dest='name', default=argparse.SUPPRESS, help="MongoDB to conect to on the server." )
+    arg_parser.add_argument( '--db-user', dest='username', default=argparse.SUPPRESS, help="MongoDB username." )
+    arg_parser.add_argument( '--db-pass', dest='password', default=argparse.SUPPRESS, help="MongoDB user password." )
+    return arg_parser.parse_args()
 
 # Start the application
 if __name__ == '__main__':
-    if "--help" in sys.argv or '-h' in sys.argv:
-        _print_help()
-        sys.exit()
-    if "-d" in sys.argv:
-        start_arg = sys.argv.index("-d")
+    args = _parse_args()
+
+    config = {
+        'server': {
+            'address': '127.0.0.1',
+            'port': 5000
+        },
+        'db': {
+            'host': None,
+            'name': None,
+            'username': None,
+            'password': None
+        }
+    }
+
+    try:
+        config_file = os.path.abspath(os.path.expanduser( args.config ))
+        with open( config_file, 'r' ) as file:
+            config = json.load( file )
+    except AttributeError as e:
+        pass
+
+    for arg in ['address', 'port']:
         try:
-            mongo["host"] = sys.argv[start_arg + 1]
-            mongo["name"] = sys.argv[start_arg + 2]
-            mongo["username"] = sys.argv[start_arg + 3]
-            mongo["password"] = sys.argv[start_arg + 4]
-        except Exception:
-            _print_help()
-            sys.exit()
-        _write_to_config(mongo)
-    else:
+            config['server'][arg] = vars(args)[arg]
+        except KeyError as e:
+            pass
+
+    for arg in ['host', 'name', 'user', 'password']:
         try:
-            from db.config import mongodb
-            mongo = mongodb
-        except Exception:
-            _print_help()
-            sys.exit()
-    if "-p" in sys.argv:
-        start_arg = sys.argv.index("-p")
-        try:
-            host = sys.argv[start_arg + 1]
-            port = int(sys.argv[start_arg + 2])
-        except Exception:
-            _print_help()
-            sys.exit()
-        application.run(debug=True, host=host, port=port)
-    else:
-        application.run(debug=True)
+            config['db'][arg] = vars(args)[arg]
+        except KeyError as e:
+            pass
+
+    mongo = config['db']
+
+    application.run(debug=True, host=config['server']['address'], port=config['server']['port'])
