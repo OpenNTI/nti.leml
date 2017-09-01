@@ -82,8 +82,8 @@ function drawEdgeBetweenSelectedNodes(evt) {
 function removeSelectedNodes() {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(val) {
-    if (val.selected) { // If a node is selected
-      cy.$("#" + val.data.id).remove();
+    if (val.selected && !val.classes.includes("startstop")) {
+      cy.$("#" + val.data.id).remove();      
     }
   });
 }
