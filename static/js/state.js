@@ -5,5 +5,7 @@ var STATE = {
 };
 
 function reduce(action) {
+  console.log(STATE);
   STATE = action(STATE);
+  console.log(STATE);
 }

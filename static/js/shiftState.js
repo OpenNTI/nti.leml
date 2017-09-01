@@ -6,6 +6,6 @@ document.addEventListener('keydown', function(event) {
 
 document.addEventListener('keyup', function(event) {
         if (event.key === "Shift") {
-          STATE.keyboard.shiftPressed = false;
+          shiftReleased();
         }
     }, false);
