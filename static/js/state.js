@@ -1,6 +1,8 @@
 var STATE = {
   keyboard: {
-    shiftPressed: false
+    shiftPressed: false,
+    deletePressed: false,
+    backspacePressed: false
   }
 };
 
