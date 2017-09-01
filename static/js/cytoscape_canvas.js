@@ -231,7 +231,7 @@ function loadNewCytoscapeWith(elements) {
 
   // When a node is selected
   cy.on('select', 'node', function (evt) {
-    if (GLOBAL_SHIFT_PRESSED) {
+    if (STATE.keyboard.shiftPressed) {
       cy.$("#" + evt.cyTarget._private.data.id).unselect();
       drawEdgeBetweenSelectedNodes(evt);
     } else {

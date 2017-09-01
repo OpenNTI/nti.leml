@@ -1,13 +1,11 @@
-var GLOBAL_SHIFT_PRESSED = false;
-
 document.addEventListener('keydown', function(event) {
         if (event.key === "Shift") {
-          GLOBAL_SHIFT_PRESSED = true;
+          STATE.keyboard.shiftPressed = true;
         }
     }, false);
 
 document.addEventListener('keyup', function(event) {
         if (event.key === "Shift") {
-          GLOBAL_SHIFT_PRESSED = false;
+          STATE.keyboard.shiftPressed = false;
         }
     }, false);
