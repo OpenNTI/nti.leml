@@ -3,3 +3,7 @@ var STATE = {
     shiftPressed: false
   }
 };
+
+function reduce(action) {
+  STATE = action(STATE);
+}
