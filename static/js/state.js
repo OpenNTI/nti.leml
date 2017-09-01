@@ -4,8 +4,9 @@ var STATE = {
   }
 };
 
-function reduce(action) {
-  console.log(STATE);
+function reduce(action, name) {
+  console.log("Prev state: ", STATE);
+  console.log("Action: ", name)
   STATE = action(STATE);
-  console.log(STATE);
+  console.log("Next state: ", STATE);
 }
