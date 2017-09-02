@@ -1,43 +1,30 @@
-function loginReduce(action, name) {
-    reduce(function(prevState) {
-      let prevLoginState = prevState.login;
-      return {
-        ...prevState,
-        login: action(prevLoginState)
-      }
-    },
-    name
-  );
+function loginSelector(state) {
+  return state.login;
 }
+let loginReduce = reducerCreator(loginSelector);
+let loginActionCreator = createReducerSpecificActionCreator(loginReduce);
 
-function setUsername(params) {
-  loginReduce(function(prevLoginState) {
-      return {
-        ...prevLoginState,
-        username: params.username
-      }
-    },
-  "Set Username"
-  );
+function setUsernameAction(prevLoginState, params) {
+  return {
+    ...prevLoginState,
+    username: params.username
+  }
 }
+let setUsername = loginActionCreator("Set Username", setUsernameAction);
 
-function setLoginState(params) {
-  loginReduce(function(prevLoginState) {
-      let username = prevLoginState.username;
+function setLoginStateAction(prevLoginState, params) {
+  let username = prevLoginState.username;
 
-      if (params.state === loginEnum.LOGGED_IN) {
-        username = params.username;
-      } else if (params.state === loginEnum.NOT_LOGGED_IN){
-        username = undefined;
-      }
+  if (params.state === loginEnum.LOGGED_IN) {
+    username = params.username;
+  } else if (params.state === loginEnum.NOT_LOGGED_IN){
+    username = undefined;
+  }
 
-      return {
-        ...prevLoginState,
-        username: username,
-        status: params.state
-      }
-
-    },
-  "Set Login State"
-  );
+  return {
+    ...prevLoginState,
+    username: username,
+    status: params.state
+  }
 }
+let setLoginState = loginActionCreator("Set Login State", setLoginStateAction);

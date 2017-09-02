@@ -1,10 +1,11 @@
 function setSidebar(params) {
-  reduce(function(prevState) {
+  reduce(function(prevState, params) {
       return {
         ...prevState,
         currentSidebar: params.sidebar
       }
     },
-  "Set Current Sidebar"
+  "Set Current Sidebar",
+  params
   );
 }
