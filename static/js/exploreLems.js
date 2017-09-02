@@ -164,27 +164,6 @@ function loadPublicLEMs() {
   });
 }
 
-function loadUserLEMs() {
-  $.get(lemuserRoute, function(data, status) {
-    console.log(status);
-
-    var lems = JSON.parse(data);
-
-    lemsDict = {}
-
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-      var lemID = lem._id.$oid;
-
-      lemsDict[lemID] = lem;
-    }
-
-    setPrivateLemsDict({publicLemsDict: lemsDict});
-
-    loadLemsHtml(lems, true, false);
-  });
-}
-
 function loadLemsHtml(lems, isPrivate, showSearch) {
   var sectionID;
   if  (isPrivate) {
@@ -225,7 +204,7 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
     }
 
-    var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+    var refreshButton = '<button class="btn" onclick="requestPrivateLems();"style="margin-bottom:10px;">Refresh</button>';
 
     lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
   }
@@ -240,9 +219,9 @@ function deleteLem(lemJson) {
   var lemBody = {"id": lemJson.id};
   $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
     // Reload lems so that deleted lem is removed
-    loadUserLEMs();
+    requestPrivateLems();
   }).error(function(data) {
     alert("Failed to delete. \n " + JSON.stringify(data));
-    loadUserLEMs();
+    requestPrivateLems();
   });
 }

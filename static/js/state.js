@@ -16,6 +16,13 @@ const loginEnum = {
   LOGGED_IN: "logged in",
 };
 
+const dataRequestEnum = {
+  NOT_REQUESTED: "not requested",
+  WAITING: "waiting",
+  SUCCESS: "success",
+  FAILURE: "failure"
+};
+
 var STATE = {
   currentPage: 'canvas',
   currentSidebar: sidebarEnum.DEFAULT,
@@ -31,10 +38,12 @@ var STATE = {
     selectedId: null,
   },
   publicLems: {
-    dict: {}
+    dict: {},
+    status: dataRequestEnum.NOT_REQUESTED;
   },
   privateLems: {
-    dict: {}
+    dict: {},
+    status: dataRequestEnum.NOT_REQUESTED;
   },
   favoriteLems: {
     dict: {}
