@@ -5,6 +5,12 @@ var STATE = {
   canvas: {
     new_unique_id: 0,
     selectedId: null,
+  },
+  publicLems: {
+    dict: {}
+  },
+  privateLems: {
+    dict: {}
   }
 };
 

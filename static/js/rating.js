@@ -3,8 +3,8 @@ function rate(lemJson, rating) {
   $.post(rateRoute, JSON.stringify(ratingPostBody), function (data, status) {
     var response = JSON.parse(data);
     setupRatingStars(response.new_avg);
-    if (globalPublicLemsDict[response.lem_id]) {
-      globalPublicLemsDict[response.lem_id].avgRating = response.new_avg;
+    if (STATE.publicLems.dict[response.lem_id]) {
+      setPublicLemRating({lemId: response.lem_id, rating: response.new_avg});
     } else {
       globalPrivateLemsDict[response.lem_id].avgRating = response.new_avg;
     }

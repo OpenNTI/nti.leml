@@ -1,4 +1,3 @@
-var globalPublicLemsDict = {};
 var globalPrivateLemsDict = {};
 
 function createLemDetailHtml(lemID, isPrivate, isModal) {
@@ -6,7 +5,7 @@ function createLemDetailHtml(lemID, isPrivate, isModal) {
   if (isPrivate) {
     lem = globalPrivateLemsDict[lemID];
   } else {
-    lem = globalPublicLemsDict[lemID];
+    lem = STATE.publicLems.dict[lemID];
   }
 
   const title = lem.name;
@@ -80,7 +79,7 @@ function showLemDetailModal(lemID, isPrivate) {
   if (isPrivate) {
     lem = globalPrivateLemsDict[lemID];
   } else {
-    lem = globalPublicLemsDict[lemID];
+    lem = STATE.publicLems.dict[lemID];
   }
 
   $("#lemModalTitle").text(lem.name);
@@ -150,14 +149,16 @@ function loadPublicLEMs() {
   $.get(lemallRoute, function(data, status) {
     var lems = JSON.parse(data);
 
-    globalPublicLemsDict = {}
+    lemsDict = {}
 
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
       var lemID = lem._id.$oid;
 
-      globalPublicLemsDict[lemID] = lem;
+      lemsDict[lemID] = lem;
     }
+
+    setPublicLemsDict({publicLemsDict: lemsDict});
 
     loadLemsHtml(lems, false, true);
   });
