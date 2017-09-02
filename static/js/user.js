@@ -1,5 +1,5 @@
 var globalUsername = undefined;
-var globalPage = 'canvas';
+var STATE.currentPage = 'canvas';
 
 $(function() {
   $.get(currentuserRoute, function(data, status) {
@@ -148,7 +148,7 @@ function logout() {
       globalUsername = undefined;
       resetLocalFavoritesList(loadPublicLEMs, loadFavoriteTemplates);
 
-      if (globalPage == 'user') {
+      if (STATE.currentPage == 'user') {
         showPage('canvas');
       }
 

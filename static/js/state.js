@@ -1,4 +1,5 @@
 var STATE = {
+  currentPage: 'canvas',
   keyboard: {
     shiftPressed: false,
   },

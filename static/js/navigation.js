@@ -1,8 +1,6 @@
-var globalPage = 'canvas';
-
 function showPage(page) {
   if (page == 'canvas') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
     $('#main_window').removeClass('hidden');
@@ -17,7 +15,7 @@ function showPage(page) {
       $('#user_button').removeClass('active');
     }
   } else if (page == 'public') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
     $('#publicLemList').removeClass('hidden');
@@ -32,7 +30,7 @@ function showPage(page) {
       $('#user_button').removeClass('active');
     }
   } else if (page == 'user') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
     if (globalUsername) {
