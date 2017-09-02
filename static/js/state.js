@@ -1,3 +1,21 @@
+const LOG_ACTIONS = true;
+
+const sidebarEnum = {
+  DEFAULT: "default",
+  BLOCK: "block",
+  ACTION: "action",
+  CONTEXT: "context",
+  OBJECTIVE: "objective",
+  STARTSTOP: "startstop"
+};
+
+const loginEnum = {
+  NOT_LOGGED_IN: "not logged in",
+  LOGGING_IN: "logging in",
+  FAILED_TO_LOGIN: "failed to login",
+  LOGGED_IN: "logged in",
+};
+
 var STATE = {
   currentPage: 'canvas',
   currentUsername: undefined,
@@ -21,33 +39,16 @@ var STATE = {
   },
   favoriteLems: {
     dict: {}
-  },
-  debug: true
+  }
 };
 
 function reduce(action, name) {
-  if (STATE.debug) {
+  if (LOG_ACTIONS) {
     console.log("Prev state: ", STATE);
     console.log("Action: ", name)
   }
   STATE = action(STATE);
-  if (STATE.debug) {
+  if (LOG_ACTIONS) {
     console.log("Next state: ", STATE);
   }
-}
-
-const sidebarEnum = {
-  DEFAULT: "default",
-  BLOCK: "block",
-  ACTION: "action",
-  CONTEXT: "context",
-  OBJECTIVE: "objective",
-  STARTSTOP: "startstop"
-};
-
-const loginEnum = {
-  NOT_LOGGED_IN: "not logged in",
-  LOGGING_IN: "logging_in",
-  FAILED_TO_LOGIN: "failed to login",
-  LOGGED_IN: "logged in",
 }

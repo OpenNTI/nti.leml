@@ -3,13 +3,12 @@ function loginReduce(action, name) {
       let prevLoginState = prevState.login;
       return {
         ...prevState,
-        login: action(prevloginState)
+        login: action(prevLoginState)
       }
     },
     name
   );
 }
-
 
 function setUsername(params) {
   loginReduce(function(prevLoginState) {
@@ -19,5 +18,26 @@ function setUsername(params) {
       }
     },
   "Set Username"
+  );
+}
+
+function setLoginState(params) {
+  loginReduce(function(prevLoginState) {
+      let username = prevLoginState.username;
+
+      if (params.state === loginEnum.LOGGED_IN) {
+        username = params.username;
+      } else if (params.state === loginEnum.NOT_LOGGED_IN){
+        username = undefined;
+      }
+
+      return {
+        ...prevLoginState,
+        username: username,
+        status: params.state
+      }
+
+    },
+  "Set Login State"
   );
 }
