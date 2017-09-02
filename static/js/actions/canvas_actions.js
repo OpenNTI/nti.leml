@@ -20,7 +20,7 @@ function setDefaultNewIdAction(prevCanvasState, params) {
 }
 let setDefaultNewId = canvasActionCreator("Set Default New ID", setDefaultNewIdAction);
 
-function ensureNewIdIsUniqueAction(params) {
+function ensureNewIdIsUniqueAction(prevCanvasState, params) {
   var unique_id = prevCanvasState.new_unique_id;
 
   while(cy.$("#" + unique_id).length > 0) {
@@ -35,7 +35,7 @@ function ensureNewIdIsUniqueAction(params) {
 let ensureNewIdIsUnique = canvasActionCreator("Ensure New ID Is Unique", ensureNewIdIsUniqueAction);
 
 
-function setSelectedIdAction(params) {
+function setSelectedIdAction(prevCanvasState, params) {
   return {
     ...prevCanvasState,
     selectedId: params.selectedId
