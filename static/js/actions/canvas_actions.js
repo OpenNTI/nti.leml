@@ -1,61 +1,44 @@
-function canvasReduce(action, name) {
-    reduce(function(prevState) {
-      let prevCanvasState = prevState.canvas;
-      return {
-        ...prevState,
-        canvas: action(prevCanvasState)
-      }
-    },
-    name
-  );
+function canvasSelector(state) {
+  return state.canvas;
 }
+let canvasReduce = reducerCreator(canvasSelector);
+let canvasActionCreator = createReducerSpecificActionCreator(canvasReduce);
 
-function incrementNewId() {
-  canvasReduce(function(prevCanvasState) {
-      return {
-        ...prevCanvasState,
-        new_unique_id: prevCanvasState.new_unique_id + 1
-      }
-    },
-    "Increment New ID"
-  );
+function incrementNewIdAction(prevCanvasState) {
+  return {
+    ...prevCanvasState,
+    new_unique_id: prevCanvasState.new_unique_id + 1
+  }
 }
+let incrementNewId = canvasActionCreator("Increment New ID", incrementNewIdAction);
 
-function setDefaultNewId(params) {
-  canvasReduce(function(prevCanvasState) {
-      return {
-        ...prevCanvasState,
-        new_unique_id: params.numberOfCanvasElements
-      }
-    },
-    "Set Default New ID"
-  );
+function setDefaultNewIdAction(prevCanvasState, params) {
+  return {
+    ...prevCanvasState,
+    new_unique_id: params.numberOfCanvasElements
+  }
 }
+let setDefaultNewId = canvasActionCreator("Set Default New ID", setDefaultNewIdAction);
 
-function ensureNewIdIsUnique() {
-  canvasReduce(function(prevCanvasState) {
-      var unique_id = prevCanvasState.new_unique_id;
+function ensureNewIdIsUniqueAction(params) {
+  var unique_id = prevCanvasState.new_unique_id;
 
-      while(cy.$("#" + unique_id).length > 0) {
-        ++unique_id;
-      }
+  while(cy.$("#" + unique_id).length > 0) {
+    ++unique_id;
+  }
 
-      return {
-        ...prevCanvasState,
-        new_unique_id: unique_id
-      }
-    },
-    "Ensure New ID Is Unique"
-  );
+  return {
+    ...prevCanvasState,
+    new_unique_id: unique_id
+  };
 }
+let ensureNewIdIsUnique = canvasActionCreator("Ensure New ID Is Unique", ensureNewIdIsUniqueAction);
 
-function setSelectedId(params) {
-  canvasReduce(function(prevCanvasState) {
-      return {
-        ...prevCanvasState,
-        selectedId: params.selectedId
-      }
-    },
-    "Set Selected ID"
-  );
+
+function setSelectedIdAction(params) {
+  return {
+    ...prevCanvasState,
+    selectedId: params.selectedId
+  }
 }
+let setSelectedId = canvasActionCreator("Set Selected ID", setSelectedIdAction);

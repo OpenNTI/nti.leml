@@ -41,14 +41,46 @@ var STATE = {
   }
 };
 
-function reduce(action, name) {
+function reduce(action, name, params) {
   if (LOG_ACTIONS) {
     console.log("Prev state: ", STATE);
-    console.log("Action: ", name)
+    console.log("Action: ", name, params);
   }
-  STATE = action(STATE);
+  STATE = action(STATE, params);
   if (LOG_ACTIONS) {
     console.log("Next state: ", STATE);
     console.log("--------------------End Action")
+  }
+}
+
+function reducerCreator(selector) {
+  return function(action, name, params) {
+    reduce(function(prevState, params) {
+      let prevSelectedState = selector(prevState);
+      return {
+        ...prevState,
+        canvas: action(prevSelectedState, params)
+      }
+    },
+    name,
+    params
+  );
+}
+}
+
+function actionCreator(reducer, name, action) {
+  return function(params) {
+    reducer(function(prevState, params) {
+      return action(prevState, params);
+    },
+    name,
+    params
+  );
+  }
+}
+
+function createReducerSpecificActionCreator(reducer) {
+  return function(name, action) {
+    return actionCreator(reducer, name, action);
   }
 }
