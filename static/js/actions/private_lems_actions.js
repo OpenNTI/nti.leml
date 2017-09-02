@@ -1,11 +1,11 @@
 function privateLemsSelector(state) {
   return state.privateLems;
 }
-let privateLemsReduce = reducerCreator(privateLemsSelector);
+let privateLemsReduce = reducerCreator(privateLemsSelector, "privateLems");
 let privateLemsActionCreator = createReducerSpecificActionCreator(privateLemsReduce);
 
 function privateLemsReceivedAction(prevPrivateLemsState, params) {
-      loadLemsHtml(lems, true, false);
+      loadLemsHtml(params.privateLems, true, false);
 
       return {
         ...prevPrivateLemsState,

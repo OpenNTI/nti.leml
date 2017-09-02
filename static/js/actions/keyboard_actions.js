@@ -1,7 +1,7 @@
 function keyboardSelector(state) {
   return state.keyboard;
 }
-let keyboardReduce = reducerCreator(keyboardSelector);
+let keyboardReduce = reducerCreator(keyboardSelector, "keyboard");
 let keyboardActionCreator = createReducerSpecificActionCreator(keyboardReduce);
 
 function shiftPressedAction(prevKeyboardState) {

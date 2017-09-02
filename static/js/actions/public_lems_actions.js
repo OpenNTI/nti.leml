@@ -1,7 +1,7 @@
 function publicLemsSelector(state) {
   return state.publicLems;
 }
-let publicLemsReduce = reducerCreator(publicLemsSelector);
+let publicLemsReduce = reducerCreator(publicLemsSelector, "publicLems");
 let publicLemsActionCreator = createReducerSpecificActionCreator(publicLemsReduce);
 
 function publicLemsReceivedAction(prevPublicLemsState, params) {

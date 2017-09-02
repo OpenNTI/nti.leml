@@ -1,7 +1,7 @@
 function loginSelector(state) {
   return state.login;
 }
-let loginReduce = reducerCreator(loginSelector);
+let loginReduce = reducerCreator(loginSelector, "login");
 let loginActionCreator = createReducerSpecificActionCreator(loginReduce);
 
 function setUsernameAction(prevLoginState, params) {
