@@ -59,7 +59,7 @@ function addBuildingBlockToCanvas(data, x_coord, y_coord) {
 
 function addFavoriteToCanvas(lem_id) {
   showPage('canvas');
-  var lem = globalFavoriteLemsDict[lem_id];
+  var lem = STATE.favoriteLems.dict[lem_id];
   var json = {"lem": lem};
   renderLem(json);
   redraw();

@@ -12,6 +12,9 @@ var STATE = {
   privateLems: {
     dict: {}
   }
+  favoriteLems: {
+    dict: {}
+  }
 };
 
 function reduce(action, name) {

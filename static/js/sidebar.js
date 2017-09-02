@@ -220,8 +220,8 @@ function loadFavoriteTemplates() {
 			$("#templatePanel").show()
 		}
 
-    for (lemIndex in globalFavoriteLemsDict) {
-      var lem = globalFavoriteLemsDict[lemIndex];
+    for (lemIndex in STATE.favoriteLems.dict) {
+      var lem = STATE.favoriteLems.dict[lemIndex];
 
       var imgURL = lem.thumbnail;
       var id = lem._id.$oid;
