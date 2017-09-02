@@ -16,12 +16,17 @@ var STATE = {
   },
   favoriteLems: {
     dict: {}
-  }
+  },
+  debug: true
 };
 
 function reduce(action, name) {
-  console.log("Prev state: ", STATE);
-  console.log("Action: ", name)
+  if (STATE.debug) {
+    console.log("Prev state: ", STATE);
+    console.log("Action: ", name)
+  }
   STATE = action(STATE);
-  console.log("Next state: ", STATE);
+  if (STATE.debug) {
+    console.log("Next state: ", STATE);
+  }
 }
