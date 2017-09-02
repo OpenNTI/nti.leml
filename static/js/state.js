@@ -3,7 +3,8 @@ var STATE = {
     shiftPressed: false,
   },
   canvas: {
-    new_unique_id: 0
+    new_unique_id: 0,
+    STATE.canvas.selectedId: null,
   }
 };
 

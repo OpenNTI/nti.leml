@@ -3,7 +3,7 @@ function canvasReduce(action, name) {
       let prevCanvasState = prevState.canvas;
       return {
         ...prevState,
-        keyboard: action(prevCanvasState)
+        canvas: action(prevCanvasState)
       }
     },
     name

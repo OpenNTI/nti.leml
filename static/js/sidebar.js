@@ -75,7 +75,7 @@ function toggleSidebar(i, evt) {
 }
 
 function typeChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all block types
 	for (var index in blockTypes) {
@@ -96,7 +96,7 @@ function setBlockType(element, blockType) {
 }
 
 function actionChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all action types
 	for (var index in actionTypes) {
@@ -118,13 +118,13 @@ function setActionType(element, actionType) {
 
 function actionDescriptionChange() {
 	var new_description = document.getElementById('actionDescription').value;
-	cy.$('#' + selectedId).data('description', new_description);
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description});
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
+	var json = cy.$('#' + STATE.canvas.selectedId).json();
+	cy.$('#' + STATE.canvas.selectedId).css({label: json.data.description});
 }
 
 function contextChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all action types
 	for (var index in contextTypes) {
@@ -147,18 +147,18 @@ function setContextType(element, contextType) {
 
 function methodChange() {
 	var new_method = document.getElementById('inputMethod').value;
-	cy.$('#' + selectedId).data('method', new_method);
+	cy.$('#' + STATE.canvas.selectedId).data('method', new_method);
 	updateLabel();
 }
 
 function descriptionChange() {
 	var new_description = document.getElementById('inputDescription').value;
-	cy.$('#' + selectedId).data('description', new_description);
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
 	updateLabel();
 }
 
 function startstopChange(start) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 	if (start) {
 		ele.data('start', true);
 		ele.css({label: "Start"});
@@ -172,13 +172,13 @@ function startstopChange(start) {
 
 function objectiveChange() {
 	var new_description = document.getElementById('inputObjective').value;
-	cy.$('#' + selectedId).data('description', new_description);
-	cy.$('#' + selectedId).css({label: new_description});
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
+	cy.$('#' + STATE.canvas.selectedId).css({label: new_description});
 }
 
 function updateLabel() {
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
+	var json = cy.$('#' + STATE.canvas.selectedId).json();
+	cy.$('#' + STATE.canvas.selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
 }
 
 function redraw() {

@@ -1,6 +1,4 @@
 var cy;
-var ur;
-var selectedId;
 
 var lemStyle = [ // the stylesheet for the graph
   {
@@ -236,7 +234,7 @@ function loadNewCytoscapeWith(elements) {
       drawEdgeBetweenSelectedNodes(evt);
     } else {
       evt.cyTarget.addClass('selected');
-      selectedId = evt.cyTarget.id();
+      STATE.canvas.selectedId = evt.cyTarget.id();
 
       showSideBarForSelectedElement(evt);
     }
@@ -256,7 +254,7 @@ function loadNewCytoscapeWith(elements) {
   // When an edge is selected
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
-    selectedId = evt.cyTarget.id();
+    STATE.canvas.selectedId = evt.cyTarget.id();
     toggleSidebar(2, evt);
   });
 
