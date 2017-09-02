@@ -23,7 +23,7 @@ Debugging:
 ============
 Some ideas from [redux](http://redux.js.org/docs/introduction/) are implemented in this app. There is a state object (in `static/js/state.js`) that holds most of the global data. This state object is never changed, but is sometime replaced by a changed copy. The only code that replaces (changes) the state is the actions which are all in `static/js/actions`.
 
-At the top of `/static/js/state.js` there is `const LOG_ACTION`. When this is `true` all actions modifying the state will print to the console. This can be useful to figure out what is going on.
+At the top of `/static/js/state.js` there is `const LOG_ACTIONS`. When this is `true` all actions modifying the state will print to the console. This can be useful to figure out what is going on.
 
 Suggested Improvements:
 ====================
