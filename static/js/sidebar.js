@@ -212,7 +212,7 @@ function loadFavoriteTemplates() {
 
     var lemDivs = "";
 
-		if (globalUsername == undefined) {
+		if (STATE.currentUsername == undefined) {
 			$("#loginForFavorites").show();
 			$("#templatePanel").hide()
 		} else {

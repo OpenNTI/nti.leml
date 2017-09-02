@@ -10,7 +10,7 @@ function showPage(page) {
     $('#publicLemList').addClass('hidden');
     $('#public_button').removeClass('active');
 
-    if (globalUsername) {
+    if (STATE.currentUsername) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
@@ -25,7 +25,7 @@ function showPage(page) {
     $('#main_window').addClass('hidden');
     $('#canvas_button').removeClass('active');
 
-    if (globalUsername) {
+    if (STATE.currentUsername) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
@@ -33,7 +33,7 @@ function showPage(page) {
     setCurrentPage({page: page});
 
     // Show
-    if (globalUsername) {
+    if (STATE.currentUsername) {
       $('#userLemList').removeClass('hidden');
       $('#user_button').addClass('active');
     }

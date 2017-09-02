@@ -96,7 +96,7 @@ function generateCommentSectionHtml(id) {
   // Set form id so comments can be added to correct lems
   $("#newCommentForm").attr('lemid', id);
 
-  if (globalUsername) {
+  if (STATE.currentUsername) {
     // Show commenting for if logged in
     $("#newCommentForm").show()
     $("#loginRequiredToComment").hide()

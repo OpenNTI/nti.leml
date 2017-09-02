@@ -1,14 +1,12 @@
-var globalUsername = undefined;
-
 $(function() {
   $.get(currentuserRoute, function(data, status) {
     var userJson = JSON.parse(data);
 
     if (userJson.email) {
-      globalUsername = userJson.email;
+      setUsername({username: userJson.email});
       loginState('loggedIn');
     } else {
-      globalUsername = undefined;
+      setUsername({username: undefined});
       loginState('ready');
     }
   });
@@ -92,7 +90,7 @@ function loginState(state) {
 
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(globalUsername);
+      $("#currentUserEmail").append(STATE.currentUsername);
       $("#currentUserInfo").show();
 
       loadUserLEMs();
@@ -131,7 +129,7 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      globalUsername = loginInfo.email;
+      setUsername({username: loginInfo.email});
       resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
 
       loginState('loggedIn');
@@ -144,7 +142,7 @@ function login(email, password) {
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
-      globalUsername = undefined;
+      setUsername({username: undefined});
       resetLocalFavoritesList(loadPublicLEMs, loadFavoriteTemplates);
 
       if (STATE.currentPage == 'user') {
