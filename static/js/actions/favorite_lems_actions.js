@@ -20,17 +20,3 @@ function setFavoriteLemsDict(params) {
     "Set favorite Lems Dict"
   );
 }
-
-function setFavoriteLemsRating(params) {
-  favoriteLemsReduce(function(prevFavoriteLemsState) {
-      let dict = prevFavoriteLemsState.dict;
-      dict[params.lem_id].avgRating = params.rating;
-
-      return {
-        ...prevFavoriteLemsState,
-        dict: dict
-      }
-    },
-    "Set favorite Lems Rating"
-  );
-}
