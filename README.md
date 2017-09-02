@@ -4,9 +4,19 @@ Running the Application:
 Steps to run application in Chrome; other browsers have not been tested.
 1. Download python3.
 2. Install MongoDB 3.2
-3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.
-2. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
-3. Navigate to http://[host]:[port]. The default is 127.0.0.1:5000.
+3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.  
+ On Ubuntu, you might get an error when downloading cffi
+  ```
+  No package 'libffi' found
+  c/_cffi_backend.c:15:17: fatal error: ffi.h: No such file or directory
+  compilation terminated.
+  error: Setup script exited with error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+  ```
+
+  I found [these](https://l.messenger.com/l.php?u=https%3A%2F%2Fgithub.com%2FKozea%2Fcairocffi%2Fissues%2F14&h=ATNIrW48G4GzpBoIvVvfgY_4jzogeQYOEzFXoKbe8Vtf6auMk134329a71qCcOdLLcCjHESf90mydpcQFoeqmeWaSZxp7YzbbWkcnQCZFsIFuxjPT6Zlt_Y8uqDVxCUddSvy6w) [links](https://l.messenger.com/l.php?u=https%3A%2F%2Faskubuntu.com%2Fquestions%2F518635%2Funable-to-locate-package-libffi-and-libffi5-dev-on-ubuntu-12-04-4-through-apt-ge&h=ATNIrW48G4GzpBoIvVvfgY_4jzogeQYOEzFXoKbe8Vtf6auMk134329a71qCcOdLLcCjHESf90mydpcQFoeqmeWaSZxp7YzbbWkcnQCZFsIFuxjPT6Zlt_Y8uqDVxCUddSvy6w) on the issue. It appears that `sudo apt install libffi6 libffi-dev` fixes the problem.
+
+4. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
+5. Navigate to http://[host]:[port]. The default is 127.0.0.1:5000.
 
 Suggested Improvements:
 ====================
