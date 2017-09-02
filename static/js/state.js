@@ -43,13 +43,12 @@ var STATE = {
 
 function reduce(action, name, params) {
   if (LOG_ACTIONS) {
-    console.log("Prev state: ", STATE);
-    console.log("Action: ", name, params);
+    console.log("%c Prev state: ", "color:#4cd359", STATE);
+    console.log("%c Action: ", "color:#7c786d", name, params);
   }
   STATE = action(STATE, params);
   if (LOG_ACTIONS) {
-    console.log("Next state: ", STATE);
-    console.log("--------------------End Action")
+    console.log("%c Next state: ", "color:#4286f4", STATE);
   }
 }
 
