@@ -23,20 +23,12 @@ function setPublicLemsDict(params) {
 
 function setPublicLemsRating(params) {
   publicLemsReduce(function(prevPublicLemsState) {
-      let newDict = prevPublicLemsState.dict.map(function(lem) {
-        if (lem.id === params.lemId) {
-          return {
-            ...lem,
-            rating: params.rating
-          }
-        } else {
-          return lem;
-        }
-      });
-      
+      let dict = prevPrivateLemsState.dict;
+      dict[params.lem_id].avgRating = params.rating;
+
       return {
-        ...prevPublicLemsState,
-        dict: newDict
+        ...prevPrivateLemsState,
+        dict: dict
       }
     },
     "Set Public Lems Rating"

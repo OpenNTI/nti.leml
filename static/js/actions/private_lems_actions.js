@@ -23,20 +23,12 @@ function setprivateLemsDict(params) {
 
 function setPrivateLemsRating(params) {
   privateLemsReduce(function(prevPrivateLemsState) {
-      let newDict = prevPrivateLemsState.dict.map(function(lem) {
-        if (lem.id === params.lemId) {
-          return {
-            ...lem,
-            rating: params.rating
-          }
-        } else {
-          return lem;
-        }
-      });
+      let dict = prevPrivateLemsState.dict;
+      dict[params.lem_id].avgRating = params.rating;
 
       return {
         ...prevPrivateLemsState,
-        dict: newDict
+        dict: dict
       }
     },
     "Set Private Lems Rating"
