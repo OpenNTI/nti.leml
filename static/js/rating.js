@@ -6,7 +6,7 @@ function rate(lemJson, rating) {
     if (STATE.publicLems.dict[response.lem_id]) {
       setPublicLemRating({lemId: response.lem_id, rating: response.new_avg});
     } else {
-      globalPrivateLemsDict[response.lem_id].avgRating = response.new_avg;
+      setPrivateLemRating({lemId: response.lem_id, rating: response.new_avg});
     }
   });
 }

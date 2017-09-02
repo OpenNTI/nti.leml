@@ -1,9 +1,7 @@
-var globalPrivateLemsDict = {};
-
 function createLemDetailHtml(lemID, isPrivate, isModal) {
   var lem;
   if (isPrivate) {
-    lem = globalPrivateLemsDict[lemID];
+    lem = STATE.privateLems.dict[lemID];
   } else {
     lem = STATE.publicLems.dict[lemID];
   }
@@ -77,7 +75,7 @@ function addToCanvas(lemDetailBlockHtml) {
 function showLemDetailModal(lemID, isPrivate) {
   var lem;
   if (isPrivate) {
-    lem = globalPrivateLemsDict[lemID];
+    lem = STATE.privateLems.dict[lemID];
   } else {
     lem = STATE.publicLems.dict[lemID];
   }
@@ -168,14 +166,16 @@ function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
 
-    globalPrivateLemsDict = {}
+    lemsDict = {}
 
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
       var lemID = lem._id.$oid;
 
-      globalPrivateLemsDict[lemID] = lem;
+      lemsDict[lemID] = lem;
     }
+
+    setPrivateLemsDict({publicLemsDict: lemsDict});
 
     loadLemsHtml(lems, true, false);
   });
