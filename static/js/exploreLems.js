@@ -154,17 +154,32 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
   var lemSection = $("#" + sectionID);
 
   if (lems.length === 0) {
-      let offsetDiv = "<div class='col-md-3'></div>";
+      let offsetDiv = "<div class='col-md-2'></div>";
       let blackboardGlyphicon = "<span class='glyphicon glyphicon-blackboard' style='font-size: 100px;'/>";
       let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
       let callToActionDiv = "<div>" + callToActionText + " </div>";
 
-      let loginDiv = "<div class='col-md-4 well'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right</div>";
-      let createLemDiv ="<div class='col-md-4 well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM</div>";
-      let shareDiv = "<div class='col-md-4 well'>Share</div>";
+
+      let showLoginStep = false;
+      let stepWidth = 6;
+      let loginDiv = "";
+
+      if (STATE.login.status !== loginEnum.LOGGED_IN) {
+        showLoginStep = true;
+        stepWidth = 4;
+
+        let loginPicture = "<span style='padding-top:20px; font-size:500%;' class='glyphicon glyphicon-user'/>";
+        loginDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right" + loginPicture + "</div>";
+      }
+
+      let canvasPicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/canvas.png'/>";
+      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
+
+      let sharePicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/share.png'/>";
+      let shareDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>Share your LEM with others!" + sharePicture + "</div>";
 
       let stepsDiv = loginDiv + createLemDiv + shareDiv;
-      let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
+      let noLemsDiv = "<div class='col-md-8' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
       lemSection.html(offsetDiv + noLemsDiv)
   } else {
     var lemDivs = "";
