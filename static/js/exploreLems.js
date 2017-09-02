@@ -157,6 +157,9 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       let offsetDiv = "<div class='col-md-2'></div>";
       let blackboardGlyphicon = "<span class='glyphicon glyphicon-blackboard' style='font-size: 100px;'/>";
       let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
+      if (isPrivate) {
+        callToActionText = "<p class='lead'>You haven't saved any LEMs. Store them here so you can access them on any computer! It's your personal online storage.</p>";
+      }
       let callToActionDiv = "<div>" + callToActionText + " </div>";
 
 
@@ -176,7 +179,11 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
 
       let sharePicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/share.png'/>";
-      let shareDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>Share your LEM with others!" + sharePicture + "</div>";
+      let shareText = "Share your LEM with others!";
+      if (isPrivate) {
+        shareText = "Save your LEM online!";
+      }
+      let shareDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>" + shareText + sharePicture + "</div>";
 
       let stepsDiv = loginDiv + createLemDiv + shareDiv;
       let noLemsDiv = "<div class='col-md-8' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
