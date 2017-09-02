@@ -1,5 +1,4 @@
 var globalUsername = undefined;
-var STATE.currentPage = 'canvas';
 
 $(function() {
   $.get(currentuserRoute, function(data, status) {

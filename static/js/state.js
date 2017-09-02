@@ -12,7 +12,7 @@ var STATE = {
   },
   privateLems: {
     dict: {}
-  }
+  },
   favoriteLems: {
     dict: {}
   }
