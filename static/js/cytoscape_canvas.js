@@ -199,7 +199,7 @@ var lemStyle = [ // the stylesheet for the graph
 ];
 
 function loadNewCytoscapeWith(elements) {
-  new_id = elements.length;
+  STATE.canvas.new_unique_id = elements.length;
 
   cy = cytoscape({
 

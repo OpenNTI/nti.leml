@@ -1,6 +1,9 @@
 var STATE = {
   keyboard: {
     shiftPressed: false,
+  },
+  canvas: {
+    new_unique_id: 0
   }
 };
 

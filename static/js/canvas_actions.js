@@ -33,8 +33,8 @@ function drawEdgeBetweenSelectedNodes(evt) {
             console.error("Cannot draw two edges between one pair of items.");
           } else {
             if (evt.cyTarget.id() != val.data.id) { // If the selected node is NOT the one clicked
-              cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
-              new_id = new_id + 1;
+              cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+              STATE.canvas.new_unique_id = STATE.canvas.new_unique_id + 1;
             } else {
               if (!val.classes.includes("startstop")) {
                 cy.remove(evt.cyTarget);
@@ -83,7 +83,7 @@ function removeSelectedNodes() {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(val) {
     if (val.selected && !val.classes.includes("startstop")) {
-      cy.$("#" + val.data.id).remove();      
+      cy.$("#" + val.data.id).remove();
     }
   });
 }
