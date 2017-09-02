@@ -243,7 +243,7 @@ function loadNewCytoscapeWith(elements) {
   // When a node is unselected
   cy.on('unselect', 'node', function(evt) {
     evt.cyTarget.removeClass('selected');
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 
   // When a node is right-clicked
@@ -255,19 +255,19 @@ function loadNewCytoscapeWith(elements) {
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
     setSelectedId({selectedId: evt.cyTarget.id()});
-    toggleSidebar(2, evt);
+    toggleSidebar(sidebarEnum.ACTION, evt);
   });
 
   // When an edge is unselected
   cy.on('unselect', 'edge', function(evt) {
     evt.cyTarget.removeClass('selected');
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 
   // When an edge is right-clicked
   cy.on('cxttap', 'edge', function(evt) {
     cy.remove(evt.cyTarget);
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 }
 

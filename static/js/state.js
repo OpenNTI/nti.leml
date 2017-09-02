@@ -1,6 +1,16 @@
+const sidebarEnum: {
+  DEFAULT: "default",
+  BLOCK: "block",
+  ACTION: "action",
+  CONTEXT: "context",
+  OBJECTIVE: "objective",
+  STARTSTOP: "startstop"
+}
+
 var STATE = {
   currentPage: 'canvas',
   currentUsername: undefined,
+  currentSidebar: sidebarEnum.DEFAULT,
   keyboard: {
     shiftPressed: false,
   },

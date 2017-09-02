@@ -1,14 +1,14 @@
 function showSideBarForSelectedElement(evt) {
     if (evt.cyTarget.hasClass('buildingBlock')) {
-      toggleSidebar(1, evt);
+      toggleSidebar(sidebarEnum.BLOCK, evt);
     } else if (evt.cyTarget.hasClass('context')) {
-      toggleSidebar(3, evt);
+      toggleSidebar(sidebarEnum.CONTEXT, evt);
     } else if (evt.cyTarget.hasClass('notation')) {
-      toggleSidebar(4, evt);
+      toggleSidebar(sidebarEnum.OBJECTIVE, evt);
     } else if (evt.cyTarget.hasClass('startstop')) {
-      toggleSidebar(5, evt);
+      toggleSidebar(sidebarEnum.STARTSTOP, evt);
     } else {
-      toggleSidebar(0, evt);
+      toggleSidebar(sidebarEnum.DEFAULT, evt);
     }
   }
 
@@ -38,7 +38,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
             } else {
               if (!val.classes.includes("startstop")) {
                 cy.remove(evt.cyTarget);
-                toggleSidebar(0, evt);
+                toggleSidebar(sidebarEnum.DEFAULT, evt);
               }
             }
           }
@@ -72,7 +72,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
-          toggleSidebar(0, evt);
+          toggleSidebar(sidebarEnum.DEFAULT, evt);
         }
       }
     }

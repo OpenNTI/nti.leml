@@ -19,8 +19,8 @@ function closeSidebar(sidebar) {
 	}
 }
 
-function showOnlySidebar(sidebarNumber) {
-	var desiredSidebar = $('#sidebar' + sidebarNumber);
+function showOnlySidebar(sidebarName) {
+	var desiredSidebar = $('#' + sidebarNumber + '-sidebar');
 
 	openSidebar(desiredSidebar);
 
@@ -34,19 +34,19 @@ function showOnlySidebar(sidebarNumber) {
 	}
 }
 
-function toggleSidebar(i, evt) {
-	switch (i) {
-		case 0: // default
-			showOnlySidebar(0);
+function toggleSidebar(sidebarName, evt) {
+	showOnlySidebar(sidebarName);
+	setSidebar({sidebar: sidebarName});
+
+	switch (sidebarName) {
+		case sidebarEnum.DEFAULT:
 			break;
-		case 1: // block
-			showOnlySidebar(1);
+		case sidebarEnum.BLOCK:
 			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;
 			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;
 			document.getElementById('inputDescription').value = evt.cyTarget.json().data.description;
 			break;
-		case 2: // action
-			showOnlySidebar(2);
+		case sidebarEnum.ACTION:
 			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
 			if (evt.cyTarget.json().data.description) {
 				document.getElementById('actionDescription').value = evt.cyTarget.json().data.description;
@@ -54,15 +54,12 @@ function toggleSidebar(i, evt) {
 				document.getElementById('actionDescription').value = "";
 			}
 			break;
-		case 3: // context
-			showOnlySidebar(3);
+		case sidebarEnum.CONTEXT:
 			document.getElementById('inputContext').value = evt.cyTarget.json().data.context_type;
 			break;
-		case 4: // objective
-			showOnlySidebar(4);
+		case sidebarEnum.OBJECTIVE:
 			break;
-		case 5: // startstop
-			showOnlySidebar(5);
+		case sidebarEnum.STARTSTOP:
 			if (typeof(evt.cyTarget.json().data.start) != 'undefined') {
 				if (evt.cyTarget.json().data.start) {
 					document.getElementById('inputStartstop').value = "Start";
@@ -70,6 +67,11 @@ function toggleSidebar(i, evt) {
 					document.getElementById('inputStartstop').value = "Stop";
 				}
 			}
+			break;
+		default:
+			console.error("Invalid sidebar requested: " + sidebarName);
+			showOnlySidebar(sidebarEnum.DEFAULT);
+			setSidebar({sidebar: sidebarEnum.DEFAULT});
 			break;
 	}
 }
