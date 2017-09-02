@@ -200,14 +200,6 @@ function clearCanvas() {
 	cy.zoom(1);
 }
 
-function undo() {
-	ur.undo();
-}
-
-function redo() {
-	ur.redo();
-}
-
 function loadFavoriteTemplates() {
 
     var lemSection = $("#templatePanel");
