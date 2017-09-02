@@ -4,7 +4,7 @@ function keyboardSelector(state) {
 let keyboardReduce = reducerCreator(keyboardSelector);
 let keyboardActionCreator = createReducerSpecificActionCreator(keyboardReduce);
 
-function shiftPressedAction() {
+function shiftPressedAction(prevKeyboardState) {
   return {
     ...prevKeyboardState,
     shiftPressed: true
@@ -13,7 +13,7 @@ function shiftPressedAction() {
 let shiftPressed = keyboardActionCreator("Shift pressed", shiftPressedAction);
 
 
-function shiftReleasedAction() {
+function shiftReleasedAction(prevKeyboardState) {
   return {
     ...prevKeyboardState,
     shiftReleased: true
