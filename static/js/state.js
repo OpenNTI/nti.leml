@@ -39,11 +39,11 @@ var STATE = {
   },
   publicLems: {
     dict: {},
-    status: dataRequestEnum.NOT_REQUESTED;
+    status: dataRequestEnum.NOT_REQUESTED
   },
   privateLems: {
     dict: {},
-    status: dataRequestEnum.NOT_REQUESTED;
+    status: dataRequestEnum.NOT_REQUESTED
   },
   favoriteLems: {
     dict: {}

@@ -4,7 +4,7 @@ function privateLemsSelector(state) {
 let privateLemsReduce = reducerCreator(privateLemsSelector);
 let privateLemsActionCreator = createReducerSpecificActionCreator(privateLemsReduce);
 
-function setPrivateLemsDictAction(prevPrivateLemsState, params) {
+function privateLemsReceivedAction(prevPrivateLemsState, params) {
       loadLemsHtml(lems, true, false);
 
       return {
@@ -13,7 +13,7 @@ function setPrivateLemsDictAction(prevPrivateLemsState, params) {
         status: dataRequestEnum.SUCCESS
       }
 }
-let setPrivateLemsDict = privateLemsActionCreator("Set Private Lems Dict", setPrivateLemsDictAction);
+let privateLemsReceived = privateLemsActionCreator("Private Lems Received", privateLemsReceivedAction);
 
 function setPrivateLemsRatingAction(prevPrivateLemsState, params) {
       let dict = prevPrivateLemsState.dict;
@@ -36,8 +36,17 @@ function requestPrivateLemsAction(prevPrivateLemsState) {
 }
 let requestPrivateLems = privateLemsActionCreator("Request private lems", requestPrivateLemsAction);
 
+function setPrivateLemStatusAction(prevPrivateLemsState, params) {
+  return {
+    ...prevPrivateLemsState,
+    status: params.status
+  }
+}
+let setPrivateLemStatus = privateLemsActionCreator("Set private lems status", setPrivateLemStatusAction);
+
 function loadPrivateLEMs() {
-  $.get(lemuserRoute, function(data, status) {
+  $.get(lemuserRoute)
+    .success(function(data, status) {
     var lems = JSON.parse(data);
 
     lemsDict = {}
@@ -49,6 +58,9 @@ function loadPrivateLEMs() {
       lemsDict[lemID] = lem;
     }
 
-    setPrivateLemsDict({publicLemsDict: lemsDict});
+    privateLemsReceived({privateLemsDict: lemsDict, privateLems: lems});
+  })
+  .error(function(jqXHR, textStatus, errorThrown) {
+    setPrivateLemStatus({status: dataRequestEnum.FAILURE});
   });
 }

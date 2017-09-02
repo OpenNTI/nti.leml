@@ -143,27 +143,6 @@ function searchLems() {
   });
 }
 
-function loadPublicLEMs() {
-  $.get(lemallRoute, function(data, status) {
-    console.log(status);
-
-    var lems = JSON.parse(data);
-
-    lemsDict = {}
-
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-      var lemID = lem._id.$oid;
-
-      lemsDict[lemID] = lem;
-    }
-
-    setPublicLemsDict({publicLemsDict: lemsDict});
-
-    loadLemsHtml(lems, false, true);
-  });
-}
-
 function loadLemsHtml(lems, isPrivate, showSearch) {
   var sectionID;
   if  (isPrivate) {
