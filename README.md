@@ -18,6 +18,13 @@ Steps to run application in Chrome; other browsers have not been tested.
 4. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
 5. Navigate to http://[host]:[port]. The default is 127.0.0.1:5000.
 
+
+Debugging:
+============
+Some ideas from [redux](http://redux.js.org/docs/introduction/) are implemented in this app. There is a state object (in `static/js/state.js`) that holds most of the global data. This state object is never changed, but is sometime replaced by a changed copy. The only code that replaces (changes) the state is the actions which are all in `static/js/actions`.
+
+At the top of `/static/js/state.js` there is `const LOG_ACTION`. When this is `true` all actions modifying the state will print to the console. This can be useful to figure out what is going on.
+
 Suggested Improvements:
 ====================
 - Add creative commons/ licensing info to share modal so that users know their lems are open source.
