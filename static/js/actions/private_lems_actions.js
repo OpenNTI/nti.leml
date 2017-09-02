@@ -10,7 +10,7 @@ function privateLemsReduce(action, name) {
   );
 }
 
-function setprivateLemsDict(params) {
+function setPrivateLemsDict(params) {
   privateLemsReduce(function(prevPrivateLemsState) {
       return {
         ...prevPrivateLemsState,
