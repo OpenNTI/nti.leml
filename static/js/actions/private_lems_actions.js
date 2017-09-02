@@ -1,28 +1,18 @@
-function privateLemsReduce(action, name) {
-    reduce(function(prevState) {
-      let prevPrivateLemsState = prevState.privateLems;
-      return {
-        ...prevState,
-        privateLems: action(prevPrivateLemsState)
-      }
-    },
-    name
-  );
+function privateLemsSelector(state) {
+  return state.privateLems;
 }
+let privateLemsReduce = reducerCreator(privateLemsSelector);
+let privateLemsActionCreator = createReducerSpecificActionCreator(privateLemsReduce);
 
-function setPrivateLemsDict(params) {
-  privateLemsReduce(function(prevPrivateLemsState) {
+function setPrivateLemsDictAction(prevPrivateLemsState, params) {
       return {
         ...prevPrivateLemsState,
         dict: params.privateLemsDict
       }
-    },
-    "Set Private Lems Dict"
-  );
 }
+let setPrivateLemsDict = privateLemsActionCreator("Set Private Lems Dict", setPrivateLemsDictAction);
 
-function setPrivateLemsRating(params) {
-  privateLemsReduce(function(prevPrivateLemsState) {
+function setPrivateLemsRatingAction(prevPrivateLemsState, params) {
       let dict = prevPrivateLemsState.dict;
       dict[params.lem_id].avgRating = params.rating;
 
@@ -30,7 +20,5 @@ function setPrivateLemsRating(params) {
         ...prevPrivateLemsState,
         dict: dict
       }
-    },
-    "Set Private Lems Rating"
-  );
 }
+let setPrivateLemsRating = privateLemsActionCreator("Set Private Lems Rating", setPrivateLemsRatingAction);
