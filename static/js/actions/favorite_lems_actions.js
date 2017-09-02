@@ -1,7 +1,7 @@
 function favoriteLemsSelector(state) {
   return state.favoriteLems;
 }
-let favoriteLemsReduce = reducerCreator(favoriteLemsSelector);
+let favoriteLemsReduce = reducerCreator(favoriteLemsSelector, "favoriteLems");
 let favoriteLemsActionCreator = createReducerSpecificActionCreator(favoriteLemsReduce);
 
 function setFavoriteLemsDictAction(prevFavoriteLemsState, params) {

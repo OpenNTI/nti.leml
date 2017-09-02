@@ -64,7 +64,7 @@ function generateLemRowHtml(lemID, isPrivate, isModal) {
 }
 
 function addToCanvas(lemDetailBlockHtml) {
-  showPage('canvas');
+  setCurrentPage({page:'canvas'});
   $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
@@ -143,48 +143,6 @@ function searchLems() {
   });
 }
 
-function loadPublicLEMs() {
-  $.get(lemallRoute, function(data, status) {
-    console.log(status);
-
-    var lems = JSON.parse(data);
-
-    lemsDict = {}
-
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-      var lemID = lem._id.$oid;
-
-      lemsDict[lemID] = lem;
-    }
-
-    setPublicLemsDict({publicLemsDict: lemsDict});
-
-    loadLemsHtml(lems, false, true);
-  });
-}
-
-function loadUserLEMs() {
-  $.get(lemuserRoute, function(data, status) {
-    console.log(status);
-
-    var lems = JSON.parse(data);
-
-    lemsDict = {}
-
-    for (lemIndex in lems) {
-      var lem = JSON.parse(lems[lemIndex]);
-      var lemID = lem._id.$oid;
-
-      lemsDict[lemID] = lem;
-    }
-
-    setPrivateLemsDict({publicLemsDict: lemsDict});
-
-    loadLemsHtml(lems, true, false);
-  });
-}
-
 function loadLemsHtml(lems, isPrivate, showSearch) {
   var sectionID;
   if  (isPrivate) {
@@ -196,11 +154,39 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
   var lemSection = $("#" + sectionID);
 
   if (lems.length === 0) {
-      let offsetDiv = "<div class='col-md-3'></div>";
+      let offsetDiv = "<div class='col-md-2'></div>";
       let blackboardGlyphicon = "<span class='glyphicon glyphicon-blackboard' style='font-size: 100px;'/>";
       let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
+      if (isPrivate) {
+        callToActionText = "<p class='lead'>You haven't saved any LEMs. Store them here so you can access them on any computer! It's your personal online storage.</p>";
+      }
       let callToActionDiv = "<div>" + callToActionText + " </div>";
-      let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + "</div>";
+
+
+      let showLoginStep = false;
+      let stepWidth = 6;
+      let loginDiv = "";
+
+      if (STATE.login.status !== loginEnum.LOGGED_IN) {
+        showLoginStep = true;
+        stepWidth = 4;
+
+        let loginPicture = "<span style='padding-top:20px; font-size:500%;' class='glyphicon glyphicon-user'/>";
+        loginDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right" + loginPicture + "</div>";
+      }
+
+      let canvasPicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/canvas.png'/>";
+      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
+
+      let sharePicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/share.png'/>";
+      let shareText = "Share your LEM with others!";
+      if (isPrivate) {
+        shareText = "Save your LEM online!";
+      }
+      let shareDiv = "<div style='height:300px' class='col-md-" + stepWidth + " well'>" + shareText + sharePicture + "</div>";
+
+      let stepsDiv = loginDiv + createLemDiv + shareDiv;
+      let noLemsDiv = "<div class='col-md-8' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
       lemSection.html(offsetDiv + noLemsDiv)
   } else {
     var lemDivs = "";
@@ -225,7 +211,7 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
     }
 
-    var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+    var refreshButton = '<button class="btn" onclick="requestPrivateLems();"style="margin-bottom:10px;">Refresh</button>';
 
     lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
   }
@@ -240,9 +226,9 @@ function deleteLem(lemJson) {
   var lemBody = {"id": lemJson.id};
   $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
     // Reload lems so that deleted lem is removed
-    loadUserLEMs();
+    requestPrivateLems();
   }).error(function(data) {
     alert("Failed to delete. \n " + JSON.stringify(data));
-    loadUserLEMs();
+    requestPrivateLems();
   });
 }
