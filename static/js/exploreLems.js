@@ -158,7 +158,13 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       let blackboardGlyphicon = "<span class='glyphicon glyphicon-blackboard' style='font-size: 100px;'/>";
       let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
       let callToActionDiv = "<div>" + callToActionText + " </div>";
-      let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + "</div>";
+
+      let loginDiv = "<div class='col-md-4'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right</div>";
+      let createLemDiv ="<div class='col-md-4'>Create LEM</div>";
+      let shareDiv = "<div class='col-md-4'>Share</div>";
+
+      let stepsDiv = loginDiv + createLemDiv + shareDiv;
+      let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
       lemSection.html(offsetDiv + noLemsDiv)
   } else {
     var lemDivs = "";
