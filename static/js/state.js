@@ -1,11 +1,11 @@
-const sidebarEnum: {
+const sidebarEnum = {
   DEFAULT: "default",
   BLOCK: "block",
   ACTION: "action",
   CONTEXT: "context",
   OBJECTIVE: "objective",
   STARTSTOP: "startstop"
-}
+};
 
 var STATE = {
   currentPage: 'canvas',
