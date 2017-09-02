@@ -1,4 +1,3 @@
-var numberOfSidebars = 6;
 var actionTypes = ['Learner_Action', 'Facilitator_Action', 'System_Action'];
 var blockTypes = ['Information','Dialogue','Feedback','Practice','Evidence'];
 var contextTypes = ['Classroom', 'Online_Synchronous', 'Online_Asynchronous', 'Experiential'];
@@ -20,16 +19,17 @@ function closeSidebar(sidebar) {
 }
 
 function showOnlySidebar(sidebarName) {
-	var desiredSidebar = $('#' + sidebarNumber + '-sidebar');
+	var desiredSidebar = $('#' + sidebarName + '-sidebar');
 
 	openSidebar(desiredSidebar);
 
-	for (var index = 0; index < numberOfSidebars; ++index) {
-		if (index == sidebarNumber) {
+	for (var enm in sidebarEnum) {
+		let currentSideBarName = sidebarEnum[enm];
+		if (currentSideBarName === sidebarName) {
 			continue; // Don't close the sidebar that we want open
 		}
 
-		var undesiredSidebar = $('#sidebar' + index);
+		var undesiredSidebar = $('#' + currentSideBarName + '-sidebar');
 		closeSidebar(undesiredSidebar);
 	}
 }
