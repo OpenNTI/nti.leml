@@ -214,7 +214,7 @@ function loadFavoriteTemplates() {
 
     var lemDivs = "";
 
-		if (STATE.currentUsername == undefined) {
+		if (STATE.login.username == undefined) {
 			$("#loginForFavorites").show();
 			$("#templatePanel").hide()
 		} else {

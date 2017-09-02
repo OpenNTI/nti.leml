@@ -90,7 +90,7 @@ function loginState(state) {
 
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(STATE.currentUsername);
+      $("#currentUserEmail").append(STATE.login.username);
       $("#currentUserInfo").show();
 
       loadUserLEMs();
