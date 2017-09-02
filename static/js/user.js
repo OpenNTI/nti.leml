@@ -174,7 +174,7 @@ function logout() {
       resetLocalFavoritesList(requestPublicLems, loadFavoriteTemplates);
 
       if (STATE.currentPage == 'user') {
-        showPage('canvas');
+        setCurrentPage({page:'canvas'});
       }
 
       $("#shareDropdown").hide();

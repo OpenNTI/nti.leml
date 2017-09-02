@@ -64,7 +64,7 @@ function generateLemRowHtml(lemID, isPrivate, isModal) {
 }
 
 function addToCanvas(lemDetailBlockHtml) {
-  showPage('canvas');
+  setCurrentPage({page:'canvas'});
   $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
@@ -159,9 +159,9 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
       let callToActionDiv = "<div>" + callToActionText + " </div>";
 
-      let loginDiv = "<div class='col-md-4'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right</div>";
-      let createLemDiv ="<div class='col-md-4'>Create LEM</div>";
-      let shareDiv = "<div class='col-md-4'>Share</div>";
+      let loginDiv = "<div class='col-md-4 well'>Login or <a onclick='$('#registerModal').modal('show');'>Register</a> at the top right</div>";
+      let createLemDiv ="<div class='col-md-4 well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM</div>";
+      let shareDiv = "<div class='col-md-4 well'>Share</div>";
 
       let stepsDiv = loginDiv + createLemDiv + shareDiv;
       let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + stepsDiv + "</div>";
