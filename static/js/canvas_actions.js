@@ -48,3 +48,14 @@ function ensureNewIdIsUnique() {
     "Ensure New ID Is Unique"
   );
 }
+
+function setSelectedId(params) {
+  canvasReduce(function(prevCanvasState) {
+      return {
+        ...prevCanvasState,
+        selectedId: params.selectedId
+      }
+    },
+    "Set Selected ID"
+  );
+}

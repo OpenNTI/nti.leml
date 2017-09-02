@@ -4,7 +4,7 @@ var STATE = {
   },
   canvas: {
     new_unique_id: 0,
-    STATE.canvas.selectedId: null,
+    selectedId: null,
   }
 };
 

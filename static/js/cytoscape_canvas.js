@@ -234,7 +234,7 @@ function loadNewCytoscapeWith(elements) {
       drawEdgeBetweenSelectedNodes(evt);
     } else {
       evt.cyTarget.addClass('selected');
-      STATE.canvas.selectedId = evt.cyTarget.id();
+      setSelectedId({selectedId: evt.cyTarget.id()});
 
       showSideBarForSelectedElement(evt);
     }
@@ -254,7 +254,7 @@ function loadNewCytoscapeWith(elements) {
   // When an edge is selected
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
-    STATE.canvas.selectedId = evt.cyTarget.id();
+    setSelectedId({selectedId: evt.cyTarget.id()});
     toggleSidebar(2, evt);
   });
 
