@@ -1,33 +1,22 @@
-function keyboardReduce(action, name) {
-    reduce(function(prevState) {
-      let prevKeyboardState = prevState.keyboard;
-      return {
-        ...prevState,
-        keyboard: action(prevKeyboardState)
-      }
-    },
-    name
-  );
+function keyboardSelector(state) {
+  return state.keyboard;
 }
+let keyboardReduce = reducerCreator(keyboardSelector);
+let keyboardActionCreator = createReducerSpecificActionCreator(keyboardReduce);
 
-function shiftPressed() {
-  keyboardReduce(function(prevKeyboardState) {
-      return {
-        ...prevKeyboardState,
-        shiftPressed: true
-      }
-    },
-    "Shift Pressed"
-  );
+function shiftPressedAction() {
+  return {
+    ...prevKeyboardState,
+    shiftPressed: true
+  }
 }
+let shiftPressed = keyboardActionCreator("Shift pressed", shiftPressedAction);
 
-function shiftReleased() {
-  keyboardReduce(function(prevKeyboardState) {
-      return {
-        ...prevKeyboardState,
-        shiftPressed: false
-      }
-    },
-   "Shift Released"
-  );
+
+function shiftReleasedAction() {
+  return {
+    ...prevKeyboardState,
+    shiftReleased: true
+  }
 }
+let shiftReleased = keyboardActionCreator("Shift released", shiftReleasedAction);
