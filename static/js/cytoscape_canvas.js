@@ -1,6 +1,4 @@
 var cy;
-var ur;
-var selectedId;
 
 var lemStyle = [ // the stylesheet for the graph
   {
@@ -199,7 +197,7 @@ var lemStyle = [ // the stylesheet for the graph
 ];
 
 function loadNewCytoscapeWith(elements) {
-  new_id = elements.length;
+  setDefaultNewId({numberOfCanvasElements: elements.length});
 
   cy = cytoscape({
 
@@ -236,7 +234,7 @@ function loadNewCytoscapeWith(elements) {
       drawEdgeBetweenSelectedNodes(evt);
     } else {
       evt.cyTarget.addClass('selected');
-      selectedId = evt.cyTarget.id();
+      setSelectedId({selectedId: evt.cyTarget.id()});
 
       showSideBarForSelectedElement(evt);
     }
@@ -245,7 +243,7 @@ function loadNewCytoscapeWith(elements) {
   // When a node is unselected
   cy.on('unselect', 'node', function(evt) {
     evt.cyTarget.removeClass('selected');
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 
   // When a node is right-clicked
@@ -256,20 +254,20 @@ function loadNewCytoscapeWith(elements) {
   // When an edge is selected
   cy.on('select', 'edge', function(evt) {
     evt.cyTarget.addClass('selected');
-    selectedId = evt.cyTarget.id();
-    toggleSidebar(2, evt);
+    setSelectedId({selectedId: evt.cyTarget.id()});
+    toggleSidebar(sidebarEnum.ACTION, evt);
   });
 
   // When an edge is unselected
   cy.on('unselect', 'edge', function(evt) {
     evt.cyTarget.removeClass('selected');
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 
   // When an edge is right-clicked
   cy.on('cxttap', 'edge', function(evt) {
     cy.remove(evt.cyTarget);
-    toggleSidebar(0, evt);
+    toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
 }
 

@@ -1,14 +1,14 @@
 function showSideBarForSelectedElement(evt) {
     if (evt.cyTarget.hasClass('buildingBlock')) {
-      toggleSidebar(1, evt);
+      toggleSidebar(sidebarEnum.BLOCK, evt);
     } else if (evt.cyTarget.hasClass('context')) {
-      toggleSidebar(3, evt);
+      toggleSidebar(sidebarEnum.CONTEXT, evt);
     } else if (evt.cyTarget.hasClass('notation')) {
-      toggleSidebar(4, evt);
+      toggleSidebar(sidebarEnum.OBJECTIVE, evt);
     } else if (evt.cyTarget.hasClass('startstop')) {
-      toggleSidebar(5, evt);
+      toggleSidebar(sidebarEnum.STARTSTOP, evt);
     } else {
-      toggleSidebar(0, evt);
+      toggleSidebar(sidebarEnum.DEFAULT, evt);
     }
   }
 
@@ -33,12 +33,12 @@ function drawEdgeBetweenSelectedNodes(evt) {
             console.error("Cannot draw two edges between one pair of items.");
           } else {
             if (evt.cyTarget.id() != val.data.id) { // If the selected node is NOT the one clicked
-              cy.add([{group: "edges", data: {id: new_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
-              new_id = new_id + 1;
+              cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+              incrementNewId();
             } else {
               if (!val.classes.includes("startstop")) {
                 cy.remove(evt.cyTarget);
-                toggleSidebar(0, evt);
+                toggleSidebar(sidebarEnum.DEFAULT, evt);
               }
             }
           }
@@ -72,7 +72,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
-          toggleSidebar(0, evt);
+          toggleSidebar(sidebarEnum.DEFAULT, evt);
         }
       }
     }
@@ -83,7 +83,7 @@ function removeSelectedNodes() {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(val) {
     if (val.selected && !val.classes.includes("startstop")) {
-      cy.$("#" + val.data.id).remove();      
+      cy.$("#" + val.data.id).remove();
     }
   });
 }
