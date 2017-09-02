@@ -1,5 +1,3 @@
-var STATE.canvas.new_unique_id = 0;
-
 function allowDrop(ev) {
 	ev.preventDefault();
 }
@@ -35,10 +33,7 @@ function addBuildingBlockToCanvas(data, x_coord, y_coord) {
 		y_coord = 0;
 	}
 
-	// Ensure id is unique
-	while(cy.$("#" + STATE.canvas.new_unique_id).length > 0) {
-		++STATE.canvas.new_unique_id;
-	}
+	ensureNewIdIsUnique()
 
 	if (data.includes("Context")) {
 		var ct = data.replace("Context", "");
@@ -59,7 +54,7 @@ function addBuildingBlockToCanvas(data, x_coord, y_coord) {
 
 	cy.resize();
 
-	++STATE.canvas.new_unique_id;
+	incrementNewId();
 }
 
 function addFavoriteToCanvas(lem_id) {

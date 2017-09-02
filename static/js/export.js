@@ -61,7 +61,7 @@ function generateJson() {
           //convertIdToInt(node.data);
           node.data.building_block = buildingBlockIDNumeric;
           node.data.id = STATE.canvas.new_unique_id;
-          STATE.canvas.new_unique_id++;
+          incrementNewId();
 
           lem.notations.push(node.data);
       }
