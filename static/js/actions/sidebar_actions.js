@@ -5,6 +5,6 @@ function setSidebar(params) {
         currentSidebar: params.sidebar
       }
     },
-  "Set Username"
+  "Set Current Sidebar"
   );
 }
