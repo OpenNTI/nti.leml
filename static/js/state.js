@@ -18,7 +18,6 @@ const loginEnum = {
 
 var STATE = {
   currentPage: 'canvas',
-  currentUsername: undefined,
   currentSidebar: sidebarEnum.DEFAULT,
   login: {
     username: undefined,
