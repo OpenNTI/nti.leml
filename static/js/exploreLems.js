@@ -226,9 +226,9 @@ function deleteLem(lemJson) {
   var lemBody = {"id": lemJson.id};
   $.delete(lemRoute, JSON.stringify(lemBody), function(data, status) {
     // Reload lems so that deleted lem is removed
-    requestPrivateLems();
+    resetLocalFavoritesList(requestPublicLems, requestPrivateLems, loadFavoriteTemplates);
   }).error(function(data) {
     alert("Failed to delete. \n " + JSON.stringify(data));
-    requestPrivateLems();
+    resetLocalFavoritesList(requestPublicLems, requestPrivateLems, loadFavoriteTemplates);
   });
 }

@@ -215,8 +215,8 @@ function exportLem(public) {
   lem.thumbnail = cy.png();
 
   $.post(lemRoute, JSON.stringify(lem), function(data, status){
-
-      // alert("Data: " + data + "\nStatus: " + status);
+      requestPublicLems();
+      requestPrivateLems();
   });
 }
 
