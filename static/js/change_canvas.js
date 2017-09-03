@@ -86,7 +86,7 @@ function removeSelectedElements() {
 
 function removeSelectedNodes() {
   let nodes = cy.json().elements.nodes;
-  if (nodes.length === 0) {
+  if (nodes.length > 0) {
     nodes.map(function(val) {
       if (val.selected && !val.classes.includes("startstop")) {
         cy.$("#" + val.data.id).remove();
