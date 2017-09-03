@@ -79,9 +79,23 @@ function drawEdgeBetweenSelectedNodes(evt) {
   });
 }
 
+function removeSelectedElements() {
+  removeSelectedNodes();
+  removeSelectedEdges();
+}
+
 function removeSelectedNodes() {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(val) {
+    if (val.selected && !val.classes.includes("startstop")) {
+      cy.$("#" + val.data.id).remove();
+    }
+  });
+}
+
+function removeSelectedEdges() {
+  var edges = cy.json().elements.edges;
+  edges.map(function(val) {
     if (val.selected && !val.classes.includes("startstop")) {
       cy.$("#" + val.data.id).remove();
     }

@@ -12,12 +12,12 @@ document.addEventListener('keyup', function(event) {
 
 document.addEventListener('keydown', function(event) {
         if (event.key === "Backspace") {
-          removeSelectedNodes();
+          removeSelectedElements();
         }
     }, false);
 
 document.addEventListener('keydown', function(event) {
         if (event.key === "Delete") {
-          removeSelectedNodes();
+          removeSelectedElements();
         }
     }, false);
