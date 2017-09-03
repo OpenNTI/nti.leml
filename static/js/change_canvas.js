@@ -85,19 +85,23 @@ function removeSelectedElements() {
 }
 
 function removeSelectedNodes() {
-  var nodes = cy.json().elements.nodes;
-  nodes.map(function(val) {
-    if (val.selected && !val.classes.includes("startstop")) {
-      cy.$("#" + val.data.id).remove();
-    }
-  });
+  let nodes = cy.json().elements.nodes;
+  if (nodes.length === 0) {
+    nodes.map(function(val) {
+      if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).remove();
+      }
+    });
+  }
 }
 
 function removeSelectedEdges() {
-  var edges = cy.json().elements.edges;
-  edges.map(function(val) {
-    if (val.selected && !val.classes.includes("startstop")) {
-      cy.$("#" + val.data.id).remove();
-    }
-  });
+  let edges = cy.json().elements.edges;
+  if (edges.length > 0) {
+    edges.map(function(val) {
+      if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).remove();
+      }
+    });
+  }
 }
