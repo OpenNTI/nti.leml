@@ -5,7 +5,12 @@ let privateLemsReduce = reducerCreator(privateLemsSelector, "privateLems");
 let privateLemsActionCreator = createReducerSpecificActionCreator(privateLemsReduce);
 
 function privateLemsReceivedAction(prevPrivateLemsState, params) {
-      loadLemsHtml(params.privateLems, true, false);
+      // Call this once the state is updated
+      setTimeout(
+        function() {
+          loadLemsHtml(params.privateLems, true, false);
+        },
+        100);
 
       return {
         ...prevPrivateLemsState,
