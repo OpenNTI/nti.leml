@@ -89,6 +89,7 @@ function removeSelectedNodes() {
   if (nodes.length > 0) {
     nodes.map(function(val) {
       if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).unselect();
         cy.$("#" + val.data.id).remove();
       }
     });
@@ -100,6 +101,7 @@ function removeSelectedEdges() {
   if (edges.length > 0) {
     edges.map(function(val) {
       if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).unselect();
         cy.$("#" + val.data.id).remove();
       }
     });
