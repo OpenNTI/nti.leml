@@ -227,8 +227,14 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
 
+  cy.on('click', function(evt) {
+    let canvas = document.getElementById("canvas_input");
+    canvas.focus();
+  });
+
   // When a node is selected
   cy.on('select', 'node', function (evt) {
+
     if (STATE.keyboard.shiftPressed) {
       cy.$("#" + evt.cyTarget._private.data.id).unselect();
       drawEdgeBetweenSelectedNodes(evt);
