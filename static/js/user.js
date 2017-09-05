@@ -244,6 +244,15 @@ function openExportDialog(share) {
 function setupExportModal(title, submitName, submitAction) {
   $("#exportSubmitButton").unbind('click');
   $("#exportSubmitButton").on('click', submitAction);
+
+  $("#lemNameText").unbind('keydown');
+  $("#lemNameText").on('keydown', function(event) {
+    console.log(event.key);
+    if (event.key === "Enter" || event.key === "Return") {
+      $("#exportSubmitButton").click();
+    }
+  });
+
   $("#exportSubmitButton").text(submitName);
   $("#exportModalTitle").text(title);
 }
