@@ -3,7 +3,7 @@ Running the Application:
 
 Steps to run application in Chrome; other browsers have not been tested.
 1. Download python3.
-2. Install MongoDB 3.2
+2. Install MongoDB 3.2 ([Instructions for Ubuntu 16.04](https://www.howtoforge.com/tutorial/install-mongodb-on-ubuntu-16.04/))
 3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.  
  On Ubuntu, you might get an error when downloading cffi
   ```
