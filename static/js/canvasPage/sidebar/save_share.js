@@ -53,7 +53,6 @@ function setupExportModal(title, submitName, submitAction) {
 
   $("#lemNameText").unbind('keydown');
   $("#lemNameText").on('keydown', function(event) {
-    console.log(event.key);
     if (event.key === "Enter" || event.key === "Return") {
       $("#exportSubmitButton").click();
     }
