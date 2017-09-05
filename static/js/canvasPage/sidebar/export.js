@@ -1,5 +1,22 @@
+const START_ID = "start";
+const START_NUM = -1111;
+const STOP_ID = "stop";
+const STOP_NUM = -2222;
+
+function convertAlphabetStartAndStopToNumber(data) {
+  if (data.source === START_ID) {
+    data.source = START_NUM;
+  }
+
+  if (data.target === STOP_ID) {
+    data.target = STOP_NUM;
+  }
+
+  return data;
+}
+
 function generateJson() {
-  var lem = {contexts: [], building_blocks: [], notations: [], actions: [], startIDs: [], stopIDs: []};
+  var lem = {contexts: [], building_blocks: [], notations: [], actions: []};
 
   var elements = cy.json().elements;
   var edges = elements.edges;
@@ -7,23 +24,8 @@ function generateJson() {
 
   if (edges) {
     edges.map(function(edge) {
-      var id = edge.data.id;
-      var source = cy.$("#" + id).source();
-      var target = cy.$("#" + id).target();
-      var startStopNotation = false;
-
-      if (source.hasClass("startstop") || source.hasClass("notation")) {
-        startStopNotation = true;
-      }
-
-      if (target.hasClass("startstop")) {
-        startStopNotation = true;
-      }
-
-      if (!startStopNotation) {
-        convertIdToInt(edge.data);
+        edge.data = convertAlphabetStartAndStopToNumber(edge.data);
         lem.actions.push(edge.data);
-      }
     });
   }
 
@@ -32,24 +34,6 @@ function generateJson() {
       if (node.classes.includes("context")) {
           convertIdToInt(node.data);
           lem.contexts.push(node.data);
-      } else if (node.classes.includes("startstop")) {
-        var id = node.data.id;
-
-        if (node.data.start) {
-          cy.$("#" + id).outgoers().map(function(element) {
-            if (element.hasClass("buildingBlock")) {
-              var numericID = element.id() * 1
-              lem.startIDs.push(numericID);
-            }
-          });
-        } else {
-          cy.$("#" + id).incomers().map(function(element) {
-            if (element.hasClass("buildingBlock")) {
-              var numericID = element.id() * 1
-              lem.stopIDs.push(numericID);
-            }
-          });
-        }
       } else if (node.classes.includes("buildingBlock")) {
           convertIdToInt(node.data);
           lem.building_blocks.push(node.data);

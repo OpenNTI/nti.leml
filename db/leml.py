@@ -46,8 +46,8 @@ class Lem(Document):
 	name = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
-	startIDs = ListField(IntField())
-	stopIDs = ListField(IntField())
+	startIDs = ListField(IntField(),required=False)
+	stopIDs = ListField(IntField(), required=False)
 	building_blocks = ListField(EmbeddedDocumentField(Block), required=True)
 	contexts = ListField(EmbeddedDocumentField(Context))
 	actions = ListField(EmbeddedDocumentField(Action))
@@ -70,5 +70,5 @@ def toLem(json_dict, user_email):
 	action_objs = []
 	for action in json_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], description=action["description"], source=action["source"], target=action["target"]))
-	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
+	lem = Lem(name=json_dict["name"], created_by=user_email, building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
 	return lem
