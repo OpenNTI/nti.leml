@@ -1,8 +1,6 @@
 {
   "fromModelURL": "http://www2.uco.edu/CeCE/LEMPatterns/model.aspx?model=JQ41",
   "lem": {
-    "startIDs": [1],
-    "stopIDs": [7],
     "building_blocks": [
       {
         "id":1,
@@ -83,6 +81,18 @@
         "action_type": "Learner Action",
         "source": 6,
         "target": 7
+      },
+      {
+        "id": 213,
+        "action_type": "Learner Action",
+        "source": -1111,
+        "target": 1
+      },
+      {
+        "id": 214,
+        "action_type": "Learner Action",
+        "source": 7,
+        "target": -2222
       }
     ],
     "contexts": [
