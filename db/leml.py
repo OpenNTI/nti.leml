@@ -9,17 +9,17 @@ ACTION_TYPE = ("Learner Action", "Facilitator Action", "System Action")
 
 # Block Model
 class Block(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	block_type = StringField(required=True, choices=BLOCK_TYPE)
 	description = StringField()
 	method = StringField(required=True)
 
 # Context Model
 class Context(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	context_type = StringField(required=True, choices=CONTEXT_TYPE)
-	building_blocks = ListField(IntField())
-	notations = ListField(IntField())
+	building_blocks = ListField(StringField())
+	notations = ListField(StringField())
 
 # Action Model
 class Action(EmbeddedDocument):
@@ -31,7 +31,7 @@ class Action(EmbeddedDocument):
 
 # Notation Model
 class Notation(EmbeddedDocument):
-	building_block = IntField(required=True)
+	building_block = StringField(required=True)
 	description = StringField(required=True)
 
 #Comment Model
