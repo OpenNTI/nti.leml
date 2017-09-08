@@ -26,8 +26,8 @@ class Action(EmbeddedDocument):
 	id = StringField(required=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
 	description = StringField ()
-	source = IntField(required=True)
-	target = IntField(required=True)
+	source = StringField(required=True)
+	target = StringField(required=True)
 
 # Notation Model
 class Notation(EmbeddedDocument):
