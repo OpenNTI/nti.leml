@@ -23,7 +23,7 @@ class Context(EmbeddedDocument):
 
 # Action Model
 class Action(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
 	description = StringField ()
 	source = IntField(required=True)

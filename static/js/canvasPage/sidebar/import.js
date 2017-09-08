@@ -53,18 +53,6 @@ function receivedText(e) {
   }
 }
 
-function convertNumberStartAndStopToAlphabetic(data) {
-  if (data.source === START_NUM) {
-    data.source = START_ID;
-  }
-
-  if (data.target === STOP_NUM) {
-    data.target = STOP_ID;
-  }
-
-  return data;
-}
-
 function renderLem(json) {
   // Build cytoscape elements here
   var elements = [];
@@ -130,10 +118,9 @@ function renderLem(json) {
       action = actions[index];
 
       var styleClass = action.action_type.replace(" ", "_");
-
-      let edgeData = convertNumberStartAndStopToAlphabetic(action);
+      
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
-      elements.push({data: edgeData, classes: styleClass, style: {label: action.description}});
+      elements.push({data: action, classes: styleClass, style: {label: action.description}});
     }
   }
 

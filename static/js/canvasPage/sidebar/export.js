@@ -1,20 +1,3 @@
-const START_ID = "start";
-const START_NUM = -1111;
-const STOP_ID = "stop";
-const STOP_NUM = -2222;
-
-function convertAlphabetStartAndStopToNumber(data) {
-  if (data.source === START_ID) {
-    data.source = START_NUM;
-  }
-
-  if (data.target === STOP_ID) {
-    data.target = STOP_NUM;
-  }
-
-  return data;
-}
-
 function generateJson() {
   var lem = {contexts: [], building_blocks: [], notations: [], actions: []};
 
@@ -24,7 +7,6 @@ function generateJson() {
 
   if (edges) {
     edges.map(function(edge) {
-        edge.data = convertAlphabetStartAndStopToNumber(edge.data);
         lem.actions.push(edge.data);
     });
   }
