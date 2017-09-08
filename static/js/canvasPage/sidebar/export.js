@@ -7,6 +7,10 @@ function generateJson() {
 
   if (edges) {
     edges.map(function(edge) {
+        if (edge.data.description === undefined) {
+          edge.data.description = "";
+        }
+        
         lem.actions.push(edge.data);
     });
   }
