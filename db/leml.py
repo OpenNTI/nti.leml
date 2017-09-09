@@ -9,29 +9,29 @@ ACTION_TYPE = ("Learner Action", "Facilitator Action", "System Action")
 
 # Block Model
 class Block(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	block_type = StringField(required=True, choices=BLOCK_TYPE)
 	description = StringField()
 	method = StringField(required=True)
 
 # Context Model
 class Context(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	context_type = StringField(required=True, choices=CONTEXT_TYPE)
-	building_blocks = ListField(IntField())
-	notations = ListField(IntField())
+	building_blocks = ListField(StringField())
+	notations = ListField(StringField())
 
 # Action Model
 class Action(EmbeddedDocument):
-	id = IntField(required=True)
+	id = StringField(required=True)
 	action_type = StringField(required=True, choices=ACTION_TYPE)
 	description = StringField ()
-	source = IntField(required=True)
-	target = IntField(required=True)
+	source = StringField(required=True)
+	target = StringField(required=True)
 
 # Notation Model
 class Notation(EmbeddedDocument):
-	building_block = IntField(required=True)
+	building_block = StringField(required=True)
 	description = StringField(required=True)
 
 #Comment Model
@@ -46,8 +46,8 @@ class Lem(Document):
 	name = StringField(required=True)
 	created_by = ReferenceField(User, required=True)
 	date_created = DateTimeField(default=datetime.datetime.now())
-	startIDs = ListField(IntField())
-	stopIDs = ListField(IntField())
+	startIDs = ListField(IntField(),required=False)
+	stopIDs = ListField(IntField(), required=False)
 	building_blocks = ListField(EmbeddedDocumentField(Block), required=True)
 	contexts = ListField(EmbeddedDocumentField(Context))
 	actions = ListField(EmbeddedDocumentField(Action))
@@ -70,5 +70,5 @@ def toLem(json_dict, user_email):
 	action_objs = []
 	for action in json_dict["actions"]:
 		action_objs.append(Action(id=action["id"], action_type=action["action_type"], description=action["description"], source=action["source"], target=action["target"]))
-	lem = Lem(name=json_dict["name"], created_by=user_email, startIDs=json_dict["startIDs"], stopIDs=json_dict["stopIDs"], building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
+	lem = Lem(name=json_dict["name"], created_by=user_email, building_blocks=block_objs, contexts=context_objs, actions=action_objs, notations=notation_objs, thumbnail = json_dict["thumbnail"], public = json_dict["public"])
 	return lem

@@ -59,27 +59,17 @@ function renderLem(json) {
 
   // Get lem parts
   var buildingBlocks = json.lem.building_blocks;
-  var startIDs = json.lem.startIDs;
-  var stopIDs = json.lem.stopIDs;
   var actions = json.lem.actions;
   var contexts = json.lem.contexts;
   var notations = json.lem.notations;
+
   if(json.lem.date_created){
   	elements.push({data: {id: "authorship"}, style: {label: json.lem.name+"\n\n\n\n\nBy: "+json.lem.created_by+" on "+ (new Date(json.lem.date_created.$date).toDateString()), class: "authorship"}, classes: "authorship"});
   }
 
-  // Start dots
-  if (startIDs) {
-    // Add one stop node
-    elements.push({data: {id: "start", start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'});
-
-    for (var index in startIDs) {
-      var startID = startIDs[index];
-      var startNodeID = "start" + startID;
-
-      elements.push({data: {id: startNodeID + startID, source: "start", target: startID, action_type: "Learner Action"}, classes: "Learner_Action"});
-    }
-  }
+  // Add start and stop IDs
+  elements.push({data: {id: "start", start: true}, style: {label:"Start", class:"startstop"}, classes: 'startstop'});
+  elements.push({data: {id: "stop", start: false}, style: {label:"Stop"}, classes: "startstop"});
 
   // Contexts
   if (contexts) {
@@ -122,27 +112,13 @@ function renderLem(json) {
     }
   }
 
-  // Stop dots
-  if (stopIDs) {
-    // Add one stop node
-    elements.push({data: {id: "stop", start: false}, style: {label:"Stop"}, classes: "startstop"});
-
-    // Add all arrows to stop node
-    for (var index in stopIDs) {
-      var stopID = stopIDs[index];
-      var stopNodeID = "stop" + stopID;
-
-      elements.push({data: {id: stopNodeID + stopID, source: stopID, target: "stop", action_type: "Learner Action"}, classes: "Learner_Action"});
-    }
-  }
-
   // Actions
   if (actions) {
     for (var index in actions) {
       action = actions[index];
 
       var styleClass = action.action_type.replace(" ", "_");
-
+      
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
       elements.push({data: action, classes: styleClass, style: {label: action.description}});
     }
