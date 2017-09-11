@@ -1,22 +1,13 @@
-function favoriteLemsReduce(action, name) {
-    reduce(function(prevState) {
-      let prevFavoriteLemsState = prevState.favoriteLems;
-      return {
-        ...prevState,
-        favoriteLems: action(prevFavoriteLemsState)
-      }
-    },
-    name
-  );
+function favoriteLemsSelector(state) {
+  return state.favoriteLems;
 }
+let favoriteLemsReduce = reducerCreator(favoriteLemsSelector);
+let favoriteLemsActionCreator = createReducerSpecificActionCreator(favoriteLemsReduce);
 
-function setFavoriteLemsDict(params) {
-  favoriteLemsReduce(function(prevFavoriteLemsState) {
-      return {
-        ...prevFavoriteLemsState,
-        dict: params.favoriteLemsDict
-      }
-    },
-    "Set favorite Lems Dict"
-  );
+function setFavoriteLemsDictAction(prevFavoriteLemsState, params) {
+  return {
+    ...prevFavoriteLemsState,
+    dict: params.favoriteLemsDict
+  }
 }
+let setFavoriteLemsDict = favoriteLemsActionCreator("Set favoite Lems Dict", setFavoriteLemsDictAction);
