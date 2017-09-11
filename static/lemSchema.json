@@ -46,7 +46,7 @@
               "building_blocks": {
                 "type": "array",
                 "items": {
-                  "type": "integer"
+                  "type": "string"
                 }
               },
               "actions": {
