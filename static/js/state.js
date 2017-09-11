@@ -50,5 +50,6 @@ function reduce(action, name) {
   STATE = action(STATE);
   if (LOG_ACTIONS) {
     console.log("Next state: ", STATE);
+    console.log("--------------------End Action")
   }
 }
