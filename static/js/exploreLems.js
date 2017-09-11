@@ -1,12 +1,9 @@
-var globalPublicLemsDict = {};
-var globalPrivateLemsDict = {};
-
 function createLemDetailHtml(lemID, isPrivate, isModal) {
   var lem;
   if (isPrivate) {
-    lem = globalPrivateLemsDict[lemID];
+    lem = STATE.privateLems.dict[lemID];
   } else {
-    lem = globalPublicLemsDict[lemID];
+    lem = STATE.publicLems.dict[lemID];
   }
 
   const title = lem.name;
@@ -19,7 +16,7 @@ function createLemDetailHtml(lemID, isPrivate, isModal) {
 
   // Set state of favorite button if this lem is favorited by this user or not
   var favoriteButton = '<a lemid=' + lemID + '  class="favoriteButton btn btn-warning" role="button"';
-  if (Object.keys(globalFavoriteLemsDict).includes(lemID)) {
+  if (Object.keys(STATE.favoriteLems.dict).includes(lemID)) {
     favoriteButton += ' onclick="unfavoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star"></span> Unfavorite</a>';
   } else {
     favoriteButton += ' onclick="favoriteLem(this.parentElement.parentElement);"><span class="glyphicon glyphicon-star-empty"></span> Favorite</a>';
@@ -78,9 +75,9 @@ function addToCanvas(lemDetailBlockHtml) {
 function showLemDetailModal(lemID, isPrivate) {
   var lem;
   if (isPrivate) {
-    lem = globalPrivateLemsDict[lemID];
+    lem = STATE.privateLems.dict[lemID];
   } else {
-    lem = globalPublicLemsDict[lemID];
+    lem = STATE.publicLems.dict[lemID];
   }
 
   $("#lemModalTitle").text(lem.name);
@@ -99,7 +96,7 @@ function generateCommentSectionHtml(id) {
   // Set form id so comments can be added to correct lems
   $("#newCommentForm").attr('lemid', id);
 
-  if (globalUsername) {
+  if (STATE.login.username) {
     // Show commenting for if logged in
     $("#newCommentForm").show()
     $("#loginRequiredToComment").hide()
@@ -150,14 +147,16 @@ function loadPublicLEMs() {
   $.get(lemallRoute, function(data, status) {
     var lems = JSON.parse(data);
 
-    globalPublicLemsDict = {}
+    lemsDict = {}
 
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
       var lemID = lem._id.$oid;
 
-      globalPublicLemsDict[lemID] = lem;
+      lemsDict[lemID] = lem;
     }
+
+    setPublicLemsDict({publicLemsDict: lemsDict});
 
     loadLemsHtml(lems, false, true);
   });
@@ -167,14 +166,16 @@ function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
     var lems = JSON.parse(data);
 
-    globalPrivateLemsDict = {}
+    lemsDict = {}
 
     for (lemIndex in lems) {
       var lem = JSON.parse(lems[lemIndex]);
       var lemID = lem._id.$oid;
 
-      globalPrivateLemsDict[lemID] = lem;
+      lemsDict[lemID] = lem;
     }
+
+    setPrivateLemsDict({publicLemsDict: lemsDict});
 
     loadLemsHtml(lems, true, false);
   });

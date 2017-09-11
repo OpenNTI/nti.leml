@@ -1,4 +1,3 @@
-var numberOfSidebars = 6;
 var actionTypes = ['Learner_Action', 'Facilitator_Action', 'System_Action'];
 var blockTypes = ['Information','Dialogue','Feedback','Practice','Evidence'];
 var contextTypes = ['Classroom', 'Online_Synchronous', 'Online_Asynchronous', 'Experiential'];
@@ -19,34 +18,35 @@ function closeSidebar(sidebar) {
 	}
 }
 
-function showOnlySidebar(sidebarNumber) {
-	var desiredSidebar = $('#sidebar' + sidebarNumber);
+function showOnlySidebar(sidebarName) {
+	var desiredSidebar = $('#' + sidebarName + '-sidebar');
 
 	openSidebar(desiredSidebar);
 
-	for (var index = 0; index < numberOfSidebars; ++index) {
-		if (index == sidebarNumber) {
+	for (var enm in sidebarEnum) {
+		let currentSideBarName = sidebarEnum[enm];
+		if (currentSideBarName === sidebarName) {
 			continue; // Don't close the sidebar that we want open
 		}
 
-		var undesiredSidebar = $('#sidebar' + index);
+		var undesiredSidebar = $('#' + currentSideBarName + '-sidebar');
 		closeSidebar(undesiredSidebar);
 	}
 }
 
-function toggleSidebar(i, evt) {
-	switch (i) {
-		case 0: // default
-			showOnlySidebar(0);
+function toggleSidebar(sidebarName, evt) {
+	showOnlySidebar(sidebarName);
+	setSidebar({sidebar: sidebarName});
+
+	switch (sidebarName) {
+		case sidebarEnum.DEFAULT:
 			break;
-		case 1: // block
-			showOnlySidebar(1);
+		case sidebarEnum.BLOCK:
 			document.getElementById('inputType').value = evt.cyTarget.json().data.block_type;
 			document.getElementById('inputMethod').value = evt.cyTarget.json().data.method;
 			document.getElementById('inputDescription').value = evt.cyTarget.json().data.description;
 			break;
-		case 2: // action
-			showOnlySidebar(2);
+		case sidebarEnum.ACTION:
 			document.getElementById('inputAction').value = evt.cyTarget.json().data.action_type;
 			if (evt.cyTarget.json().data.description) {
 				document.getElementById('actionDescription').value = evt.cyTarget.json().data.description;
@@ -54,15 +54,12 @@ function toggleSidebar(i, evt) {
 				document.getElementById('actionDescription').value = "";
 			}
 			break;
-		case 3: // context
-			showOnlySidebar(3);
+		case sidebarEnum.CONTEXT:
 			document.getElementById('inputContext').value = evt.cyTarget.json().data.context_type;
 			break;
-		case 4: // objective
-			showOnlySidebar(4);
+		case sidebarEnum.OBJECTIVE:
 			break;
-		case 5: // startstop
-			showOnlySidebar(5);
+		case sidebarEnum.STARTSTOP:
 			if (typeof(evt.cyTarget.json().data.start) != 'undefined') {
 				if (evt.cyTarget.json().data.start) {
 					document.getElementById('inputStartstop').value = "Start";
@@ -71,11 +68,16 @@ function toggleSidebar(i, evt) {
 				}
 			}
 			break;
+		default:
+			console.error("Invalid sidebar requested: " + sidebarName);
+			showOnlySidebar(sidebarEnum.DEFAULT);
+			setSidebar({sidebar: sidebarEnum.DEFAULT});
+			break;
 	}
 }
 
 function typeChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all block types
 	for (var index in blockTypes) {
@@ -96,7 +98,7 @@ function setBlockType(element, blockType) {
 }
 
 function actionChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all action types
 	for (var index in actionTypes) {
@@ -118,13 +120,13 @@ function setActionType(element, actionType) {
 
 function actionDescriptionChange() {
 	var new_description = document.getElementById('actionDescription').value;
-	cy.$('#' + selectedId).data('description', new_description);
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description});
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
+	var json = cy.$('#' + STATE.canvas.selectedId).json();
+	cy.$('#' + STATE.canvas.selectedId).css({label: json.data.description});
 }
 
 function contextChange(i) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 
 	// Remove classes for all action types
 	for (var index in contextTypes) {
@@ -147,18 +149,18 @@ function setContextType(element, contextType) {
 
 function methodChange() {
 	var new_method = document.getElementById('inputMethod').value;
-	cy.$('#' + selectedId).data('method', new_method);
+	cy.$('#' + STATE.canvas.selectedId).data('method', new_method);
 	updateLabel();
 }
 
 function descriptionChange() {
 	var new_description = document.getElementById('inputDescription').value;
-	cy.$('#' + selectedId).data('description', new_description);
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
 	updateLabel();
 }
 
 function startstopChange(start) {
-	var ele = cy.$('#' + selectedId);
+	var ele = cy.$('#' + STATE.canvas.selectedId);
 	if (start) {
 		ele.data('start', true);
 		ele.css({label: "Start"});
@@ -172,13 +174,13 @@ function startstopChange(start) {
 
 function objectiveChange() {
 	var new_description = document.getElementById('inputObjective').value;
-	cy.$('#' + selectedId).data('description', new_description);
-	cy.$('#' + selectedId).css({label: new_description});
+	cy.$('#' + STATE.canvas.selectedId).data('description', new_description);
+	cy.$('#' + STATE.canvas.selectedId).css({label: new_description});
 }
 
 function updateLabel() {
-	var json = cy.$('#' + selectedId).json();
-	cy.$('#' + selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
+	var json = cy.$('#' + STATE.canvas.selectedId).json();
+	cy.$('#' + STATE.canvas.selectedId).css({label: json.data.description + "\n\n\n\n" + json.data.method});
 }
 
 function redraw() {
@@ -212,7 +214,7 @@ function loadFavoriteTemplates() {
 
     var lemDivs = "";
 
-		if (globalUsername == undefined) {
+		if (STATE.login.username == undefined) {
 			$("#loginForFavorites").show();
 			$("#templatePanel").hide()
 		} else {
@@ -220,8 +222,8 @@ function loadFavoriteTemplates() {
 			$("#templatePanel").show()
 		}
 
-    for (lemIndex in globalFavoriteLemsDict) {
-      var lem = globalFavoriteLemsDict[lemIndex];
+    for (lemIndex in STATE.favoriteLems.dict) {
+      var lem = STATE.favoriteLems.dict[lemIndex];
 
       var imgURL = lem.thumbnail;
       var id = lem._id.$oid;

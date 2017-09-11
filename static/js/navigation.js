@@ -1,8 +1,6 @@
-var globalPage = 'canvas';
-
 function showPage(page) {
   if (page == 'canvas') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
     $('#main_window').removeClass('hidden');
@@ -12,12 +10,12 @@ function showPage(page) {
     $('#publicLemList').addClass('hidden');
     $('#public_button').removeClass('active');
 
-    if (globalUsername) {
+    if (STATE.login.username) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
   } else if (page == 'public') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
     $('#publicLemList').removeClass('hidden');
@@ -27,15 +25,15 @@ function showPage(page) {
     $('#main_window').addClass('hidden');
     $('#canvas_button').removeClass('active');
 
-    if (globalUsername) {
+    if (STATE.login.username) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
   } else if (page == 'user') {
-    globalPage = page;
+    setCurrentPage({page: page});
 
     // Show
-    if (globalUsername) {
+    if (STATE.login.username) {
       $('#userLemList').removeClass('hidden');
       $('#user_button').addClass('active');
     }

@@ -60,8 +60,8 @@ function generateJson() {
 
           //convertIdToInt(node.data);
           node.data.building_block = buildingBlockIDNumeric;
-          node.data.id = new_id;
-          new_id++;
+          node.data.id = STATE.canvas.new_unique_id;
+          incrementNewId();
 
           lem.notations.push(node.data);
       }

@@ -1,5 +1,3 @@
-var new_id = 0;
-
 function allowDrop(ev) {
 	ev.preventDefault();
 }
@@ -35,36 +33,33 @@ function addBuildingBlockToCanvas(data, x_coord, y_coord) {
 		y_coord = 0;
 	}
 
-	// Ensure id is unique
-	while(cy.$("#" + new_id).length > 0) {
-		++new_id;
-	}
+	ensureNewIdIsUnique()
 
 	if (data.includes("Context")) {
 		var ct = data.replace("Context", "");
-		var context = {id: new_id, context_type: ct.replace("_", " "), building_blocks: [], actions: [], notations: []};
+		var context = {id: STATE.canvas.new_unique_id, context_type: ct.replace("_", " "), building_blocks: [], actions: [], notations: []};
 		var new_node = cy.add([{group: "nodes", data: context, position: {x: x_coord, y: y_coord}, style: {label: context.context_type}, classes: ct + " context"}]);
 	} else if (data.includes("startstop")) {
-		cy.add({group: "nodes", data: {id: new_id, start: true}, position: {x: x_coord, y: y_coord}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
+		cy.add({group: "nodes", data: {id: STATE.canvas.new_unique_id, start: true}, position: {x: x_coord, y: y_coord}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
 	} else if (data.includes("favorite_")) {
 		addFavoriteToCanvas(data.split('_')[1]);
 	} else if (data.includes("objective")) {
-		cy.add({group: "nodes", data: {id: new_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
+		cy.add({group: "nodes", data: {id: STATE.canvas.new_unique_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
 	} else {
 		var description = "{Enter a description}";
 		var method = "{Enter a method}"
-		var buildingBlock = {id: new_id, method: "{Enter a method}", description: description, block_type: data};
+		var buildingBlock = {id: STATE.canvas.new_unique_id, method: "{Enter a method}", description: description, block_type: data};
 		var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: description + " \n\n\n\n " + method}, classes: "buildingBlock " + data}]);
 	}
 
 	cy.resize();
 
-	++new_id;
+	incrementNewId();
 }
 
 function addFavoriteToCanvas(lem_id) {
   showPage('canvas');
-  var lem = globalFavoriteLemsDict[lem_id];
+  var lem = STATE.favoriteLems.dict[lem_id];
   var json = {"lem": lem};
   renderLem(json);
   redraw();

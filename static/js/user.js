@@ -1,17 +1,19 @@
-var globalUsername = undefined;
-var globalPage = 'canvas';
-
 $(function() {
   $.get(currentuserRoute, function(data, status) {
     var userJson = JSON.parse(data);
 
     if (userJson.email) {
-      globalUsername = userJson.email;
-      loginState('loggedIn');
+      setLoginState({
+        state: loginEnum.LOGGED_IN,
+        username: userJson.email,
+      });
     } else {
-      globalUsername = undefined;
-      loginState('ready');
+      setLoginState({
+        state: loginEnum.NOT_LOGGED_IN,
+      });
     }
+
+    updateLoginUI();
   });
 
   resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
@@ -32,14 +34,14 @@ function resetLocalFavoritesList() {
       newLemList[lemID] = lem;
     }
 
-    globalFavoriteLemsDict = newLemList;
+    setFavoriteLemsDict({favoriteLemsDict: newLemList});
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
       topArgs[i]();
     }
   }).error(function () {
-    globalFavoriteLemsDict = {};
+    setFavoriteLemsDict({favoriteLemsDict: {}});
 
     // Call all callbacks
     for (var i = 0; i < topArgs.length; i++) {
@@ -57,7 +59,8 @@ $(function() {
   $("#loginButton").on('click', function(e) {
     e.preventDefault();
 
-    loginState('loading');
+    setLoginState({state: loginEnum.LOGGING_IN});
+    updateLoginUI();
 
     login($("#usernameField").val(), $("#passwordField").val());
 
@@ -69,23 +72,23 @@ $(function() {
 
 });
 
-function loginState(state) {
-  switch (state) {
-    case "loading":
+function updateLoginUI() {
+  switch (STATE.login.status) {
+    case loginEnum.LOGGING_IN:
       $("#usernameField")[0].disabled = true;
       $("#passwordField")[0].disabled = true;
       $("#loginButton")[0].disabled = true;
       $("#loginButton").html('<span class="glyphicon glyphicon-refresh spinning"></span> Loading...');
       $("#registerButton").hide();
       break;
-    case "ready":
+    case loginEnum.NOT_LOGGED_IN:
       $("#usernameField")[0].disabled = false;
       $("#passwordField")[0].disabled = false;
       $("#loginButton")[0].disabled = false;
       $("#loginButton").html('Login');
       $("#registerButton").show();
       break;
-    case "loggedIn":
+    case loginEnum.LOGGED_IN:
       $("#shareDropdown").show();
       $("#saveDropdown").show();
 
@@ -93,10 +96,25 @@ function loginState(state) {
 
       $("#loginForm").hide();
       $("#currentUserEmail").empty();
-      $("#currentUserEmail").append(globalUsername);
+      $("#currentUserEmail").append(STATE.login.username);
       $("#currentUserInfo").show();
 
       loadUserLEMs();
+      break;
+    case loginEnum.FAILED_TO_LOGIN:
+      $("#usernameField")[0].disabled = false;
+      $("#passwordField")[0].disabled = false;
+      $("#loginButton")[0].disabled = false;
+      $("#loginButton").html('Login');
+      $("#registerButton").show();
+
+      $("#loginErrorText").empty();
+      $("#loginErrorText").append("Failed to login");
+      $("#loginErrorText").show();
+      break;
+    default:
+      console.error("Invalid login state: " + state);
+      setLoginState({state: loginEnum.NOT_LOGGED_IN});
       break;
   }
 
@@ -116,7 +134,8 @@ function login(email, password) {
   loginInfo.pass = password;
 
   $.post(loginRoute, JSON.stringify(loginInfo), function(data, status){
-    loginState('ready');
+    setLoginState({state: loginEnum.NOT_LOGGED_IN});
+    updateLoginUI();
 
     if (data === "User not found") {
       $("#usernameField").addClass("invalid");
@@ -132,23 +151,29 @@ function login(email, password) {
       $("#loginErrorText").append(data);
       $("#loginErrorText").show();
     } else if (status == "success") {
-      globalUsername = loginInfo.email;
-      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
+      setLoginState({
+        state: loginEnum.LOGGED_IN,
+        username: loginInfo.email
+      });
+      updateLoginUI();
 
-      loginState('loggedIn');
+      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
     }
   }).error(function() {
-    alert("Failed to login");
+    setLoginState({
+      state: loginEnum.FAILED_TO_LOGIN
+    });
+    updateLoginUI();
   });
 }
 
 function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
-      globalUsername = undefined;
+      setUsername({username: undefined});
       resetLocalFavoritesList(loadPublicLEMs, loadFavoriteTemplates);
 
-      if (globalPage == 'user') {
+      if (STATE.currentPage == 'user') {
         showPage('canvas');
       }
 
