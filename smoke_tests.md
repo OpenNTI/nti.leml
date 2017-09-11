@@ -79,6 +79,8 @@
   - Search
   - Add to canvas
   - Favorite
-  - Check that it adds to the favorites template on canvas sidebar
-- Private LEMs
+  - Check that it adds to the favorites template on canvas sidebar  
+ - Private LEMs
   - View private LEMs
+  - Delete a private LEM
+  - Add to canvas
