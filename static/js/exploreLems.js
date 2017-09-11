@@ -145,6 +145,8 @@ function searchLems() {
 
 function loadPublicLEMs() {
   $.get(lemallRoute, function(data, status) {
+    console.log(status);
+
     var lems = JSON.parse(data);
 
     lemsDict = {}
@@ -164,6 +166,8 @@ function loadPublicLEMs() {
 
 function loadUserLEMs() {
   $.get(lemuserRoute, function(data, status) {
+    console.log(status);
+
     var lems = JSON.parse(data);
 
     lemsDict = {}
@@ -191,31 +195,40 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
 
   var lemSection = $("#" + sectionID);
 
-  var lemDivs = "";
-  for (lemIndex in lems) {
-    var lem = JSON.parse(lems[lemIndex]);
+  if (lems.length === 0) {
+      let offsetDiv = "<div class='col-md-3'></div>";
+      let blackboardGlyphicon = "<span class='glyphicon glyphicon-blackboard' style='font-size: 100px;'/>";
+      let callToActionText = "<p class='lead'>No LEMs have been published. Create your own and share it with the world!</p>";
+      let callToActionDiv = "<div>" + callToActionText + " </div>";
+      let noLemsDiv = "<div class='col-md-6' style='text-align: center; margin-top: 10%;'>" + blackboardGlyphicon + callToActionDiv + "</div>";
+      lemSection.html(offsetDiv + noLemsDiv)
+  } else {
+    var lemDivs = "";
+    for (lemIndex in lems) {
+      var lem = JSON.parse(lems[lemIndex]);
 
-    var imgURL = lem.thumbnail;
-    var id = lem._id.$oid;
+      var imgURL = lem.thumbnail;
+      var id = lem._id.$oid;
 
-    // default img
-    if (!imgURL) {
-      imgURL = "../static/img/templates/no_thumbnail.png";
+      // default img
+      if (!imgURL) {
+        imgURL = "../static/img/templates/no_thumbnail.png";
+      }
+
+      const isModal = false;
+      lemDivs += generateLemRowHtml(id, isPrivate, isModal);
     }
 
-    const isModal = false;
-    lemDivs += generateLemRowHtml(id, isPrivate, isModal);
+    // This search bar searches the public lem page, not user lems
+    var str_test = "";
+    if (showSearch) {
+      str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+    }
+
+    var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
+
+    lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
   }
-
-  // This search bar searches the public lem page, not user lems
-  var str_test = "";
-  if (showSearch) {
-    str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
-  }
-
-  var refreshButton = '<button class="btn" onclick="loadUserLEMs();"style="margin-bottom:10px;">Refresh</button>';
-
-  lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
 }
 
 function deleteLem(lemJson) {
