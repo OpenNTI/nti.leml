@@ -22,11 +22,9 @@ function generateJson() {
       } else if (node.classes.includes("buildingBlock")) {
           lem.building_blocks.push(node.data);
       } else if (node.classes.includes("notation")) {
-          //console.log(node);
           var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
-          var buildingBlockIDNumeric = buildingBlockID;
 
-          node.data.building_block = buildingBlockIDNumeric;
+          node.data.building_block = buildingBlockID;
           node.data.id = STATE.canvas.new_unique_id;
           incrementNewId();
 
