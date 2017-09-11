@@ -24,6 +24,7 @@ function generateJson() {
       } else if (node.classes.includes("notation")) {
           var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
           node.data.building_block = buildingBlockID;
+          node.data.description = node.data.description || "";
           lem.notations.push(node.data);
       }
     });
