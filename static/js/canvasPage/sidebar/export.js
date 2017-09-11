@@ -23,11 +23,7 @@ function generateJson() {
           lem.building_blocks.push(node.data);
       } else if (node.classes.includes("notation")) {
           var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
-
           node.data.building_block = buildingBlockID;
-          node.data.id = STATE.canvas.new_unique_id;
-          incrementNewId();
-
           lem.notations.push(node.data);
       }
     });
