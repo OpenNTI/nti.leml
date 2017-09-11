@@ -11,7 +11,14 @@ function generateJson() {
           edge.data.description = "";
         }
 
-        lem.actions.push(edge.data);
+        /*
+        Don't save notation edges
+        They are not any of the valid actions types (Learner, System, Facilitator)
+        Notation edges will be generated from the building block ID on the notation
+        */
+        if (edge.data.action_type !== "notationEdge") {
+          lem.actions.push(edge.data);
+        }
     });
   }
 

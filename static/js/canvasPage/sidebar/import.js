@@ -130,8 +130,9 @@ function renderLem(json) {
       var notation = notations[index];
 
       // Set data to notation because notation already includes 'id', 'parent, and all other info
-      elements.push({data: notation, style: {label: notation.description}, classes: "notation"},
-        {data: {id: notation.id, source: notation.id, target: notation.building_block}, classes: 'notationEdge'}
+      elements.push(
+        {data: notation, style: {label: notation.description}, classes: "notation"},
+        {data: {id: "notionEdge_" + notation.id, source: notation.id, target: notation.building_block, action_type: "notationEdge", description: ""}, classes: 'notationEdge'}
       );
     }
   }

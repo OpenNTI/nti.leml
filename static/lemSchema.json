@@ -78,7 +78,7 @@
               },
               "action_type": {
                 "type": "string",
-                "enum": ["Learner Action", "Facilitator Action", "System Action", "notationEdge"]
+                "enum": ["Learner Action", "Facilitator Action", "System Action"]
               },
               "source": {
                 "type": "string"
