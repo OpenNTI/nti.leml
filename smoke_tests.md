@@ -60,10 +60,11 @@
 
 
 ## Logged in
-#### Canvas [see above](#canvas)
+#### Canvas
+ - [See not logged in](#canvas)
 
 #### Sidebar
- - [See above](#sidebar)
+ - [See not logged in](#sidebar)
  - Save
  - Share
   - Test that these appear in Public LEMs when not logged in and when logged in as a different user
