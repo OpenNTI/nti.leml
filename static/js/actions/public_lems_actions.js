@@ -5,7 +5,12 @@ let publicLemsReduce = reducerCreator(publicLemsSelector, "publicLems");
 let publicLemsActionCreator = createReducerSpecificActionCreator(publicLemsReduce);
 
 function publicLemsReceivedAction(prevPublicLemsState, params) {
-      loadLemsHtml(params.publicLems, false, true);
+      // Call this once the state is updated
+      setTimeout(
+        function() {
+          loadLemsHtml(params.publicLems, false, true);
+        },
+        100);
 
       return {
         ...prevPublicLemsState,

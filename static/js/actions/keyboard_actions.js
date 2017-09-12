@@ -16,7 +16,7 @@ let shiftPressed = keyboardActionCreator("Shift pressed", shiftPressedAction);
 function shiftReleasedAction(prevKeyboardState) {
   return {
     ...prevKeyboardState,
-    shiftReleased: true
+    shiftPressed: false
   }
 }
 let shiftReleased = keyboardActionCreator("Shift released", shiftReleasedAction);
