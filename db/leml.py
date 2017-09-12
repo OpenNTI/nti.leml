@@ -31,6 +31,7 @@ class Action(EmbeddedDocument):
 
 # Notation Model
 class Notation(EmbeddedDocument):
+	id = StringField(required=True)
 	building_block = StringField(required=True)
 	description = StringField(required=True)
 
@@ -63,7 +64,7 @@ def toLem(json_dict, user_email):
 		block_objs.append(Block(id=block["id"], block_type=block["block_type"], description=block["description"], method=block["method"]))
 	notation_objs = []
 	for notation in json_dict["notations"]:
-		notation_objs.append(Notation(building_block=notation["building_block"], description=notation["description"]))
+		notation_objs.append(Notation(id=notation["id"], building_block=notation["building_block"], description=notation["description"]))
 	context_objs = []
 	for context in json_dict["contexts"]:
 		context_objs.append(Context(id=context["id"], context_type=context["context_type"], building_blocks=context["building_blocks"], notations=context["notations"]))

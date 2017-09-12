@@ -60,8 +60,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
         data.parent = val.data.id;
         cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
 
-        // Convert id from string to int
-        var addedBuildingBlockID = evt.cyTarget.id() * 1;
+        var addedBuildingBlockID = evt.cyTarget.id();
         val.data.building_blocks.push(addedBuildingBlockID);
 
         // Add edges

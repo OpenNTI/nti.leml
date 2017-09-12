@@ -11,7 +11,14 @@ function generateJson() {
           edge.data.description = "";
         }
 
-        lem.actions.push(edge.data);
+        /*
+        Don't save notation edges
+        They are not any of the valid actions types (Learner, System, Facilitator)
+        Notation edges will be generated from the building block ID on the notation
+        */
+        if (edge.data.action_type !== "notationEdge") {
+          lem.actions.push(edge.data);
+        }
     });
   }
 
@@ -22,14 +29,9 @@ function generateJson() {
       } else if (node.classes.includes("buildingBlock")) {
           lem.building_blocks.push(node.data);
       } else if (node.classes.includes("notation")) {
-          //console.log(node);
           var buildingBlockID = cy.$("#"+node.data.id).outgoers()[1].id();
-          var buildingBlockIDNumeric = buildingBlockID;
-
-          node.data.building_block = buildingBlockIDNumeric;
-          node.data.id = STATE.canvas.new_unique_id;
-          incrementNewId();
-
+          node.data.building_block = buildingBlockID;
+          node.data.description = node.data.description || "";
           lem.notations.push(node.data);
       }
     });

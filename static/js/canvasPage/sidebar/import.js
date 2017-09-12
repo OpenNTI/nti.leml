@@ -118,7 +118,7 @@ function renderLem(json) {
       action = actions[index];
 
       var styleClass = action.action_type.replace(" ", "_");
-      
+
       // Set data to action because action already includes 'id', 'source', 'target', and all other info
       elements.push({data: action, classes: styleClass, style: {label: action.description}});
     }
@@ -128,12 +128,13 @@ function renderLem(json) {
   if (notations) {
     for (var index in notations) {
       var notation = notations[index];
-      console.log(notation);
-      notation.id = "object" + notation.building_block;
 
-      // Set data to notation because notation already includes 'id', 'parent, and all other info
-      elements.push({data: notation, style: {label: notation.description}, classes: "notation"},
-        {data: {id: "objectivelink" + notation.id, source: notation.id, target: notation.building_block}, classes: 'notationEdge'}
+      let notationNode = {data: notation, style: {label: notation.description}, classes: "notation"};
+      let notationEdge = {data: {id: "notionEdge_" + notation.id, source: notation.id, target: notation.building_block, action_type: "notationEdge", description: ""}, classes: 'notationEdge'};
+
+      elements.push(
+        notationNode,
+        notationEdge
       );
     }
   }
