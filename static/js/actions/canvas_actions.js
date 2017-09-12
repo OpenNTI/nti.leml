@@ -1,7 +1,7 @@
 function canvasSelector(state) {
   return state.canvas;
 }
-let canvasReduce = reducerCreator(canvasSelector);
+let canvasReduce = reducerCreator(canvasSelector, "canvas");
 let canvasActionCreator = createReducerSpecificActionCreator(canvasReduce);
 
 function incrementNewIdAction(prevCanvasState) {

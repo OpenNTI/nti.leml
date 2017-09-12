@@ -16,6 +16,13 @@ const loginEnum = {
   LOGGED_IN: "logged in",
 };
 
+const dataRequestEnum = {
+  NOT_REQUESTED: "not requested",
+  WAITING: "waiting",
+  SUCCESS: "success",
+  FAILURE: "failure"
+};
+
 var STATE = {
   currentPage: 'canvas',
   currentSidebar: sidebarEnum.DEFAULT,
@@ -31,10 +38,12 @@ var STATE = {
     selectedId: null,
   },
   publicLems: {
-    dict: {}
+    dict: {},
+    status: dataRequestEnum.NOT_REQUESTED
   },
   privateLems: {
-    dict: {}
+    dict: {},
+    status: dataRequestEnum.NOT_REQUESTED
   },
   favoriteLems: {
     dict: {}
@@ -52,13 +61,13 @@ function reduce(action, name, params) {
   }
 }
 
-function reducerCreator(selector) {
+function reducerCreator(selector, subStateName) {
   return function(action, name, params) {
     reduce(function(prevState, params) {
       let prevSelectedState = selector(prevState);
       return {
         ...prevState,
-        canvas: action(prevSelectedState, params)
+        [subStateName]: action(prevSelectedState, params)
       }
     },
     name,

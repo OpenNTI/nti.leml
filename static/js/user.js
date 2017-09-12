@@ -16,7 +16,7 @@ $(function() {
     updateLoginUI();
   });
 
-  resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
+  resetLocalFavoritesList(requestPublicLems, requestPrivateLems, loadFavoriteTemplates);
 });
 
 function resetLocalFavoritesList() {
@@ -99,7 +99,7 @@ function updateLoginUI() {
       $("#currentUserEmail").append(STATE.login.username);
       $("#currentUserInfo").show();
 
-      loadUserLEMs();
+      requestPrivateLems();
       break;
     case loginEnum.FAILED_TO_LOGIN:
       $("#usernameField")[0].disabled = false;
@@ -157,7 +157,7 @@ function login(email, password) {
       });
       updateLoginUI();
 
-      resetLocalFavoritesList(loadPublicLEMs, loadUserLEMs, loadFavoriteTemplates);
+      resetLocalFavoritesList(requestPublicLems, requestPrivateLems, loadFavoriteTemplates);
     }
   }).error(function() {
     setLoginState({
@@ -171,10 +171,10 @@ function logout() {
   $.post(logoutRoute, function(data, status){
     if (status == "success") {
       setUsername({username: undefined});
-      resetLocalFavoritesList(loadPublicLEMs, loadFavoriteTemplates);
+      resetLocalFavoritesList(requestPublicLems, loadFavoriteTemplates);
 
       if (STATE.currentPage == 'user') {
-        showPage('canvas');
+        setCurrentPage({page:'canvas'});
       }
 
       $("#shareDropdown").hide();
