@@ -227,8 +227,14 @@ function loadNewCytoscapeWith(elements) {
   cy.snapToGrid('snapOn');
   cy.snapToGrid('gridOn');
 
+  cy.on('click', function(evt) {
+    let canvas = document.getElementById("canvas_input");
+    canvas.focus();
+  });
+
   // When a node is selected
   cy.on('select', 'node', function (evt) {
+
     if (STATE.keyboard.shiftPressed) {
       cy.$("#" + evt.cyTarget._private.data.id).unselect();
       drawEdgeBetweenSelectedNodes(evt);
@@ -269,16 +275,47 @@ function loadNewCytoscapeWith(elements) {
     cy.remove(evt.cyTarget);
     toggleSidebar(sidebarEnum.DEFAULT, evt);
   });
+
+  cy.on('remove', function(evt) {
+    if (evt.cyTarget.children(".startstop").length > 0) {
+      let cytoscapeWindow = cy.extent();
+
+      if (evt.cyTarget.children("#start").length > 0) {
+        cy.$("#start").unselect();
+        cy.$("#start").remove();
+
+        let x1 = cytoscapeWindow.x1 + (cytoscapeWindow.w / 10);
+        cy.add(startNode(x1,0));
+      }
+
+      if (evt.cyTarget.children("#stop").length > 0) {
+        cy.$("#stop").unselect();
+        cy.$("#stop").remove();
+
+        let x2 = cytoscapeWindow.x2 - (cytoscapeWindow.w / 10);
+        cy.add(stopNode(x2,0));
+      }
+    }
+  });
+}
+
+function startNode(x, y) {
+  return {group: "nodes", data: {id: "start", start: true}, position: {x: x, y: y}, style: {label: "Start", class: "startstop"}, classes: "startstop"};
+}
+
+function stopNode(x, y) {
+  return {group: "nodes", data: {id: "stop", start: false}, position: {x: x, y: y}, style: {label: "Stop", class: "startstop"}, classes: "startstop"};
 }
 
 function loadDefaultCytoscape() {
   loadNewCytoscapeWith([]);
 
-  var wind = cy.extent();
-  var x1 = wind.x1 + (wind.w / 10);
-  var x2 = wind.x2 - (wind.w / 10);
-  cy.add({group: "nodes", data: {id: "start", start: true}, position: {x: x1, y: 0}, style: {label: "Start", class: "startstop"}, classes: "startstop"});
-  cy.add({group: "nodes", data: {id: "stop", start: false}, position: {x: x2, y: 0}, style: {label: "Stop", class: "startstop"}, classes: "startstop"});
+  let cytoscapeWindow = cy.extent();
+  let x1 = cytoscapeWindow.x1 + (cytoscapeWindow.w / 10);
+  let x2 = cytoscapeWindow.x2 - (cytoscapeWindow.w / 10);
+
+  cy.add(startNode(x1, 0));
+  cy.add(stopNode(x2, 0));
 }
 
 function showCanvasError(error) {

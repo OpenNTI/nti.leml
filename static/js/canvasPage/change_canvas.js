@@ -86,9 +86,10 @@ function removeSelectedElements() {
 
 function removeSelectedNodes() {
   let nodes = cy.json().elements.nodes;
-  if (nodes.length > 0) {
+  if (nodes && nodes.length > 0) {
     nodes.map(function(val) {
       if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).unselect();
         cy.$("#" + val.data.id).remove();
       }
     });
@@ -97,9 +98,10 @@ function removeSelectedNodes() {
 
 function removeSelectedEdges() {
   let edges = cy.json().elements.edges;
-  if (edges.length > 0) {
+  if (edges && edges.length > 0) {
     edges.map(function(val) {
       if (val.selected && !val.classes.includes("startstop")) {
+        cy.$("#" + val.data.id).unselect();
         cy.$("#" + val.data.id).remove();
       }
     });

@@ -11,13 +11,8 @@ document.addEventListener('keyup', function(event) {
     }, false);
 
 document.addEventListener('keydown', function(event) {
-        if (event.key === "Backspace") {
-          removeSelectedElements();
-        }
-    }, false);
-
-document.addEventListener('keydown', function(event) {
-        if (event.key === "Delete") {
+        let canvasHasFocus =  document.activeElement.id === "canvas_input";
+        if (canvasHasFocus && (event.key === "Backspace" || event.key === "Delete")) {
           removeSelectedElements();
         }
     }, false);

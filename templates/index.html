@@ -42,25 +42,11 @@
   <link rel="stylesheet" href="/static/css/style.css"></style>
 
   <!-- Local JS files-->
-  <script type="text/javascript" src="/static/js/json_validator.js"></script>
-  <script type="text/javascript" src="/static/js/import.js"></script>
-  <script type="text/javascript" src="/static/js/export.js"></script>
-  <script type="text/javascript" src="/static/js/image_download.js"></script>
-  <script type="text/javascript" src="/static/js/drag_and_drop.js"></script>
-  <script type="text/javascript" src="/static/js/sidebar.js"></script>
-  <script type="text/javascript" src="/static/js/register.js"></script>
   <script type="text/javascript" src="/static/js/routes.js"></script>
-  <script type="text/javascript" src="/static/js/user.js"></script>
-  <script type="text/javascript" src="/static/js/exploreLems.js"></script>
   <script type="text/javascript" src="/static/js/loadHtml.js"></script>
   <script type="text/javascript" src="/static/js/extensions.js"></script>
-  <script type="text/javascript" src="/static/js/favorite.js"></script>
-  <script type="text/javascript" src="/static/js/comment.js"></script>
-  <script type="text/javascript" src="/static/js/rating.js"></script>
-  <script type="text/javascript" src="/static/js/keypress.js"></script>
-  <script type="text/javascript" src="/static/js/change_canvas.js"></script>
-
   <script type="text/javascript" src="/static/js/state.js"></script>
+
   <script type="text/javascript" src="/static/js/actions/keyboard_actions.js"></script>
   <script type="text/javascript" src="/static/js/actions/canvas_actions.js"></script>
   <script type="text/javascript" src="/static/js/actions/public_lems_actions.js"></script>
@@ -69,6 +55,26 @@
   <script type="text/javascript" src="/static/js/actions/navigation_actions.js"></script>
   <script type="text/javascript" src="/static/js/actions/login_actions.js"></script>
   <script type="text/javascript" src="/static/js/actions/sidebar_actions.js"></script>
+
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/image_download.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/import.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/export.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/sidebar.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/save_share.js"></script>
+
+  <script type="text/javascript" src="/static/js/canvasPage/change_canvas.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/drag_and_drop.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/json_validator.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/keypress.js"></script>
+
+  <script type="text/javascript" src="/static/js/navbar/login_logout.js"></script>
+  <script type="text/javascript" src="/static/js/navbar/register.js"></script>
+
+  <script type="text/javascript" src="/static/js/publicLemsPage/favorite.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/comment.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/rating.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/exploreLems.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/userFavorites.js"></script>
 
   <script type="text/javascript">
 	  $(window).bind('beforeunload', function(){
@@ -117,7 +123,8 @@
     <div class="row">
       <div class="col-md-9" id="content">
         <div id="cy" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <script type="text/javascript" src="/static/js/cytoscape_canvas.js"></script>
+        <script type="text/javascript" src="/static/js/canvasPage/cytoscape_canvas.js"></script>
+        <input type="text" style="opacity:0; height:0; width:0;" id="canvas_input"></input>
       </div>
 
       <div class="col-md-3 open" id="default-sidebar">
