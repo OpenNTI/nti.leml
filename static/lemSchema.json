@@ -5,18 +5,6 @@
     "lem": {
       "type": "object",
       "properties": {
-        "startIDs": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "stopIDs": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
         "building_blocks": {
           "type": "array",
           "items": {

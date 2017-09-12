@@ -127,13 +127,19 @@
         "action_type": "Facilitator Action",
         "source": 118,
         "target": 117
+      },
+      {
+        "id": 911,
+        "action_type": "Facilitator Action",
+        "source": -1111,
+        "target": 104
+      },
+      {
+        "id": 912,
+        "action_type": "Facilitator Action",
+        "source": 117,
+        "target": -2222
       }
-    ],
-    "startIDs": [
-      104
-    ],
-    "stopIDs": [
-      117
     ]
   }
 }
