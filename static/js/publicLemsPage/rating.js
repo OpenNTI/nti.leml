@@ -20,64 +20,78 @@ function setupRatingStars(defaultRating) {
   setRating(defaultRating);
 
   $(".first-star").hover(function() {
-    setRating(1);
+    setRating(1, true);
   }, function() {
     setRating(defaultRating);
   }).attr('onclick', 'rate(this.parentElement.parentElement, 1);');
 
   $(".second-star").hover(function() {
-    setRating(2);
+    setRating(2, true);
   }, function() {
     setRating(defaultRating);
   }).attr('onclick', 'rate(this.parentElement.parentElement, 2);');
 
   $(".third-star").hover(function() {
-    setRating(3);
+    setRating(3, true);
   }, function() {
     setRating(defaultRating);
   }).attr('onclick', 'rate(this.parentElement.parentElement, 3);');
 
   $(".fourth-star").hover(function() {
-    setRating(4);
+    setRating(4, true);
   }, function() {
     setRating(defaultRating);
   }).attr('onclick', 'rate(this.parentElement.parentElement, 4);');
 
   $(".fifth-star").hover(function() {
-    setRating(5);
+    setRating(5, true);
   }, function() {
     setRating(defaultRating);
   }).attr('onclick', 'rate(this.parentElement.parentElement, 5);');
 }
 
-function setRating(rating) {
-  unstar("first");
-  unstar("second");
-  unstar("third");
-  unstar("fourth");
-  unstar("fifth");
+function setRating(rating, temporary) {
+  unstar("first", temporary);
+  unstar("second", temporary);
+  unstar("third", temporary);
+  unstar("fourth", temporary);
+  unstar("fifth", temporary);
 
   if (rating > 0.5) {
-    star("first");
+    star("first", temporary);
   }
   if (rating > 1.5) {
-    star("second");
+    star("second", temporary);
   }
   if (rating > 2.5) {
-    star("third");
+    star("third", temporary);
   }
   if (rating > 3.5) {
-    star("fourth");
+    star("fourth", temporary);
   }
   if (rating > 4.5) {
-    star("fifth");
+    star("fifth", temporary);
   }
 }
 
-function star(number) {
-  $("." + number + "-star").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+function star(number, temporary) {
+  let star = $("." + number + "-star");
+  star.removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+
+  if (temporary) {
+    star.css('color','gray');
+  } else {
+    star.css('color', 'black')
+  }
 }
 
-function unstar(number) {
-  $("." + number + "-star").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+function unstar(number, temporary) {
+  let star = $("." + number + "-star");
+  star.removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+
+  if (temporary) {
+    star.css('color','gray');
+  } else {
+    star.css('color', 'black')
+  }
 }
