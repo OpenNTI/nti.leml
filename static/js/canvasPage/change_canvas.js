@@ -46,11 +46,11 @@ function drawEdgeBetweenSelectedNodes(evt) {
       } else if (selectedNode.classes.includes("context")) { // If the selected node is a context
         if (evt.cyTarget.id() != selectedNode.data.id) {
           if (!evt.cyTarget.json().classes.includes("context")) {
-            let selectedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
-            let selectedNode = selectedNodeInfo.node;
-            let selectedNodeEdges = selectedNodeInfo.edges;
+            let clickedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
+            let clickedNode = clickedNodeInfo.node;
+            let clickedNodeEdges = clickedNodeInfo.edges;
 
-            createAndAddBuildingBlockToContext(selectedNode, selectedNodeEdges, selectedNode);
+            createAndAddBuildingBlockToContext(clickedNode, clickedNodeEdges, selectedNode);
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
@@ -96,7 +96,7 @@ function createAndAddBuildingBlockToContext(buildingBlockNode, buildingBlockEdge
   buildingBlockNode.data.parent = context.data.id;
   cy.add(buildingBlockNode);
 
-  context.data.building_blocks.push(buildingBlockNode.id);
+  context.data.building_blocks.push(buildingBlockNode.data.id);
 
   cy.add(buildingBlockEdges);
 }
