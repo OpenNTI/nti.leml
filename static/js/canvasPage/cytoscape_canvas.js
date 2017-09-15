@@ -220,6 +220,7 @@ function loadNewCytoscapeWith(elements) {
     selectionType: 'single',
     autounselectify: false,
 
+
   });
 
   cy.center();
@@ -272,8 +273,10 @@ function loadNewCytoscapeWith(elements) {
 
   // When an edge is right-clicked
   cy.on('cxttap', 'edge', function(evt) {
-    cy.remove(evt.cyTarget);
-    toggleSidebar(sidebarEnum.DEFAULT, evt);
+    if (evt.cyTarget.selected()) {
+      cy.remove(evt.cyTarget);
+      toggleSidebar(sidebarEnum.DEFAULT, evt);
+    }
   });
 
   cy.on('remove', function(evt) {
