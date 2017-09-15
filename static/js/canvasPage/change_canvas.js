@@ -45,29 +45,9 @@ function drawEdgeBetweenSelectedNodes(evt) {
       } else if (val.classes.includes("context")) { // If the selected node is a context
         if (evt.cyTarget.id() != val.data.id) {
           if (!evt.cyTarget.json().classes.includes("context")) {
-            let selectedNode = {
-              group: "nodes",
-              data: evt.cyTarget.json().data,
-              position: evt.cyTarget.position(),
-              style: {label: evt.cyTarget.style().label},
-              classes: evt.cyTarget.json().classes
-            };
-
-            let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + evt.cyTarget.id() + '"], edge[target = "' + evt.cyTarget.id() + '"]');
-            var edges = [];
-            for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
-              let edge = edgesConnectedToSelectedNode[index];
-              let edgeJson = edgesConnectedToSelectedNode[index].json();
-              let edgeOutput = {
-                group: "edges",
-                data: edgeJson.data,
-                style: edge.style(),
-                classes: edgeJson.classes
-              }
-              edges.push(edgeOutput);
-            }
-
-            cy.remove(evt.cyTarget);
+            let selectedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
+            let selectedNode = selectedNodeInfo.node;
+            let selectedNodeEdges = selectedNodeInfo.edges;
 
             selectedNode.data.parent = val.data.id;
             cy.add(selectedNode);
@@ -76,9 +56,10 @@ function drawEdgeBetweenSelectedNodes(evt) {
             val.data.building_blocks.push(addedBuildingBlockID);
 
             // Add edges
-            for (let index = 0; index < edges.length; index++) {
-              cy.add(edges[index]);
+            for (let index = 0; index < selectedNodeEdges.length; index++) {
+              cy.add(selectedNodeEdges[index]);
             }
+            
             cy.resize();
           }
         } else { // Go back to the start canvas
@@ -88,6 +69,37 @@ function drawEdgeBetweenSelectedNodes(evt) {
       }
     }
   });
+}
+
+function removeNodeSavingInfo(node) {
+    let selectedNode = {
+      group: "nodes",
+      data: node.json().data,
+      position: node.position(),
+      style: {label: node.style().label},
+      classes: node.json().classes
+    };
+
+    let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + node.id() + '"], edge[target = "' + node.id() + '"]');
+    var edges = [];
+    for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
+      let edge = edgesConnectedToSelectedNode[index];
+      let edgeJson = edgesConnectedToSelectedNode[index].json();
+      let edgeOutput = {
+        group: "edges",
+        data: edgeJson.data,
+        style: edge.style(),
+        classes: edgeJson.classes
+      }
+      edges.push(edgeOutput);
+    }
+
+    cy.remove(node);
+
+    return {
+      node: selectedNode,
+      edges: edges
+    };
 }
 
 function removeSelectedElements() {
