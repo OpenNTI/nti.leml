@@ -237,7 +237,7 @@ function loadNewCytoscapeWith(elements) {
 
     if (STATE.keyboard.shiftPressed) {
       cy.$("#" + evt.cyTarget._private.data.id).unselect();
-      drawEdgeBetweenSelectedNodes(evt);
+      handleOptionClickOnNode(evt);
     } else {
       evt.cyTarget.addClass('selected');
       setSelectedId({selectedId: evt.cyTarget.id()});
@@ -254,7 +254,7 @@ function loadNewCytoscapeWith(elements) {
 
   // When a node is right-clicked
   cy.on('cxttap', 'node', function(evt) {
-    drawEdgeBetweenSelectedNodes(evt);
+    handleOptionClickOnNode(evt);
   });
 
   // When an edge is selected

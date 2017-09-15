@@ -12,7 +12,7 @@ function showSideBarForSelectedElement(evt) {
     }
   }
 
-function drawEdgeBetweenSelectedNodes(evt) {
+function handleOptionClickOnNode(evt) {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(node) {
     if (node.selected) {
