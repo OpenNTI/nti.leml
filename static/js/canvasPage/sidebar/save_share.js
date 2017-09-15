@@ -45,6 +45,23 @@ function openExportDialog(share) {
   }
 
   $("#shareLEM").modal('show');
+
+  function tryFocus(limit, wait) {
+    setTimeout(
+      function() {
+        let nameInput = document.getElementById("lemNameText");
+        nameInput.focus();
+
+        if (document.activeElement != nameInput && limit > 0) {
+          tryFocus(limit - 1, wait);
+        } else if (limit <= 0) {
+          console.log("Focusing name field failed");
+        }
+      },
+    wait);
+  }
+
+  tryFocus(10, 100);
 }
 
 function setupExportModal(title, submitName, submitAction) {
