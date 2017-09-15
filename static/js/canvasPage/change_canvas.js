@@ -44,7 +44,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
             }
           }
       } else if (selectedNode.classes.includes("context")) { // If the selected node is a context
-        if (evt.cyTarget.id() != selectedNode.data.id) {
+        if (evt.cyTarget.id() != selectedNode.data.id) { // If clicked node is different than selected node
           if (!evt.cyTarget.json().classes.includes("context")) {
             let clickedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
             let clickedNode = clickedNodeInfo.node;
