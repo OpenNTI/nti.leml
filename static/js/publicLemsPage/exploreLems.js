@@ -64,7 +64,7 @@ function generateLemRowHtml(lemID, isPrivate, isModal) {
 }
 
 function addToCanvas(lemDetailBlockHtml) {
-  setCurrentPage({page:'canvas'});
+  setCurrentPage({page:pageEnum.CANVAS});
   $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
@@ -132,15 +132,12 @@ function generateCommentSectionHtml(id) {
   });
 }
 
-function searchLems() {
-  var searchValue = $("#search_field").val();
-  $(".lems").each(function(){
-    if($(this).html().toLowerCase().indexOf(searchValue.toLowerCase()) > -1){
-     $(this).removeClass('hidden');
-    } else {
-      $(this).addClass('hidden');
-    }
-  });
+function searchLems(searchText) {
+  if (STATE.currentPage === "public") {
+    applyPublicSearchText({searchText});
+  } else if (STATE.currentPage === "private") {
+    applyPrivateSearchText({searchText});
+  }
 }
 
 function loadLemsHtml(lems, isPrivate, showSearch) {
@@ -176,7 +173,7 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       }
 
       let canvasPicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/canvas.png'/>";
-      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
+      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:pageEnum.CANVAS})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
 
       let sharePicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/share.png'/>";
       let shareText = "Share your LEM with others!";
@@ -206,14 +203,32 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
     }
 
     // This search bar searches the public lem page, not user lems
-    var str_test = "";
+    let searchBar = "";
     if (showSearch) {
-      str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="searchLems();">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+      let searchButton = '<span class="input-group-btn"><button class="btn btn-default" type="button" id="submitSearchButton">Search</button></span>';
+      let searchInput = '<input id="search_field" type="text" class="form-control" placeholder="Search for...">';
+      searchBar = '<div class="row"><div class="col-lg-6"><div class="input-group">' + searchButton + searchInput + '</div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
     }
 
-    var refreshButton = '<button class="btn" onclick="requestPrivateLems();"style="margin-bottom:10px;">Refresh</button>';
+    let removeIcon = '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+    let clearSearch = '<button class="btn btn-danger" type="button" id="clearSearchButton" style="display:none;margin-bottom:10px;margin-left:10px;">Clear Search ' + removeIcon + '</button>';
+    let refreshButton = '<button class="btn" onclick="requestPrivateLems();" style="margin-bottom:10px;">Refresh</button>';
 
-    lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
+    lemSection.html(refreshButton + clearSearch + searchBar + '<div class="row">' + lemDivs + '</div>');
+
+    $("#submitSearchButton").on('click', function() {
+      let searchText = $("#search_field").val();
+      searchLems(searchText);
+    });
+    $("#search_field").on('keydown', function(evt) {
+      if (evt.key === "Enter") {
+        let searchText = $("#search_field").val();
+        searchLems(searchText);
+      }
+    });
+    $("#clearSearchButton").on('click', function(evt) {
+        searchLems("");
+    })
   }
 }
 

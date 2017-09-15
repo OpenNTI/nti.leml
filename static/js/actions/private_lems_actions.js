@@ -49,6 +49,30 @@ function setPrivateLemStatusAction(prevPrivateLemsState, params) {
 }
 let setPrivateLemStatus = privateLemsActionCreator("Set private lems status", setPrivateLemStatusAction);
 
+function applyPrivateSearchTextAction(prevPrivateLemsState, params) {
+  $(".lems").each(function(){
+    if($(this).html().toLowerCase().indexOf(params.searchText.toLowerCase()) > -1){
+     $(this).removeClass('hidden');
+    } else {
+      $(this).addClass('hidden');
+    }
+  });
+
+  if (params.searchText.length > 0) {
+    $("#clearSearchButton").show();
+  } else {
+    $("#clearSearchButton").hide();
+  }
+
+  $("#search_field").val(params.searchText);
+
+  return {
+    ...prevPrivateLemsState,
+    searchText: params.searchText
+  }
+}
+let applyPrivateSearchText = privateLemsActionCreator("Apply private search text", applyPrivateSearchTextAction);
+
 function loadPrivateLEMs() {
   $.get(lemuserRoute)
     .success(function(data, status) {

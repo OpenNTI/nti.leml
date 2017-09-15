@@ -23,8 +23,14 @@ const dataRequestEnum = {
   FAILURE: "failure"
 };
 
+const pageEnum = {
+  CANVAS: "canvas",
+  PUBLIC: "public",
+  USER: "user",
+};
+
 var STATE = {
-  currentPage: 'canvas',
+  currentPage: pageEnum.CANVAS,
   currentSidebar: sidebarEnum.DEFAULT,
   login: {
     username: undefined,
@@ -39,11 +45,13 @@ var STATE = {
   },
   publicLems: {
     dict: {},
-    status: dataRequestEnum.NOT_REQUESTED
+    status: dataRequestEnum.NOT_REQUESTED,
+    searchText: ""
   },
   privateLems: {
     dict: {},
-    status: dataRequestEnum.NOT_REQUESTED
+    status: dataRequestEnum.NOT_REQUESTED,
+    searchText: null
   },
   favoriteLems: {
     dict: {}
