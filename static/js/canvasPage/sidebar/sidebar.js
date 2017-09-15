@@ -227,9 +227,6 @@ function loadFavoriteTemplates() {
       }
 
       lemDivs += generateFavorite(lem.name, imgURL, id);
-      // <label for="/static/exampleLems/blendedLearningFlippedClassroom.lem">Blended Learning Flipped Classroom</label>
-      //     <img id="/static/exampleLems/blendedLearningFlippedClassroom.lem" src="/static/img/templates/blendedLearningFlippedClassroom.png" draggable="true" ondragstart="drag(event, id)" width='100%' border=5>
-      //     <hr>
     }
 
     lemSection.html(lemDivs);
@@ -237,6 +234,6 @@ function loadFavoriteTemplates() {
 
 function generateFavorite(title, imgURL, id) {
 	var label = '<label for="' + id + '">' + title + '</label>'
-	var img = '<img id="favorite_' + id + '" src="' + imgURL + '" draggable="true" ondragstart="drag(event, id)" width="100%" border=5>'
+	var img = '<img id="favorite_' + id + '" src="' + imgURL + '" draggable="true" ondragstart="drag(event, id)" ondblclick=doubleClick(event,id) width="100%" border=5>'
 	return label + img + '<hr>'
 }
