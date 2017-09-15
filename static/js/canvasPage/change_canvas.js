@@ -14,42 +14,43 @@ function showSideBarForSelectedElement(evt) {
 
 function drawEdgeBetweenSelectedNodes(evt) {
   var nodes = cy.json().elements.nodes;
-  nodes.map(function(val) {
-    if (val.selected) { // If a node is selected
-      if (val.classes.includes("buildingBlock") || val.classes.includes("startstop") || val.classes.includes("notation")) { // If the selected node is a buildingBlock, startstop, or notation
+  nodes.map(function(node) {
+    if (node.selected) {
+      let selectedNode = node;
+      if (selectedNode.classes.includes("buildingBlock") || selectedNode.classes.includes("startstop") || selectedNode.classes.includes("notation")) { // If the selected node is a buildingBlock, startstop, or notation
           var defaultActionType = "Learner Action";
           var defaultClass = "Learner_Action";
 
-          if (val.classes.includes("notation")) {
+          if (selectedNode.classes.includes("notation")) {
             defaultActionType = "notationEdge";
             defaultClass = "notationEdge";
           }
 
-          var duplicateActionSelector = "[source = '" + val.data.id + "'][target = '" + evt.cyTarget.id() + "']";
+          var duplicateActionSelector = "[source = '" + selectedNode.data.id + "'][target = '" + evt.cyTarget.id() + "']";
           var duplicateActions = cy.$(duplicateActionSelector);
 
           if (duplicateActions.length > 0) {
             showCanvasError("Cannot draw two edges between one pair of items.");
             console.error("Cannot draw two edges between one pair of items.");
           } else {
-            if (evt.cyTarget.id() != val.data.id) { // If the selected node is NOT the one clicked
-              cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: val.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+            if (evt.cyTarget.id() != selectedNode.data.id) { // If the selected node is NOT the one clicked
+              cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: selectedNode.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
               incrementNewId();
             } else {
-              if (!val.classes.includes("startstop")) {
+              if (!selectedNode.classes.includes("startstop")) {
                 cy.remove(evt.cyTarget);
                 toggleSidebar(sidebarEnum.DEFAULT, evt);
               }
             }
           }
-      } else if (val.classes.includes("context")) { // If the selected node is a context
-        if (evt.cyTarget.id() != val.data.id) {
+      } else if (selectedNode.classes.includes("context")) { // If the selected node is a context
+        if (evt.cyTarget.id() != selectedNode.data.id) {
           if (!evt.cyTarget.json().classes.includes("context")) {
             let selectedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
             let selectedNode = selectedNodeInfo.node;
             let selectedNodeEdges = selectedNodeInfo.edges;
 
-            createAndAddBuildingBlockToContext(selectedNode, selectedNodeEdges, val);
+            createAndAddBuildingBlockToContext(selectedNode, selectedNodeEdges, selectedNode);
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
@@ -108,10 +109,10 @@ function removeSelectedElements() {
 function removeSelectedNodes() {
   let nodes = cy.json().elements.nodes;
   if (nodes && nodes.length > 0) {
-    nodes.map(function(val) {
-      if (val.selected && !val.classes.includes("startstop")) {
-        cy.$("#" + val.data.id).unselect();
-        cy.$("#" + val.data.id).remove();
+    nodes.map(function(node) {
+      if (node.selected && !node.classes.includes("startstop")) {
+        cy.$("#" + node.data.id).unselect();
+        cy.$("#" + node.data.id).remove();
       }
     });
   }
@@ -120,10 +121,10 @@ function removeSelectedNodes() {
 function removeSelectedEdges() {
   let edges = cy.json().elements.edges;
   if (edges && edges.length > 0) {
-    edges.map(function(val) {
-      if (val.selected && !val.classes.includes("startstop")) {
-        cy.$("#" + val.data.id).unselect();
-        cy.$("#" + val.data.id).remove();
+    edges.map(function(edge) {
+      if (edge.selected && !edge.classes.includes("startstop")) {
+        cy.$("#" + edge.data.id).unselect();
+        cy.$("#" + edge.data.id).remove();
       }
     });
   }
