@@ -1,3 +1,12 @@
+function setupRegisterModal() {
+  $("#registerForm").unbind('keydown');
+  $("#registerForm").on('keydown', function(evt) {
+    if (evt.key === "Enter" || evt.key === "Return") {
+      registerSubmitClicked();
+    }
+  });
+}
+
 function registerSubmitClicked() {
   register($("#registerEmail").val(), $("#registerPassword").val());
 
