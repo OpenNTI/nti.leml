@@ -48,6 +48,22 @@ function setPublicLemStatusAction(prevPublicLemsState, params) {
 }
 let setPublicLemStatus = publicLemsActionCreator("Set private lems status", setPublicLemStatusAction);
 
+function applyPublicSearchTextAction(prevPublicLemsState, params) {
+  $(".lems").each(function(){
+    if($(this).html().toLowerCase().indexOf(params.searchText.toLowerCase()) > -1){
+     $(this).removeClass('hidden');
+    } else {
+      $(this).addClass('hidden');
+    }
+  });
+
+  return {
+    ...prevPublicLemsState,
+    searchText: params.searchText
+  }
+}
+let applyPublicSearchText = publicLemsActionCreator("Apply search text", applyPublicSearchTextAction);
+
 function loadPublicLEMs() {
   $.get(lemallRoute).
     success(function(data, status) {
