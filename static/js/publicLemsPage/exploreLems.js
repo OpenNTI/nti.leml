@@ -205,14 +205,18 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
     }
 
     // This search bar searches the public lem page, not user lems
-    var str_test = "";
+    let searchBar = "";
     if (showSearch) {
-      str_test = '<div class="row"><div class="col-lg-6"><div class="input-group"><span class="input-group-btn"><button class="btn btn-default" type="button" id="submitSearchButton">Search</button></span><input id="search_field" type="text" class="form-control" placeholder="Search for..."></div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
+      let searchButton = '<span class="input-group-btn"><button class="btn btn-default" type="button" id="submitSearchButton">Search</button></span>';
+      let searchInput = '<input id="search_field" type="text" class="form-control" placeholder="Search for...">';
+      searchBar = '<div class="row"><div class="col-lg-6"><div class="input-group">' + searchButton + searchInput + '</div><!-- /input-group --></div><!-- /.col-lg-6 --></div>';
     }
 
-    var refreshButton = '<button class="btn" onclick="requestPrivateLems();"style="margin-bottom:10px;">Refresh</button>';
+    let removeIcon = '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+    let clearSearch = '<button class="btn btn-danger" type="button" id="clearSearchButton" style="margin-bottom:10px;margin-left:10px;">Clear Search ' + removeIcon + '</button>';
+    let refreshButton = '<button class="btn" onclick="requestPrivateLems();" style="margin-bottom:10px;">Refresh</button>';
 
-    lemSection.html(refreshButton + str_test + '<div class="row">' + lemDivs + '</div>');
+    lemSection.html(refreshButton + clearSearch + searchBar + '<div class="row">' + lemDivs + '</div>');
 
     $("#submitSearchButton").on('click', function() {
       searchLems();
