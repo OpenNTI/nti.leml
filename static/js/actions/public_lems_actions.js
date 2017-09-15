@@ -57,6 +57,12 @@ function applyPublicSearchTextAction(prevPublicLemsState, params) {
     }
   });
 
+  if (params.searchText.length > 0) {
+    $("#clearSearchButton").show();
+  } else {
+    $("#clearSearchButton").hide();
+  }
+
   return {
     ...prevPublicLemsState,
     searchText: params.searchText

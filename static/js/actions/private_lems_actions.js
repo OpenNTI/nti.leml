@@ -58,6 +58,12 @@ function applyPrivateSearchTextAction(prevPrivateLemsState, params) {
     }
   });
 
+  if (params.searchText.length > 0) {
+    $("#clearSearchButton").show();
+  } else {
+    $("#clearSearchButton").hide();
+  }
+
   return {
     ...prevPrivateLemsState,
     searchText: params.searchText

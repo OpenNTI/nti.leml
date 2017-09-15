@@ -213,7 +213,7 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
     }
 
     let removeIcon = '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
-    let clearSearch = '<button class="btn btn-danger" type="button" id="clearSearchButton" style="margin-bottom:10px;margin-left:10px;">Clear Search ' + removeIcon + '</button>';
+    let clearSearch = '<button class="btn btn-danger" type="button" id="clearSearchButton" style="display:none;margin-bottom:10px;margin-left:10px;">Clear Search ' + removeIcon + '</button>';
     let refreshButton = '<button class="btn" onclick="requestPrivateLems();" style="margin-bottom:10px;">Refresh</button>';
 
     lemSection.html(refreshButton + clearSearch + searchBar + '<div class="row">' + lemDivs + '</div>');
