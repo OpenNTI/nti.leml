@@ -49,18 +49,7 @@ function drawEdgeBetweenSelectedNodes(evt) {
             let selectedNode = selectedNodeInfo.node;
             let selectedNodeEdges = selectedNodeInfo.edges;
 
-            selectedNode.data.parent = val.data.id;
-            cy.add(selectedNode);
-
-            var addedBuildingBlockID = evt.cyTarget.id();
-            val.data.building_blocks.push(addedBuildingBlockID);
-
-            // Add edges
-            for (let index = 0; index < selectedNodeEdges.length; index++) {
-              cy.add(selectedNodeEdges[index]);
-            }
-            
-            cy.resize();
+            createAndAddBuildingBlockToContext(selectedNode, selectedNodeEdges, val);
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
@@ -100,6 +89,15 @@ function removeNodeSavingInfo(node) {
       node: selectedNode,
       edges: edges
     };
+}
+
+function createAndAddBuildingBlockToContext(buildingBlockNode, buildingBlockEdges, context) {
+  buildingBlockNode.data.parent = context.data.id;
+  cy.add(buildingBlockNode);
+
+  context.data.building_blocks.push(buildingBlockNode.id);
+
+  cy.add(buildingBlockEdges);
 }
 
 function removeSelectedElements() {
