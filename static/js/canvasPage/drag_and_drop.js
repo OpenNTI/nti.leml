@@ -44,11 +44,12 @@ function addBuildingBlockToCanvas(data, x_coord, y_coord) {
 	} else if (data.includes("favorite_")) {
 		addFavoriteToCanvas(data.split('_')[1]);
 	} else if (data.includes("objective")) {
-		cy.add({group: "nodes", data: {id: STATE.canvas.new_unique_id}, position: {x: x_coord, y: y_coord}, style: {label: "{Enter a description}"}, classes: "notation"});
+		let description = "{Enter a description}";
+		cy.add({group: "nodes", data: {id: STATE.canvas.new_unique_id, description: description}, position: {x: x_coord, y: y_coord}, style: {label: description}, classes: "notation"});
 	} else {
-		var description = "{Enter a description}";
-		var method = "{Enter a method}"
-		var buildingBlock = {id: STATE.canvas.new_unique_id, method: "{Enter a method}", description: description, block_type: data};
+		let description = "{Enter a description}";
+		let method = "{Enter a method}"
+		var buildingBlock = {id: STATE.canvas.new_unique_id, method: method, description: description, block_type: data};
 		var new_node = cy.add([{group: "nodes", data: buildingBlock, position: {x: x_coord, y: y_coord}, style: {label: description + " \n\n\n\n " + method}, classes: "buildingBlock " + data}]);
 	}
 

@@ -58,6 +58,7 @@ function toggleSidebar(sidebarName, evt) {
 			document.getElementById('inputContext').value = evt.cyTarget.json().data.context_type;
 			break;
 		case sidebarEnum.OBJECTIVE:
+			document.getElementById('inputObjective').value = evt.cyTarget.json().data.description;
 			break;
 		case sidebarEnum.STARTSTOP:
 			if (typeof(evt.cyTarget.json().data.start) != 'undefined') {
