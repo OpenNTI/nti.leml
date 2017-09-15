@@ -23,8 +23,14 @@ const dataRequestEnum = {
   FAILURE: "failure"
 };
 
+const pageEnum = {
+  CANVAS: "canvas",
+  PUBLIC: "public",
+  USER: "user",
+};
+
 var STATE = {
-  currentPage: 'canvas',
+  currentPage: pageEnum.CANVAS,
   currentSidebar: sidebarEnum.DEFAULT,
   login: {
     username: undefined,

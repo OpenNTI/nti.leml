@@ -17,7 +17,7 @@ function setCurrentPage(params) {
 }
 
 function updateUIToShowNewPage(page) {
-  if (page == 'canvas') {
+  if (page == pageEnum.CANVAS) {
     // Show
     $('#main_window').removeClass('hidden');
     $('#canvas_button').addClass('active');
@@ -30,7 +30,7 @@ function updateUIToShowNewPage(page) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
-  } else if (page == 'public') {
+  } else if (page == pageEnum.PUBLIC) {
 
     // Show
     $('#publicLemList').removeClass('hidden');
@@ -44,7 +44,7 @@ function updateUIToShowNewPage(page) {
       $('#userLemList').addClass('hidden');
       $('#user_button').removeClass('active');
     }
-  } else if (page == 'user') {
+  } else if (page == pageEnum.USER) {
 
     // Show
     if (STATE.login.username) {

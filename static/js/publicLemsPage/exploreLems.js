@@ -64,7 +64,7 @@ function generateLemRowHtml(lemID, isPrivate, isModal) {
 }
 
 function addToCanvas(lemDetailBlockHtml) {
-  setCurrentPage({page:'canvas'});
+  setCurrentPage({page:pageEnum.CANVAS});
   $.get(lemRoute, {"id": lemDetailBlockHtml.id}, function(data, status) {
     var lem = JSON.parse('{"lem": ' + data + '}');
     renderLem(lem);
@@ -175,7 +175,7 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
       }
 
       let canvasPicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/canvas.png'/>";
-      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:`canvas`})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
+      let createLemDiv ="<div style='height:300px' class='col-md-" + stepWidth + " well'><a onclick='setCurrentPage({page:pageEnum.CANVAS})'>Head to the canvas</a> and create a LEM" + canvasPicture + "</div>";
 
       let sharePicture = "<img style='max-width:100%; margin-top:20px;' src='/static/img/share.png'/>";
       let shareText = "Share your LEM with others!";

@@ -121,8 +121,8 @@ function logout() {
       setUsername({username: undefined});
       resetLocalFavoritesList(requestPublicLems, loadFavoriteTemplates);
 
-      if (STATE.currentPage == 'user') {
-        setCurrentPage({page:'canvas'});
+      if (STATE.currentPage == pageEnum.USER) {
+        setCurrentPage({page:pageEnum.CANVAS});
       }
 
       $("#shareDropdown").hide();
