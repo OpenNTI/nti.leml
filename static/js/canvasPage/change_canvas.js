@@ -18,28 +18,35 @@ function handleOptionClickOnNode(evt) {
     if (node.selected) {
       let selectedNode = node;
       if (selectedNode.classes.includes("buildingBlock") || selectedNode.classes.includes("startstop") || selectedNode.classes.includes("notation")) { // If the selected node is a buildingBlock, startstop, or notation
-          var defaultActionType = "Learner Action";
-          var defaultClass = "Learner_Action";
-
-          if (selectedNode.classes.includes("notation")) {
-            defaultActionType = "notationEdge";
-            defaultClass = "notationEdge";
-          }
-
-          var duplicateActionSelector = "[source = '" + selectedNode.data.id + "'][target = '" + evt.cyTarget.id() + "']";
-          var duplicateActions = cy.$(duplicateActionSelector);
-
-          if (duplicateActions.length > 0) {
-            showCanvasError("Cannot draw two edges between one pair of items.");
-            console.error("Cannot draw two edges between one pair of items.");
+          if(evt.cyTarget.json().classes.includes("context") && selectedNode.data.parent === evt.cyTarget.json().data.id) {
+            let selectedNodeInfo = removeNodeSavingInfo(cy.$("#"+selectedNode.data.id));
+            let selectedNodeModel = selectedNodeInfo.node;
+            let selectedNodeEdges = selectedNodeInfo.edges;
+            createAndAddBuildingBlockOutsideContext(selectedNodeModel, selectedNodeEdges);
           } else {
-            if (evt.cyTarget.id() != selectedNode.data.id) { // If the selected node is NOT the one clicked
-              cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: selectedNode.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
-              incrementNewId();
+            var defaultActionType = "Learner Action";
+            var defaultClass = "Learner_Action";
+
+            if (selectedNode.classes.includes("notation")) {
+              defaultActionType = "notationEdge";
+              defaultClass = "notationEdge";
+            }
+
+            var duplicateActionSelector = "[source = '" + selectedNode.data.id + "'][target = '" + evt.cyTarget.id() + "']";
+            var duplicateActions = cy.$(duplicateActionSelector);
+
+            if (duplicateActions.length > 0) {
+              showCanvasError("Cannot draw two edges between one pair of items.");
+              console.error("Cannot draw two edges between one pair of items.");
             } else {
-              if (!selectedNode.classes.includes("startstop")) {
-                cy.remove(evt.cyTarget);
-                toggleSidebar(sidebarEnum.DEFAULT, evt);
+              if (evt.cyTarget.id() != selectedNode.data.id) { // If the selected node is NOT the one clicked
+                cy.add([{group: "edges", data: {id: STATE.canvas.new_unique_id, action_type: defaultActionType, source: selectedNode.data.id, target: evt.cyTarget.id()}, classes: defaultClass}]);
+                incrementNewId();
+              } else {
+                if (!selectedNode.classes.includes("startstop")) {
+                  cy.remove(evt.cyTarget);
+                  toggleSidebar(sidebarEnum.DEFAULT, evt);
+                }
               }
             }
           }
@@ -98,6 +105,12 @@ function createAndAddBuildingBlockToContext(buildingBlockNode, buildingBlockEdge
 
   context.data.building_blocks.push(buildingBlockNode.data.id);
 
+  cy.add(buildingBlockEdges);
+}
+
+function createAndAddBuildingBlockOutsideContext(buildingBlockNode, buildingBlockEdges) {
+  buildingBlockNode.data.parent = null;
+  cy.add(buildingBlockNode);
   cy.add(buildingBlockEdges);
 }
 
