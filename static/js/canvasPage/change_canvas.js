@@ -45,29 +45,41 @@ function drawEdgeBetweenSelectedNodes(evt) {
       } else if (val.classes.includes("context")) { // If the selected node is a context
         if (evt.cyTarget.id() != val.data.id) {
           if (!evt.cyTarget.json().classes.includes("context")) {
+            let selectedNode = {
+              group: "nodes",
+              data: evt.cyTarget.json().data,
+              position: evt.cyTarget.position(),
+              style: {label: evt.cyTarget.style().label},
+              classes: evt.cyTarget.json().classes
+            };
 
-        var data = evt.cyTarget.json().data;
-        var classes = evt.cyTarget.json().classes;
-        var label = evt.cyTarget.style().label;
-        var position = evt.cyTarget.position();
-        var out_edges = cy.elements('edge[source = "' + evt.cyTarget.id() + '"], edge[target = "' + evt.cyTarget.id() + '"]');
-        var index = 0;
-        var edges = [];
-        for (index = 0; index < out_edges.length; index++) {
-          edges.push(out_edges[index].json().data);
-        }
-        cy.remove(evt.cyTarget);
-        data.parent = val.data.id;
-        cy.add({group: "nodes", data: data, position: position, style: {label: label}, classes: classes});
+            let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + evt.cyTarget.id() + '"], edge[target = "' + evt.cyTarget.id() + '"]');
+            var edges = [];
+            for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
+              let edge = edgesConnectedToSelectedNode[index];
+              let edgeJson = edgesConnectedToSelectedNode[index].json();
+              let edgeOutput = {
+                group: "edges",
+                data: edgeJson.data,
+                style: edge.style(),
+                classes: edgeJson.classes
+              }
+              edges.push(edgeOutput);
+            }
 
-        var addedBuildingBlockID = evt.cyTarget.id();
-        val.data.building_blocks.push(addedBuildingBlockID);
+            cy.remove(evt.cyTarget);
 
-        // Add edges
-        for (index = 0; index < edges.length; index++) {
-          cy.add({group: "edges", data: edges[index]});
-        }
-        cy.resize();
+            selectedNode.data.parent = val.data.id;
+            cy.add(selectedNode);
+
+            var addedBuildingBlockID = evt.cyTarget.id();
+            val.data.building_blocks.push(addedBuildingBlockID);
+
+            // Add edges
+            for (let index = 0; index < edges.length; index++) {
+              cy.add(edges[index]);
+            }
+            cy.resize();
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
