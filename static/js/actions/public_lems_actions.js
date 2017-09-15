@@ -63,12 +63,14 @@ function applyPublicSearchTextAction(prevPublicLemsState, params) {
     $("#clearSearchButton").hide();
   }
 
+  $("#search_field").val(params.searchText);
+
   return {
     ...prevPublicLemsState,
     searchText: params.searchText
   }
 }
-let applyPublicSearchText = publicLemsActionCreator("Apply search text", applyPublicSearchTextAction);
+let applyPublicSearchText = publicLemsActionCreator("Apply public search text", applyPublicSearchTextAction);
 
 function loadPublicLEMs() {
   $.get(lemallRoute).

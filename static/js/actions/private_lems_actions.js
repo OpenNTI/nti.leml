@@ -64,12 +64,14 @@ function applyPrivateSearchTextAction(prevPrivateLemsState, params) {
     $("#clearSearchButton").hide();
   }
 
+  $("#search_field").val(params.searchText);
+
   return {
     ...prevPrivateLemsState,
     searchText: params.searchText
   }
 }
-let applyPrivateSearchText = privateLemsActionCreator("Apply search text", applyPrivateSearchTextAction);
+let applyPrivateSearchText = privateLemsActionCreator("Apply private search text", applyPrivateSearchTextAction);
 
 function loadPrivateLEMs() {
   $.get(lemuserRoute)

@@ -132,9 +132,7 @@ function generateCommentSectionHtml(id) {
   });
 }
 
-function searchLems() {
-  let searchText = $("#search_field").val();
-
+function searchLems(searchText) {
   if (STATE.currentPage === "public") {
     applyPublicSearchText({searchText});
   } else if (STATE.currentPage === "private") {
@@ -219,13 +217,18 @@ function loadLemsHtml(lems, isPrivate, showSearch) {
     lemSection.html(refreshButton + clearSearch + searchBar + '<div class="row">' + lemDivs + '</div>');
 
     $("#submitSearchButton").on('click', function() {
-      searchLems();
+      let searchText = $("#search_field").val();
+      searchLems(searchText);
     });
     $("#search_field").on('keydown', function(evt) {
       if (evt.key === "Enter") {
-        searchLems();
+        let searchText = $("#search_field").val();
+        searchLems(searchText);
       }
     });
+    $("#clearSearchButton").on('click', function(evt) {
+        searchLems("");
+    })
   }
 }
 
