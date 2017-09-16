@@ -59,11 +59,7 @@ function handleOptionClickOnNode(evt) {
       } else if (selectedNode.classes.includes("context")) { // If the selected node is a context
         if (evt.cyTarget.id() != selectedNode.data.id) { // If clicked node is different than selected node
           if (!evt.cyTarget.json().classes.includes("context")) {
-            let clickedNodeInfo = removeNodeSavingInfo(evt.cyTarget);
-            let clickedNode = clickedNodeInfo.node;
-            let clickedNodeEdges = clickedNodeInfo.edges;
-
-            createAndAddBuildingBlockToContext(clickedNode, clickedNodeEdges, selectedNode);
+            moveBuildingBlockIntoContext(evt.cyTarget, selectedNode);
           }
         } else { // Go back to the start canvas
           cy.remove(evt.cyTarget);
@@ -74,6 +70,26 @@ function handleOptionClickOnNode(evt) {
   });
 }
 
+function moveBuildingBlockIntoContext(buildingBlock, context) {
+  let clickedBuildingBlockID = buildingBlock.id();
+  let labelDict = {};
+
+  let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + clickedBuildingBlockID + '"], edge[target = "' + clickedBuildingBlockID + '"]');
+  for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
+    let edge = edgesConnectedToSelectedNode[index];
+    labelDict[edge.id()] = edge.style().label;
+  }
+  labelDict[clickedBuildingBlockID] = buildingBlock.style().label;
+
+  buildingBlock.move({
+    parent: context.data.id
+  });
+
+  for (id in labelDict) {
+    cy.$("#" + id).style("label", labelDict[id]);
+  }
+}
+
 function removeNodeSavingInfo(node) {
     node.unselect();
     let selectedNode = {
@@ -81,7 +97,7 @@ function removeNodeSavingInfo(node) {
       data: node.json().data,
       position: node.position(),
       style: {label: node.style().label},
-      classes: node.json().classes
+      classes: node.json().classes,
     };
 
     let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + node.id() + '"], edge[target = "' + node.id() + '"]');
@@ -89,13 +105,7 @@ function removeNodeSavingInfo(node) {
     for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
       let edge = edgesConnectedToSelectedNode[index];
       let edgeJson = edgesConnectedToSelectedNode[index].json();
-      let edgeOutput = {
-        group: "edges",
-        data: edgeJson.data,
-        style: edge.style(),
-        classes: edgeJson.classes
-      }
-      edges.push(edgeOutput);
+      edges.push(edgeJson);
     }
 
     cy.remove(node);
@@ -104,15 +114,6 @@ function removeNodeSavingInfo(node) {
       node: selectedNode,
       edges: edges
     };
-}
-
-function createAndAddBuildingBlockToContext(buildingBlockNode, buildingBlockEdges, context) {
-  buildingBlockNode.data.parent = context.data.id;
-  cy.add(buildingBlockNode);
-
-  context.data.building_blocks.push(buildingBlockNode.data.id);
-
-  cy.add(buildingBlockEdges);
 }
 
 function createAndAddBuildingBlockOutsideContext(buildingBlockNode, buildingBlockEdges) {
