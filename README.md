@@ -46,16 +46,39 @@ Testing:
 UI Functionality:
 =================
 
-- Click a node to select it (border becomes red).
-- Right click a selected node to delete it.
-- Right click another node to draw an arrow between them.
-- Click on the canvas to remove selection.
-- Right click on a selected edge to remove it.
-- Select a context, then right click nodes to add them to the context
+**Selecting and Editing**  
+1. Click a node to select it (border becomes red)  
+2. Edit the properites on the sidebar  
+3. Click anywhere on the canvas where the are no elements to unselect
 
-**Drag and Drop Functionality**:
-- Drag and drop from the toolbar to the canvas.
+**Adding nodes**  
+ - Drag from the toolbar and drop onto the canvas
+or  
+ - Double click from the toolbar
 
+**Deleting nodes and edges**  
+1. Click once to select  
+2. Then right click or shift click on a selected element to delete it
+
+**Drawing actions**  
+1. Select a starting node  
+2. Right click or shift click another node to draw between them
+
+**Adding building blocks to a context**
+1. Add the context and building block to the canvas
+2. Select the context you want to add them to
+3. Right click or shift click the building block you want to add to the context
+
+
+**Remove building blocks from a context**  
+1. Select the building block you want to remove
+2. Right click or shift click anywhere on empty canvas to move the building block out of the context to that point on the canvas
+
+
+**Adding favorite templates**
+- Drag from the favorite template sidebar and drop onto the canvas
+or  
+- Double click from the favorite template sidebar
 
 API Routes:
 ===========
