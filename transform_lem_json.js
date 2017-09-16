@@ -24,7 +24,7 @@ function toNew(lem) {
 
   for(let i = 0; i < lem.notations.length; i++) {
     lem.notations[i].building_block = String(lem.notations[i].building_block);
-    lem.notations[i].description = lem.notations[i].description || "";
+    lem.notations[i].id = lem.notations[i].id || getUniqueID(lem);
   }
 
   addStartID(startID, lem);
@@ -33,11 +33,12 @@ function toNew(lem) {
   console.log(lem);
 }
 
-function getUniqueActionID(lem) {
+function getUniqueID(lem) {
   let newID = 0;
   let unique = false;
 
-  while (unique === false && newID < 100) {
+  let numberOfElements = lem.actions.length + lem.building_blocks.length + lem.contexts.length + lem.building_blocks.length;
+  while (unique === false && newID < 1.5 * numberOfElements) {
     newID++;
 
     unique = true;
@@ -47,13 +48,34 @@ function getUniqueActionID(lem) {
         break;
       }
     }
+
+    for (let i = 0; i < lem.building_blocks.length; i++) {
+      if (lem.building_blocks[i].id === String(newID)) {
+        unique = false;
+        break;
+      }
+    }
+
+    for (let i = 0; i < lem.contexts.length; i++) {
+      if (lem.contexts[i].id === String(newID)) {
+        unique = false;
+        break;
+      }
+    }
+
+    for (let i = 0; i < lem.notations.length; i++) {
+      if (lem.notations[i].id === String(newID)) {
+        unique = false;
+        break;
+      }
+    }
   }
 
-  return newID;
+  return String(newID);
 }
 
 function addStartID(id, lem) {
-  let newID = getUniqueActionID(lem);
+  let newID = getUniqueID(lem);
 
   lem.actions.push({
     "id": String(newID),
@@ -64,7 +86,7 @@ function addStartID(id, lem) {
 }
 
 function addStopID(id, lem) {
-  let newID = getUniqueActionID(lem);
+  let newID = getUniqueID(lem);
 
   lem.actions.push({
     "id": String(newID),
