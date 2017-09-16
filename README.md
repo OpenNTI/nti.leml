@@ -150,15 +150,17 @@ Lems:
 Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response)):
 ```json
 {
-  "_id": {"$oid": "58de81a29a93ac144a594fa7"},
+  "_id": {
+    "$oid": "58de81a29a93ac144a594fa7"
+  },
   "name": "test",
   "created_by": "newemail@email.com",
-  "date_created": {"$date": 149095899737},
-  "startIDs": [1],
-  "stopIDs": [7],
+  "date_created": {
+    "$date": 149095899737
+  },
   "building_blocks": [
     {
-      "id": 1,
+      "id": "1",
       "block_type": "Information",
       "description": "Topic Overview",
       "method": "HTML File"
@@ -166,29 +168,59 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response
   ],
   "contexts": [
     {
-      "id": 14,
+      "id": "14",
       "context_type": "Online Asynchronous",
-      "building_blocks": [1,2,3],
+      "building_blocks": [
+        1,
+        2,
+        3
+      ],
       "notations": []
     }
   ],
   "actions": [
     {
-      "id": 8,
+      "id": "8",
       "action_type": "Learner Action",
-      "source": 1,
-      "target": 2
+      "source": "1",
+      "target": "2"
+    },
+    {
+      "id": "2",
+      "action_type": "notationEdge",
+      "source": "undefined",
+      "target": "7"
+    },
+    {
+      "id": "3",
+      "action_type": "Learner Action",
+      "source": "start",
+      "target": "1"
+    },
+    {
+      "id": "4",
+      "action_type": "Learner Action",
+      "source": "7",
+      "target": "stop"
     }
   ],
   "notations": [
     {
-      "building_block": 7,
-      "description": "Objective 1"
+      "description": "Objective 1",
+      "id": "undefined"
     }
   ],
-  "ratings": [4,5,5,5,4,1,1],
+  "ratings": [
+    4,
+    5,
+    5,
+    5,
+    4,
+    1,
+    1
+  ],
   "avgRating": 3,
-  "thumbnail": "data:image\/png;base64,iVBO...",
+  "thumbnail": "data:image/png;base64,iVBO...",
   "public": 1
 }
 ```
@@ -201,15 +233,19 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body)):
 {
   "contexts": [
     {
-      "id": 14,
+      "id": "14",
       "context_type": "Online Asynchronous",
-      "building_blocks": [1,2,3],
+      "building_blocks": [
+        1,
+        2,
+        3
+      ],
       "notations": []
     }
   ],
   "building_blocks": [
     {
-      "id": 1,
+      "id": "1",
       "block_type": "Information",
       "description": "Topic Overview",
       "method": "HTML File",
@@ -218,21 +254,36 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body)):
   ],
   "notations": [
     {
-      "building_block": 7,
       "description": "Objective 1",
-      "id": null
+      "id": "null"
     }
   ],
   "actions": [
     {
-      "id": 8,
+      "id": "8",
       "action_type": "Learner Action",
-      "source": 1,
-      "target": 2
+      "source": "1",
+      "target": "2"
+    },
+    {
+      "id": "2",
+      "action_type": "notationEdge",
+      "source": "null",
+      "target": "7"
+    },
+    {
+      "id": "3",
+      "action_type": "Learner Action",
+      "source": "start",
+      "target": "1"
+    },
+    {
+      "id": "4",
+      "action_type": "Learner Action",
+      "source": "7",
+      "target": "stop"
     }
   ],
-  "startIDs": [1],
-  "stopIDs": [7],
   "name": "testName",
   "public": 0,
   "thumbnail": "data:image/png;base64,iVBORw0KGgoA..."
@@ -357,15 +408,17 @@ Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
 ```JSON
 [
   {
-    "_id": {"$oid": "58de826e9a93ac14ffbaab6b"},
-    "name": "anothertest",
+    "_id": {
+      "$oid": "58de81a29a93ac144a594fa7"
+    },
+    "name": "test",
     "created_by": "newemail@email.com",
-    "date_created": {"$date": 1490959352160},
-    "startIDs": [1],
-    "stopIDs": [7],
+    "date_created": {
+      "$date": 1490958997377
+    },
     "building_blocks": [
       {
-        "id": 1,
+        "id": "1",
         "block_type": "Information",
         "description": "Topic Overview",
         "method": "HTML File"
@@ -374,7 +427,7 @@ Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
     ],
     "contexts": [
       {
-        "id": 14,
+        "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
           1,
@@ -387,22 +440,46 @@ Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
     ],
     "actions": [
       {
-        "id": 8,
+        "id": "8",
         "action_type": "Learner Action",
-        "source": 1,
-        "target": 2
+        "source": "1",
+        "target": "2"
       },
-      "..."
+    "..."
     ],
     "notations": [
       {
-        "building_block": 7,
-        "description": "Objective 1"
+        "description": "Objective 1",
+        "id": "undefined"
       }
     ],
-    "ratings": [5,5,4,3,1,3,1],
-    "avgRating": 3.1428571428571,
-    "thumbnail": "data:image\/png;base64,iVBORw0KG...UVORK5CYII=",
+    "ratings": [
+      6,
+      5,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      4,
+      4,
+      5,
+      5,
+      4,
+      5,
+      4,
+      1,
+      1
+    ],
+    "avgRating": 3,
+    "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAAN...UVORK5CYII=",
     "public": 1
   },
   "..."

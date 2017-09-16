@@ -1,5 +1,12 @@
 function prettyPrintNewLem(lem) {
-  let newLem = toNew(lem);
+  let newLem;
+  if (Array.isArray(lem)) {
+    for (let i = 0; i < lems.length; i++) {
+      newLem[i] = toNew(lem[i]);
+    }
+  } else {
+    newLem = toNew(lem);
+  }
   console.log(JSON.stringify(newLem, null, 2));
 }
 
