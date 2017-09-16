@@ -11,6 +11,18 @@
  - Action
    - Create
      - Right click and shift click
+     - Building block to
+       - building block
+       - context
+       - stop node
+     - Start node to
+       - building block
+       - context
+       - stop node
+     - Context to
+       - building block (impossible, because this is how you add building block to context)
+       - context (known to not work)
+       - stop node  (impossible, because this is how you stop building block to context)
    - Change description
    - Change type
    - Delete
