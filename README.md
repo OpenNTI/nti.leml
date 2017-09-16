@@ -1,9 +1,9 @@
-[Running the Application](#running_the_application)  
+[Running the Application](#running-the-application)  
 [Debugging](#debugging)  
-[Suggested Improvements](#suggested_improvements)  
+[Suggested Improvements](#suggested-improvements)  
 [Testing](#testing)  
-[How to use the canvas](#how_to_use_the_canvas)  
-[API Documentation](#api_documentation)
+[How to use the canvas](#how-to-use-the-canvas)  
+[API Documentation](#api-documentation)
 
 Running the Application:
 ========================
