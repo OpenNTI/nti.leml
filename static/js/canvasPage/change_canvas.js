@@ -81,6 +81,10 @@ function moveBuildingBlockIntoContext(buildingBlock, context) {
   moveSavingLabels(buildingBlock, {
     parent: context.data.id
   });
+
+  let buildingBlocks = context.data.building_blocks;
+  buildingBlocks.push(buildingBlock.id());
+  cy.$("#" + context.data.id).data("building_blocks", buildingBlocks);
 }
 
 function removeSelectedNodeFromContext(evt) {
@@ -91,6 +95,14 @@ function removeSelectedNodeFromContext(evt) {
       parent: null
     });
     newNode.position(evt.cyPosition);
+
+    let context = cy.$("#" + selectedNodeJson.data.parent);
+    let buildingBlocks = context.json().data.building_blocks;
+    let index = buildingBlocks.indexOf(newNode.id());
+    if (index > -1) {
+      buildingBlocks.splice(index, 1);
+    }
+    cy.$("#" + context.data.id).data("building_blocks", buildingBlocks);
   }
 }
 
