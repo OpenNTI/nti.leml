@@ -53,9 +53,6 @@
   - Connect to context
   - Delete
     - Right click and delete and backspace
- - Favorite template (sidebar)
-  - Add to canvas
-    - Double click and drag
 
 #### Sidebar
  - Clear canvas (filled and empty)
@@ -83,6 +80,9 @@
 ## Logged in
 #### Canvas
  - [See not logged in](#canvas)
+ - Favorite template (sidebar)
+  - Add to canvas
+    - Double click and drag
 
 #### Sidebar
  - [See not logged in](#sidebar)
