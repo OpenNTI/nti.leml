@@ -41,7 +41,7 @@ Suggested Improvements:
 
 Testing:
 ============
-[Smoke tests](#/blob/master/smoke_test.md)
+[Smoke tests](./smoke_test.md)
 
 UI Functionality:
 =================
@@ -142,7 +142,7 @@ Lems:
 *Query String Parameters*: id  
 `/lem?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lem-get-response)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response)):
 ```json
 {
   "_id": {"$oid": "58de81a29a93ac144a594fa7"},
