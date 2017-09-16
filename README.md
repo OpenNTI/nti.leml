@@ -50,6 +50,10 @@ Suggested Improvements:
 - Most API calls from the browser just show the default alert on error. A better UI should be created to handle API errors.
 - Add an undo and redo feature to the canvas. There should be libraries for this, or keep a stack of canvas states (using cy.json) that can be popped.
 
+Things that are possible but just cause problems:
+ - **Drawing an action from a building block to a context** This will create a disconnected graph because actions cannot be drawn from a context to anything else. If you try to draw that action, the element you click on will be added to the context
+ - **Changing the type of the start and stop node** This changes the class of the element and so changes the display label, but it doesn't actually change the IDs, so programatically the stop node is always the stop node - even if you change the type. This can cause the user to create a backwards graph that will not validate.
+
 
 Testing:
 ============
