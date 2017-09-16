@@ -130,11 +130,9 @@ function renderLem(json) {
       var notation = notations[index];
 
       let notationNode = {data: notation, style: {label: notation.description}, classes: "notation"};
-      let notationEdge = {data: {id: "notionEdge_" + notation.id, source: notation.id, target: notation.building_block, action_type: "notationEdge", description: ""}, classes: 'notationEdge'};
 
       elements.push(
         notationNode,
-        notationEdge
       );
     }
   }
