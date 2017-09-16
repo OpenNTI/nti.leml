@@ -12,19 +12,6 @@ function showSideBarForSelectedElement(evt) {
     }
   }
 
-function removeSelectedNodeFromContext(evt) {
-  let nodes = cy.json().elements.nodes;
-  nodes.map(function(node) {
-    if (node.selected && node.data.parent && node.data.parent.length > 0) {
-      let selectedNodeInfo = removeNodeSavingInfo(cy.$("#"+node.data.id));
-      let selectedNodeModel = selectedNodeInfo.node;
-      selectedNodeModel.position = evt.cyPosition;
-      let selectedNodeEdges = selectedNodeInfo.edges;
-      createAndAddBuildingBlockOutsideContext(selectedNodeModel, selectedNodeEdges);
-    }
-  });
-}
-
 function handleOptionClickOnNode(evt) {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(node) {
@@ -70,23 +57,40 @@ function handleOptionClickOnNode(evt) {
   });
 }
 
-function moveBuildingBlockIntoContext(buildingBlock, context) {
-  let clickedBuildingBlockID = buildingBlock.id();
+function moveSavingLabels(node, target) {
+  let nodeID = node.id();
   let labelDict = {};
 
-  let edgesConnectedToSelectedNode = cy.elements('edge[source = "' + clickedBuildingBlockID + '"], edge[target = "' + clickedBuildingBlockID + '"]');
-  for (let index = 0; index < edgesConnectedToSelectedNode.length; index++) {
-    let edge = edgesConnectedToSelectedNode[index];
+  let edgesConnectedToNode = cy.elements('edge[source = "' + nodeID + '"], edge[target = "' + nodeID + '"]');
+  for (let index = 0; index < edgesConnectedToNode.length; index++) {
+    let edge = edgesConnectedToNode[index];
     labelDict[edge.id()] = edge.style().label;
   }
-  labelDict[clickedBuildingBlockID] = buildingBlock.style().label;
+  labelDict[nodeID] = node.style().label;
 
-  buildingBlock.move({
-    parent: context.data.id
-  });
+  node.move(target);
 
   for (id in labelDict) {
     cy.$("#" + id).style("label", labelDict[id]);
+  }
+
+  return cy.$("#" + nodeID);
+}
+
+function moveBuildingBlockIntoContext(buildingBlock, context) {
+  moveSavingLabels(buildingBlock, {
+    parent: context.data.id
+  });
+}
+
+function removeSelectedNodeFromContext(evt) {
+  let selectedNode = cy.$(":selected");
+  let selectedNodeJson = selectedNode.json();
+  if (selectedNodeJson.data.parent && selectedNodeJson.data.parent.length > 0) {
+    let newNode = moveSavingLabels(selectedNode, {
+      parent: null
+    });
+    newNode.position(evt.cyPosition);
   }
 }
 
