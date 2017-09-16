@@ -1,3 +1,10 @@
+[Running the Application](#running_the_application)  
+[Debugging](#debugging)  
+[Suggested Improvements](#suggested_improvements)  
+[Testing](#testing)  
+[How to use the canvas](#how_to_use_the_canvas)  
+[API Documentation](#api_documentation)
+
 Running the Application:
 ========================
 
@@ -52,7 +59,7 @@ Use [transform_lem_json.js](./transform_lem_json.js) to convert old LEM format t
  - Store actions objects for start and stop instead of list of start and stop id lists
  - Store notaition actions instead of a reference to building block id on the notation
 
-UI Functionality:
+How to use the canvas:
 =================
 
 **Selecting and Editing**  
@@ -89,7 +96,7 @@ or
 or  
 - Double click from the favorite template sidebar
 
-API Routes:
+API Documentation:
 ===========
 
 - [Authentication](#authentication)
