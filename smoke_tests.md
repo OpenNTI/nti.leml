@@ -15,18 +15,24 @@
    - Change type
    - Delete
      - Right click and delete and backspace
-- Context
+ - Context
   - Create
     - Double click and drag
-  - Adding building blocks to canvas
+  - Adding building blocks to context
      - Right click and shift click
+     - Make sure that building block description and method are retained
+     - Make sure that action type and description (from actions off that building block) are retained
+  - Removing building blocks from context
+     - Right click and shift click
+     - Make sure that building block description and method are retained
+     - Make sure that action type and description (from actions off that building block) are retained
   - Delete
      - Right click and delete and backspace
-- Start and stop
+ - Start and stop
   - Change type (start to stop, stop to start)
   - Try deleting start and stop nodes (manually and from context)
     - Right click and delete and backspace
-- Notation
+ - Notation
   - Create
     - Double click and drag
   - Change description
@@ -35,6 +41,9 @@
   - Connect to context
   - Delete
     - Right click and delete and backspace
+ - Favorite template (sidebar)
+  - Add to canvas
+    - Double click and drag
 
 #### Sidebar
  - Clear canvas (filled and empty)

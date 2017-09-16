@@ -12,6 +12,19 @@ function showSideBarForSelectedElement(evt) {
     }
   }
 
+function removeSelectedNodeFromContext(evt) {
+  let nodes = cy.json().elements.nodes;
+  nodes.map(function(node) {
+    if (node.selected && node.data.parent && node.data.parent.length > 0) {
+      let selectedNodeInfo = removeNodeSavingInfo(cy.$("#"+node.data.id));
+      let selectedNodeModel = selectedNodeInfo.node;
+      selectedNodeModel.position = evt.cyPosition;
+      let selectedNodeEdges = selectedNodeInfo.edges;
+      createAndAddBuildingBlockOutsideContext(selectedNodeModel, selectedNodeEdges);
+    }
+  });
+}
+
 function handleOptionClickOnNode(evt) {
   var nodes = cy.json().elements.nodes;
   nodes.map(function(node) {
@@ -62,6 +75,7 @@ function handleOptionClickOnNode(evt) {
 }
 
 function removeNodeSavingInfo(node) {
+    node.unselect();
     let selectedNode = {
       group: "nodes",
       data: node.json().data,
@@ -98,6 +112,13 @@ function createAndAddBuildingBlockToContext(buildingBlockNode, buildingBlockEdge
 
   context.data.building_blocks.push(buildingBlockNode.data.id);
 
+  cy.add(buildingBlockEdges);
+}
+
+function createAndAddBuildingBlockOutsideContext(buildingBlockNode, buildingBlockEdges) {
+  delete buildingBlockNode.data.parent;
+  buildingBlockNode.classes = buildingBlockNode.classes.replace("selected", ""); //Newly added nodes won't be selected, so make them appear unselected
+  cy.add(buildingBlockNode);
   cy.add(buildingBlockEdges);
 }
 

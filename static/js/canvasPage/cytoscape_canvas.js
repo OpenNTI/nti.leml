@@ -231,6 +231,16 @@ function loadNewCytoscapeWith(elements) {
   cy.on('click', function(evt) {
     let canvas = document.getElementById("canvas_input");
     canvas.focus();
+
+    if (STATE.keyboard.shiftPressed && (evt.cyTarget.length === undefined || evt.cyTarget.length < 1)) { // Clicked on empty canvas
+      removeSelectedNodeFromContext(evt);
+    }
+  });
+
+  cy.on('cxttap', function(evt) {
+    if (evt.cyTarget.length === undefined || evt.cyTarget.length < 1) { // Clicked on empty canvas
+      removeSelectedNodeFromContext(evt);
+    }
   });
 
   // When a node is selected
