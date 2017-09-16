@@ -1,3 +1,8 @@
+function prettyPrintNewLem(lem) {
+  let newLem = toNew(lem);
+  console.log(JSON.stringify(newLem, null, 2));
+}
+
 function toNew(lem) {
   let startID = lem.startIDs[0];
   let stopID = lem.stopIDs[0];
