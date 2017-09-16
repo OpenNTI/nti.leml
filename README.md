@@ -39,6 +39,10 @@ Suggested Improvements:
 - Add an undo and redo feature to the canvas. There should be libraries for this, or keep a stack of canvas states (using cy.json) that can be popped.
 
 
+Testing:
+============
+[Smoke tests](#/blob/master/smoke_test.md)
+
 UI Functionality:
 =================
 

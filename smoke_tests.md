@@ -18,8 +18,14 @@
 - Context
   - Create
     - Double click and drag
-  - Adding building blocks to canvas
+  - Adding building blocks to context
      - Right click and shift click
+     - Make sure that building block description and method are retained
+     - Make sure that action type and description (from actions off that building block) are retained
+  - Removing building blocks from context
+     - Right click and shift click
+     - Make sure that building block description and method are retained
+     - Make sure that action type and description (from actions off that building block) are retained
   - Delete
      - Right click and delete and backspace
 - Start and stop
