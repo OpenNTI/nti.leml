@@ -46,7 +46,11 @@ Suggested Improvements:
 
 Testing:
 ============
-[Smoke tests](./smoke_tests.md)
+Run through the [smoke tests](./smoke_tests.md)  
+Use [transform_lem_json.js](./transform_lem_json.js) to convert old LEM format to new  
+ - Stringify all ids
+ - Store actions objects for start and stop instead of list of start and stop id lists
+ - Store notaition actions instead of a reference to building block id on the notation
 
 UI Functionality:
 =================
