@@ -32,7 +32,6 @@ class Action(EmbeddedDocument):
 # Notation Model
 class Notation(EmbeddedDocument):
 	id = StringField(required=True)
-	building_block = StringField(required=False)
 	description = StringField(required=True)
 
 #Comment Model
