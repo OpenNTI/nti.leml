@@ -60,9 +60,9 @@
       "id": "14",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        1,
-        2,
-        3
+        "1",
+        "2",
+        "3"
       ],
       "notations": []
     },
@@ -70,8 +70,8 @@
       "id": "15",
       "context_type": "Classroom",
       "building_blocks": [
-        4,
-        5
+        "4",
+        "5"
       ],
       "notations": []
     },
@@ -79,8 +79,8 @@
       "id": "16",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        6,
-        7
+        "6",
+        "7"
       ],
       "notations": []
     }
@@ -139,6 +139,12 @@
       "action_type": "Learner Action",
       "source": "7",
       "target": "stop"
+    },
+    {
+      "id": "20",
+      "action_type": "notationEdge",
+      "source": "undefined",
+      "target": "undefined"
     }
   ],
   "notations": [
@@ -187,9 +193,9 @@
       "id": "14",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        1,
-        2,
-        3
+        "1",
+        "2",
+        "3"
       ],
       "notations": []
     },
@@ -197,8 +203,8 @@
       "id": "15",
       "context_type": "Classroom",
       "building_blocks": [
-        4,
-        5
+        "4",
+        "5"
       ],
       "notations": []
     },
@@ -206,8 +212,8 @@
       "id": "16",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        6,
-        7
+        "6",
+        "7"
       ],
       "notations": []
     }
@@ -323,6 +329,12 @@
       "action_type": "Learner Action",
       "source": "7",
       "target": "stop"
+    },
+    {
+      "id": "20",
+      "action_type": "notationEdge",
+      "source": "null",
+      "target": "undefined"
     }
   ],
   "name": "testName",
@@ -392,9 +404,9 @@
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -402,8 +414,8 @@
         "id": "15",
         "context_type": "Classroom",
         "building_blocks": [
-          4,
-          5
+          "4",
+          "5"
         ],
         "notations": []
       },
@@ -411,8 +423,8 @@
         "id": "16",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          6,
-          7
+          "6",
+          "7"
         ],
         "notations": []
       }
@@ -471,6 +483,12 @@
         "action_type": "Learner Action",
         "source": "7",
         "target": "stop"
+      },
+      {
+        "id": "20",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [
@@ -566,9 +584,9 @@
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -576,8 +594,8 @@
         "id": "15",
         "context_type": "Classroom",
         "building_blocks": [
-          4,
-          5
+          "4",
+          "5"
         ],
         "notations": []
       },
@@ -585,8 +603,8 @@
         "id": "16",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          6,
-          7
+          "6",
+          "7"
         ],
         "notations": []
       }
@@ -645,6 +663,12 @@
         "action_type": "Learner Action",
         "source": "7",
         "target": "stop"
+      },
+      {
+        "id": "20",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [
@@ -724,8 +748,8 @@
         "id": "108",
         "context_type": "Classroom",
         "building_blocks": [
-          104,
-          105
+          "104",
+          "105"
         ],
         "notations": []
       },
@@ -733,9 +757,9 @@
         "id": "116",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          109,
-          111,
-          113
+          "109",
+          "111",
+          "113"
         ],
         "notations": []
       },
@@ -743,8 +767,8 @@
         "id": "124",
         "context_type": "Classroom",
         "building_blocks": [
-          117,
-          118
+          "117",
+          "118"
         ],
         "notations": []
       }
@@ -803,6 +827,12 @@
         "action_type": "Learner Action",
         "source": "117",
         "target": "stop"
+      },
+      {
+        "id": "4",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [
@@ -996,9 +1026,9 @@
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -1006,8 +1036,8 @@
         "id": "15",
         "context_type": "Classroom",
         "building_blocks": [
-          4,
-          5
+          "4",
+          "5"
         ],
         "notations": []
       },
@@ -1015,8 +1045,8 @@
         "id": "16",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          6,
-          7
+          "6",
+          "7"
         ],
         "notations": []
       }
@@ -1075,6 +1105,12 @@
         "action_type": "Learner Action",
         "source": "7",
         "target": "stop"
+      },
+      {
+        "id": "20",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [
@@ -1170,9 +1206,9 @@
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -1180,8 +1216,8 @@
         "id": "15",
         "context_type": "Classroom",
         "building_blocks": [
-          4,
-          5
+          "4",
+          "5"
         ],
         "notations": []
       },
@@ -1189,8 +1225,8 @@
         "id": "16",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          6,
-          7
+          "6",
+          "7"
         ],
         "notations": []
       }
@@ -1249,6 +1285,12 @@
         "action_type": "Learner Action",
         "source": "7",
         "target": "stop"
+      },
+      {
+        "id": "20",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [
@@ -1328,9 +1370,9 @@
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -1338,8 +1380,8 @@
         "id": "15",
         "context_type": "Classroom",
         "building_blocks": [
-          4,
-          5
+          "4",
+          "5"
         ],
         "notations": []
       },
@@ -1347,8 +1389,8 @@
         "id": "16",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          6,
-          7
+          "6",
+          "7"
         ],
         "notations": []
       }
@@ -1407,6 +1449,12 @@
         "action_type": "Learner Action",
         "source": "7",
         "target": "stop"
+      },
+      {
+        "id": "20",
+        "action_type": "notationEdge",
+        "source": "undefined",
+        "target": "undefined"
       }
     ],
     "notations": [

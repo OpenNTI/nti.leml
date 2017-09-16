@@ -171,9 +171,9 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response
       "id": "14",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        1,
-        2,
-        3
+        "1",
+        "2",
+        "3"
       ],
       "notations": []
     }
@@ -202,6 +202,12 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response
       "action_type": "Learner Action",
       "source": "7",
       "target": "stop"
+    },
+    {
+      "id": "5",
+      "action_type": "notationEdge",
+      "source": "undefined",
+      "target": "undefined"
     }
   ],
   "notations": [
@@ -236,9 +242,9 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body)):
       "id": "14",
       "context_type": "Online Asynchronous",
       "building_blocks": [
-        1,
-        2,
-        3
+        "1",
+        "2",
+        "3"
       ],
       "notations": []
     }
@@ -430,9 +436,9 @@ Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
         "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },

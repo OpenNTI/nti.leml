@@ -11,11 +11,6 @@ function prettyPrintNewLem(lem) {
 }
 
 function toNew(lem) {
-  let startID = lem.startIDs[0];
-  let stopID = lem.stopIDs[0];
-
-  delete lem.startIDs;
-  delete lem.stopIDs;
 
   for(let i = 0; i < lem.building_blocks.length; i++) {
     lem.building_blocks[i].id = String(lem.building_blocks[i].id);
@@ -24,7 +19,7 @@ function toNew(lem) {
   for(let i = 0; i < lem.contexts.length; i++) {
     lem.contexts[i].id = String(lem.contexts[i].id);
     for(let j = 0; j < lem.contexts[i].building_blocks.length; j++) {
-      lem.contexts[i].building_blocks[j].id = String(lem.contexts[i].building_blocks[j].id);
+      lem.contexts[i].building_blocks[j] = String(lem.contexts[i].building_blocks[j]);
     }
   }
 
@@ -48,8 +43,17 @@ function toNew(lem) {
     });
   }
 
-  addStartID(startID, lem);
-  addStopID(stopID, lem);
+  if (lem.startIDs) {
+   let startID = lem.startIDs[0];
+   delete lem.startIDs;
+   addStartID(startID, lem);
+ }
+
+ if (lem.stopIDs) {
+   let stopID = lem.stopIDs[0];
+   delete lem.stopIDs
+   addStopID(stopID, lem);
+ }
 
   return lem;
 }
