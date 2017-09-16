@@ -26,9 +26,14 @@ Steps to run application in Chrome; other browsers have not been tested.
 
 Debugging:
 ============
+
+### State and Actions
 Some ideas from [redux](http://redux.js.org/docs/introduction/) are implemented in this app. There is a state object (in `static/js/state.js`) that holds most of the global data. This state object is never changed, but is sometime replaced by a changed copy. The only code that replaces (changes) the state is the actions which are all in `static/js/actions`.
 
 At the top of `/static/js/state.js` there is `const LOG_ACTIONS`. When this is `true` all actions modifying the state will print to the console. This can be useful to figure out what is going on.
+
+### LEM structure
+You can verify that LEM JSON being sent to the backend is correct by using a [JSON validator](http://www.jsonschemavalidator.net/) and testing against our [defined schema](./static/lemSchema.json)
 
 Suggested Improvements:
 ====================
