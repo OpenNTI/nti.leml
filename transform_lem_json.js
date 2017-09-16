@@ -24,6 +24,7 @@ function toNew(lem) {
 
   for(let i = 0; i < lem.notations.length; i++) {
     lem.notations[i].building_block = String(lem.notations[i].building_block);
+    lem.notations[i].description = lem.notations[i].description || "";
   }
 
   addStartID(startID, lem);
