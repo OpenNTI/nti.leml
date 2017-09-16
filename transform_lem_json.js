@@ -23,7 +23,7 @@ function toNew(lem) {
   }
 
   for(let i = 0; i < lem.notations.length; i++) {
-    lem.notations[i].id = lem.notations[i].id || getUniqueID(lem);
+    lem.notations[i].id = String(lem.notations[i].id) || getUniqueID(lem);
 
     let bbID = lem.notations[i].building_block;
     delete lem.notations[i].building_block;
@@ -32,14 +32,14 @@ function toNew(lem) {
       id: getUniqueID(lem),
       action_type: "notationEdge",
       source: lem.notations[i].id,
-      target: bbID
+      target: String(bbID)
     });
   }
 
   addStartID(startID, lem);
   addStopID(stopID, lem);
 
-  console.log(lem);
+  return lem;
 }
 
 function getUniqueID(lem) {
