@@ -76,7 +76,7 @@ or
 
 
 **Adding favorite templates**
-- Drag from the favorite template sidebar and drop onto the canvas
+- Drag from the favorite template sidebar and drop onto the canvas  
 or  
 - Double click from the favorite template sidebar
 
