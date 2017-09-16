@@ -1,5 +1,5 @@
 ## lem GET response
-![Blended Learning - Flipped Classroom LEM](https://raw.githubusercontent.com/NextThought/cs.capstone2017.leml/master/static/img/templates/blendedLearningFlippedClassroom.png?token=AKpYyhuxMtGxySLljcABsWEAnrwJYG9Uks5ZA1jowA%3D%3D)
+![Blended Learning - Flipped Classroom LEM](./static/img/templates/blendedLearningFlippedClassroom.png)
 
 ```JSON
 {

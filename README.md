@@ -41,7 +41,7 @@ Suggested Improvements:
 
 Testing:
 ============
-[Smoke tests](./smoke_test.md)
+[Smoke tests](./smoke_tests.md)
 
 UI Functionality:
 =================
@@ -191,7 +191,7 @@ Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response
 **POST**: takes in json object representing lem and saves to database.  
 *Precondition*: Must be logged in.  
 *Body*: Stringify-ed JSON  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body)):
 ```json
 {
   "contexts": [
@@ -248,7 +248,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 #### */lemall*  
 **GET**: retrieves all public lems.  
 *Success Response*: 200
-Abbreviated LEM list JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lemall-response)):
+Abbreviated LEM list JSON ([full](./FullAPIExamples.md#lem-post-body#lemall-response)):
 ```json
 [
   {
@@ -293,7 +293,7 @@ Comments:
 *Query String Parameters*: id  
 `/comment?lem=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-comments-response)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#get-comments-response)):
 ```json
 [
   {
@@ -348,7 +348,7 @@ Favorites:
 **GET**: retrieves the lem's that have been favorited by the currently logged in user.  
 *Precondition*: Must be logged in.  
 *Success Response*: 200  
-Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
 ```JSON
 [
   {
@@ -409,7 +409,7 @@ Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017
 *Query String Parameters*: id  
 `/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Same format as **GET** `/favorite` but returns new favorites ([full format](./FullAPIExamples.md#get-favorites-response))
 
 
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
@@ -417,4 +417,4 @@ Same format as **GET** `/favorite` but returns new favorites ([full format](http
 *Query String Parameters*: id  
 `/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Same format as **GET** `/favorite` but returns new favorites ([full format](./FullAPIExamples.md#get-favorites-response))
