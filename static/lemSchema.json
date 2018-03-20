@@ -5,25 +5,13 @@
     "lem": {
       "type": "object",
       "properties": {
-        "startIDs": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "stopIDs": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
         "building_blocks": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": "string"
               },
               "block_type": {
                 "type": "string",
@@ -49,7 +37,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": "string"
               },
               "context_type": {
                 "type": "string",
@@ -58,7 +46,7 @@
               "building_blocks": {
                 "type": "array",
                 "items": {
-                  "type": "integer"
+                  "type": "string"
                 }
               },
               "actions": {
@@ -86,17 +74,17 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": "string"
               },
               "action_type": {
                 "type": "string",
-                "enum": ["Learner Action", "Facilitator Action", "System Action"]
+                "enum": ["Learner Action", "Facilitator Action", "System Action", "notationEdge"]
               },
               "source": {
-                "type": "integer"
+                "type": "string"
               },
               "target": {
-                "type": "integer"
+                "type": "string"
               },
               "description": {
                 "type": "string"
@@ -116,10 +104,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
-              },
-              "building_block": {
-                "type": "integer"
+                "type": "string"
               },
               "description": {
                 "type": "string"
@@ -127,7 +112,6 @@
             },
             "required": [
               "id",
-              "building_block",
               "description"
             ]
           }

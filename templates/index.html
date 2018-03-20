@@ -10,12 +10,12 @@
   <link rel="shortcut icon" href="/static/img/favicon.ico" />
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,42 +25,57 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <link rel="stylesheet" href="/static/css/style.css"></style>
 
   <!-- Cytoscape -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.15/cytoscape.js"></script>
+  <script type="text/javascript" src="/static/node_modules/cytoscape/dist/cytoscape.min.js"></script>
 
   <!-- Dagre layout -->
-  <script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
-  <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.1.2/cytoscape-dagre.js"></script>
-
+  <script src="/static/node_modules/dagre/dist/dagre.min.js"></script>
+  <script src="/static/node_modules/cytoscape-dagre/cytoscape-dagre.js"></script>
 
   <!-- Snap to grid -->
-  <script src="https://rawgit.com/guimeira/cytoscape-snap-to-grid/master/cytoscape-snap-to-grid.js"></script>
+  <script src="/static/node_modules/cytoscape-snap-to-grid/cytoscape-snap-to-grid.js"></script>
 
   <!-- AJV Another Json Validator-->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/4.11.3/ajv.bundle.js"></script>
+  <script type="text/javascript" src="/static/node_modules/ajv/dist/ajv.bundle.js"></script>
 
-  <!-- Undo Redo -->
-  <script type="text/javascript" src="https://rawgit.com/iVis-at-Bilkent/cytoscape.js-undo-redo/master/cytoscape-undo-redo.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css"></style>
 
   <!-- Local JS files-->
-  <script type="text/javascript" src="/static/js/json_validator.js"></script>
-  <script type="text/javascript" src="/static/js/import.js"></script>
-  <script type="text/javascript" src="/static/js/export.js"></script>
-  <script type="text/javascript" src="/static/js/image_download.js"></script>
-  <script type="text/javascript" src="/static/js/drag_and_drop.js"></script>
-  <script type="text/javascript" src="/static/js/sidebar.js"></script>
-  <script type="text/javascript" src="/static/js/register.js"></script>
   <script type="text/javascript" src="/static/js/routes.js"></script>
-  <script type="text/javascript" src="/static/js/user.js"></script>
-  <script type="text/javascript" src="/static/js/exploreLems.js"></script>
-  <script type="text/javascript" src="/static/js/navigation.js"></script>
   <script type="text/javascript" src="/static/js/loadHtml.js"></script>
   <script type="text/javascript" src="/static/js/extensions.js"></script>
-  <script type="text/javascript" src="/static/js/favorite.js"></script>
-  <script type="text/javascript" src="/static/js/comment.js"></script>
-  <script type="text/javascript" src="/static/js/rating.js"></script>
+  <script type="text/javascript" src="/static/js/state.js"></script>
+
+  <script type="text/javascript" src="/static/js/actions/keyboard_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/canvas_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/public_lems_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/private_lems_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/favorite_lems_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/navigation_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/login_actions.js"></script>
+  <script type="text/javascript" src="/static/js/actions/sidebar_actions.js"></script>
+
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/image_download.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/import.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/export.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/sidebar.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/sidebar/save_share.js"></script>
+
+  <script type="text/javascript" src="/static/js/canvasPage/change_canvas.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/drag_and_drop.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/json_validator.js"></script>
+  <script type="text/javascript" src="/static/js/canvasPage/keypress.js"></script>
+
+  <script type="text/javascript" src="/static/js/navbar/login_logout.js"></script>
+  <script type="text/javascript" src="/static/js/navbar/register.js"></script>
+
+  <script type="text/javascript" src="/static/js/publicLemsPage/favorite.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/comment.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/rating.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/exploreLems.js"></script>
+  <script type="text/javascript" src="/static/js/publicLemsPage/userFavorites.js"></script>
+
   <script type="text/javascript">
 	  $(window).bind('beforeunload', function(){
 		return "Some string";
@@ -73,13 +88,13 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <a class="navbar-brand">UCO LEML Project</a>
+        <a class="navbar-brand">LEML Project</a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li id="canvas_button" class="active"><a  onclick="showPage('canvas');">Canvas Editor<span class="sr-only">(current)</span></a></li>
-          <li id="public_button"><a  onclick="showPage('public');">Public LEMs</a></li>
+          <li id="canvas_button" class="active"><a  onclick="showPage(pageEnum.CANVAS);">Canvas Editor<span class="sr-only">(current)</span></a></li>
+          <li id="public_button"><a  onclick="showPage(pageEnum.PUBLIC);">Public LEMs</a></li>
           <li style="display:none;" id="user_button"><a  onclick="showPage('user');">My LEMs</a></li>
         </ul>
 
@@ -90,7 +105,7 @@
             <button id="loginButton" class="btn btn-default">Log In</button>
             <br><small id="loginErrorText" class="text-warning" style="display:none">User not found</small>
           </div>
-          <button id="registerButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
+          <button id="registerButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" onclick="setupRegisterModal()">Register</button>
         </form>
 
         <div class="navbar-form navbar-right dropdown" id="currentUserInfo" style="display:none">
@@ -108,10 +123,11 @@
     <div class="row">
       <div class="col-md-9" id="content">
         <div id="cy" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <script type="text/javascript" src="/static/js/cytoscape_canvas.js"></script>
+        <script type="text/javascript" src="/static/js/canvasPage/cytoscape_canvas.js"></script>
+        <input type="text" style="opacity:0; height:0; width:0;" id="canvas_input"></input>
       </div>
 
-      <div class="col-md-3 open" id="sidebar0">
+      <div class="col-md-3 open" id="default-sidebar">
         <div class="btn-group" role="group" aria-label="...">
           <div class="btn-group" role="group">
             <button type="button" id="canvasDropdown" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,7 +182,7 @@
     </div>
   </div> -->
 </div>
-<div class="hidden" id="sidebar1">
+<div class="hidden" id="block-sidebar">
   <h3>Building Block</h3>
   <hr>
   <form class="form-horizontal">
@@ -198,7 +214,7 @@
     </div><!-- /input-group -->
   </form>
 </div>
-<div class="hidden" id="sidebar2">
+<div class="hidden" id="action-sidebar">
   <h3>Action</h3>
   <hr>
   <form class="form-horizontal">
@@ -222,7 +238,7 @@
     </div>
   </form>
 </div>
-<div class="hidden" id="sidebar3">
+<div class="hidden" id="context-sidebar">
   <h3>Context</h3>
   <hr>
   <form class="form-horizontal">
@@ -241,7 +257,7 @@
   </form>
 
 </div>
-<div class="hidden" id="sidebar4">
+<div class="hidden" id="objective-sidebar">
   <h3>Objective</h3>
   <hr>
   <form class="form-horizontal">
@@ -254,7 +270,7 @@
   </form>
 </div>
 
-<div class="hidden" id="sidebar5">
+<div class="hidden" id="startstop-sidebar">
   <h3>Start/Stop</h3>
   <hr>
   <form class="form-horizontal">
@@ -280,16 +296,16 @@
         <label id="canvasErrorLabel"></label>
       </div>
       <div class="panel-body">
-        <img id="Information" src="/static/img/Information.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-        <img id="Dialogue" src="/static/img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" width="5%" height="5%">
-        <img id="Feedback" src="/static/img/Feedback.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-        <img id="Practice" src="/static/img/Practice.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-        <img id="Evidence" src="/static/img/Evidence.png" draggable="true" ondragstart="drag(event, id)" width="5%" height="5%">
-        <img id="objective" src="/static/img/objective.png" draggable="true" ondragstart="drag(event, id)" height="10%" width="10%">
-        <img id="ClassroomContext" src="/static/img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-        <img id="Online_SynchronousContext" src="/static/img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-        <img id="Online_AsynchronousContext" src="/static/img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
-        <img id="ExperientialContext" src="/static/img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" height="5%">
+        <img id="Information" src="/static/img/Information.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" width="5%" height="5%">
+        <img id="Dialogue" src="/static/img/Dialogue.png" draggable="true" ondragstart="drag(event,id)" ondblclick="doubleClick(event, id)" width="5%" height="5%">
+        <img id="Feedback" src="/static/img/Feedback.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" width="5%" height="5%">
+        <img id="Practice" src="/static/img/Practice.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" width="5%" height="5%">
+        <img id="Evidence" src="/static/img/Evidence.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" width="5%" height="5%">
+        <img id="objective" src="/static/img/objective.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" height="10%" width="10%">
+        <img id="ClassroomContext" src="/static/img/ClassroomContext.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" height="5%">
+        <img id="Online_SynchronousContext" src="/static/img/OnlineSynchronousContext.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" height="5%">
+        <img id="Online_AsynchronousContext" src="/static/img/OnlineAsynchronousContext.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" height="5%">
+        <img id="ExperientialContext" src="/static/img/ExperientialContext.png" draggable="true" ondragstart="drag(event, id)" ondblclick="doubleClick(event, id)" height="5%">
       </div>
     </div>
   </div>

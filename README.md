@@ -1,12 +1,46 @@
+[Running the Application](#running-the-application)  
+[Debugging](#debugging)  
+[Suggested Improvements](#suggested-improvements)  
+[Testing](#testing)  
+[How to use the canvas](#how-to-use-the-canvas)  
+[API Documentation](#api-documentation)
+
 Running the Application:
 ========================
 
 Steps to run application in Chrome; other browsers have not been tested.
 1. Download python3.
-2. Install MongoDB 3.2
-3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.
-2. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
-3. Navigate to http://[host]:[port]. The default is 127.0.0.1:5000.
+2. Install MongoDB 3.2 ([Instructions for Ubuntu 16.04](https://www.howtoforge.com/tutorial/install-mongodb-on-ubuntu-16.04/))
+3. Install necessary modules by running `python3 setup.py install` inside a virtualenv.  
+ - Setting up virtualenv  
+ Install: `pip3 install virtualenv`  
+ Create virtual environment: `python3 -m virtualenv <path_to_this_repo>`
+ Activate:  `source <path_to_this_repo>/bin/activate`  
+ - On Ubuntu, you might get an error when downloading cffi
+  ```
+  No package 'libffi' found
+  c/_cffi_backend.c:15:17: fatal error: ffi.h: No such file or directory
+  compilation terminated.
+  error: Setup script exited with error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+  ```
+
+  I found [these](https://l.messenger.com/l.php?u=https%3A%2F%2Fgithub.com%2FKozea%2Fcairocffi%2Fissues%2F14&h=ATNIrW48G4GzpBoIvVvfgY_4jzogeQYOEzFXoKbe8Vtf6auMk134329a71qCcOdLLcCjHESf90mydpcQFoeqmeWaSZxp7YzbbWkcnQCZFsIFuxjPT6Zlt_Y8uqDVxCUddSvy6w) [links](https://l.messenger.com/l.php?u=https%3A%2F%2Faskubuntu.com%2Fquestions%2F518635%2Funable-to-locate-package-libffi-and-libffi5-dev-on-ubuntu-12-04-4-through-apt-ge&h=ATNIrW48G4GzpBoIvVvfgY_4jzogeQYOEzFXoKbe8Vtf6auMk134329a71qCcOdLLcCjHESf90mydpcQFoeqmeWaSZxp7YzbbWkcnQCZFsIFuxjPT6Zlt_Y8uqDVxCUddSvy6w) on the issue. It appears that `sudo apt install libffi6 libffi-dev` fixes the problem.
+
+4. Run `npm install` in /static to install all 3rd party packages
+4. Run `python3 run.py` to spin up the server. Include --help or -h for command options on how to supply database access and location specifications.
+5. Navigate to http://[host]:[port]. The default is http://127.0.0.1:5000.
+
+
+Debugging:
+============
+
+### State and Actions
+Some ideas from [redux](http://redux.js.org/docs/introduction/) are implemented in this app. There is a state object (in `static/js/state.js`) that holds most of the global data. This state object is never changed, but is sometime replaced by a changed copy. The only code that replaces (changes) the state is the actions which are all in `static/js/actions`.
+
+At the top of `/static/js/state.js` there is `const LOG_ACTIONS`. When this is `true` all actions modifying the state will print to the console. This can be useful to figure out what is going on.
+
+### LEM structure
+You can verify that LEM JSON being sent to the backend is correct by using a [JSON validator](http://www.jsonschemavalidator.net/) and testing against our [defined schema](./static/lemSchema.json)
 
 Suggested Improvements:
 ====================
@@ -16,22 +50,57 @@ Suggested Improvements:
 - Most API calls from the browser just show the default alert on error. A better UI should be created to handle API errors.
 - Add an undo and redo feature to the canvas. There should be libraries for this, or keep a stack of canvas states (using cy.json) that can be popped.
 
+Things that are possible but just cause problems:
+ - **Drawing an action from a building block to a context** This will create a disconnected graph because actions cannot be drawn from a context to anything else. If you try to draw that action, the element you click on will be added to the context
+ - **Changing the type of the start and stop node** This changes the class of the element and so changes the display label, but it doesn't actually change the IDs, so programatically the stop node is always the stop node - even if you change the type. This can cause the user to create a backwards graph that will not validate.
 
-UI Functionality:
+
+Testing:
+============
+Run through the [smoke tests](./smoke_tests.md)  
+Use [transform_lem_json.js](./transform_lem_json.js) to convert old LEM format to new  
+ - Stringify all ids
+ - Store actions objects for start and stop instead of list of start and stop id lists
+ - Store notaition actions instead of a reference to building block id on the notation
+
+How to use the canvas:
 =================
 
-- Click a node to select it (border becomes red).
-- Right click a selected node to delete it.
-- Right click another node to draw an arrow between them.
-- Click on the canvas to remove selection.
-- Right click on a selected edge to remove it.
-- Select a context, then right click nodes to add them to the context
+**Selecting and Editing**  
+1. Click a node to select it (border becomes red)  
+2. Edit the properites on the sidebar  
+3. Click anywhere on the canvas where the are no elements to unselect
 
-**Drag and Drop Functionality**:
-- Drag and drop from the toolbar to the canvas.
+**Adding nodes**  
+ - Drag from the toolbar and drop onto the canvas
+or  
+ - Double click from the toolbar
+
+**Deleting nodes and edges**  
+1. Click once to select  
+2. Then right click or shift click on a selected element to delete it
+
+**Drawing actions**  
+1. Select a starting node  
+2. Right click or shift click another node to draw between them
+
+**Adding building blocks to a context**
+1. Add the context and building block to the canvas
+2. Select the context you want to add them to
+3. Right click or shift click the building block you want to add to the context
 
 
-API Routes:
+**Remove building blocks from a context**  
+1. Select the building block you want to remove
+2. Right click or shift click anywhere on empty canvas to move the building block out of the context to that point on the canvas
+
+
+**Adding favorite templates**
+- Drag from the favorite template sidebar and drop onto the canvas  
+or  
+- Double click from the favorite template sidebar
+
+API Documentation:
 ===========
 
 - [Authentication](#authentication)
@@ -93,18 +162,20 @@ Lems:
 *Query String Parameters*: id  
 `/lem?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lem-get-response)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body#lem-get-response)):
 ```json
 {
-  "_id": {"$oid": "58de81a29a93ac144a594fa7"},
+  "_id": {
+    "$oid": "58de81a29a93ac144a594fa7"
+  },
   "name": "test",
   "created_by": "newemail@email.com",
-  "date_created": {"$date": 149095899737},
-  "startIDs": [1],
-  "stopIDs": [7],
+  "date_created": {
+    "$date": 149095899737
+  },
   "building_blocks": [
     {
-      "id": 1,
+      "id": "1",
       "block_type": "Information",
       "description": "Topic Overview",
       "method": "HTML File"
@@ -112,29 +183,65 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
   ],
   "contexts": [
     {
-      "id": 14,
+      "id": "14",
       "context_type": "Online Asynchronous",
-      "building_blocks": [1,2,3],
+      "building_blocks": [
+        "1",
+        "2",
+        "3"
+      ],
       "notations": []
     }
   ],
   "actions": [
     {
-      "id": 8,
+      "id": "8",
       "action_type": "Learner Action",
-      "source": 1,
-      "target": 2
+      "source": "1",
+      "target": "2"
+    },
+    {
+      "id": "2",
+      "action_type": "notationEdge",
+      "source": "undefined",
+      "target": "7"
+    },
+    {
+      "id": "3",
+      "action_type": "Learner Action",
+      "source": "start",
+      "target": "1"
+    },
+    {
+      "id": "4",
+      "action_type": "Learner Action",
+      "source": "7",
+      "target": "stop"
+    },
+    {
+      "id": "5",
+      "action_type": "notationEdge",
+      "source": "undefined",
+      "target": "undefined"
     }
   ],
   "notations": [
     {
-      "building_block": 7,
-      "description": "Objective 1"
+      "description": "Objective 1",
+      "id": "undefined"
     }
   ],
-  "ratings": [4,5,5,5,4,1,1],
+  "ratings": [
+    4,
+    5,
+    5,
+    5,
+    4,
+    1,
+    1
+  ],
   "avgRating": 3,
-  "thumbnail": "data:image\/png;base64,iVBO...",
+  "thumbnail": "data:image/png;base64,iVBO...",
   "public": 1
 }
 ```
@@ -142,20 +249,24 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 **POST**: takes in json object representing lem and saves to database.  
 *Precondition*: Must be logged in.  
 *Body*: Stringify-ed JSON  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#lem-post-body)):
 ```json
 {
   "contexts": [
     {
-      "id": 14,
+      "id": "14",
       "context_type": "Online Asynchronous",
-      "building_blocks": [1,2,3],
+      "building_blocks": [
+        "1",
+        "2",
+        "3"
+      ],
       "notations": []
     }
   ],
   "building_blocks": [
     {
-      "id": 1,
+      "id": "1",
       "block_type": "Information",
       "description": "Topic Overview",
       "method": "HTML File",
@@ -164,21 +275,36 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
   ],
   "notations": [
     {
-      "building_block": 7,
       "description": "Objective 1",
-      "id": null
+      "id": "null"
     }
   ],
   "actions": [
     {
-      "id": 8,
+      "id": "8",
       "action_type": "Learner Action",
-      "source": 1,
-      "target": 2
+      "source": "1",
+      "target": "2"
+    },
+    {
+      "id": "2",
+      "action_type": "notationEdge",
+      "source": "null",
+      "target": "7"
+    },
+    {
+      "id": "3",
+      "action_type": "Learner Action",
+      "source": "start",
+      "target": "1"
+    },
+    {
+      "id": "4",
+      "action_type": "Learner Action",
+      "source": "7",
+      "target": "stop"
     }
   ],
-  "startIDs": [1],
-  "stopIDs": [7],
   "name": "testName",
   "public": 0,
   "thumbnail": "data:image/png;base64,iVBORw0KGgoA..."
@@ -199,7 +325,7 @@ Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml
 #### */lemall*  
 **GET**: retrieves all public lems.  
 *Success Response*: 200
-Abbreviated LEM list JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#lem-post-body#lemall-response)):
+Abbreviated LEM list JSON ([full](./FullAPIExamples.md#lem-post-body#lemall-response)):
 ```json
 [
   {
@@ -244,7 +370,7 @@ Comments:
 *Query String Parameters*: id  
 `/comment?lem=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Abbreviated LEM JSON ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-comments-response)):
+Abbreviated LEM JSON ([full](./FullAPIExamples.md#get-comments-response)):
 ```json
 [
   {
@@ -299,19 +425,21 @@ Favorites:
 **GET**: retrieves the lem's that have been favorited by the currently logged in user.  
 *Precondition*: Must be logged in.  
 *Success Response*: 200  
-Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Abbreviated LEM JSON list ([full](./FullAPIExamples.md#get-favorites-response))
 ```JSON
 [
   {
-    "_id": {"$oid": "58de826e9a93ac14ffbaab6b"},
-    "name": "anothertest",
+    "_id": {
+      "$oid": "58de81a29a93ac144a594fa7"
+    },
+    "name": "test",
     "created_by": "newemail@email.com",
-    "date_created": {"$date": 1490959352160},
-    "startIDs": [1],
-    "stopIDs": [7],
+    "date_created": {
+      "$date": 1490958997377
+    },
     "building_blocks": [
       {
-        "id": 1,
+        "id": "1",
         "block_type": "Information",
         "description": "Topic Overview",
         "method": "HTML File"
@@ -320,12 +448,12 @@ Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017
     ],
     "contexts": [
       {
-        "id": 14,
+        "id": "14",
         "context_type": "Online Asynchronous",
         "building_blocks": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ],
         "notations": []
       },
@@ -333,22 +461,46 @@ Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017
     ],
     "actions": [
       {
-        "id": 8,
+        "id": "8",
         "action_type": "Learner Action",
-        "source": 1,
-        "target": 2
+        "source": "1",
+        "target": "2"
       },
-      "..."
+    "..."
     ],
     "notations": [
       {
-        "building_block": 7,
-        "description": "Objective 1"
+        "description": "Objective 1",
+        "id": "undefined"
       }
     ],
-    "ratings": [5,5,4,3,1,3,1],
-    "avgRating": 3.1428571428571,
-    "thumbnail": "data:image\/png;base64,iVBORw0KG...UVORK5CYII=",
+    "ratings": [
+      6,
+      5,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      4,
+      4,
+      5,
+      5,
+      4,
+      5,
+      4,
+      1,
+      1
+    ],
+    "avgRating": 3,
+    "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAAN...UVORK5CYII=",
     "public": 1
   },
   "..."
@@ -360,7 +512,7 @@ Abbreviated LEM JSON list ([full](https://github.com/NextThought/cs.capstone2017
 *Query String Parameters*: id  
 `/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Same format as **GET** `/favorite` but returns new favorites ([full format](./FullAPIExamples.md#get-favorites-response))
 
 
 **DELETE**: removes a given lem id from the currently logged in user's list of favorited lems.  
@@ -368,4 +520,4 @@ Same format as **GET** `/favorite` but returns new favorites ([full format](http
 *Query String Parameters*: id  
 `/favorite?id=58de81a29a93ac144a594fa7`  
 *Success Response*: 200  
-Same format as **GET** `/favorite` but returns new favorites ([full format](https://github.com/NextThought/cs.capstone2017.leml/blob/documentation/FullAPIExamples.md#get-favorites-response))
+Same format as **GET** `/favorite` but returns new favorites ([full format](./FullAPIExamples.md#get-favorites-response))
